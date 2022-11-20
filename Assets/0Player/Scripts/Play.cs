@@ -1,4 +1,5 @@
-﻿using Spine.Unity;
+﻿using Spine;
+using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -33,9 +34,40 @@ public class Play : MonoBehaviour, IPointerClickHandler
     Dictionary<string, AudioClip> bgmList = new Dictionary<string, AudioClip>();
     Dictionary<string, Texture2D> backgroundList = new Dictionary<string, Texture2D>();
 
-    void Start()
+    //web
+    string settingJson;
+
+    //spr
+    SpineAtlasAsset runtimeAtlasAsset;
+    SkeletonDataAsset runtimeSkeletonDataAsset;
+    SkeletonAnimation runtimeSkeletonAnimation;
+
+    string atlasPath, skelPath, sprPath, atlasTxt;
+    byte[] imageData, bgData, skelData;
+
+    IEnumerator Start()
     {
-        ReadTxt();
+        dataPath = Path.Combine(Directory.GetParent(Application.dataPath).ToString(), "Data");
+        jsonPath = Path.Combine(dataPath, "setting.json");
+
+        using (UnityWebRequest uwr = UnityWebRequest.Get(jsonPath))
+        {
+            yield return uwr.SendWebRequest();
+            settingJson = uwr.downloadHandler.text;
+        }
+
+        setting = JsonUtility.FromJson<Setting>(settingJson);
+
+        txtPath = Path.Combine(dataPath, "0Txt", setting.txtName + ".txt");
+        bgmPath = Path.Combine(dataPath, "Bgm");
+        backgroundPath = Path.Combine(dataPath, "Image", "Background");
+
+        using (UnityWebRequest uwr = UnityWebRequest.Get(txtPath))
+        {
+            yield return uwr.SendWebRequest();
+            txts = uwr.downloadHandler.text.Split('\n');
+        }
+
         endClick = true;
         lineNum = 0;
         autoT = 0;
@@ -115,23 +147,9 @@ public class Play : MonoBehaviour, IPointerClickHandler
         SetClick();
     }
 
-    void ReadTxt()
-    {
-        dataPath = Path.Combine(Directory.GetParent(Application.dataPath).ToString(), "Data");
-        jsonPath = Path.Combine(dataPath, "setting.json");
-        string json = File.ReadAllText(jsonPath);
-        setting = JsonUtility.FromJson<Setting>(json);
-
-        txtPath = Path.Combine(dataPath, "0Txt", setting.txtName + ".txt");
-        bgmPath = Path.Combine(dataPath, "Bgm");
-        backgroundPath = Path.Combine(dataPath, "Image", "Background");
-
-        txts = File.ReadAllLines(txtPath);
-    }
-
     void TxtPlay(int lineNum)
     {
-        string line = txts[lineNum];
+        string line = txts[lineNum].Trim();
         if (line.StartsWith("="))
         {
             isClick = false;
@@ -213,7 +231,7 @@ public class Play : MonoBehaviour, IPointerClickHandler
                 //Background
                 case "LoadBg":
                     {
-                        LoadBackground(l[1], l[2]);
+                        StartCoroutine(LoadBackground(l[1], l[2]));
                         break;
                     };
                 case "SetBg":
@@ -231,10 +249,7 @@ public class Play : MonoBehaviour, IPointerClickHandler
                 // Spr 
                 case "LoadSpr":
                     {
-                        Spr tmpSpr = new Spr();
-                        SkeletonAnimation sprTmp = tmpSpr.LoadSpr(l[1], l[2]);
-                        GameObject emotion = Instantiate(GameObject.Find("Emotion"), sprTmp.transform);
-                        sprList.Add(l[1], sprTmp);
+                        StartCoroutine(CreateNewSpineGameObject(l[1], l[2]));
                         break;
                     }
 
@@ -300,7 +315,7 @@ public class Play : MonoBehaviour, IPointerClickHandler
 
     IEnumerator LoadBgm(string nameId, string bgmName)
     {
-        using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip("file://" + Path.Combine(bgmPath, bgmName + ".ogg"), AudioType.OGGVORBIS))
+        using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip(Path.Combine(bgmPath, bgmName + ".ogg"), AudioType.OGGVORBIS))
         {
             yield return uwr.SendWebRequest();
             bgmList.Add(nameId, DownloadHandlerAudioClip.GetContent(uwr));
@@ -313,11 +328,78 @@ public class Play : MonoBehaviour, IPointerClickHandler
         bgm.Play();
     }
 
-    void LoadBackground(string nameId, string bgName)
+    IEnumerator LoadBackground(string nameId, string bgName)
     {
         Texture2D texture = new Texture2D(1, 1);
-        texture.LoadImage(File.ReadAllBytes(Path.Combine(backgroundPath, bgName)));
+
+        using (UnityWebRequest uwr = UnityWebRequest.Get(Path.Combine(backgroundPath, bgName)))
+        {
+            yield return uwr.SendWebRequest();
+            bgData = uwr.downloadHandler.data;
+        }
+
+        texture.LoadImage(bgData);
         texture.name = nameId;
         backgroundList.Add(nameId, texture);
+    }
+
+    IEnumerator CreateNewSpineGameObject(string nameId, string sprName)
+    {
+        sprPath = Path.Combine(Directory.GetParent(Application.dataPath).ToString(), "Data", "Spr", sprName);
+        atlasPath = sprPath + ".atlas.prefab";
+        skelPath = sprPath + ".skel.prefab";
+
+        using (UnityWebRequest uwr = UnityWebRequest.Get(atlasPath))
+        {
+            yield return uwr.SendWebRequest();
+            atlasTxt = uwr.downloadHandler.text;
+        }
+
+        TextAsset atlasTextAsset = new TextAsset(atlasTxt);
+
+        Texture2D[] textures = new Texture2D[1];
+        Texture2D texture = new Texture2D(1, 1);
+
+        using (UnityWebRequest uwr = UnityWebRequest.Get(sprPath + ".png"))
+        {
+            yield return uwr.SendWebRequest();
+            imageData = uwr.downloadHandler.data;
+        }
+
+        texture.LoadImage(imageData);
+        texture.name = sprName;
+        textures[0] = texture;
+
+        runtimeAtlasAsset = SpineAtlasAsset.CreateRuntimeInstance(atlasTextAsset, textures, Shader.Find("SFill"), true);
+
+        AtlasAttachmentLoader attachmentLoader = new AtlasAttachmentLoader(runtimeAtlasAsset.GetAtlas());
+        SkeletonBinary binary = new SkeletonBinary(attachmentLoader);
+
+        binary.Scale *= 0.012f;
+
+        using (UnityWebRequest uwr = UnityWebRequest.Get(skelPath))
+        {
+            yield return uwr.SendWebRequest();
+            skelData = uwr.downloadHandler.data;
+        }
+
+        SkeletonData skeletonData = binary.ReadSkeletonData(sprName, skelData);
+
+        AnimationStateData stateData = new AnimationStateData(skeletonData);
+
+        runtimeSkeletonDataAsset = SkeletonDataAsset.CreateSkeletonDataAsset(skeletonData, stateData);
+        runtimeSkeletonAnimation = SkeletonAnimation.NewSkeletonAnimationGameObject(nameId, runtimeSkeletonDataAsset);
+
+        runtimeSkeletonAnimation.Initialize(false);
+        runtimeSkeletonAnimation.Skeleton.SetSlotsToSetupPose();
+        runtimeSkeletonAnimation.AnimationState.SetAnimation(0, "Idle_01", true);
+        //runtimeSkeletonAnimation.AnimationState.SetAnimation(1, "00", false);
+        runtimeSkeletonAnimation.transform.Translate(Vector3.down * 9);
+
+        runtimeSkeletonAnimation.gameObject.AddComponent<SprState>();
+        runtimeSkeletonAnimation.gameObject.SetActive(false);
+
+        GameObject emotion = Instantiate(GameObject.Find("Emotion"), runtimeSkeletonAnimation.transform);
+        sprList.Add(nameId, runtimeSkeletonAnimation);
     }
 }

@@ -2,7 +2,7 @@
 
 适用于碧蓝档案的二创工具
 
-目前仅为测试版
+目前仅为测试版（点击蓝色超链接下载
 
 - 播放器 [baPlayer](https://dza.vin/baPlayer)
 
@@ -12,14 +12,17 @@
 
   Quick Xor Hash: `tyRDgN838JOKGFrDRBNFKTWwhD0=`
 
+- WebGl 版播放器
+
 - 后续仅更新播放器。素材文件可自行添加
 
 本项目以 16:10 窗口为基准制作，因允许了拖拽更改分辨率，会造成个别分辨率显示异常。
 
 # 如何使用
 
-1. 在 `Data/0Txt` 中新建文本文件编写脚本
+1. 在 `Data/0Txt` 中新建文本文件编写脚本（建议使用有行数显示的文本编辑器，如 vscode。
 2. 设置 `Data/Setting.json` 中 `txtName` 为要播放文本文件名称
+3. 打开 baPlayer 进行播放
 
 [命令](./Doc/Command.md)
 

@@ -1,7 +1,10 @@
 ﻿using Spine;
 using Spine.Unity;
+using System;
+using System.Collections;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class Spr
 {
@@ -9,20 +12,33 @@ public class Spr
     SkeletonDataAsset runtimeSkeletonDataAsset;
     SkeletonAnimation runtimeSkeletonAnimation;
 
-    string atlasPath, skelPath, sprPath;
+    string atlasPath, skelPath, sprPath, atlasTxt;
+    byte[] imageData;
 
-    public void CreateNewSpineGameObject(string nameId, string sprName)
+    public IEnumerator CreateNewSpineGameObject(string nameId, string sprName)
     {
         sprPath = Path.Combine(Directory.GetParent(Application.dataPath).ToString(), "Data", "Spr", sprName);
         atlasPath = sprPath + ".atlas.prefab";
         skelPath = sprPath + ".skel.prefab";
 
-        string atlasTxt = File.ReadAllText(atlasPath);
+        using (UnityWebRequest uwr = UnityWebRequest.Get(atlasPath))
+        {
+            yield return uwr.SendWebRequest();
+            atlasTxt = uwr.downloadHandler.text;
+        }
+
         TextAsset atlasTextAsset = new TextAsset(atlasTxt);
 
         Texture2D[] textures = new Texture2D[1];
         Texture2D texture = new Texture2D(1, 1);
-        texture.LoadImage(File.ReadAllBytes(sprPath + ".png"));
+
+        using (UnityWebRequest uwr = UnityWebRequest.Get(sprPath + ".png"))
+        {
+            yield return uwr.SendWebRequest();
+            imageData = uwr.downloadHandler.data;
+        }
+
+        texture.LoadImage(imageData);
         texture.name = sprName;
         textures[0] = texture;
 
@@ -38,11 +54,6 @@ public class Spr
 
         runtimeSkeletonDataAsset = SkeletonDataAsset.CreateSkeletonDataAsset(skeletonData, stateData);
         runtimeSkeletonAnimation = SkeletonAnimation.NewSkeletonAnimationGameObject(nameId, runtimeSkeletonDataAsset);
-    }
-
-    public SkeletonAnimation LoadSpr(string nameId, string sprName)
-    {
-        CreateNewSpineGameObject(nameId, sprName);
 
         runtimeSkeletonAnimation.Initialize(false);
         runtimeSkeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -52,6 +63,11 @@ public class Spr
 
         runtimeSkeletonAnimation.gameObject.AddComponent<SprState>();
         runtimeSkeletonAnimation.gameObject.SetActive(false);
+    }
+
+    public SkeletonAnimation LoadSpr(string nameId, string sprName)
+    {
+        CreateNewSpineGameObject(nameId, sprName);
 
         return runtimeSkeletonAnimation;
     }
