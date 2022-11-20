@@ -20,11 +20,13 @@
 
 # 如何使用
 
-1. 在 `Data/0Txt` 中新建文本文件编写脚本（建议使用有行数显示的文本编辑器，如 vscode。
+目前为测试版，未开放 auto 功能（有 Bug）仅能使用鼠标点击播放
+
+1. 在 `Data/0Txt` 中新建文本文件编写脚本（建议使用有行数显示的文本编辑器，如 vs Code。
 2. 设置 `Data/Setting.json` 中 `txtName` 为要播放文本文件名称
 3. 打开 baPlayer 进行播放
 
-[命令](./Doc/Command.md)
+[脚本命令](./Doc/Command.md)
 
 # Credits
 

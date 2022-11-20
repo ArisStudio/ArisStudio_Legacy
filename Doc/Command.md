@@ -1,4 +1,4 @@
-# 命令
+# 脚本命令
 
 - 命令用来控制播放逻辑
 - 一行为一句命令
@@ -50,6 +50,7 @@
   - 两个按钮 `Button&{第一个按钮内容}&{第一个按钮要跳转行数}&{第二个按钮内容}&{第二个按钮要跳转行数}`
   - 三个按钮 `Button&{第一个按钮内容}&{第一个按钮要跳转行数}&{第二个按钮内容}&{第二个按钮要跳转行数}&{第三个按钮内容}&{第三个按钮要跳转行数}`
 - 示例: `Button&First Button&32&Seconde Button&14`
+- **此命令自带一次断点**
 
 ## 文本框
 
@@ -58,7 +59,7 @@
   - 命令: `Txt&{学生名}&{社团名}&{内容}`
   - 示例: `Txt&日步美&补课部&是<波浪猫>造型的头枕，好软好蓬松啊！`
   - 此命令自带显示文本框效果
-  - 此命令自带一次断点
+  - **此命令自带一次断点**
 
 - 隐藏文本框
   - 命令: `TxtHide`
@@ -106,18 +107,63 @@
 # 人物
 
 ## 加载
-  - 命令: `LoadSpr&{nameId}&{人物文件名}`
-  - 示例: `LoadSpr&hihumi&hihumi_spr`
-  - `nameId` 为自定义唯一识别 Id，为后续设置使用
-  - 人物文件请放在 `\Data\Spr` 文件夹中
-  - 人物文件名 **不包括后缀** 以 `_spr` 结尾
+
+- 命令: `LoadSpr&{nameId}&{人物文件名}`
+- 示例: `LoadSpr&hihumi&hihumi_spr`
+- `nameId` 为自定义唯一识别 Id，为后续设置使用
+- 人物文件请放在 `\Data\Spr` 文件夹中
+- 人物文件名 **不包括后缀** 以 `_spr` 结尾
 
 ## 显示
 
 - 出现
+  - 命令: `SprShow&{nameId}`
+  - 示例: `SprShow&hihumi`
 - 隐藏
+  - 命令: `SprHide&{nameId}`
+  - 示例: `SprHide&hihumi`
 - 高亮效果
+  - 命令: `SprHL&{nameId}&{程度0.0~1.0}`
+  - 示例: `SprHL&hihumi&0.5`
 
-## 状态
+## 面部表情状态
+
+- 命令: `SprState&{nameId}&{状态名}`
+- 示例: `SprState&hihumi&03`
+- 如何查看状态名与面部表情对应关系？
+  - 以 `/Data` 为根目录开启 web 服务
+  - 比如用 vscode 的 Live Server 插件
 
 ## 表情
+
+- 命令: `SprEmo&{nameId}&{表情名}`
+- 示例: `SprEmo&hihumi&Action`
+- 表情名与实际效果对应关系
+  - 表格后补
+  - 可以先播放 `/Data/0Txt/Test.txt` 查看
+
+## 位置与移动
+
+X 轴从左到右建议 -10，-5，0，5，10 这五个位置
+
+- 设置位置
+  - 命令: `SprX&{nameId}&{X坐标}`
+  - 示例: `SprX&hihumi&-5`
+- 移动到指定位置
+  - 命令: `SprMove&{nameId}&{目标X坐标}`
+  - 示例: `SprMove&hihumi&10`
+- X 轴抖动
+  - 命令: `SprShakeX&{速度}&{幅度}&{周期}`
+  - 示例: `SprShakeX&hihumi&20&1&6`
+  - 抖动为 Sin 函数
+- Y 轴抖动
+  - 命令: `SprShakeY&{速度}&{幅度}&{周期}`
+  - 示例: `SprShakeY&hihumi&3&-1&1`
+  - 抖动为 Sin 函数
+- 靠近
+  - 命令: `SprClose&{nameId}`
+  - 示例: `SprClose&hihumi`
+  - 与隐藏出现一起用可实现走到脸前效果
+- 后退到默认位置
+  - 命令: `SprBack&{nameId}`
+  - 示例: `SprBack&hihumi`
