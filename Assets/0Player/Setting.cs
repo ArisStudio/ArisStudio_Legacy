@@ -4,15 +4,13 @@
 public class Setting
 {
     public string txtName;
+    public Auto auto;
 
     [Serializable]
-    public class Talk
+    public class Auto
     {
-        public bool onlyTalk;
-        public float volume;
-        public int x;
-        public int y;
-        public float scale;
-        public int n;
+        public bool enable;
+        public float seconds;
+
     }
 }

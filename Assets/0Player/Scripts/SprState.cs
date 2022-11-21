@@ -66,8 +66,9 @@ public class SprState : MonoBehaviour
         mpb = new MaterialPropertyBlock();
     }
 
-    public void Move(string position)
+    public void Move(string position,string speed)
     {
+        moveSpeed = float.Parse(speed);
         isMove = true;
         endMove = false;
         movePosition = int.Parse(position);

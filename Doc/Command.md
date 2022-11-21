@@ -93,11 +93,11 @@
 - 加载
 
   - 命令: `LoadBgm&{nameId}&{音乐名}`
-  - 示例: `LoadBgm&Theme_04&Theme_04`
+  - 示例: `LoadBgm&Theme_04&Theme_04.ogg`
   - `nameId` 为自定义唯一识别 Id，为后续设置使用
   - 背景文件请放在 `\Data\Bgm` 文件夹中
-  - 音乐名 **不包括后缀**
-  - 目前仅支持 ogg 格式
+  - 音乐名 **包括后缀**
+  - 仅支持 ogg,wav 格式
 
 - 设置
   - 命令: `SetBgm&{nameId}`
@@ -150,8 +150,8 @@ X 轴从左到右建议 -10，-5，0，5，10 这五个位置
   - 命令: `SprX&{nameId}&{X坐标}`
   - 示例: `SprX&hihumi&-5`
 - 移动到指定位置
-  - 命令: `SprMove&{nameId}&{目标X坐标}`
-  - 示例: `SprMove&hihumi&10`
+  - 命令: `SprMove&{nameId}&{目标X坐标}&{速度}`
+  - 示例: `SprMove&hihumi&10&25`
 - X 轴抖动
   - 命令: `SprShakeX&{速度}&{幅度}&{周期}`
   - 示例: `SprShakeX&hihumi&20&1&6`

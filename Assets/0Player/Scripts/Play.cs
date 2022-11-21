@@ -57,6 +57,7 @@ public class Play : MonoBehaviour, IPointerClickHandler
         }
 
         setting = JsonUtility.FromJson<Setting>(settingJson);
+        isAuto = setting.auto.enable;
 
         txtPath = Path.Combine(dataPath, "0Txt", setting.txtName + ".txt");
         bgmPath = Path.Combine(dataPath, "Bgm");
@@ -90,12 +91,11 @@ public class Play : MonoBehaviour, IPointerClickHandler
             if (!isClick && endClick)
             {
                 autoT += Time.deltaTime;
-                if (autoT > 1)
+                if (autoT > setting.auto.seconds)
                 {
                     autoT = 0;
                     SetClick();
                 }
-                Debug.Log(autoT);
             }
         }
 
@@ -285,7 +285,7 @@ public class Play : MonoBehaviour, IPointerClickHandler
                     }
                 case "SprMove":
                     {
-                        sprList[l[1]].GetComponent<SprState>().Move(l[2]);
+                        sprList[l[1]].GetComponent<SprState>().Move(l[2], l[3]);
                         break;
                     }
                 case "SprX":
@@ -315,7 +315,7 @@ public class Play : MonoBehaviour, IPointerClickHandler
 
     IEnumerator LoadBgm(string nameId, string bgmName)
     {
-        using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip(Path.Combine(bgmPath, bgmName + ".ogg"), AudioType.OGGVORBIS))
+        using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip(Path.Combine(bgmPath, bgmName), AudioType.UNKNOWN))
         {
             yield return uwr.SendWebRequest();
             bgmList.Add(nameId, DownloadHandlerAudioClip.GetContent(uwr));
