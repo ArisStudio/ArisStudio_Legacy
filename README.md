@@ -4,9 +4,9 @@
 
 目前仅为测试版（点击蓝色超链接下载
 
-- 播放器 [baPlayer 0.1.1](https://dza.vin/baPlayer)
+- 播放器 [baPlayer 0.1.2](https://dza.vin/baPlayer)
 
-  Quick Xor Hash: `CFjPZmHXYyc8gtwg80SpuHYy9zs=`
+  Quick Xor Hash: `467SjvuLwmKEXB+7DjAfqEGz7eA=`
 
 - 素材文件，放入播放器的根目录,与 exe 同级 [data](https://dza.vin/baPlayerData)
 
@@ -29,6 +29,19 @@
 3. 打开 baPlayer 进行播放
 
 [脚本命令](./Doc/Command.md)
+
+# Log
+
+- 0.1.2
+
+  修复因对接 webgl 造成的人物加载问题
+
+- 0.1.1
+
+  添加 webgl 支持
+
+- 0.1.0
+  ...
 
 # Credits
 

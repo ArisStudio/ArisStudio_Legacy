@@ -37,14 +37,6 @@ public class Play : MonoBehaviour, IPointerClickHandler
     //web
     string settingJson;
 
-    //spr
-    SpineAtlasAsset runtimeAtlasAsset;
-    SkeletonDataAsset runtimeSkeletonDataAsset;
-    SkeletonAnimation runtimeSkeletonAnimation;
-
-    string atlasPath, skelPath, sprPath, atlasTxt;
-    byte[] imageData, bgData, skelData;
-
     IEnumerator Start()
     {
         dataPath = Path.Combine(Directory.GetParent(Application.dataPath).ToString(), "Data");
@@ -330,6 +322,7 @@ public class Play : MonoBehaviour, IPointerClickHandler
 
     IEnumerator LoadBackground(string nameId, string bgName)
     {
+        byte[] bgData;
         Texture2D texture = new Texture2D(1, 1);
 
         using (UnityWebRequest uwr = UnityWebRequest.Get(Path.Combine(backgroundPath, bgName)))
@@ -345,6 +338,13 @@ public class Play : MonoBehaviour, IPointerClickHandler
 
     IEnumerator CreateNewSpineGameObject(string nameId, string sprName)
     {
+        SpineAtlasAsset runtimeAtlasAsset;
+        SkeletonDataAsset runtimeSkeletonDataAsset;
+        SkeletonAnimation runtimeSkeletonAnimation;
+
+        string atlasPath, skelPath, sprPath, atlasTxt;
+        byte[] imageData, bgData, skelData;
+
         sprPath = Path.Combine(Directory.GetParent(Application.dataPath).ToString(), "Data", "Spr", sprName);
         atlasPath = sprPath + ".atlas.prefab";
         skelPath = sprPath + ".skel.prefab";
