@@ -16,7 +16,7 @@
 
   Quick Xor Hash: `FKJ0suJXm9V7ewiP2mHA1tQ1OOU=`
 
-- 后续仅更新播放器。素材文件可自行添加
+- 后续仅更新播放器。素材文件可自行添加。缺少的素材可以 [在这找](https://github.com/respectZ/blue-archive-spine/tree/main/assets/spine)
 
 本项目以 16:10 窗口为基准制作，因允许了拖拽更改分辨率，会造成个别分辨率显示异常。
 
