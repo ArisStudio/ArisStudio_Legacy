@@ -1,26 +1,24 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SelectButton : MonoBehaviour, IPointerClickHandler, IPointerExitHandler, IPointerEnterHandler
+public class C_Select : MonoBehaviour, IPointerClickHandler, IPointerExitHandler, IPointerEnterHandler
 {
-    public Button playBtn;
-    public Text txt;
+    public int i;
+    public GameObject selectbuttonGo;
 
-    int lineN=0;
     void Start()
     {
         
     }
 
-    public void SetButton(string t,string n)
+    void OnEnable()
     {
-        txt.text = t;
-        lineN=int.Parse(n);
-        gameObject.SetActive(true);
+        transform.localScale = new Vector3(1, 1, 1);
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -28,7 +26,7 @@ public class SelectButton : MonoBehaviour, IPointerClickHandler, IPointerExitHan
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        playBtn.GetComponent<Play>().SetLine(lineN);
+        selectbuttonGo.GetComponent<C_SelectButton>().Select(i);
         transform.localScale = new Vector3(1f, 1f, 1f);
     }
 
@@ -38,6 +36,6 @@ public class SelectButton : MonoBehaviour, IPointerClickHandler, IPointerExitHan
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        transform.localScale = new Vector3(1f, 1f, 1f);
+        transform.localScale = new Vector3(1, 1, 1);
     }
 }

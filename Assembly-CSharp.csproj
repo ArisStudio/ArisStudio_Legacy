@@ -55,16 +55,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\0Player\Scripts\Background.cs" />
-     <Compile Include="Assets\0Player\Scripts\Banner.cs" />
-     <Compile Include="Assets\0Player\Scripts\Emoticon.cs" />
-     <Compile Include="Assets\0Player\Scripts\Label.cs" />
-     <Compile Include="Assets\0Player\Scripts\Play.cs" />
-     <Compile Include="Assets\0Player\Scripts\SelectButton.cs" />
-     <Compile Include="Assets\0Player\Scripts\Spr.cs" />
-     <Compile Include="Assets\0Player\Scripts\SprState.cs" />
-     <Compile Include="Assets\0Player\Scripts\Txt.cs" />
-     <Compile Include="Assets\0Player\Setting.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Banner.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Bg.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Bgm.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Control.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Emoticon.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Label.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_PlayButton.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_SE.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Select.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_SelectButton.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Setting.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Spr\C_Spr.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Spr\C_SprAnimation.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Spr\C_SprEmo.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Spr\C_SprMove.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Text.cs" />
+     <Compile Include="Assets\0Player\Scripts\FullScreen.cs" />
      <Compile Include="Assets\0Player\SkipSplash.cs" />
      <None Include="Assets\Spine\version.txt" />
      <None Include="Assets\0Player\SFill.shader" />
@@ -611,11 +618,17 @@
  <Reference Include="Unity.2D.SpriteShape.Editor">
  <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.2D.SpriteShape.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.Recorder.Editor">
+ <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.Recorder.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Path.Editor">
  <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.2D.Path.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Recorder">
+ <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.Recorder.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
@@ -634,6 +647,9 @@
  </Reference>
  <Reference Include="Unity.Rider.Editor">
  <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Recorder.Base">
+ <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.Recorder.Base.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Mathematics">
  <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>

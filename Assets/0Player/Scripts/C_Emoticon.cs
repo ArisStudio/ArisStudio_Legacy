@@ -1,17 +1,18 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class Emoticon : MonoBehaviour
+public class C_Emoticon : MonoBehaviour
 {
     GameObject gm;
     Animator anim;
+    bool playing;
     string animName;
-    bool isAnimPlay;
 
     void Start()
     {
-
+        
     }
-
 
     public void EmoPlay(string emoticon)
     {
@@ -23,18 +24,18 @@ public class Emoticon : MonoBehaviour
         gm = transform.Find(emoticon).gameObject;
         anim = gm.GetComponent<Animator>();
         gm.SetActive(true);
-        isAnimPlay = true;
+        playing = true;
     }
 
     void Update()
     {
-        if (isAnimPlay)
+        if (playing)
         {
             AnimatorStateInfo animTmp = anim.GetCurrentAnimatorStateInfo(0);
             if (animTmp.normalizedTime > 0.99f && animTmp.IsName(animName))
             {
                 gm.SetActive(false);
-                isAnimPlay = false;
+                playing = false;
             }
         }
     }
