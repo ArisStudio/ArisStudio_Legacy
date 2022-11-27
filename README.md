@@ -17,6 +17,8 @@
 2. 设置 `Data/Setting.json` 中 `txtName` 为要播放文本文件名称
 3. 打开 baPlayer 进行播放
 
+[脚本命令](https://github.com/Tualin14/baPlayer/wiki)
+
 # Log
 
 - 0.2.0
