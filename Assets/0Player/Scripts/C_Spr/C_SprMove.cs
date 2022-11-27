@@ -9,7 +9,6 @@ public class C_SprMove : MonoBehaviour
     float moveSpeed;
     bool moving;
 
-
     //Shake
     Vector3 oXPosition, oYPosition, tmpXPosition, tmpYPosition;
     float shakeTimeX = 0;
@@ -44,7 +43,7 @@ public class C_SprMove : MonoBehaviour
             shakeTimeX += Time.deltaTime;
             if (shakeTimeX * shakeXA > shakeXT)
             {
-                sprBase.transform.position = oXPosition;
+                transform.localPosition = oXPosition;
                 shakeXA = 0; shakeXH = 0; shakeTimeX = 0;
                 xShaking = false;
             }
@@ -52,7 +51,7 @@ public class C_SprMove : MonoBehaviour
             {
                 tmpXPosition = oXPosition;
                 tmpXPosition.x = Mathf.Sin(shakeTimeX * Mathf.PI * shakeXA) * shakeXH + oXPosition.x;
-                sprBase.transform.position = tmpXPosition;
+                transform.localPosition = tmpXPosition;
             }
         }
 
@@ -61,7 +60,7 @@ public class C_SprMove : MonoBehaviour
             shakeTimeY += Time.deltaTime;
             if (shakeTimeY * shakeYA > shakeYT)
             {
-                sprBase.transform.position = oYPosition;
+                transform.localPosition = oYPosition;
                 shakeYA = 0; shakeYH = 0; shakeTimeY = 0;
                 yShaking = false;
             }
@@ -69,7 +68,7 @@ public class C_SprMove : MonoBehaviour
             {
                 tmpYPosition = oYPosition;
                 tmpYPosition.y = Mathf.Sin(shakeTimeY * Mathf.PI * shakeYA) * shakeYH + oYPosition.y;
-                sprBase.transform.position = tmpYPosition;
+                transform.localPosition = tmpYPosition;
             }
         }
     }
@@ -101,14 +100,14 @@ public class C_SprMove : MonoBehaviour
     public void ShakeX(string xa, string xh, string xt)
     {
         shakeXA = float.Parse(xa); shakeXH = float.Parse(xh) * 0.2f; shakeXT = float.Parse(xt);
-        oXPosition = sprBase.transform.position;
+        oXPosition = transform.localPosition;
         xShaking = true;
     }
 
     public void ShakeY(string ya, string yh, string yt)
     {
         shakeYA = float.Parse(ya); shakeYH = float.Parse(yh) * 0.4f; shakeYT = float.Parse(yt);
-        oYPosition = sprBase.transform.position;
+        oYPosition = transform.localPosition;
         yShaking = true;
     }
 }

@@ -10,14 +10,15 @@ using static C_Setting;
 
 public class C_Control : MonoBehaviour
 {
-    public GameObject sprBase,lableGo,bannerGo,txtGo, selectButtonGo;
-    public AudioSource bgmGo,seGo;
+    public GameObject sprBase, lableGo, bannerGo, txtGo, selectButtonGo, coverGo;
+    public AudioSource bgmGo, seGo;
     public RawImage bgGo;
 
     //Run
-    bool isAuto,isClick,isBanner,txtTyping,selecting;
+    bool isAuto, isClick, isBanner, txtTyping, selecting;
     int lineIndex, textLength;
-    float autoTimer=0;
+    float autoTimer = 0;
+    float autoSeconds=1.5f;
 
     string[] texts;
 
@@ -25,12 +26,13 @@ public class C_Control : MonoBehaviour
     string settingJson;
     C_Setting setting;
     // FolderPath
-    string dataFolderPath, settingFolderPath, sprFolderPath, bgmFolderPath, seFolderPath,backgroundFolderPath, txtFolderPathPath;
+    string dataFolderPath, settingFolderPath, sprFolderPath, bgmFolderPath, seFolderPath, backgroundFolderPath, coverFolderPath, txtFolderPathPath;
 
     Dictionary<string, SkeletonAnimation> sprList = new Dictionary<string, SkeletonAnimation>();
     Dictionary<string, AudioClip> bgmList = new Dictionary<string, AudioClip>();
     Dictionary<string, AudioClip> seList = new Dictionary<string, AudioClip>();
     Dictionary<string, Texture2D> backgroundList = new Dictionary<string, Texture2D>();
+    Dictionary<string, Texture2D> coverList = new Dictionary<string, Texture2D>();
     Dictionary<string, int> targetList = new Dictionary<string, int>();
 
     IEnumerator Start()
@@ -39,8 +41,9 @@ public class C_Control : MonoBehaviour
         settingFolderPath = Path.Combine(dataFolderPath, "setting.json");
         sprFolderPath = Path.Combine(dataFolderPath, "Spr");
         bgmFolderPath = Path.Combine(dataFolderPath, "Bgm");
-        seFolderPath= Path.Combine(dataFolderPath, "SE");
+        seFolderPath = Path.Combine(dataFolderPath, "SE");
         backgroundFolderPath = Path.Combine(dataFolderPath, "Image", "Background");
+        coverFolderPath = Path.Combine(dataFolderPath, "Image", "Cover");
 
         using (UnityWebRequest uwr = UnityWebRequest.Get(settingFolderPath))
         {
@@ -51,6 +54,7 @@ public class C_Control : MonoBehaviour
         setting = JsonUtility.FromJson<C_Setting>(settingJson);
 
         isAuto = setting.auto.enable;
+        autoSeconds=setting.auto.seconds;
 
         txtFolderPathPath = Path.Combine(dataFolderPath, "0Txt", setting.txtName + ".txt");
 
@@ -60,7 +64,7 @@ public class C_Control : MonoBehaviour
             texts = uwr.downloadHandler.text.Split('\n');
         }
 
-        textLength=texts.Length;
+        textLength = texts.Length;
 
         PreLoad(setting, texts);
 
@@ -72,9 +76,9 @@ public class C_Control : MonoBehaviour
         if (isAuto)
         {
             autoTimer += Time.deltaTime;
-            if (autoTimer > 1)
+            if (autoTimer > autoSeconds)
             {
-                autoTimer= 0;
+                autoTimer = 0;
                 isClick = true;
             }
         }
@@ -82,7 +86,7 @@ public class C_Control : MonoBehaviour
         if (txtTyping)
         {
             autoTimer = 0;
-            isClick= false;
+            isClick = false;
             return;
         }
 
@@ -182,6 +186,8 @@ public class C_Control : MonoBehaviour
         sprAnim.AnimationState.SetAnimation(0, "Idle_01", true);
         sprGo.SetActive(false);
 
+        Debug.Log("Load Spr: " + nameId);
+
         sprList.Add(nameId, sprAnim);
     }
 
@@ -208,6 +214,22 @@ public class C_Control : MonoBehaviour
         texture.LoadImage(bgData);
         texture.name = nameId;
         backgroundList.Add(nameId, texture);
+    }
+
+    IEnumerator LoadCover(string nameId, string coverName)
+    {
+        byte[] coverData;
+        Texture2D texture = new Texture2D(1, 1);
+
+        using (UnityWebRequest uwr = UnityWebRequest.Get(Path.Combine(coverFolderPath, coverName)))
+        {
+            yield return uwr.SendWebRequest();
+            coverData = uwr.downloadHandler.data;
+        }
+
+        texture.LoadImage(coverData);
+        texture.name = nameId;
+        coverList.Add(nameId, texture);
     }
 
     IEnumerator LoadSe(string nameId, string bgmName)
@@ -251,6 +273,10 @@ public class C_Control : MonoBehaviour
                         {
                             StartCoroutine(LoadBackground(l[2], l[3]));
                         }
+                        else if (l[1] == "cover")
+                        {
+                            StartCoroutine(LoadCover(l[2], l[3]));
+                        }
                         else if (l[1] == "se")
                         {
                             StartCoroutine(LoadSe(l[2], l[3]));
@@ -266,7 +292,7 @@ public class C_Control : MonoBehaviour
 
                 case "target":
                     {
-                        targetList.Add(l[1], iTmp); 
+                        targetList.Add(l[1], iTmp);
                         break;
                     }
             }
@@ -291,7 +317,7 @@ public class C_Control : MonoBehaviour
                 case "jump":
                     {
                         lineIndex = targetList[l[1]];
-                        Debug.Log("Jump to: "+lineIndex);
+                        Debug.Log("Jump to: " + lineIndex);
                         break;
                     }
 
@@ -304,7 +330,7 @@ public class C_Control : MonoBehaviour
                 case "banner":
                     {
                         bannerGo.GetComponent<C_Banner>().SetBannerText(l[1]);
-                        isBanner=true;
+                        isBanner = true;
                         isClick = false;
                         break;
                     }
@@ -398,6 +424,24 @@ public class C_Control : MonoBehaviour
                         break;
                     }
 
+                //Cover
+                case "cover":
+                    {
+                        if (l[1] == "set")
+                        {
+                            coverGo.GetComponent<C_Cover>().SetCover(coverList[l[2]]);
+                        }
+                        else if (l[1] == "show")
+                        {
+                            coverGo.GetComponent<C_Cover>().Show();
+                        }
+                        else if (l[1] == "hide")
+                        {
+                            coverGo.GetComponent<C_Cover>().Hide();
+                        }
+                        break;
+                    }
+
                 // Spr
                 case "spr":
                     {
@@ -409,7 +453,7 @@ public class C_Control : MonoBehaviour
                         {
                             sprList[l[2]].GetComponent<C_Spr>().Hide();
                         }
-                        else if (l[1] == "highlight"|| l[1] == "hl")
+                        else if (l[1] == "highlight" || l[1] == "hl")
                         {
                             sprList[l[2]].GetComponent<C_Spr>().HighLight(l[3]);
                         }
@@ -418,7 +462,7 @@ public class C_Control : MonoBehaviour
                             sprList[l[2]].GetComponent<C_Spr>().SetState(l[3]);
                         }
                         //Emoticon
-                        else if (l[1] == "emoticon"|| l[1] == "emo")
+                        else if (l[1] == "emoticon" || l[1] == "emo")
                         {
                             sprList[l[2]].GetComponent<C_SprEmo>().PlayEmoticon(l[3]);
                         }

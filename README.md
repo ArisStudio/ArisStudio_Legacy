@@ -4,33 +4,24 @@
 
 目前仅为测试版（点击蓝色超链接下载
 
-- 播放器 [baPlayer 0.1.2](https://dza.vin/baPlayer)
+- 播放器 [baPlayer 0.2.0](https://storage.dza.vin/baPlayer%200.2.0.7z)
 
-  Quick Xor Hash: `467SjvuLwmKEXB+7DjAfqEGz7eA=`
+  SHA256: `e2e685af8406f4bd36cd60f6ac539a429848506009e7834b1b3c82969b9f63c0`
 
-- 素材文件，放入播放器的根目录,与 exe 同级 [data](https://dza.vin/baPlayerData)
-
-  Quick Xor Hash: `tyRDgN838JOKGFrDRBNFKTWwhD0=`
-
-- WebGl 版播放器 [baPlayer_WebGL 0.1.1](https://dza.vin/baPlayer_WebGL)
-
-  Quick Xor Hash: `FKJ0suJXm9V7ewiP2mHA1tQ1OOU=`
-
-- 后续仅更新播放器。素材文件可自行添加。缺少的素材可以 [在这找](https://github.com/respectZ/blue-archive-spine/tree/main/assets/spine)
-
-本项目以 16:10 窗口为基准制作，因允许了拖拽更改分辨率，会造成个别分辨率显示异常。
 
 # 如何使用
 
-目前为测试版
+0.2.0 版 待更新
 
 1. 在 `Data/0Txt` 中新建文本文件编写脚本（建议使用有行数显示的文本编辑器，如 vs Code。
 2. 设置 `Data/Setting.json` 中 `txtName` 为要播放文本文件名称
 3. 打开 baPlayer 进行播放
 
-[脚本命令](./Doc/Command.md)
-
 # Log
+
+- 0.2.0
+
+  修改UI，添加音效，键盘控制和一些效果
 
 - 0.1.2
 

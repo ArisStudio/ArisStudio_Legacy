@@ -9,6 +9,8 @@ public class C_SelectButton : MonoBehaviour
     public AudioSource bas;
 
     string t1, t2, t3;
+    bool selecting;
+
     void Start()
     {
 
@@ -17,40 +19,45 @@ public class C_SelectButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Select(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            Select(2);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            Select(3);
-        }
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                Select(1);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                Select(2);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                Select(3);
+            }
     }
 
     public void Select(int n)
     {
-        bas.Play();
+        if (selecting)
+        {
+            bas.Play();
 
-        if (n == 1)
-        {
-            control.GetComponent<C_Control>().SetSelecting(t1);
-        }
-        else if (n == 2)
-        {
-            control.GetComponent<C_Control>().SetSelecting(t2);
-        }
-        else if (n == 3)
-        {
-            control.GetComponent<C_Control>().SetSelecting(t3);
-        }
+            if (n == 1)
+            {
+                control.GetComponent<C_Control>().SetSelecting(t1);
+            }
+            else if (n == 2)
+            {
+                control.GetComponent<C_Control>().SetSelecting(t2);
+            }
+            else if (n == 3)
+            {
+                control.GetComponent<C_Control>().SetSelecting(t3);
+            }
 
-        s1.gameObject.SetActive(false);
-        s2.gameObject.SetActive(false);
-        s3.gameObject.SetActive(false);
+            s1.gameObject.SetActive(false);
+            s2.gameObject.SetActive(false);
+            s3.gameObject.SetActive(false);
+
+            selecting = false;
+        }
     }
 
     public void SetSelectButton(string lt)
@@ -80,5 +87,6 @@ public class C_SelectButton : MonoBehaviour
             s2.gameObject.SetActive(true);
             s3.gameObject.SetActive(true);
         }
+        selecting = true;
     }
 }
