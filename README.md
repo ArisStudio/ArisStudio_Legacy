@@ -11,8 +11,6 @@
 
 # 如何使用
 
-0.2.0 版 待更新
-
 1. 在 `Data/0Txt` 中新建文本文件编写脚本（建议使用有行数显示的文本编辑器，如 vs Code。
 2. 设置 `Data/Setting.json` 中 `txtName` 为要播放文本文件名称
 3. 打开 baPlayer 进行播放
