@@ -10,7 +10,7 @@ public class C_SprMove : MonoBehaviour
     bool moving;
 
     //Shake
-    Vector3 oXPosition, oYPosition, tmpXPosition, tmpYPosition;
+    float oXPosition, oYPosition;
     float shakeTimeX = 0;
     float shakeTimeY = 0;
     float shakeXA, shakeYA;
@@ -29,12 +29,12 @@ public class C_SprMove : MonoBehaviour
         {
             if (math.abs(moveX - sprBase.transform.localPosition.x) <= 0.1f)
             {
-                sprBase.transform.localPosition = new Vector3(moveX, 0, 0);
+                sprBase.transform.localPosition = new Vector3(moveX, sprBase.transform.localPosition.y, sprBase.transform.localPosition.z);
                 moving = false;
             }
             else
             {
-                sprBase.transform.localPosition = Vector3.MoveTowards(sprBase.transform.localPosition, new Vector3(moveX, 0, 0), moveSpeed * Time.deltaTime);
+                sprBase.transform.localPosition = Vector3.MoveTowards(sprBase.transform.localPosition, new Vector3(moveX, sprBase.transform.localPosition.y, sprBase.transform.localPosition.z), moveSpeed * Time.deltaTime);
             }
         }
 
@@ -43,15 +43,13 @@ public class C_SprMove : MonoBehaviour
             shakeTimeX += Time.deltaTime;
             if (shakeTimeX * shakeXA > shakeXT)
             {
-                transform.localPosition = oXPosition;
+                sprBase.transform.localPosition = new Vector3(oXPosition, sprBase.transform.localPosition.y, sprBase.transform.localPosition.z);
                 shakeXA = 0; shakeXH = 0; shakeTimeX = 0;
                 xShaking = false;
             }
             else
             {
-                tmpXPosition = oXPosition;
-                tmpXPosition.x = Mathf.Sin(shakeTimeX * Mathf.PI * shakeXA) * shakeXH + oXPosition.x;
-                transform.localPosition = tmpXPosition;
+                sprBase.transform.localPosition = new Vector3(Mathf.Sin(shakeTimeX * Mathf.PI * shakeXA) * shakeXH + oXPosition, sprBase.transform.localPosition.y, sprBase.transform.localPosition.z);
             }
         }
 
@@ -60,15 +58,13 @@ public class C_SprMove : MonoBehaviour
             shakeTimeY += Time.deltaTime;
             if (shakeTimeY * shakeYA > shakeYT)
             {
-                transform.localPosition = oYPosition;
+                sprBase.transform.localPosition = new Vector3(sprBase.transform.localPosition.x, oYPosition, sprBase.transform.localPosition.z);
                 shakeYA = 0; shakeYH = 0; shakeTimeY = 0;
                 yShaking = false;
             }
             else
             {
-                tmpYPosition = oYPosition;
-                tmpYPosition.y = Mathf.Sin(shakeTimeY * Mathf.PI * shakeYA) * shakeYH + oYPosition.y;
-                transform.localPosition = tmpYPosition;
+                sprBase.transform.localPosition = new Vector3(sprBase.transform.localPosition.x, Mathf.Sin(shakeTimeY * Mathf.PI * shakeYA) * shakeYH + oYPosition, sprBase.transform.localPosition.z);
             }
         }
     }
@@ -100,14 +96,14 @@ public class C_SprMove : MonoBehaviour
     public void ShakeX(string xa, string xh, string xt)
     {
         shakeXA = float.Parse(xa); shakeXH = float.Parse(xh) * 0.2f; shakeXT = float.Parse(xt);
-        oXPosition = transform.localPosition;
+        oXPosition = sprBase.transform.localPosition.x;
         xShaking = true;
     }
 
     public void ShakeY(string ya, string yh, string yt)
     {
         shakeYA = float.Parse(ya); shakeYH = float.Parse(yh) * 0.4f; shakeYT = float.Parse(yt);
-        oYPosition = transform.localPosition;
+        oYPosition = sprBase.transform.localPosition.y;
         yShaking = true;
     }
 }

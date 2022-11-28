@@ -1,11 +1,15 @@
 ﻿using Spine.Unity;
+using System.Xml.Linq;
 using UnityEngine;
 
 public class C_Spr : MonoBehaviour
 {
+    Shader def, comm;
+
     SkeletonAnimation sa;
     MaterialPropertyBlock mpb;
     MeshRenderer md;
+    Material m;
 
     //Show
     float showTime = 0;
@@ -16,6 +20,9 @@ public class C_Spr : MonoBehaviour
     {
         sa = GetComponent<SkeletonAnimation>();
         md = GetComponent<MeshRenderer>();
+
+        def = Shader.Find("SFill");
+        comm = Shader.Find("Comm");
     }
 
     // Update is called once per frame
@@ -78,5 +85,27 @@ public class C_Spr : MonoBehaviour
     {
         mpb.SetFloat("_FillPhase", 1 - float.Parse(f));
         md.SetPropertyBlock(mpb);
+    }
+
+    public void ShowC()
+    {
+        Comm();
+        gameObject.SetActive(true);
+    }
+
+    public void HideC()
+    {
+        Def();
+        gameObject.SetActive(false);
+    }
+
+    public void Def()
+    {
+        md.material.shader = def;
+    }
+
+    public void Comm()
+    {
+        md.material.shader = comm;
     }
 }

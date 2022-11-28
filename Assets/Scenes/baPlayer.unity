@@ -332,6 +332,7 @@ MonoBehaviour:
   txtGo: {fileID: 1584736970}
   selectButtonGo: {fileID: 361110516}
   coverGo: {fileID: 1149005911}
+  cGo: {fileID: 486668731}
   bgmGo: {fileID: 743722557}
   seGo: {fileID: 1286726085}
   bgGo: {fileID: 1137852062}
@@ -1517,7 +1518,7 @@ RectTransform:
   - {fileID: 1391258229}
   - {fileID: 1539559247}
   m_Father: {fileID: 1553037142}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1678,6 +1679,7 @@ GameObject:
   - component: {fileID: 486668734}
   - component: {fileID: 486668733}
   - component: {fileID: 486668732}
+  - component: {fileID: 486668735}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1703,7 +1705,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1750,6 +1752,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &486668735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486668731}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e331863f3ddf4c042b1a23d88f4d55f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 4b03d0d99a0babb41b84524e46c10e71, type: 2}
 --- !u!1 &492795087
 GameObject:
   m_ObjectHideFlags: 0
@@ -2665,7 +2680,7 @@ RectTransform:
   m_Children:
   - {fileID: 916873400}
   m_Father: {fileID: 1553037142}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -4187,7 +4202,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1553037142}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5476,7 +5491,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 685563705d2967040a6c4b55402a02b8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -5936,10 +5951,10 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1584736971}
   - {fileID: 723752164}
   - {fileID: 400769588}
   - {fileID: 1149005915}
+  - {fileID: 1584736971}
   m_Father: {fileID: 504217652}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6223,7 +6238,7 @@ RectTransform:
   m_Children:
   - {fileID: 2008426456}
   m_Father: {fileID: 1553037142}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}

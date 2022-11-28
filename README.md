@@ -6,8 +6,13 @@
 
 - 播放器 [baPlayer 0.2.0](https://storage.dza.vin/baPlayer%200.2.0.7z)
 
-  SHA256: `e2e685af8406f4bd36cd60f6ac539a429848506009e7834b1b3c82969b9f63c0`
+  - SHA256: `e2e685af8406f4bd36cd60f6ac539a429848506009e7834b1b3c82969b9f63c0`
 
+- 素材 [data](https://oss.dza.vin/item/share@dzaaaaaa.com/013EY5Y6E2GGGRQ7TVNJBK6RK3BFJJKEJC)
+  - Quick Xor Hash: `eci3yuwSY9emQ0J+Be3VX3y2Jkc=`
+  - 素材收集于网络，如有缺失素材请自行添加。
+
+- WebGl版 待补充
 
 # 如何使用
 
@@ -16,23 +21,6 @@
 3. 打开 baPlayer 进行播放
 
 [脚本命令](https://github.com/Tualin14/baPlayer/wiki)
-
-# Log
-
-- 0.2.0
-
-  修改UI，添加音效，键盘控制和一些效果
-
-- 0.1.2
-
-  修复因对接 webgl 造成的人物加载问题
-
-- 0.1.1
-
-  添加 webgl 支持
-
-- 0.1.0
-  ...
 
 # Credits
 

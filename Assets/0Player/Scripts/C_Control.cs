@@ -10,7 +10,7 @@ using static C_Setting;
 
 public class C_Control : MonoBehaviour
 {
-    public GameObject sprBase, lableGo, bannerGo, txtGo, selectButtonGo, coverGo;
+    public GameObject sprBase, lableGo, bannerGo, txtGo, selectButtonGo, coverGo,cGo;
     public AudioSource bgmGo, seGo;
     public RawImage bgGo;
 
@@ -353,6 +353,16 @@ public class C_Control : MonoBehaviour
                         isClick = false;
                         break;
                     }
+                case "speedlineShow":
+                    {
+                        cGo.GetComponent<S_SpeedLine>().enabled=true;
+                        break;
+                    }
+                case "speedlineHide":
+                    {
+                        cGo.GetComponent<S_SpeedLine>().enabled = false;
+                        break;
+                    }
 
                 // Bgm
                 case "bgm":
@@ -507,6 +517,24 @@ public class C_Control : MonoBehaviour
                         else if (l[1] == "shakeY")
                         {
                             sprList[l[2]].GetComponent<C_SprMove>().ShakeY(l[3], l[4], l[5]);
+                        }
+
+                        //Comm
+                        else if (l[1] == "def")
+                        {
+                            sprList[l[2]].GetComponent<C_Spr>().Def();
+                        }
+                        else if (l[1] == "comm")
+                        {
+                            sprList[l[2]].GetComponent<C_Spr>().Comm();
+                        }
+                        else if (l[1] == "showC")
+                        {
+                            sprList[l[2]].GetComponent<C_Spr>().ShowC();
+                        }
+                        else if (l[1] == "hideC")
+                        {
+                            sprList[l[2]].GetComponent<C_Spr>().HideC();
                         }
 
                         break;
