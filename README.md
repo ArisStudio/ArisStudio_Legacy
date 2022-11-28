@@ -4,9 +4,9 @@
 
 目前仅为测试版（点击蓝色超链接下载
 
-- 播放器 [baPlayer 0.2.0](https://storage.dza.vin/baPlayer%200.2.0.7z)
+- 播放器 [baPlayer 0.3.0](https://storage.dza.vin/baPlayer%200.3.0.7z)
 
-  - SHA256: `e2e685af8406f4bd36cd60f6ac539a429848506009e7834b1b3c82969b9f63c0`
+  - SHA256: `fa08c21eaa5857843278e2b168601a6063c54c3d56a50ab573b764bf7582f690`
 
 - 素材 [data](https://oss.dza.vin/item/share@dzaaaaaa.com/013EY5Y6E2GGGRQ7TVNJBK6RK3BFJJKEJC)
   - Quick Xor Hash: `eci3yuwSY9emQ0J+Be3VX3y2Jkc=`
