@@ -71,6 +71,7 @@ public class C_Spr : MonoBehaviour
     {
         sa.AnimationState.SetAnimation(1, s, true);
     }
+
     public void Show()
     {
         mpb = new MaterialPropertyBlock();

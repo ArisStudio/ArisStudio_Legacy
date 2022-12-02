@@ -307,7 +307,7 @@ RectTransform:
   - {fileID: 590927138}
   - {fileID: 361110517}
   m_Father: {fileID: 504217652}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -335,6 +335,7 @@ MonoBehaviour:
   coverGo: {fileID: 1149005911}
   cGo: {fileID: 486668731}
   smokeGo: {fileID: 1706420416}
+  curtainGo: {fileID: 337958831}
   bgmGo: {fileID: 743722557}
   seGo: {fileID: 1286726085}
   bgGo: {fileID: 1137852062}
@@ -1388,6 +1389,7 @@ GameObject:
   - component: {fileID: 337958832}
   - component: {fileID: 337958834}
   - component: {fileID: 337958833}
+  - component: {fileID: 337958835}
   m_Layer: 5
   m_Name: Curtain
   m_TagString: Untagged
@@ -1407,7 +1409,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 504217652}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1451,6 +1453,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 337958831}
   m_CullTransparentMesh: 0
+--- !u!114 &337958835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337958831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c3308fc5487604fa717683566e5af3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iGo: {fileID: 337958833}
 --- !u!1 &347778043
 GameObject:
   m_ObjectHideFlags: 0
@@ -2571,8 +2586,8 @@ RectTransform:
   m_Children:
   - {fileID: 1706420417}
   - {fileID: 1553037142}
-  - {fileID: 109861069}
   - {fileID: 337958832}
+  - {fileID: 109861069}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

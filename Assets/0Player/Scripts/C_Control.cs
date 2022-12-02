@@ -10,7 +10,7 @@ using static C_Setting;
 
 public class C_Control : MonoBehaviour
 {
-    public GameObject sprBase, lableGo, bannerGo, banner2Go, txtGo, selectButtonGo, coverGo,cGo,smokeGo;
+    public GameObject sprBase, lableGo, bannerGo, banner2Go, txtGo, selectButtonGo, coverGo, cGo, smokeGo, curtainGo;
     public AudioSource bgmGo, seGo;
     public RawImage bgGo;
 
@@ -18,7 +18,7 @@ public class C_Control : MonoBehaviour
     bool isAuto, isClick, isBanner, txtTyping, selecting;
     int lineIndex, textLength;
     float autoTimer = 0;
-    float autoSeconds=1.5f;
+    float autoSeconds = 1.5f;
 
     string[] texts;
 
@@ -54,7 +54,7 @@ public class C_Control : MonoBehaviour
         setting = JsonUtility.FromJson<C_Setting>(settingJson);
 
         isAuto = setting.auto.enable;
-        autoSeconds=setting.auto.seconds;
+        autoSeconds = setting.auto.seconds;
         bgmGo.volume = setting.bgm.volume;
         seGo.volume = setting.se.volume;
 
@@ -367,7 +367,7 @@ public class C_Control : MonoBehaviour
                     }
                 case "txt":
                     {
-                        string[] tt=lt.Split('"');
+                        string[] tt = lt.Split('"');
                         txtGo.GetComponent<C_Text>().SetTxt(tt[1], tt[3], tt[5]);
                         txtTyping = true;
                         isClick = false;
@@ -397,7 +397,7 @@ public class C_Control : MonoBehaviour
                     }
                 case "speedlineShow":
                     {
-                        cGo.GetComponent<S_SpeedLine>().enabled=true;
+                        cGo.GetComponent<S_SpeedLine>().enabled = true;
                         break;
                     }
                 case "speedlineHide":
@@ -497,6 +497,36 @@ public class C_Control : MonoBehaviour
                         {
                             bgGo.GetComponent<C_Bg>().Black();
                         }
+                        else if (l[1] == "white")
+                        {
+                            bgGo.GetComponent<C_Bg>().White();
+                        }
+                        break;
+                    }
+
+                // Curtain
+                case "curtain":
+                    {
+                        if (l[1] == "show")
+                        {
+                            curtainGo.GetComponent<C_Curtain>().Show();
+                        }
+                        else if (l[1] == "showS")
+                        {
+                            curtainGo.SetActive(true);
+                        }
+                        else if (l[1] == "hide")
+                        {
+                            curtainGo.SetActive(false);
+                        }
+                        else if (l[1] == "black")
+                        {
+                            curtainGo.GetComponent<C_Curtain>().Black();
+                        }
+                        else if (l[1] == "white")
+                        {
+                            curtainGo.GetComponent<C_Curtain>().White();
+                        }
                         break;
                     }
 
@@ -528,6 +558,14 @@ public class C_Control : MonoBehaviour
                         else if (l[1] == "hide")
                         {
                             sprList[l[2]].GetComponent<C_Spr>().Hide();
+                        }
+                        else if (l[1] == "showS")
+                        {
+                            sprList[l[2]].gameObject.SetActive(true);
+                        }
+                        else if (l[1] == "hideS")
+                        {
+                            sprList[l[2]].gameObject.SetActive(false);
                         }
                         else if (l[1] == "highlight" || l[1] == "hl")
                         {
@@ -590,7 +628,7 @@ public class C_Control : MonoBehaviour
                         }
 
                         //Comm
-                        else if (l[1] == "def")
+                        else if (l[1] == "default" || l[1] == "def")
                         {
                             sprList[l[2]].GetComponent<C_Spr>().Def();
                         }
@@ -606,7 +644,6 @@ public class C_Control : MonoBehaviour
                         {
                             sprList[l[2]].GetComponent<C_Spr>().HideC();
                         }
-
                         break;
                     }
             }

@@ -65,6 +65,11 @@ public class C_Bg : MonoBehaviour
 
     public void Black()
     {
-        bgGo.color = new Color(1, 1, 1, 0);
+        bgGo.color = Color.black;
+    }
+
+    public void White()
+    {
+        bgGo.color = Color.white;
     }
 }

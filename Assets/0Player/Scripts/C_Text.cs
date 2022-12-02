@@ -14,7 +14,6 @@ public class C_Text : MonoBehaviour
 
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -56,11 +55,11 @@ public class C_Text : MonoBehaviour
         contentTxt.text = "";
         if (size == "big")
         {
-            contentTxt.fontSize = 64;
+            contentTxt.fontSize = 48;
         }
         else if (size == "small")
         {
-            contentTxt.fontSize = 16;
+            contentTxt.fontSize = 24;
         }else if (size == "medium")
         {
             contentTxt.fontSize = 32;
