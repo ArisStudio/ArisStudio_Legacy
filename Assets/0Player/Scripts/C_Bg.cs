@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class C_Bg : MonoBehaviour
 {
-    RawImage bgGo;
+    public RawImage bgGo;
 
     float showTime = 0;
     float changeShowTime = 0.5f;
@@ -11,7 +11,6 @@ public class C_Bg : MonoBehaviour
 
     void Start()
     {
-        bgGo = gameObject.GetComponent<RawImage>();
     }
 
     void Update()

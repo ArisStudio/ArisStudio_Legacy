@@ -102,7 +102,6 @@
 		float4 _ClipRect;
 		float4 _MainTex_ST;
 
-	//#if _ENABLE_SIGNAL
 		sampler2D _DragTex;
 		half _DragInterval;
 		half _DragStrength;
@@ -112,7 +111,6 @@
 		sampler2D _FlowLightTex;
 		float _FlowLightSpeed;
 		float _SignalNoise;
-	//#endif
 
 
 		v2f vert(appdata_t v)
@@ -137,7 +135,7 @@
 		fixed4 frag(v2f IN) : SV_Target
 		{
 			half4 totalColor;
-	//#if _ENABLE_SIGNAL
+
 			half dragOffset = (_Time.y % _DragInterval);
 			if (dragOffset > 0 && dragOffset < 1)
 			{
@@ -149,20 +147,9 @@
 			{
 				totalColor = totalColor * _StripeColor;
 			}
-			totalColor.rgb *= saturate(random(IN.texcoord.x, IN.texcoord.y % 0.01 * _Time.y) + (1 - _SignalNoise));//噪点
-
-			//half flowLightOffset = (_Time.y * _FlowLightSpeed % 3);
-			//if (flowLightOffset < 1)
-			//{
-			//	float4 flowLightColor = tex2D(_FlowLightTex, float2(IN.texcoord.x, IN.texcoord.y + 1 - flowLightOffset));
-			//	totalColor.rgb = totalColor.rgb + flowLightColor.rgb;
-			//}
+			totalColor.rgb *= saturate(random(IN.texcoord.x, IN.texcoord.y % 0.01 * _Time.y) + (1 - _SignalNoise));
 
 			totalColor = totalColor * _MainColor;
-	//#else
-	//		totalColor = tex2D(_MainTex, IN.texcoord);
-
-	//#endif
 
 			half4 color = (totalColor + _TextureSampleAdd) * IN.color;
 

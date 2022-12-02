@@ -9,7 +9,6 @@ public class C_Spr : MonoBehaviour
     SkeletonAnimation sa;
     MaterialPropertyBlock mpb;
     MeshRenderer md;
-    Material m;
 
     //Show
     float showTime = 0;
@@ -17,12 +16,7 @@ public class C_Spr : MonoBehaviour
 
     bool showing, hiding;
     void Start()
-    {
-        sa = GetComponent<SkeletonAnimation>();
-        md = GetComponent<MeshRenderer>();
-
-        def = Shader.Find("SFill");
-        comm = Shader.Find("Comm");
+    { 
     }
 
     // Update is called once per frame
@@ -62,6 +56,15 @@ public class C_Spr : MonoBehaviour
                 md.SetPropertyBlock(mpb);
             }
         }
+    }
+
+    public void Init()
+    {
+        sa = GetComponent<SkeletonAnimation>();
+        md = GetComponent<MeshRenderer>();
+
+        def = Shader.Find("SFill");
+        comm = Shader.Find("Comm");
     }
 
     public void SetState(string s)

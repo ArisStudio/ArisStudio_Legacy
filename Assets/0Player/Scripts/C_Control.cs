@@ -10,7 +10,7 @@ using static C_Setting;
 
 public class C_Control : MonoBehaviour
 {
-    public GameObject sprBase, lableGo, bannerGo, txtGo, selectButtonGo, coverGo,cGo;
+    public GameObject sprBase, lableGo, bannerGo, banner2Go, txtGo, selectButtonGo, coverGo,cGo,smokeGo;
     public AudioSource bgmGo, seGo;
     public RawImage bgGo;
 
@@ -55,6 +55,8 @@ public class C_Control : MonoBehaviour
 
         isAuto = setting.auto.enable;
         autoSeconds=setting.auto.seconds;
+        bgmGo.volume = setting.bgm.volume;
+        seGo.volume = setting.se.volume;
 
         txtFolderPathPath = Path.Combine(dataFolderPath, "0Txt", setting.txtName + ".txt");
 
@@ -101,6 +103,7 @@ public class C_Control : MonoBehaviour
             if (isBanner)
             {
                 bannerGo.SetActive(false);
+                banner2Go.SetActive(false);
             }
 
             if (lineIndex < textLength)
@@ -181,6 +184,8 @@ public class C_Control : MonoBehaviour
         SkeletonDataAsset sprSkeletonDataAsset = SkeletonDataAsset.CreateSkeletonDataAsset(skeletonData, stateData);
         SkeletonAnimation sprAnim = SkeletonAnimation.AddToGameObject(sprGo, sprSkeletonDataAsset);
 
+        sprAnim.GetComponent<C_Spr>().Init();
+
         sprAnim.Initialize(false);
         sprAnim.Skeleton.SetSlotsToSetupPose();
         sprAnim.AnimationState.SetAnimation(0, "Idle_01", true);
@@ -232,9 +237,9 @@ public class C_Control : MonoBehaviour
         coverList.Add(nameId, texture);
     }
 
-    IEnumerator LoadSe(string nameId, string bgmName)
+    IEnumerator LoadSe(string nameId, string seName)
     {
-        using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip(Path.Combine(seFolderPath, bgmName), AudioType.UNKNOWN))
+        using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip(Path.Combine(seFolderPath, seName), AudioType.UNKNOWN))
         {
             yield return uwr.SendWebRequest();
             seList.Add(nameId, DownloadHandlerAudioClip.GetContent(uwr));
@@ -248,6 +253,24 @@ public class C_Control : MonoBehaviour
         {
             Debug.Log("pre load spr: " + s.nameId);
             StartCoroutine(LoadAndCreateSprGameObject(s.nameId, s.sprName));
+        }
+
+        foreach (bgmPre b in pSetting.bgm.bgmPreList)
+        {
+            Debug.Log("pre load bgm: " + b.nameId);
+            StartCoroutine(LoadBgm(b.nameId, b.bgmName));
+        }
+
+        foreach (bgPre b in pSetting.bg.bgPreList)
+        {
+            Debug.Log("pre load bg: " + b.nameId);
+            StartCoroutine(LoadBackground(b.nameId, b.bgName));
+        }
+
+        foreach (sePre s in pSetting.se.sePreList)
+        {
+            Debug.Log("pre load se: " + s.nameId);
+            StartCoroutine(LoadSe(s.nameId, s.seName));
         }
 
         //Text
@@ -324,19 +347,28 @@ public class C_Control : MonoBehaviour
                 // Front
                 case "label":
                     {
-                        lableGo.GetComponent<C_Label>().SetLabelText(l[1]);
+                        lableGo.GetComponent<C_Label>().SetLabelText(lt.Split('"')[1]);
                         break;
                     }
                 case "banner":
                     {
-                        bannerGo.GetComponent<C_Banner>().SetBannerText(l[1]);
+                        bannerGo.GetComponent<C_Banner>().SetBannerText(lt.Split('"')[1]);
+                        isBanner = true;
+                        isClick = false;
+                        break;
+                    }
+                case "banner2":
+                    {
+                        string[] bt = lt.Split('"');
+                        banner2Go.GetComponent<C_Banner2>().SetBanner2Text(bt[1], bt[3]);
                         isBanner = true;
                         isClick = false;
                         break;
                     }
                 case "txt":
                     {
-                        txtGo.GetComponent<C_Text>().SetTxt(l[1], l[2], lt.Split('"')[1]);
+                        string[] tt=lt.Split('"');
+                        txtGo.GetComponent<C_Text>().SetTxt(tt[1], tt[3], tt[5]);
                         txtTyping = true;
                         isClick = false;
                         break;
@@ -346,11 +378,21 @@ public class C_Control : MonoBehaviour
                         txtGo.GetComponent<C_Text>().SetTxtSize(l[1]);
                         break;
                     }
+                case "txtHide":
+                    {
+                        txtGo.SetActive(false);
+                        break;
+                    }
                 case "button":
                     {
                         selectButtonGo.GetComponent<C_SelectButton>().SetSelectButton(lt);
                         selecting = true;
                         isClick = false;
+                        break;
+                    }
+                case "speedline":
+                    {
+                        cGo.GetComponent<C_SpeedLine>().Set(l[1]);
                         break;
                     }
                 case "speedlineShow":
@@ -361,6 +403,18 @@ public class C_Control : MonoBehaviour
                 case "speedlineHide":
                     {
                         cGo.GetComponent<S_SpeedLine>().enabled = false;
+                        break;
+                    }
+                case "smoke":
+                    {
+                        if (l[1] == "show")
+                        {
+                            smokeGo.GetComponent<C_Smoke>().Show();
+                        }
+                        else if (l[1] == "hide")
+                        {
+                            smokeGo.GetComponent<C_Smoke>().Hide();
+                        }
                         break;
                     }
 
@@ -382,6 +436,14 @@ public class C_Control : MonoBehaviour
                         else if (l[1] == "stop")
                         {
                             bgmGo.GetComponent<C_Bgm>().Stop();
+                        }
+                        else if (l[1] == "down")
+                        {
+                            bgmGo.GetComponent<C_Bgm>().Down();
+                        }
+                        else if (l[1] == "v")
+                        {
+                            bgmGo.GetComponent<C_Bgm>().V(l[2]);
                         }
                         break;
                     }
@@ -408,6 +470,10 @@ public class C_Control : MonoBehaviour
                         else if (l[1] == "pre")
                         {
                             seGo.GetComponent<C_SE>().PlayPre(l[2]);
+                        }
+                        else if (l[1] == "v")
+                        {
+                            seGo.GetComponent<C_SE>().V(l[2]);
                         }
                         break;
                     }
@@ -497,6 +563,10 @@ public class C_Control : MonoBehaviour
                         else if (l[1] == "move")
                         {
                             sprList[l[2]].GetComponent<C_SprMove>().Move(l[3], l[4]);
+                        }
+                        else if (l[1] == "z")
+                        {
+                            sprList[l[2]].GetComponent<C_SprMove>().SetZ(l[3]);
                         }
                         else if (l[1] == "close")
                         {

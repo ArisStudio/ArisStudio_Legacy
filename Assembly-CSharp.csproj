@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\0Player\Scripts\C_Banner.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Banner2.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Bg.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Bgm.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Control.cs" />
@@ -67,6 +68,8 @@
      <Compile Include="Assets\0Player\Scripts\C_Select.cs" />
      <Compile Include="Assets\0Player\Scripts\C_SelectButton.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Setting.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Smoke.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_SpeedLine.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Spr\C_Spr.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Spr\C_SprAnimation.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Spr\C_SprEmo.cs" />
@@ -76,7 +79,9 @@
      <Compile Include="Assets\0Player\Shader\S_SpeedLine.cs" />
      <Compile Include="Assets\0Player\SkipSplash.cs" />
      <None Include="Assets\Spine\version.txt" />
+     <None Include="Assets\0Player\Image\Smoke\SmokeScroll.shader" />
      <None Include="Assets\0Player\Shader\SpeedLine.shader" />
+     <None Include="Assets\0Player\Shader\Blur.shader" />
      <None Include="Assets\0Player\Shader\SFill.shader" />
      <None Include="Assets\0Player\Shader\Comm.shader" />
  <Reference Include="UnityEngine">

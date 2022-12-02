@@ -74,6 +74,11 @@ public class C_SprMove : MonoBehaviour
         sprBase.transform.localPosition = new Vector3(int.Parse(x), 0, 0);
     }
 
+    public void SetZ(string z)
+    {
+        sprBase.transform.localPosition = new Vector3(0, 0, -int.Parse(z));
+    }
+
     public void Move(string x, string speed)
     {
         moveX = int.Parse(x);

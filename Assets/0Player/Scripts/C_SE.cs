@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
+using static C_Setting;
 
 public class C_SE : MonoBehaviour
 {
-    AudioSource se;
+    public AudioSource se;
 
     void Start()
     {
-        se = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -39,5 +39,10 @@ public class C_SE : MonoBehaviour
     public void PlayPre(string ac)
     {
         transform.Find(ac).gameObject.GetComponent<AudioSource>().Play();
+    }
+
+    public void V(string v)
+    {
+        se.volume = float.Parse(v);
     }
 }
