@@ -26,6 +26,7 @@
 
 - [spine-unity](http://zh.esotericsoftware.com/spine-unity)
 - [UnitySkipSplash](https://github.com/psygames/UnitySkipSplash)
+- [Unity3dRichTextHelper](https://github.com/majecty/Unity3dRichTextHelper)
 
 # Licence
 
