@@ -63,25 +63,26 @@ public class C_SelectButton : MonoBehaviour
     public void SetSelectButton(string lt)
     {
         string[] l = lt.Split(' ');
+        string[] t = lt.Split('"');
         if (l.Length == 3)
         {
-            txt2.text = l[1];
+            txt2.text = t[1];
             t2 = l[2];
             s2.gameObject.SetActive(true);
         }
         else if (l.Length == 5)
         {
-            txt1.text = l[1];
-            txt2.text = l[3];
+            txt1.text = t[1];
+            txt2.text = t[3];
             t1 = l[2]; t2 = l[4];
             s1.gameObject.SetActive(true);
             s2.gameObject.SetActive(true);
         }
         else if (l.Length == 7)
         {
-            txt1.text = l[1];
-            txt2.text = l[3];
-            txt3.text = l[5];
+            txt1.text = t[1];
+            txt2.text = t[3];
+            txt3.text = t[5];
             t1 = l[2]; t2 = l[4]; t3 = l[6];
             s1.gameObject.SetActive(true);
             s2.gameObject.SetActive(true);

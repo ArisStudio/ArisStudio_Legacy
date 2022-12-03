@@ -10,7 +10,7 @@ using static C_Setting;
 
 public class C_Control : MonoBehaviour
 {
-    public GameObject sprBase, lableGo, bannerGo, banner2Go, txtGo, selectButtonGo, coverGo, cGo, smokeGo, curtainGo;
+    public GameObject sprBase, lableGo, bannerGo, banner2Go, txtGo, selectButtonGo, coverGo, cGo, smokeGo, curtainGo,blurGo;
     public AudioSource bgmGo, seGo;
     public RawImage bgGo;
 
@@ -104,6 +104,7 @@ public class C_Control : MonoBehaviour
             {
                 bannerGo.SetActive(false);
                 banner2Go.SetActive(false);
+                blurGo.SetActive(false);
             }
 
             if (lineIndex < textLength)
@@ -352,6 +353,7 @@ public class C_Control : MonoBehaviour
                     }
                 case "banner":
                     {
+                        blurGo.SetActive(true);
                         bannerGo.GetComponent<C_Banner>().SetBannerText(lt.Split('"')[1]);
                         isBanner = true;
                         isClick = false;
@@ -359,6 +361,7 @@ public class C_Control : MonoBehaviour
                     }
                 case "banner2":
                     {
+                        blurGo.SetActive(true);
                         string[] bt = lt.Split('"');
                         banner2Go.GetComponent<C_Banner2>().SetBanner2Text(bt[1], bt[3]);
                         isBanner = true;

@@ -65,6 +65,7 @@
      <Compile Include="Assets\0Player\Scripts\C_Emoticon.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Label.cs" />
      <Compile Include="Assets\0Player\Scripts\C_PlayButton.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_RichText.cs" />
      <Compile Include="Assets\0Player\Scripts\C_SE.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Select.cs" />
      <Compile Include="Assets\0Player\Scripts\C_SelectButton.cs" />

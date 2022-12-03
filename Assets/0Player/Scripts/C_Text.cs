@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using RichText;
 
 public class C_Text : MonoBehaviour
 {
@@ -26,9 +27,9 @@ public class C_Text : MonoBehaviour
             {
                 timer = 0;
                 currentPos++;
-                contentTxt.text = tmpContent.Substring(0, currentPos);
+                contentTxt.text = tmpContent.RichTextSubString( currentPos);
 
-                if (currentPos >= tmpContent.Length)
+                if (currentPos >= tmpContent.RichTextLength())
                 {
                     PlayTxtAll();
                 }
