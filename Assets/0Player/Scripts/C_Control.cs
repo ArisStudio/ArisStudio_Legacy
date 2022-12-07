@@ -10,7 +10,7 @@ using static C_Setting;
 
 public class C_Control : MonoBehaviour
 {
-    public GameObject sprBase, lableGo, bannerGo, banner2Go, txtGo, selectButtonGo, coverGo, cGo, smokeGo, curtainGo,blurGo;
+    public GameObject sprBase, lableGo, bannerGo, banner2Go, txtGo, selectButtonGo, coverGo, cGo, smokeGo, curtainGo, blurGo;
     public AudioSource bgmGo, seGo;
     public RawImage bgGo;
 
@@ -348,13 +348,13 @@ public class C_Control : MonoBehaviour
                 // Front
                 case "label":
                     {
-                        lableGo.GetComponent<C_Label>().SetLabelText(lt.Split('"')[1]);
+                        lableGo.GetComponent<C_Label>().SetLabelText(lt.Split('\'')[1]);
                         break;
                     }
                 case "banner":
                     {
                         blurGo.SetActive(true);
-                        bannerGo.GetComponent<C_Banner>().SetBannerText(lt.Split('"')[1]);
+                        bannerGo.GetComponent<C_Banner>().SetBannerText(lt.Split('\'')[1]);
                         isBanner = true;
                         isClick = false;
                         break;
@@ -362,7 +362,7 @@ public class C_Control : MonoBehaviour
                 case "banner2":
                     {
                         blurGo.SetActive(true);
-                        string[] bt = lt.Split('"');
+                        string[] bt = lt.Split('\'');
                         banner2Go.GetComponent<C_Banner2>().SetBanner2Text(bt[1], bt[3]);
                         isBanner = true;
                         isClick = false;
@@ -370,7 +370,7 @@ public class C_Control : MonoBehaviour
                     }
                 case "txt":
                     {
-                        string[] tt = lt.Split('"');
+                        string[] tt = lt.Split('\'');
                         txtGo.GetComponent<C_Text>().SetTxt(tt[1], tt[3], tt[5]);
                         txtTyping = true;
                         isClick = false;
@@ -470,13 +470,17 @@ public class C_Control : MonoBehaviour
                         {
                             seGo.GetComponent<C_SE>().Stop();
                         }
-                        else if (l[1] == "pre")
-                        {
-                            seGo.GetComponent<C_SE>().PlayPre(l[2]);
-                        }
                         else if (l[1] == "v")
                         {
                             seGo.GetComponent<C_SE>().V(l[2]);
+                        }
+                        else if (l[1] == "loop")
+                        {
+                            seGo.GetComponent<C_SE>().Loop();
+                        }
+                        else if (l[1] == "once")
+                        {
+                            seGo.GetComponent<C_SE>().Once();
                         }
                         break;
                     }
@@ -496,13 +500,21 @@ public class C_Control : MonoBehaviour
                         {
                             bgGo.GetComponent<C_Bg>().Hide();
                         }
-                        else if (l[1] == "black")
+                        else if (l[1] == "showD")
                         {
-                            bgGo.GetComponent<C_Bg>().Black();
+                            bgGo.GetComponent<C_Bg>().ShowD();
                         }
-                        else if (l[1] == "white")
+                        else if (l[1] == "hideD")
                         {
-                            bgGo.GetComponent<C_Bg>().White();
+                            bgGo.GetComponent<C_Bg>().HideD();
+                        }
+                        else if (l[1] == "shakeX")
+                        {
+                            bgGo.GetComponent<C_BgShake>().ShakeX(l[2], l[3], l[4]);
+                        }
+                        else if (l[1] == "shakeY")
+                        {
+                            bgGo.GetComponent<C_BgShake>().ShakeY(l[2], l[3], l[4]);
                         }
                         break;
                     }
@@ -514,7 +526,7 @@ public class C_Control : MonoBehaviour
                         {
                             curtainGo.GetComponent<C_Curtain>().Show();
                         }
-                        else if (l[1] == "showS")
+                        else if (l[1] == "showD")
                         {
                             curtainGo.SetActive(true);
                         }
@@ -562,11 +574,11 @@ public class C_Control : MonoBehaviour
                         {
                             sprList[l[2]].GetComponent<C_Spr>().Hide();
                         }
-                        else if (l[1] == "showS")
+                        else if (l[1] == "showD")
                         {
                             sprList[l[2]].gameObject.SetActive(true);
                         }
-                        else if (l[1] == "hideS")
+                        else if (l[1] == "hideD")
                         {
                             sprList[l[2]].gameObject.SetActive(false);
                         }
@@ -578,15 +590,17 @@ public class C_Control : MonoBehaviour
                         {
                             sprList[l[2]].GetComponent<C_Spr>().SetState(l[3]);
                         }
+
                         //Emoticon
                         else if (l[1] == "emoticon" || l[1] == "emo")
                         {
                             sprList[l[2]].GetComponent<C_SprEmo>().PlayEmoticon(l[3]);
                         }
+
                         //Animation
-                        else if (l[1] == "animInit")
+                        else if (l[1] == "empty")
                         {
-                            sprList[l[2]].GetComponent<C_SprAnimation>().AnimInit();
+                            sprList[l[2]].GetComponent<C_SprAnimation>().Empty();
                         }
                         else if (l[1] == "down")
                         {
@@ -596,7 +610,8 @@ public class C_Control : MonoBehaviour
                         {
                             sprList[l[2]].GetComponent<C_SprAnimation>().Up();
                         }
-                        // Move
+
+                        // Position
                         else if (l[1] == "x")
                         {
                             sprList[l[2]].GetComponent<C_SprMove>().SetX(l[3]);

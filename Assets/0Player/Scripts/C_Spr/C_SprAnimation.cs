@@ -15,7 +15,7 @@ public class C_SprAnimation : MonoBehaviour
         
     }
 
-    public void AnimInit()
+    public void Empty()
     {
         sprAnimator.Play("Empty");
     }

@@ -36,9 +36,14 @@ public class C_SE : MonoBehaviour
         se.Stop();
     }
 
-    public void PlayPre(string ac)
+    public void Loop()
     {
-        transform.Find(ac).gameObject.GetComponent<AudioSource>().Play();
+        se.loop = true;
+    }
+
+    public void Once()
+    {
+        se.loop = false;
     }
 
     public void V(string v)

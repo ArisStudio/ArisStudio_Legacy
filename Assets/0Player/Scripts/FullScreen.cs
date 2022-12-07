@@ -19,7 +19,7 @@ public class FullScreen : MonoBehaviour
         {
             if (r == 1)
             {
-                Screen.SetResolution(1280, 800, Screen.fullScreen);
+                Screen.SetResolution(1280, 720, Screen.fullScreen);
             }
             else if (r == 2)
             {

@@ -63,12 +63,12 @@ public class C_Bg : MonoBehaviour
         hiding = true;
     }
 
-    public void Black()
+    public void HideD()
     {
         bgGo.color = Color.black;
     }
 
-    public void White()
+    public void ShowD()
     {
         bgGo.color = Color.white;
     }

@@ -55,20 +55,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\0Player\Scripts\C_Banner.cs" />
-     <Compile Include="Assets\0Player\Scripts\C_Banner2.cs" />
-     <Compile Include="Assets\0Player\Scripts\C_Bg.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Bg\C_Bg.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Bg\C_BgShake.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Bgm.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Control.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Cover.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Curtain.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Emoticon.cs" />
-     <Compile Include="Assets\0Player\Scripts\C_Label.cs" />
      <Compile Include="Assets\0Player\Scripts\C_PlayButton.cs" />
      <Compile Include="Assets\0Player\Scripts\C_RichText.cs" />
      <Compile Include="Assets\0Player\Scripts\C_SE.cs" />
-     <Compile Include="Assets\0Player\Scripts\C_Select.cs" />
-     <Compile Include="Assets\0Player\Scripts\C_SelectButton.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Setting.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Smoke.cs" />
      <Compile Include="Assets\0Player\Scripts\C_SpeedLine.cs" />
@@ -76,7 +72,12 @@
      <Compile Include="Assets\0Player\Scripts\C_Spr\C_SprAnimation.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Spr\C_SprEmo.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Spr\C_SprMove.cs" />
-     <Compile Include="Assets\0Player\Scripts\C_Text.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Txt\C_Banner.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Txt\C_Banner2.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Txt\C_Label.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Txt\C_Select.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Txt\C_SelectButton.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Txt\C_Text.cs" />
      <Compile Include="Assets\0Player\Scripts\FullScreen.cs" />
      <Compile Include="Assets\0Player\Shader\S_SpeedLine.cs" />
      <Compile Include="Assets\0Player\SkipSplash.cs" />

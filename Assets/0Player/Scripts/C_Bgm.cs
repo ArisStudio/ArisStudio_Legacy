@@ -6,7 +6,7 @@ public class C_Bgm : MonoBehaviour
 
     bool down;
     float downTime = 0;
-    float changeDownTime = 0.5f;
+    float changeDownTime = 1;
     float ov;
 
     void Start()
