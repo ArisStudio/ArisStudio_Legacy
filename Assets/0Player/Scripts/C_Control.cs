@@ -38,7 +38,7 @@ public class C_Control : MonoBehaviour
     IEnumerator Start()
     {
         dataFolderPath = Path.Combine(Directory.GetParent(Application.dataPath).ToString(), "Data");
-        settingFolderPath = Path.Combine(dataFolderPath, "setting.json");
+        settingFolderPath = Path.Combine(dataFolderPath, "Setting.json");
         sprFolderPath = Path.Combine(dataFolderPath, "Spr");
         bgmFolderPath = Path.Combine(dataFolderPath, "Bgm");
         seFolderPath = Path.Combine(dataFolderPath, "SE");
