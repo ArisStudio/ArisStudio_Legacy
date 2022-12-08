@@ -10,7 +10,7 @@ using static C_Setting;
 
 public class C_Control : MonoBehaviour
 {
-    public GameObject sprBase, lableGo, bannerGo, banner2Go, txtGo, selectButtonGo, coverGo, cGo, smokeGo, curtainGo, blurGo;
+    public GameObject sprBase, lableGo, bannerGo, banner2Go, txtGo, selectButtonGo, coverGo, cGo, smokeGo, curtainGo, blurGo,mGo;
     public AudioSource bgmGo, seGo;
     public RawImage bgGo;
 
@@ -105,6 +105,7 @@ public class C_Control : MonoBehaviour
                 bannerGo.SetActive(false);
                 banner2Go.SetActive(false);
                 blurGo.SetActive(false);
+                mGo.SetActive(true);
             }
 
             if (lineIndex < textLength)
@@ -353,6 +354,7 @@ public class C_Control : MonoBehaviour
                     }
                 case "banner":
                     {
+                        mGo.SetActive(false);
                         blurGo.SetActive(true);
                         bannerGo.GetComponent<C_Banner>().SetBannerText(lt.Split('\'')[1]);
                         isBanner = true;
@@ -361,6 +363,7 @@ public class C_Control : MonoBehaviour
                     }
                 case "banner2":
                     {
+                        mGo.SetActive(false);
                         blurGo.SetActive(true);
                         string[] bt = lt.Split('\'');
                         banner2Go.GetComponent<C_Banner2>().SetBanner2Text(bt[1], bt[3]);
@@ -632,10 +635,6 @@ public class C_Control : MonoBehaviour
                         {
                             sprList[l[2]].GetComponent<C_SprMove>().Back();
                         }
-                        else if (l[1] == "preShake")
-                        {
-                            sprList[l[2]].GetComponent<C_SprAnimation>();
-                        }
                         else if (l[1] == "shakeX")
                         {
                             sprList[l[2]].GetComponent<C_SprMove>().ShakeX(l[3], l[4], l[5]);
@@ -650,7 +649,7 @@ public class C_Control : MonoBehaviour
                         {
                             sprList[l[2]].GetComponent<C_Spr>().Def();
                         }
-                        else if (l[1] == "comm")
+                        else if (l[1] == "communication" || l[1] == "comm")
                         {
                             sprList[l[2]].GetComponent<C_Spr>().Comm();
                         }

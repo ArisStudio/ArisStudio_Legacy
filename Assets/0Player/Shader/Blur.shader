@@ -40,9 +40,9 @@
                     v2f o;
                     o.vertex = UnityObjectToClipPos(v.vertex);
                     #if UNITY_UV_STARTS_AT_TOP
-                    float scale = -1.0;
+                        float scale = -1.0;
                     #else
-                    float scale = 1.0;
+                        float scale = 1.0;
                     #endif
                     o.uvgrab.xy = (float2(o.vertex.x, o.vertex.y*scale) + o.vertex.w) * 0.5;
                     o.uvgrab.zw = o.vertex.zw;
@@ -98,9 +98,9 @@
                     v2f o;
                     o.vertex = UnityObjectToClipPos(v.vertex);
                     #if UNITY_UV_STARTS_AT_TOP
-                    float scale = -1.0;
+                        float scale = -1.0;
                     #else
-                    float scale = 1.0;
+                        float scale = 1.0;
                     #endif
                     o.uvgrab.xy = (float2(o.vertex.x, o.vertex.y*scale) + o.vertex.w) * 0.5;
                     o.uvgrab.zw = o.vertex.zw;
@@ -163,9 +163,9 @@
                     v2f o;
                     o.vertex = UnityObjectToClipPos(v.vertex);
                     #if UNITY_UV_STARTS_AT_TOP
-                    float scale = -1.0;
+                        float scale = -1.0;
                     #else
-                    float scale = 1.0;
+                        float scale = 1.0;
                     #endif
                     o.uvgrab.xy = (float2(o.vertex.x, o.vertex.y*scale) + o.vertex.w) * 0.5;
                     o.uvgrab.zw = o.vertex.zw;

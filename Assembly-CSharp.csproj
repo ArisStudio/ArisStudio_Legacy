@@ -79,14 +79,17 @@
      <Compile Include="Assets\0Player\Scripts\C_Txt\C_SelectButton.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Txt\C_Text.cs" />
      <Compile Include="Assets\0Player\Scripts\FullScreen.cs" />
+     <Compile Include="Assets\0Player\Shader\S_ButtonFlow.cs" />
      <Compile Include="Assets\0Player\Shader\S_SpeedLine.cs" />
      <Compile Include="Assets\0Player\SkipSplash.cs" />
+     <None Include="Assets\0Player\Shader\UIEffectsLib.cginc" />
      <None Include="Assets\Spine\version.txt" />
      <None Include="Assets\0Player\Image\Smoke\SmokeScroll.shader" />
      <None Include="Assets\0Player\Shader\SpeedLine.shader" />
      <None Include="Assets\0Player\Shader\Blur.shader" />
      <None Include="Assets\0Player\Shader\SFill.shader" />
      <None Include="Assets\0Player\Shader\Comm.shader" />
+     <None Include="Assets\0Player\Shader\Flow.shader" />
  <Reference Include="UnityEngine">
  <HintPath>D:/Unity3d/2019.3.15f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

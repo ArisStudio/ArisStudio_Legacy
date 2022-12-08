@@ -1,5 +1,4 @@
 ﻿using Spine.Unity;
-using System.Xml.Linq;
 using UnityEngine;
 
 public class C_Spr : MonoBehaviour
@@ -10,18 +9,33 @@ public class C_Spr : MonoBehaviour
     MaterialPropertyBlock mpb;
     MeshRenderer md;
 
+    //EyeClose
+    bool isEyeClose = false;
+    float closeTimer = 0;
+    float closeInterval = 5;
+
     //Show
     float showTime = 0;
     float changeShowTime = 0.4f;
 
     bool showing, hiding;
     void Start()
-    { 
+    {
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (isEyeClose)
+        {
+            closeTimer += Time.deltaTime;
+            if (closeTimer >= closeInterval)
+            {
+                sa.AnimationState.AddAnimation(1, "Eye_Close_01", false, 0);
+                closeTimer = 0;
+            }
+        }
+
         if (showing)
         {
             showTime += Time.deltaTime;
@@ -69,6 +83,15 @@ public class C_Spr : MonoBehaviour
 
     public void SetState(string s)
     {
+        if (s == "01")
+        {
+            isEyeClose = true;
+        }
+        else
+        {
+            isEyeClose = false;
+            closeTimer = 0;
+        }
         sa.AnimationState.SetAnimation(1, s, true);
     }
 

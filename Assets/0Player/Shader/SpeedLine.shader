@@ -13,15 +13,12 @@
 		_MaskHardness("Mask Hardness", Range( 0 , 1)) = 0
 		_MaskPower("Mask Power", Float) = 5
 		[HideInInspector] _texcoord( "", 2D ) = "white" {}
-
 	}
 
 	SubShader
 	{
 		LOD 0
 
-		
-		
 		ZTest Always
 		Cull Off
 		ZWrite Off
@@ -30,8 +27,6 @@
 		Pass
 		{ 
 			CGPROGRAM 
-
-			
 
 			#pragma vertex vert_img_custom 
 			#pragma fragment frag
@@ -52,10 +47,10 @@
 				float4 pos : SV_POSITION;
 				half2 uv   : TEXCOORD0;
 				half2 stereoUV : TEXCOORD2;
-		#if UNITY_UV_STARTS_AT_TOP
-				half4 uv2 : TEXCOORD1;
-				half4 stereoUV2 : TEXCOORD3;
-		#endif
+				#if UNITY_UV_STARTS_AT_TOP
+					half4 uv2 : TEXCOORD1;
+					half4 stereoUV2 : TEXCOORD3;
+				#endif
 				
 			};
 
@@ -114,7 +109,7 @@
 					o.stereoUV2 = UnityStereoScreenSpaceUVAdjust ( o.uv2, _MainTex_ST );
 
 					if ( _MainTex_TexelSize.y < 0.0 )
-						o.uv.y = 1.0 - o.uv.y;
+					o.uv.y = 1.0 - o.uv.y;
 				#endif
 				o.stereoUV = UnityStereoScreenSpaceUVAdjust ( o.uv, _MainTex_ST );
 				return o;
@@ -132,7 +127,6 @@
 				
 				half4 finalColor;
 
-				// ase common template code
 				float2 uv_MainTex = i.uv.xy * _MainTex_ST.xy + _MainTex_ST.zw;
 				float4 SceneColour7 = tex2D( _MainTex, uv_MainTex );
 				float2 CenteredUV15_g1 = ( i.uv.xy - float2( 0.5,0.5 ) );

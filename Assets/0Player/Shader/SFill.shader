@@ -1,7 +1,3 @@
-// - Unlit
-// - Premultiplied Alpha Blending (Optional straight alpha input)
-// - Double-sided, no depth
-
 Shader "SFill" {
 	Properties {
 		_FillColor ("FillColor", Color) = (1,1,1,1)
@@ -10,9 +6,8 @@ Shader "SFill" {
 		_Cutoff ("Shadow alpha cutoff", Range(0,1)) = 0.1
 		[Toggle(_STRAIGHT_ALPHA_INPUT)] _StraightAlphaInput("Straight Alpha Texture", Int) = 0
 		[HideInInspector] _StencilRef("Stencil Reference", Float) = 1.0
-		[HideInInspector][Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comparison", Float) = 8 // Set to Always as default
+		[HideInInspector][Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp("Stencil Comparison", Float) = 8 
 
-		// Outline properties are drawn via custom editor.
 		[HideInInspector] _OutlineWidth("Outline Width", Range(0,8)) = 3.0
 		[HideInInspector] _OutlineColor("Outline Color", Color) = (1,1,0,1)
 		[HideInInspector] _OutlineReferenceTexWidth("Reference Texture Width", Int) = 1024
@@ -70,11 +65,9 @@ Shader "SFill" {
 				float4 rawColor = tex2D(_MainTex,i.uv);
 				float finalAlpha = (rawColor.a * i.vertexColor.a);
 
-				//#if defined(_STRAIGHT_ALPHA_INPUT)
 				rawColor.rgb *= rawColor.a;
-				//#endif
 
-				float3 finalColor = lerp((rawColor.rgb * i.vertexColor.rgb), (_FillColor.rgb * finalAlpha), _FillPhase); // make sure to PMA _FillColor.
+				float3 finalColor = lerp((rawColor.rgb * i.vertexColor.rgb), (_FillColor.rgb * finalAlpha), _FillPhase); 
 				return fixed4(finalColor, finalAlpha);
 			}
 			ENDCG
