@@ -110,6 +110,7 @@ public class C_Spr : MonoBehaviour
 
     public void HighLight(string f)
     {
+        mpb = new MaterialPropertyBlock();
         mpb.SetFloat("_FillPhase", 1 - float.Parse(f));
         md.SetPropertyBlock(mpb);
     }

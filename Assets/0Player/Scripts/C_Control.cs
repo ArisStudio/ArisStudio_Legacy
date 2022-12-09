@@ -102,6 +102,7 @@ public class C_Control : MonoBehaviour
         {
             if (isBanner)
             {
+                isBanner=false;
                 bannerGo.SetActive(false);
                 banner2Go.SetActive(false);
                 blurGo.SetActive(false);
@@ -198,9 +199,27 @@ public class C_Control : MonoBehaviour
         sprList.Add(nameId, sprAnim);
     }
 
+    AudioType SelectAudioType(string sName)
+    {
+        if (sName.EndsWith(".ogg"))
+        {
+            return AudioType.OGGVORBIS;
+        }else if (sName.EndsWith(".wav")){
+            return AudioType.WAV;
+        }
+        else if (sName.EndsWith(".mp3"))
+        {
+            return AudioType.MPEG;
+        }
+        else
+        {
+            return AudioType.UNKNOWN;
+        }
+    }
+
     IEnumerator LoadBgm(string nameId, string bgmName)
     {
-        using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip(Path.Combine(bgmFolderPath, bgmName), AudioType.UNKNOWN))
+        using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip(Path.Combine(bgmFolderPath, bgmName), SelectAudioType(bgmName)))
         {
             yield return uwr.SendWebRequest();
             bgmList.Add(nameId, DownloadHandlerAudioClip.GetContent(uwr));
@@ -241,7 +260,7 @@ public class C_Control : MonoBehaviour
 
     IEnumerator LoadSe(string nameId, string seName)
     {
-        using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip(Path.Combine(seFolderPath, seName), AudioType.UNKNOWN))
+        using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip(Path.Combine(seFolderPath, seName), SelectAudioType(seName)))
         {
             yield return uwr.SendWebRequest();
             seList.Add(nameId, DownloadHandlerAudioClip.GetContent(uwr));
