@@ -191,7 +191,12 @@ public class C_Control : MonoBehaviour
 
         sprAnim.Initialize(false);
         sprAnim.Skeleton.SetSlotsToSetupPose();
-        sprAnim.AnimationState.SetAnimation(0, "Idle_01", true);
+        try {
+            sprAnim.AnimationState.SetAnimation(0, "Idle_01", true);
+        }
+        catch {
+            sprAnim.AnimationState.SetAnimation(0, "00", true);
+        }
         sprGo.SetActive(false);
 
         Debug.Log("Load Spr: " + nameId);
