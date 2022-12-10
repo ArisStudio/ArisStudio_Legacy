@@ -2,9 +2,7 @@
 
 适用于碧蓝档案的二创工具(点击蓝色超链接下载
 
-- 播放器PC
-  - [baPlayer 1.0.1](https://storage.dza.vin/baPlayer%201.0.1.7z)
-  - SHA256: `99f7a9573587de579bd17d1df90e602882b0532d931a3dc178f93656aba3c47c`
+- 播放器PC [baPlayer](https://github.com/Tualin14/baPlayer/releases)
 
 - 素材 
   - [Data](https://oss.dza.vin/item/share@dzaaaaaa.com/013EY5Y6E2GGGRQ7TVNJBK6RK3BFJJKEJC)
