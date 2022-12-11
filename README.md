@@ -5,8 +5,8 @@
 - 播放器PC [baPlayer](https://github.com/Tualin14/baPlayer/releases)
 
 - 素材 
-  - [Data](https://oss.dza.vin/item/share@dzaaaaaa.com/013EY5Y6E2GGGRQ7TVNJBK6RK3BFJJKEJC)
-  - Quick Xor Hash: `eci3yuwSY9emQ0J+Be3VX3y2Jkc=`
+  - [Data](https://oss.dza.vin/share@dzaaaaaa.com/baPlayer%E5%8F%AF%E7%94%A8%E7%B4%A0%E6%9D%90%E9%9B%86)
+  - 解压到对应文件夹
   - 素材收集于网络，如没有找到自己需要的素材请自行添加。
 
 - WebGl版
@@ -21,6 +21,11 @@
 - 在 [Issues](https://github.com/Tualin14/baPlayer/issues) 提交反馈和意见
 - 加入新效果，表情等内容请 **提供游戏内出现位置**
 - 无法播放等问题请提供 **相关文本**
+
+
+# 其它
+
+- unity 版本 2019.3.15f1
 
 # Credits
 
