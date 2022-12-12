@@ -7,10 +7,11 @@ using UnityEngine.Networking;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using static C_Setting;
+using UnityEngine.UIElements;
 
 public class C_Control : MonoBehaviour
 {
-    public GameObject sprBase, lableGo, bannerGo, banner2Go, txtGo, selectButtonGo, coverGo, cGo, smokeGo, curtainGo, blurGo,mGo;
+    public GameObject sprBase, chBase, lableGo, bannerGo, banner2Go, txtGo, selectButtonGo, coverGo, cGo, smokeGo, curtainGo, blurGo, mGo;
     public AudioSource bgmGo, seGo;
     public RawImage bgGo;
 
@@ -26,7 +27,7 @@ public class C_Control : MonoBehaviour
     string settingJson;
     C_Setting setting;
     // FolderPath
-    string dataFolderPath, settingFolderPath, sprFolderPath, bgmFolderPath, seFolderPath, backgroundFolderPath, coverFolderPath, txtFolderPathPath;
+    string dataFolderPath, settingFolderPath, sprFolderPath, characterFolderPath, bgmFolderPath, seFolderPath, backgroundFolderPath, coverFolderPath, txtFolderPathPath;
 
     Dictionary<string, SkeletonAnimation> sprList = new Dictionary<string, SkeletonAnimation>();
     Dictionary<string, AudioClip> bgmList = new Dictionary<string, AudioClip>();
@@ -34,6 +35,7 @@ public class C_Control : MonoBehaviour
     Dictionary<string, Texture2D> backgroundList = new Dictionary<string, Texture2D>();
     Dictionary<string, Texture2D> coverList = new Dictionary<string, Texture2D>();
     Dictionary<string, int> targetList = new Dictionary<string, int>();
+    Dictionary<string, GameObject> chList = new Dictionary<string, GameObject>();
 
     IEnumerator Start()
     {
@@ -44,6 +46,7 @@ public class C_Control : MonoBehaviour
         seFolderPath = Path.Combine(dataFolderPath, "SE");
         backgroundFolderPath = Path.Combine(dataFolderPath, "Image", "Background");
         coverFolderPath = Path.Combine(dataFolderPath, "Image", "Cover");
+        characterFolderPath = Path.Combine(dataFolderPath, "Character");
 
         using (UnityWebRequest uwr = UnityWebRequest.Get(settingFolderPath))
         {
@@ -102,7 +105,7 @@ public class C_Control : MonoBehaviour
         {
             if (isBanner)
             {
-                isBanner=false;
+                isBanner = false;
                 bannerGo.SetActive(false);
                 banner2Go.SetActive(false);
                 blurGo.SetActive(false);
@@ -191,10 +194,12 @@ public class C_Control : MonoBehaviour
 
         sprAnim.Initialize(false);
         sprAnim.Skeleton.SetSlotsToSetupPose();
-        try {
+        try
+        {
             sprAnim.AnimationState.SetAnimation(0, "Idle_01", true);
         }
-        catch {
+        catch
+        {
             sprAnim.AnimationState.SetAnimation(0, "00", true);
         }
         sprGo.SetActive(false);
@@ -209,7 +214,9 @@ public class C_Control : MonoBehaviour
         if (sName.EndsWith(".ogg"))
         {
             return AudioType.OGGVORBIS;
-        }else if (sName.EndsWith(".wav")){
+        }
+        else if (sName.EndsWith(".wav"))
+        {
             return AudioType.WAV;
         }
         else if (sName.EndsWith(".mp3"))
@@ -272,6 +279,41 @@ public class C_Control : MonoBehaviour
         }
     }
 
+    IEnumerator LoadCharacter(string nameId, string chY, string chScale, string chName)
+    {
+        byte[] chData;
+        Texture2D texture = new Texture2D(1, 1);
+
+        GameObject chBaseGo = Instantiate(chBase);
+        GameObject chGo = chBaseGo.transform.Find("Character").gameObject;
+
+        chBaseGo.name = nameId;
+
+        using (UnityWebRequest uwr = UnityWebRequest.Get(Path.Combine(characterFolderPath, chName)))
+        {
+            yield return uwr.SendWebRequest();
+            chData = uwr.downloadHandler.data;
+        }
+        texture.LoadImage(chData);
+        texture.name = nameId;
+
+        SpriteRenderer sr = chGo.GetComponent<SpriteRenderer>();
+        sr.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        sr.material.shader = Shader.Find("SFill");
+        sr.material.SetFloat("_FillPhase", 1);
+        sr.material.SetColor("_FillColor", new Color(0, 0, 0, 1));
+
+        chGo.GetComponent<C_Character>().Init();
+        chGo.SetActive(false);
+
+        chBaseGo.transform.localPosition = new Vector3(0, float.Parse(chY), 0);
+        chBaseGo.transform.localScale = new Vector3(float.Parse(chScale), float.Parse(chScale), 1);
+
+        chGo.GetComponent<C_SprEmo>().InitEmoticon(chY, chScale);
+
+        chList.Add(nameId, chGo);
+    }
+
     void PreLoad(C_Setting pSetting, string[] pTexts)
     {
         //Setting
@@ -329,6 +371,10 @@ public class C_Control : MonoBehaviour
                         else if (l[1] == "se")
                         {
                             StartCoroutine(LoadSe(l[2], l[3]));
+                        }
+                        else if (l[1] == "ch")
+                        {
+                            StartCoroutine(LoadCharacter(l[2], l[3], l[4], l[5]));
                         }
                         else if (l[1] == "end")
                         {
@@ -586,6 +632,100 @@ public class C_Control : MonoBehaviour
                         else if (l[1] == "hide")
                         {
                             coverGo.GetComponent<C_Cover>().Hide();
+                        }
+                        break;
+                    }
+
+                //Character
+                case "ch":
+                    {
+                        if (l[1] == "show")
+                        {
+                            chList[l[2]].GetComponent<C_Character>().Show();
+                        }
+                        else if (l[1] == "hide")
+                        {
+                            chList[l[2]].GetComponent<C_Character>().Hide();
+                        }
+                        else if (l[1] == "showD")
+                        {
+                            chList[l[2]].gameObject.SetActive(true);
+                        }
+                        else if (l[1] == "hideD")
+                        {
+                            chList[l[2]].gameObject.SetActive(false);
+                        }
+                        else if (l[1] == "highlight" || l[1] == "hl")
+                        {
+                            chList[l[2]].GetComponent<C_Character>().HighLight(l[3]);
+                        }
+
+                        //Comm
+                        else if (l[1] == "default" || l[1] == "def")
+                        {
+                            chList[l[2]].GetComponent<C_Character>().Def();
+                        }
+                        else if (l[1] == "communication" || l[1] == "comm")
+                        {
+                            chList[l[2]].GetComponent<C_Character>().Comm();
+                        }
+                        else if (l[1] == "showC")
+                        {
+                            chList[l[2]].GetComponent<C_Character>().ShowC();
+                        }
+                        else if (l[1] == "hideC")
+                        {
+                            chList[l[2]].GetComponent<C_Character>().HideC();
+                        }
+
+                        //Emoticon
+                        else if (l[1] == "emoticon" || l[1] == "emo")
+                        {
+                            chList[l[2]].GetComponent<C_SprEmo>().PlayEmoticon(l[3]);
+                        }
+
+                        //Animation
+                        else if (l[1] == "empty")
+                        {
+                            chList[l[2]].GetComponent<C_SprAnimation>().Empty();
+                        }
+                        else if (l[1] == "down")
+                        {
+                            chList[l[2]].GetComponent<C_SprAnimation>().Down();
+                        }
+                        else if (l[1] == "up")
+                        {
+                            chList[l[2]].GetComponent<C_SprAnimation>().Up();
+                        }
+
+                        // Position
+                        else if (l[1] == "x")
+                        {
+                            chList[l[2]].GetComponent<C_SprMove>().SetX(l[3]);
+                        }
+                        else if (l[1] == "move")
+                        {
+                            chList[l[2]].GetComponent<C_SprMove>().Move(l[3], l[4]);
+                        }
+                        else if (l[1] == "z")
+                        {
+                            chList[l[2]].GetComponent<C_SprMove>().SetZ(l[3]);
+                        }
+                        else if (l[1] == "close")
+                        {
+                            chList[l[2]].GetComponent<C_SprMove>().Close();
+                        }
+                        else if (l[1] == "back")
+                        {
+                            chList[l[2]].GetComponent<C_SprMove>().Back();
+                        }
+                        else if (l[1] == "shakeX")
+                        {
+                            chList[l[2]].GetComponent<C_SprMove>().ShakeX(l[3], l[4], l[5]);
+                        }
+                        else if (l[1] == "shakeY")
+                        {
+                            chList[l[2]].GetComponent<C_SprMove>().ShakeY(l[3], l[4], l[5]);
                         }
                         break;
                     }
