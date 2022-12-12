@@ -9,9 +9,7 @@
   - 解压到对应文件夹
   - 素材收集于网络，如没有找到自己需要的素材请自行添加。
 
-- WebGl版
-  - [baPlayer_WebGL 1.0.1.7z](https://storage.dza.vin/baPlayer_WebGL%201.0.1.7z)
-  - SHA256: `b7df3b38d9d7ccba7fb28b2b8f1c9cb6ebc649868fa20587ae58575b77a74609`
+- [WebGl版](https://github.com/Tualin14/baPlayer_WebGL)
   - 在线播放Demo文件预览 [Demo 1.1.1](https://baplayer.dza.vin/)
 
 # [如何使用](https://github.com/Tualin14/baPlayer/wiki)
