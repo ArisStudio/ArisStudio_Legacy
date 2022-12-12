@@ -6,6 +6,7 @@ public class C_Setting
 {
     public string txtName;
     public Auto auto;
+    //public WebGL webGL;
     public Spr spr;
     public Bgm bgm;
     public Se se;
@@ -16,6 +17,13 @@ public class C_Setting
     {
         public bool enable;
         public float seconds;
+    }
+
+    [Serializable]
+    public class WebGL
+    {
+        public bool enable;
+        public string dataUrl;
     }
 
     [Serializable]

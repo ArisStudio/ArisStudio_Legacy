@@ -6,8 +6,6 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using static C_Setting;
-using UnityEngine.UIElements;
 
 public class C_Control : MonoBehaviour
 {
@@ -40,13 +38,8 @@ public class C_Control : MonoBehaviour
     IEnumerator Start()
     {
         dataFolderPath = Path.Combine(Directory.GetParent(Application.dataPath).ToString(), "Data");
+
         settingFolderPath = Path.Combine(dataFolderPath, "Setting.json");
-        sprFolderPath = Path.Combine(dataFolderPath, "Spr");
-        bgmFolderPath = Path.Combine(dataFolderPath, "Bgm");
-        seFolderPath = Path.Combine(dataFolderPath, "SE");
-        backgroundFolderPath = Path.Combine(dataFolderPath, "Image", "Background");
-        coverFolderPath = Path.Combine(dataFolderPath, "Image", "Cover");
-        characterFolderPath = Path.Combine(dataFolderPath, "Character");
 
         using (UnityWebRequest uwr = UnityWebRequest.Get(settingFolderPath))
         {
@@ -63,6 +56,13 @@ public class C_Control : MonoBehaviour
 
         txtFolderPathPath = Path.Combine(dataFolderPath, "0Txt", setting.txtName + ".txt");
 
+        sprFolderPath = Path.Combine(dataFolderPath, "Spr");
+        bgmFolderPath = Path.Combine(dataFolderPath, "Bgm");
+        seFolderPath = Path.Combine(dataFolderPath, "SE");
+        backgroundFolderPath = Path.Combine(dataFolderPath, "Image", "Background");
+        coverFolderPath = Path.Combine(dataFolderPath, "Image", "Cover");
+        characterFolderPath = Path.Combine(dataFolderPath, "Character");
+
         using (UnityWebRequest uwr = UnityWebRequest.Get(txtFolderPathPath))
         {
             yield return uwr.SendWebRequest();
@@ -72,8 +72,6 @@ public class C_Control : MonoBehaviour
         textLength = texts.Length;
 
         PreLoad(setting, texts);
-
-        Debug.Log("Finsh load");
     }
 
     void Update()
@@ -137,9 +135,6 @@ public class C_Control : MonoBehaviour
         lineIndex = targetList[t];
         selecting = false;
     }
-
-
-
 
     IEnumerator LoadAndCreateSprGameObject(string nameId, string sprName)
     {
@@ -316,30 +311,30 @@ public class C_Control : MonoBehaviour
 
     void PreLoad(C_Setting pSetting, string[] pTexts)
     {
-        //Setting
-        foreach (sprPre s in pSetting.spr.sprPreList)
-        {
-            Debug.Log("pre load spr: " + s.nameId);
-            StartCoroutine(LoadAndCreateSprGameObject(s.nameId, s.sprName));
-        }
+        ////Setting
+        //foreach (sprPre s in pSetting.spr.sprPreList)
+        //{
+        //    Debug.Log("pre load spr: " + s.nameId);
+        //    StartCoroutine(LoadAndCreateSprGameObject(s.nameId, s.sprName));
+        //}
 
-        foreach (bgmPre b in pSetting.bgm.bgmPreList)
-        {
-            Debug.Log("pre load bgm: " + b.nameId);
-            StartCoroutine(LoadBgm(b.nameId, b.bgmName));
-        }
+        //foreach (bgmPre b in pSetting.bgm.bgmPreList)
+        //{
+        //    Debug.Log("pre load bgm: " + b.nameId);
+        //    StartCoroutine(LoadBgm(b.nameId, b.bgmName));
+        //}
 
-        foreach (bgPre b in pSetting.bg.bgPreList)
-        {
-            Debug.Log("pre load bg: " + b.nameId);
-            StartCoroutine(LoadBackground(b.nameId, b.bgName));
-        }
+        //foreach (bgPre b in pSetting.bg.bgPreList)
+        //{
+        //    Debug.Log("pre load bg: " + b.nameId);
+        //    StartCoroutine(LoadBackground(b.nameId, b.bgName));
+        //}
 
-        foreach (sePre s in pSetting.se.sePreList)
-        {
-            Debug.Log("pre load se: " + s.nameId);
-            StartCoroutine(LoadSe(s.nameId, s.seName));
-        }
+        //foreach (sePre s in pSetting.se.sePreList)
+        //{
+        //    Debug.Log("pre load se: " + s.nameId);
+        //    StartCoroutine(LoadSe(s.nameId, s.seName));
+        //}
 
         //Text
         int iTmp = 0;
