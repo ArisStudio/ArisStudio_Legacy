@@ -2,6 +2,9 @@
 
 public class FullScreen : MonoBehaviour
 {
+    public GameObject debug,playBtn;
+
+    bool isDebug=false;
     int r = 1;
     void Start()
     {
@@ -11,30 +14,52 @@ public class FullScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (isDebug)
         {
-            Screen.fullScreen = !Screen.fullScreen;
+            if (Input.GetKey(KeyCode.LeftControl)&&Input.GetKeyDown(KeyCode.D))
+            {
+                isDebug = false;
+                debug.SetActive(false);
+            }
         }
-        else if (Input.GetKeyDown(KeyCode.R))
+        else
         {
-            if (r == 1)
+            if (Input.GetKeyDown(KeyCode.F))
             {
-                Screen.SetResolution(1280, 720, Screen.fullScreen);
+                Screen.fullScreen = !Screen.fullScreen;
             }
-            else if (r == 2)
+            else if (Input.GetKeyDown(KeyCode.Space))
             {
-                Screen.SetResolution(1920, 1080, Screen.fullScreen);
+                playBtn.GetComponent<C_PlayButton>().Click();
             }
-            else if (r == 3)
+            else if (Input.GetKeyDown(KeyCode.D))
             {
-                Screen.SetResolution(2560, 1440, Screen.fullScreen);
+                debug.SetActive(true);
+                isDebug = true;
             }
-            else if (r == 4)
+
+            else if (Input.GetKeyDown(KeyCode.R))
             {
-                Screen.SetResolution(3840, 2160, Screen.fullScreen);
-                r = 0;
+                if (r == 1)
+                {
+                    Screen.SetResolution(1280, 720, Screen.fullScreen);
+                }
+                else if (r == 2)
+                {
+                    Screen.SetResolution(1920, 1080, Screen.fullScreen);
+                }
+                else if (r == 3)
+                {
+                    Screen.SetResolution(2560, 1440, Screen.fullScreen);
+                }
+                else if (r == 4)
+                {
+                    Screen.SetResolution(3840, 2160, Screen.fullScreen);
+                    r = 0;
+                }
+                r++;
             }
-            r++;
         }
+       
     }
 }

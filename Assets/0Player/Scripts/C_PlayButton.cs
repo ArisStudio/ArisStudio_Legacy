@@ -14,10 +14,6 @@ public class C_PlayButton : MonoBehaviour, IPointerClickHandler
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Click();
-        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -25,7 +21,7 @@ public class C_PlayButton : MonoBehaviour, IPointerClickHandler
         Click();
     }
 
-    void Click()
+    public void Click()
     {
         if (txtGo.GetComponent<C_Text>().GetTypingState())
         {

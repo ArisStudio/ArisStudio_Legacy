@@ -61,6 +61,7 @@
      <Compile Include="Assets\0Player\Scripts\C_Control.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Cover.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Curtain.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Debug.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Emoticon.cs" />
      <Compile Include="Assets\0Player\Scripts\C_PlayButton.cs" />
      <Compile Include="Assets\0Player\Scripts\C_RichText.cs" />

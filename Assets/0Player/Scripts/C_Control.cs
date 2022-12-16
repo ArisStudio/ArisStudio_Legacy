@@ -13,6 +13,8 @@ public class C_Control : MonoBehaviour
     public AudioSource bgmGo, seGo;
     public RawImage bgGo;
 
+    public Text outputText;
+
     //Run
     bool isAuto, isClick, isBanner, txtTyping, selecting;
     int lineIndex, textLength;
@@ -112,9 +114,7 @@ public class C_Control : MonoBehaviour
 
             if (lineIndex < textLength)
             {
-                //Debug.Log("Run Line: " + lineIndex);
-                RunPlayer(lineIndex);
-                lineIndex++;
+                TryRunPlayer(texts[lineIndex].Trim());
             }
         }
     }
@@ -131,10 +131,31 @@ public class C_Control : MonoBehaviour
 
     public void SetSelecting(string t)
     {
-        Debug.Log(t);
+        Print("Select: " + t);
         lineIndex = targetList[t];
         selecting = false;
     }
+
+    public void Print(string s)
+    {
+        outputText.text += s + "\n";
+    }
+
+    public void TryRunPlayer(string s)
+    {
+        try
+        {
+            RunPlayer(s);
+        }
+        catch
+        {
+            Print("Something wrong! Text:<color=orange>" + s + "</color>");
+        }
+        finally
+        {
+            lineIndex++;
+        }
+    } 
 
     IEnumerator LoadAndCreateSprGameObject(string nameId, string sprName)
     {
@@ -199,7 +220,7 @@ public class C_Control : MonoBehaviour
         }
         sprGo.SetActive(false);
 
-        Debug.Log("Load Spr: " + nameId);
+        Print("Load Spr: <color=cyan>" + nameId + "</color>");
 
         sprList.Add(nameId, sprAnim);
     }
@@ -231,6 +252,7 @@ public class C_Control : MonoBehaviour
             yield return uwr.SendWebRequest();
             bgmList.Add(nameId, DownloadHandlerAudioClip.GetContent(uwr));
         }
+        Print("Load Bgm: <color=cyan>" + nameId + "</color>");
     }
 
     IEnumerator LoadBackground(string nameId, string bgName)
@@ -247,6 +269,7 @@ public class C_Control : MonoBehaviour
         texture.LoadImage(bgData);
         texture.name = nameId;
         backgroundList.Add(nameId, texture);
+        Print("Load Background: <color=cyan>" + nameId + "</color>");
     }
 
     IEnumerator LoadCover(string nameId, string coverName)
@@ -263,6 +286,7 @@ public class C_Control : MonoBehaviour
         texture.LoadImage(coverData);
         texture.name = nameId;
         coverList.Add(nameId, texture);
+        Print("Load Cover: <color=cyan>" + nameId + "</color>");
     }
 
     IEnumerator LoadSe(string nameId, string seName)
@@ -272,6 +296,7 @@ public class C_Control : MonoBehaviour
             yield return uwr.SendWebRequest();
             seList.Add(nameId, DownloadHandlerAudioClip.GetContent(uwr));
         }
+        Print("Load SE: <color=cyan>" + nameId + "</color>");
     }
 
     IEnumerator LoadCharacter(string nameId, string chY, string chScale, string chName)
@@ -307,6 +332,7 @@ public class C_Control : MonoBehaviour
         chGo.GetComponent<C_SprEmo>().InitEmoticon(chY, chScale);
 
         chList.Add(nameId, chGo);
+        Print("Load Character: <color=cyan>" + nameId + "</color>");
     }
 
     void PreLoad(C_Setting pSetting, string[] pTexts)
@@ -374,7 +400,6 @@ public class C_Control : MonoBehaviour
                         else if (l[1] == "end")
                         {
                             lineIndex = iTmp;
-                            Debug.Log("Load finish at " + lineIndex);
                             isClick = false;
                         }
                         break;
@@ -391,10 +416,8 @@ public class C_Control : MonoBehaviour
     }
 
     //Run txt
-    void RunPlayer(int li)
+    void RunPlayer(string lt)
     {
-        string lt = texts[li].Trim();
-
         if (lt.StartsWith("="))
         {
             isClick = false;
@@ -407,7 +430,7 @@ public class C_Control : MonoBehaviour
                 case "jump":
                     {
                         lineIndex = targetList[l[1]];
-                        Debug.Log("Jump to: " + lineIndex);
+                        Print("Jump to Line: " + lineIndex);
                         break;
                     }
 
