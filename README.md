@@ -10,7 +10,8 @@
   - 素材收集于网络，如没有找到自己需要的素材请自行添加。
 
 - [WebGl版](https://github.com/Tualin14/baPlayer_WebGL)
-  - 在线播放Demo文件预览 [Demo 1.1.1](https://baplayer.dza.vin/)
+  - WebGL 目前不在主计划路线中，仅演示播放效果
+  - 在线预览播放Demo文件 [Demo 1.1.1](https://baplayer.dza.vin/)
 
 # [如何使用](https://github.com/Tualin14/baPlayer/wiki)
 
@@ -24,6 +25,7 @@
 # 其它
 
 - unity 版本 2019.3.15f1
+- [被 gitignore 忽略的素材](https://oss.dza.vin/item/share@dzaaaaaa.com/013EY5Y6C3ROQOTJLFWJAZGCYWZ6HJCDTG)
 
 # Credits
 
