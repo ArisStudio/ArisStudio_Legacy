@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class C_Smoke : MonoBehaviour
 {
-    public GameObject s3;
+    public GameObject smokeF;
     void Start()
     {
         
@@ -18,12 +18,12 @@ public class C_Smoke : MonoBehaviour
     public void Show()
     {
         gameObject.SetActive(true);
-        s3.SetActive(true);
+        smokeF.SetActive(true);
     }
 
     public void Hide()
     {
         gameObject.SetActive(false);
-        s3.SetActive(false);
+        smokeF.SetActive(false);
     }
 }

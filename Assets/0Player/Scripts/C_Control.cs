@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class C_Control : MonoBehaviour
 {
-    public GameObject sprBase, chBase, lableGo, bannerGo, banner2Go, txtGo, selectButtonGo, coverGo, cGo, smokeGo, curtainGo, blurGo, mGo;
+    public GameObject sprBase, chBase, lableGo, bannerGo, banner2Go, txtGo, selectButtonGo, coverGo, cGo, smokeGo,dustGo, rainGo,snowGo,curtainGo, blurGo, mGo;
     public AudioSource bgmGo, seGo;
     public RawImage bgGo;
 
@@ -508,6 +508,42 @@ public class C_Control : MonoBehaviour
                         else if (l[1] == "hide")
                         {
                             smokeGo.GetComponent<C_Smoke>().Hide();
+                        }
+                        break;
+                    }
+                case "dust":
+                    {
+                        if (l[1] == "show")
+                        {
+                            dustGo.SetActive(true);
+                        }
+                        else if (l[1] == "hide")
+                        {
+                            dustGo.SetActive(false);
+                        }
+                        break;
+                    }
+                case "rain":
+                    {
+                        if (l[1] == "show")
+                        {
+                            rainGo.SetActive(true);
+                        }
+                        else if (l[1] == "hide")
+                        {
+                            rainGo.SetActive(false);
+                        }
+                        break;
+                    }
+                case "snow":
+                    {
+                        if (l[1] == "show")
+                        {
+                            snowGo.SetActive(true);
+                        }
+                        else if (l[1] == "hide")
+                        {
+                            snowGo.SetActive(false);
                         }
                         break;
                     }
