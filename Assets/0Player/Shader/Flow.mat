@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Flow
-  m_Shader: {fileID: 4800000, guid: ee7bbc74e6c65704b93247598a30422c, type: 3}
+  m_Shader: {fileID: 4800000, guid: 0eab8182adb16a14ba907906f40a91da, type: 3}
   m_ShaderKeywords: UNITY_UI_ALPHACLIP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -61,9 +61,9 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _FlowBrightness: 1
-    - _FlowPos: 0.5587629
-    - _FlowThickness: 0.19
-    - _FlowWidth: 0.3
+    - _FlowPos: 0.86116874
+    - _FlowThickness: 0.2
+    - _FlowWidth: 0.2
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
