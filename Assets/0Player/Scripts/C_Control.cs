@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System;
 
 public class C_Control : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class C_Control : MonoBehaviour
     public RawImage bgGo;
 
     public Text outputText;
+    Shader def;
+    Shader comm;
 
     //Run
     bool isAuto, isClick, isBanner, txtTyping, selecting;
@@ -39,6 +42,9 @@ public class C_Control : MonoBehaviour
 
     IEnumerator Start()
     {
+        def = Shader.Find("SFill");
+        comm = Shader.Find("Comm");
+
         dataFolderPath = Path.Combine(Directory.GetParent(Application.dataPath).ToString(), "Data");
 
         settingFolderPath = Path.Combine(dataFolderPath, "Setting.json");
@@ -147,9 +153,11 @@ public class C_Control : MonoBehaviour
         {
             RunPlayer(s);
         }
-        catch
+        catch(Exception ex)
         {
-            Print("Something wrong! Text:<color=orange>" + s + "</color>");
+            Print("Exception: <color=orange>" + s + "</color>");
+            Print(ex.Message);
+            Debug.LogException(ex);
         }
         finally
         {
@@ -157,7 +165,7 @@ public class C_Control : MonoBehaviour
         }
     } 
 
-    IEnumerator LoadAndCreateSprGameObject(string nameId, string sprName)
+    IEnumerator LoadAndCreateSprGameObject(string nameId, string sprName,Shader s)
     {
         string atlasTxt;
         byte[] imageData, skelData;
@@ -189,7 +197,7 @@ public class C_Control : MonoBehaviour
         Texture2D[] textures = new Texture2D[1];
         textures[0] = texture;
 
-        SpineAtlasAsset SprAtlasAsset = SpineAtlasAsset.CreateRuntimeInstance(atlasTextAsset, textures, Shader.Find("SFill"), true);
+        SpineAtlasAsset SprAtlasAsset = SpineAtlasAsset.CreateRuntimeInstance(atlasTextAsset, textures,s, true);
 
         AtlasAttachmentLoader attachmentLoader = new AtlasAttachmentLoader(SprAtlasAsset.GetAtlas());
         SkeletonBinary binary = new SkeletonBinary(attachmentLoader);
@@ -375,7 +383,11 @@ public class C_Control : MonoBehaviour
                     {
                         if (l[1] == "spr")
                         {
-                            StartCoroutine(LoadAndCreateSprGameObject(l[2], l[3]));
+                            StartCoroutine(LoadAndCreateSprGameObject(l[2], l[3], def));
+                        }
+                        else if (l[1] == "sprC")
+                        {
+                            StartCoroutine(LoadAndCreateSprGameObject(l[2], l[3], comm));
                         }
                         else if (l[1] == "bgm")
                         {
@@ -427,6 +439,39 @@ public class C_Control : MonoBehaviour
             string[] l = lt.Split(' ');
             switch (l[0])
             {
+                case "load":
+                    {
+                        if (l[1] == "spr")
+                        {
+                            StartCoroutine(LoadAndCreateSprGameObject(l[2], l[3], def));
+                        }
+                        else if (l[1] == "sprC")
+                        {
+                            StartCoroutine(LoadAndCreateSprGameObject(l[2], l[3], comm));
+                        }
+                        else if (l[1] == "bgm")
+                        {
+                            StartCoroutine(LoadBgm(l[2], l[3]));
+                        }
+                        else if (l[1] == "bg")
+                        {
+                            StartCoroutine(LoadBackground(l[2], l[3]));
+                        }
+                        else if (l[1] == "cover")
+                        {
+                            StartCoroutine(LoadCover(l[2], l[3]));
+                        }
+                        else if (l[1] == "se")
+                        {
+                            StartCoroutine(LoadSe(l[2], l[3]));
+                        }
+                        else if (l[1] == "ch")
+                        {
+                            StartCoroutine(LoadCharacter(l[2], l[3], l[4], l[5]));
+                        }
+                        break;
+                    }
+
                 case "jump":
                     {
                         lineIndex = targetList[l[1]];

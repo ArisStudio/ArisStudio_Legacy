@@ -86,13 +86,15 @@ namespace Spine.Unity {
 					if (string.Equals(pageName, textures[j].name, System.StringComparison.OrdinalIgnoreCase)) {
 						// Match found.
 						mat = new Material(materialPropertySource);
-						mat.mainTexture = textures[j];
+                        mat.mainTexture = textures[j];
 						break;
 					}
 				}
 
 				if (mat != null)
+				{
 					materials[i] = mat;
+				}
 				else
 					throw new ArgumentException("Could not find matching atlas page in the texture array.");
 			}

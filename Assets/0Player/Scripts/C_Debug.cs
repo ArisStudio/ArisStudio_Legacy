@@ -18,6 +18,7 @@ public class C_Debug : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
         {
             RunCommand();
+            input.ActivateInputField();
         }
 
     }
@@ -26,7 +27,7 @@ public class C_Debug : MonoBehaviour
     {
         string t = input.text;
         con.GetComponent<C_Control>().TryRunPlayer(t);
-        con.GetComponent<C_Control>().Print("Input Command: <color=lime>" + t + "</color>");
+        con.GetComponent<C_Control>().Print("Input: <color=lime>" + t + "</color>");
         input.text = string.Empty;
     }
 }
