@@ -14,7 +14,7 @@ public class C_SprEmo : MonoBehaviour
 
     }
 
-    public void InitEmoticon(string y, string scale)
+    public void InitEmoticon(string scale)
     {
         emo.transform.position = new Vector3(-3.5f, 14, -1);
         emo.transform.localScale = new Vector3(transform.localScale.x / float.Parse(scale), transform.localScale.y / float.Parse(scale), 1);

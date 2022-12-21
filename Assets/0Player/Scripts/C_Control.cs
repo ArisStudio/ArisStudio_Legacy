@@ -10,7 +10,7 @@ using System;
 
 public class C_Control : MonoBehaviour
 {
-    public GameObject sprBase, chBase, lableGo, bannerGo, banner2Go, txtGo, selectButtonGo, coverGo, cGo, smokeGo,dustGo, rainGo,snowGo,curtainGo, blurGo, mGo;
+    public GameObject sprBase, emoBase, chBase, lableGo, bannerGo, banner2Go, txtGo, selectButtonGo, coverGo, cGo, smokeGo, dustGo, rainGo, snowGo, curtainGo, blurGo, mGo;
     public AudioSource bgmGo, seGo;
     public RawImage bgGo;
 
@@ -19,10 +19,12 @@ public class C_Control : MonoBehaviour
     Shader comm;
 
     //Run
-    bool isAuto, isClick, isBanner, txtTyping, selecting;
+    bool isAuto, isWait, isClick, isBanner, txtTyping, selecting;
     int lineIndex, textLength;
     float autoTimer = 0;
-    float autoSeconds = 1.5f;
+    float autoSeconds = 2;
+    float waitTimer = 0;
+    float waitSeconds = 2;
 
     string[] texts;
 
@@ -84,6 +86,20 @@ public class C_Control : MonoBehaviour
 
     void Update()
     {
+        if (isWait)
+        {
+            waitTimer += Time.deltaTime;
+            if (waitTimer > waitSeconds)
+            {
+                autoTimer = 0;
+                waitTimer = 0;
+                isWait = false;
+                isClick = true;
+            }
+            return;
+        }
+
+
         if (isAuto)
         {
             autoTimer += Time.deltaTime;
@@ -153,7 +169,7 @@ public class C_Control : MonoBehaviour
         {
             RunPlayer(s);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Print("Exception: <color=orange>" + s + "</color>");
             Print(ex.Message);
@@ -163,15 +179,19 @@ public class C_Control : MonoBehaviour
         {
             lineIndex++;
         }
-    } 
+    }
 
-    IEnumerator LoadAndCreateSprGameObject(string nameId, string sprName,Shader s)
+    IEnumerator LoadAndCreateSprGameObject(string nameId, string sprName, Shader s)
     {
         string atlasTxt;
         byte[] imageData, skelData;
 
         GameObject sprBaseGo = Instantiate(sprBase);
         GameObject sprGo = sprBaseGo.transform.Find("Spr").gameObject;
+
+        GameObject emoGo = Instantiate(emoBase);
+        emoGo.name = "Emotion";
+        emoGo.transform.parent = sprGo.transform;
 
         sprBaseGo.name = nameId;
 
@@ -197,7 +217,7 @@ public class C_Control : MonoBehaviour
         Texture2D[] textures = new Texture2D[1];
         textures[0] = texture;
 
-        SpineAtlasAsset SprAtlasAsset = SpineAtlasAsset.CreateRuntimeInstance(atlasTextAsset, textures,s, true);
+        SpineAtlasAsset SprAtlasAsset = SpineAtlasAsset.CreateRuntimeInstance(atlasTextAsset, textures, s, true);
 
         AtlasAttachmentLoader attachmentLoader = new AtlasAttachmentLoader(SprAtlasAsset.GetAtlas());
         SkeletonBinary binary = new SkeletonBinary(attachmentLoader);
@@ -315,6 +335,10 @@ public class C_Control : MonoBehaviour
         GameObject chBaseGo = Instantiate(chBase);
         GameObject chGo = chBaseGo.transform.Find("Character").gameObject;
 
+        GameObject emoGo = Instantiate(emoBase);
+        emoGo.name = "Emotion";
+        emoGo.transform.parent = chGo.transform;
+
         chBaseGo.name = nameId;
 
         using (UnityWebRequest uwr = UnityWebRequest.Get(Path.Combine(characterFolderPath, chName)))
@@ -337,7 +361,7 @@ public class C_Control : MonoBehaviour
         chBaseGo.transform.localPosition = new Vector3(0, float.Parse(chY), 0);
         chBaseGo.transform.localScale = new Vector3(float.Parse(chScale), float.Parse(chScale), 1);
 
-        chGo.GetComponent<C_SprEmo>().InitEmoticon(chY, chScale);
+        chGo.GetComponent<C_SprEmo>().InitEmoticon(chScale);
 
         chList.Add(nameId, chGo);
         Print("Load Character: <color=cyan>" + nameId + "</color>");
@@ -469,6 +493,14 @@ public class C_Control : MonoBehaviour
                         {
                             StartCoroutine(LoadCharacter(l[2], l[3], l[4], l[5]));
                         }
+                        break;
+                    }
+
+                case "wait":
+                    {
+                        waitSeconds = float.Parse(l[1]);
+                        isWait = true;
+                        Print("wait: " + waitSeconds);
                         break;
                     }
 
