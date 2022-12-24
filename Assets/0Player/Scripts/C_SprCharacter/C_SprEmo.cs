@@ -2,7 +2,7 @@
 
 public class C_SprEmo : MonoBehaviour
 {
-    public GameObject emo;
+    GameObject emo;
 
     void Start()
     {
@@ -14,8 +14,15 @@ public class C_SprEmo : MonoBehaviour
 
     }
 
+    public void InitEmoticon()
+    {
+        emo = transform.Find("Emotion").gameObject;
+        emo.transform.position = new Vector3(-3.5f, 14, -1);
+    }
+
     public void InitEmoticon(string scale)
     {
+        emo = transform.Find("Emotion").gameObject;
         emo.transform.position = new Vector3(-3.5f, 14, -1);
         emo.transform.localScale = new Vector3(transform.localScale.x / float.Parse(scale), transform.localScale.y / float.Parse(scale), 1);
     }

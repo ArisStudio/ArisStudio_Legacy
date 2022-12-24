@@ -15,7 +15,7 @@ public class C_Debug : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Return))
         {
             RunCommand();
             input.ActivateInputField();

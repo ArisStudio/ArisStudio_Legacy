@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using static C_Setting;
 
 public class C_SE : MonoBehaviour
 {

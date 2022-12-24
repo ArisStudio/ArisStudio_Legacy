@@ -57,19 +57,22 @@
   <ItemGroup>
      <Compile Include="Assets\0Player\Scripts\C_Bg\C_Bg.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Bg\C_BgShake.cs" />
-     <Compile Include="Assets\0Player\Scripts\C_Bgm.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_ChangeVolume.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Control.cs" />
-     <Compile Include="Assets\0Player\Scripts\C_Cover.cs" />
-     <Compile Include="Assets\0Player\Scripts\C_Curtain.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Debug.cs" />
-     <Compile Include="Assets\0Player\Scripts\C_Emoticon.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Effect\C_Cover.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Effect\C_Curtain.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Effect\C_Smoke.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Effect\C_SpeedLine.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_LoadPureTxtBtn.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_LoadTxt.cs" />
      <Compile Include="Assets\0Player\Scripts\C_PlayButton.cs" />
-     <Compile Include="Assets\0Player\Scripts\C_RichText.cs" />
-     <Compile Include="Assets\0Player\Scripts\C_SE.cs" />
-     <Compile Include="Assets\0Player\Scripts\C_Setting.cs" />
-     <Compile Include="Assets\0Player\Scripts\C_Smoke.cs" />
-     <Compile Include="Assets\0Player\Scripts\C_SpeedLine.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Screen.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_SetWebPatn.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Sound\C_Bgm.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Sound\C_SE.cs" />
      <Compile Include="Assets\0Player\Scripts\C_SprCharacter\C_Character.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_SprCharacter\C_Emoticon.cs" />
      <Compile Include="Assets\0Player\Scripts\C_SprCharacter\C_Spr.cs" />
      <Compile Include="Assets\0Player\Scripts\C_SprCharacter\C_SprAnimation.cs" />
      <Compile Include="Assets\0Player\Scripts\C_SprCharacter\C_SprEmo.cs" />
@@ -77,21 +80,18 @@
      <Compile Include="Assets\0Player\Scripts\C_Txt\C_Banner.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Txt\C_Banner2.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Txt\C_Label.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Txt\C_RichText.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Txt\C_Select.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Txt\C_SelectButton.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Txt\C_Text.cs" />
-     <Compile Include="Assets\0Player\Scripts\FullScreen.cs" />
      <Compile Include="Assets\0Player\Shader\Flow.cs" />
-     <Compile Include="Assets\0Player\Shader\S_ButtonFlow.cs" />
      <Compile Include="Assets\0Player\Shader\S_SpeedLine.cs" />
      <Compile Include="Assets\0Player\SkipSplash.cs" />
      <None Include="Assets\Spine\version.txt" />
-     <None Include="Assets\0Player\Shader\UIEffectsLib.cginc" />
      <None Include="Assets\0Player\Shader\SpeedLine.shader" />
      <None Include="Assets\0Player\Shader\Blur.shader" />
      <None Include="Assets\0Player\Shader\SFill.shader" />
      <None Include="Assets\0Player\Shader\Comm.shader" />
-     <None Include="Assets\0Player\Shader\Flow.shader" />
  <Reference Include="UnityEngine">
  <HintPath>D:/Unity3d/2019.3.15f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

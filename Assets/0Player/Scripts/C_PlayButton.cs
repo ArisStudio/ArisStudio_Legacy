@@ -8,12 +8,16 @@ public class C_PlayButton : MonoBehaviour, IPointerClickHandler
     GameObject control;
     void Start()
     {
-        control= transform.parent.gameObject;
+        control = transform.parent.gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Space))
+        {
+            Click();
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)

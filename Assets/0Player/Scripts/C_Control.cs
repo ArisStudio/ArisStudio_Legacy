@@ -22,17 +22,14 @@ public class C_Control : MonoBehaviour
     bool isAuto, isWait, isClick, isBanner, txtTyping, selecting;
     int lineIndex, textLength;
     float autoTimer = 0;
-    float autoSeconds = 2;
+    float autoSeconds = 2.3f;
     float waitTimer = 0;
     float waitSeconds = 2;
 
     string[] texts;
 
-    // Setting
-    string settingJson;
-    C_Setting setting;
     // FolderPath
-    string dataFolderPath, settingFolderPath, sprFolderPath, characterFolderPath, bgmFolderPath, seFolderPath, backgroundFolderPath, coverFolderPath, txtFolderPathPath;
+    string dataFolderPath, sprFolderPath, characterFolderPath, bgmFolderPath, seFolderPath, backgroundFolderPath, coverFolderPath, txtFolderPath;
 
     Dictionary<string, SkeletonAnimation> sprList = new Dictionary<string, SkeletonAnimation>();
     Dictionary<string, AudioClip> bgmList = new Dictionary<string, AudioClip>();
@@ -42,46 +39,12 @@ public class C_Control : MonoBehaviour
     Dictionary<string, int> targetList = new Dictionary<string, int>();
     Dictionary<string, GameObject> chList = new Dictionary<string, GameObject>();
 
-    IEnumerator Start()
+    void Start()
     {
         def = Shader.Find("SFill");
         comm = Shader.Find("Comm");
 
-        dataFolderPath = Path.Combine(Directory.GetParent(Application.dataPath).ToString(), "Data");
-
-        settingFolderPath = Path.Combine(dataFolderPath, "Setting.json");
-
-        using (UnityWebRequest uwr = UnityWebRequest.Get(settingFolderPath))
-        {
-            yield return uwr.SendWebRequest();
-            settingJson = uwr.downloadHandler.text;
-        }
-
-        setting = JsonUtility.FromJson<C_Setting>(settingJson);
-
-        isAuto = setting.auto.enable;
-        autoSeconds = setting.auto.seconds;
-        bgmGo.volume = setting.bgm.volume;
-        seGo.volume = setting.se.volume;
-
-        txtFolderPathPath = Path.Combine(dataFolderPath, "0Txt", setting.txtName + ".txt");
-
-        sprFolderPath = Path.Combine(dataFolderPath, "Spr");
-        bgmFolderPath = Path.Combine(dataFolderPath, "Bgm");
-        seFolderPath = Path.Combine(dataFolderPath, "SE");
-        backgroundFolderPath = Path.Combine(dataFolderPath, "Image", "Background");
-        coverFolderPath = Path.Combine(dataFolderPath, "Image", "Cover");
-        characterFolderPath = Path.Combine(dataFolderPath, "Character");
-
-        using (UnityWebRequest uwr = UnityWebRequest.Get(txtFolderPathPath))
-        {
-            yield return uwr.SendWebRequest();
-            texts = uwr.downloadHandler.text.Split('\n');
-        }
-
-        textLength = texts.Length;
-
-        PreLoad(setting, texts);
+        SetLocalPath();
     }
 
     void Update()
@@ -141,9 +104,42 @@ public class C_Control : MonoBehaviour
         }
     }
 
+    public void SetLocalPath()
+    {
+        dataFolderPath = Path.Combine(Directory.GetParent(Application.dataPath).ToString(), "Data");
+        txtFolderPath = Path.Combine(dataFolderPath, "0Txt");
+        sprFolderPath = Path.Combine(dataFolderPath, "Spr");
+        bgmFolderPath = Path.Combine(dataFolderPath, "Bgm");
+        seFolderPath = Path.Combine(dataFolderPath, "SE");
+        backgroundFolderPath = Path.Combine(dataFolderPath, "Image", "Background");
+        coverFolderPath = Path.Combine(dataFolderPath, "Image", "Cover");
+        characterFolderPath = Path.Combine(dataFolderPath, "Character");
+
+        Print("Set Local Path");
+    }
+
+    public void SetWebPath(string url)
+    {
+        dataFolderPath = url;
+        txtFolderPath = Path.Combine(dataFolderPath, "0Txt");
+        sprFolderPath = Path.Combine(dataFolderPath, "Spr");
+        bgmFolderPath = Path.Combine(dataFolderPath, "Bgm");
+        seFolderPath = Path.Combine(dataFolderPath, "SE");
+        backgroundFolderPath = Path.Combine(dataFolderPath, "Image", "Background");
+        coverFolderPath = Path.Combine(dataFolderPath, "Image", "Cover");
+        characterFolderPath = Path.Combine(dataFolderPath, "Character");
+
+        Print("Set Web Path,Url: " + url);
+    }
+
     public void SetClick(bool b)
     {
         isClick = b;
+        autoTimer = 0;
+    }
+    public void SetAuto(bool b)
+    {
+        isAuto = b;
     }
 
     public void SetTxtTyping(bool b)
@@ -179,6 +175,24 @@ public class C_Control : MonoBehaviour
         {
             lineIndex++;
         }
+    }
+
+    public void LoadPureTxt(string txt)
+    {
+        texts = txt.Split('\n');
+        textLength = texts.Length;
+        PreLoad(texts);
+    }
+
+    public IEnumerator LoadTxt(string txtName)
+    {
+        using (UnityWebRequest uwr = UnityWebRequest.Get(Path.Combine(txtFolderPath, txtName + ".txt")))
+        {
+            yield return uwr.SendWebRequest();
+            texts = uwr.downloadHandler.text.Split('\n');
+        }
+        textLength = texts.Length;
+        PreLoad(texts);
     }
 
     IEnumerator LoadAndCreateSprGameObject(string nameId, string sprName, Shader s)
@@ -247,6 +261,8 @@ public class C_Control : MonoBehaviour
             sprAnim.AnimationState.SetAnimation(0, "00", true);
         }
         sprGo.SetActive(false);
+
+        sprGo.GetComponent<C_SprEmo>().InitEmoticon();
 
         Print("Load Spr: <color=cyan>" + nameId + "</color>");
 
@@ -367,36 +383,10 @@ public class C_Control : MonoBehaviour
         Print("Load Character: <color=cyan>" + nameId + "</color>");
     }
 
-    void PreLoad(C_Setting pSetting, string[] pTexts)
+    void PreLoad(string[] pText)
     {
-        ////Setting
-        //foreach (sprPre s in pSetting.spr.sprPreList)
-        //{
-        //    Debug.Log("pre load spr: " + s.nameId);
-        //    StartCoroutine(LoadAndCreateSprGameObject(s.nameId, s.sprName));
-        //}
-
-        //foreach (bgmPre b in pSetting.bgm.bgmPreList)
-        //{
-        //    Debug.Log("pre load bgm: " + b.nameId);
-        //    StartCoroutine(LoadBgm(b.nameId, b.bgmName));
-        //}
-
-        //foreach (bgPre b in pSetting.bg.bgPreList)
-        //{
-        //    Debug.Log("pre load bg: " + b.nameId);
-        //    StartCoroutine(LoadBackground(b.nameId, b.bgName));
-        //}
-
-        //foreach (sePre s in pSetting.se.sePreList)
-        //{
-        //    Debug.Log("pre load se: " + s.nameId);
-        //    StartCoroutine(LoadSe(s.nameId, s.seName));
-        //}
-
-        //Text
         int iTmp = 0;
-        foreach (string text in pTexts)
+        foreach (string text in pText)
         {
             string t = text.Trim();
             string[] l = t.Split(' ');
