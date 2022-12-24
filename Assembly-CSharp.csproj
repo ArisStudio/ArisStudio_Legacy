@@ -87,6 +87,13 @@
      <Compile Include="Assets\0Player\Shader\Flow.cs" />
      <Compile Include="Assets\0Player\Shader\S_SpeedLine.cs" />
      <Compile Include="Assets\0Player\SkipSplash.cs" />
+     <Compile Include="Assets\WebGLSupport\WebGLInput\Detail\RebuildChecker.cs" />
+     <Compile Include="Assets\WebGLSupport\WebGLInput\Mobile\WebGLInputMobile.cs" />
+     <Compile Include="Assets\WebGLSupport\WebGLInput\WebGLInput.cs" />
+     <Compile Include="Assets\WebGLSupport\WebGLInput\Wrapper\IInputField.cs" />
+     <Compile Include="Assets\WebGLSupport\WebGLInput\Wrapper\WrappedInputField.cs" />
+     <Compile Include="Assets\WebGLSupport\WebGLInput\Wrapper\WrappedTMPInputField.cs" />
+     <Compile Include="Assets\WebGLSupport\WebGLWindow\WebGLWindow.cs" />
      <None Include="Assets\Spine\version.txt" />
      <None Include="Assets\0Player\Shader\SpeedLine.shader" />
      <None Include="Assets\0Player\Shader\Blur.shader" />
