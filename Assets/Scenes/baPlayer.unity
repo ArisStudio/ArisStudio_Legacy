@@ -4020,7 +4020,6 @@ GameObject:
   - component: {fileID: 522504313}
   - component: {fileID: 522504312}
   - component: {fileID: 522504315}
-  - component: {fileID: 522504316}
   m_Layer: 5
   m_Name: InputField
   m_TagString: Untagged
@@ -4161,19 +4160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc33a39070010f94fb1c2dd721c1286d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showHtmlElement: 0
---- !u!114 &522504316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 522504310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56393f797a0f7e94e95547f5052052a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  showHtmlElement: 1
 --- !u!1 &556319814
 GameObject:
   m_ObjectHideFlags: 0
@@ -15663,7 +15650,6 @@ GameObject:
   - component: {fileID: 1467909744}
   - component: {fileID: 1467909743}
   - component: {fileID: 1467909746}
-  - component: {fileID: 1467909747}
   m_Layer: 5
   m_Name: InputField
   m_TagString: Untagged
@@ -15804,19 +15790,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc33a39070010f94fb1c2dd721c1286d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showHtmlElement: 0
---- !u!114 &1467909747
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1467909741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56393f797a0f7e94e95547f5052052a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  showHtmlElement: 1
 --- !u!1 &1477436363
 GameObject:
   m_ObjectHideFlags: 0
@@ -25720,7 +25694,6 @@ GameObject:
   - component: {fileID: 2060262621}
   - component: {fileID: 2060262620}
   - component: {fileID: 2060262623}
-  - component: {fileID: 2060262624}
   m_Layer: 5
   m_Name: InputField
   m_TagString: Untagged
@@ -25861,19 +25834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc33a39070010f94fb1c2dd721c1286d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showHtmlElement: 0
---- !u!114 &2060262624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2060262618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56393f797a0f7e94e95547f5052052a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  showHtmlElement: 1
 --- !u!1 &2063956263
 GameObject:
   m_ObjectHideFlags: 0
@@ -26638,7 +26599,6 @@ GameObject:
   - component: {fileID: 2134138012}
   - component: {fileID: 2134138011}
   - component: {fileID: 2134138014}
-  - component: {fileID: 2134138015}
   m_Layer: 5
   m_Name: PureTxtInputField
   m_TagString: Untagged
@@ -26779,19 +26739,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc33a39070010f94fb1c2dd721c1286d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showHtmlElement: 0
---- !u!114 &2134138015
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2134138009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56393f797a0f7e94e95547f5052052a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  showHtmlElement: 1
 --- !u!1 &2138185110
 GameObject:
   m_ObjectHideFlags: 0
