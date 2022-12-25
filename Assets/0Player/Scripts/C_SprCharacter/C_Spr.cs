@@ -13,6 +13,7 @@ public class C_Spr : MonoBehaviour
     bool isEyeClose = false;
     float closeTimer = 0;
     float closeInterval = 5;
+    string eyeCloseName;
 
     //Show
     float showTime = 0;
@@ -31,7 +32,7 @@ public class C_Spr : MonoBehaviour
             closeTimer += Time.deltaTime;
             if (closeTimer >= closeInterval)
             {
-                sa.AnimationState.AddAnimation(1, "Eye_Close_01", false, 0);
+                sa.AnimationState.AddAnimation(1, eyeCloseName, false, 0);
                 closeTimer = 0;
             }
         }
@@ -83,9 +84,16 @@ public class C_Spr : MonoBehaviour
 
     public void SetState(string s)
     {
-        if (s == "01")
+        if (s.EndsWith("01"))
         {
-            isEyeClose = true;
+            foreach (Spine.Animation a in sa.skeleton.Data.Animations)
+            {
+                if (a.Name.EndsWith("lose_" + s))
+                {
+                    eyeCloseName = a.Name;
+                    isEyeClose = true;
+                }
+            }
         }
         else
         {
