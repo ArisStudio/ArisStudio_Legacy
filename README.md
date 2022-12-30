@@ -9,7 +9,7 @@
   - 解压到对应文件夹
   - 素材收集于网络，如没有找到自己需要的素材请自行添加。
 
-- [WebGl 版](https://baplayer.dza.vin/)
+- [WebGl 版](https://baplayer.dza.vin/)(有放弃计划)
 
   - WebGL 版本吃浏览器性能，不建议使用
   - 在线版音乐不能使用 ogg，应使用 mp3 代替
@@ -25,10 +25,11 @@
 - 加入新效果，表情等内容请 **提供游戏内出现位置**
 - 无法播放等问题请提供 **相关文本**
 
-# 其它
+# 贡献
 
 - unity 版本 2019.3.15f1
-- [被 gitignore 忽略的素材](https://oss.dza.vin/item/share@dzaaaaaa.com/013EY5Y6C3ROQOTJLFWJAZGCYWZ6HJCDTG)
+- 需要: 更好的UI，更好的还原动画
+- 直接往主分支提交就行
 
 # Credits
 
