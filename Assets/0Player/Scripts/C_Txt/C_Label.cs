@@ -7,10 +7,6 @@ public class C_Label : MonoBehaviour
     bool showing;
     float t;
 
-    void Start()
-    {
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -19,7 +15,8 @@ public class C_Label : MonoBehaviour
             t += Time.deltaTime;
             if (t >= 2)
             {
-                t = 0; showing = false;
+                t = 0;
+                showing = false;
                 gameObject.SetActive(false);
             }
         }

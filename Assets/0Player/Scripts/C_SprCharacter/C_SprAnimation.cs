@@ -6,13 +6,7 @@ public class C_SprAnimation : MonoBehaviour
 
     void Start()
     {
-        sprAnimator=gameObject.GetComponent<Animator>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        sprAnimator = gameObject.GetComponent<Animator>();
     }
 
     public void Empty()

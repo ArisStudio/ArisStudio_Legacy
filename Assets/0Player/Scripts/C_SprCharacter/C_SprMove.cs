@@ -4,6 +4,7 @@ using UnityEngine;
 public class C_SprMove : MonoBehaviour
 {
     public GameObject sprBase;
+
     //Move
     int moveX;
     float moveSpeed;
@@ -18,10 +19,6 @@ public class C_SprMove : MonoBehaviour
     float shakeXT, shakeYT;
     bool xShaking, yShaking;
 
-    void Start()
-    {
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -29,12 +26,15 @@ public class C_SprMove : MonoBehaviour
         {
             if (math.abs(moveX - sprBase.transform.localPosition.x) <= 0.1f)
             {
-                sprBase.transform.localPosition = new Vector3(moveX, sprBase.transform.localPosition.y, sprBase.transform.localPosition.z);
+                sprBase.transform.localPosition = new Vector3(moveX, sprBase.transform.localPosition.y,
+                    sprBase.transform.localPosition.z);
                 moving = false;
             }
             else
             {
-                sprBase.transform.localPosition = Vector3.MoveTowards(sprBase.transform.localPosition, new Vector3(moveX, sprBase.transform.localPosition.y, sprBase.transform.localPosition.z), moveSpeed * Time.deltaTime);
+                sprBase.transform.localPosition = Vector3.MoveTowards(sprBase.transform.localPosition,
+                    new Vector3(moveX, sprBase.transform.localPosition.y, sprBase.transform.localPosition.z),
+                    moveSpeed * Time.deltaTime);
             }
         }
 
@@ -43,13 +43,18 @@ public class C_SprMove : MonoBehaviour
             shakeTimeX += Time.deltaTime;
             if (shakeTimeX * shakeXA > shakeXT)
             {
-                sprBase.transform.localPosition = new Vector3(oXPosition, sprBase.transform.localPosition.y, sprBase.transform.localPosition.z);
-                shakeXA = 0; shakeXH = 0; shakeTimeX = 0;
+                sprBase.transform.localPosition = new Vector3(oXPosition, sprBase.transform.localPosition.y,
+                    sprBase.transform.localPosition.z);
+                shakeXA = 0;
+                shakeXH = 0;
+                shakeTimeX = 0;
                 xShaking = false;
             }
             else
             {
-                sprBase.transform.localPosition = new Vector3(Mathf.Sin(shakeTimeX * Mathf.PI * shakeXA) * shakeXH + oXPosition, sprBase.transform.localPosition.y, sprBase.transform.localPosition.z);
+                sprBase.transform.localPosition =
+                    new Vector3(Mathf.Sin(shakeTimeX * Mathf.PI * shakeXA) * shakeXH + oXPosition,
+                        sprBase.transform.localPosition.y, sprBase.transform.localPosition.z);
             }
         }
 
@@ -58,25 +63,32 @@ public class C_SprMove : MonoBehaviour
             shakeTimeY += Time.deltaTime;
             if (shakeTimeY * shakeYA > shakeYT)
             {
-                sprBase.transform.localPosition = new Vector3(sprBase.transform.localPosition.x, oYPosition, sprBase.transform.localPosition.z);
-                shakeYA = 0; shakeYH = 0; shakeTimeY = 0;
+                sprBase.transform.localPosition = new Vector3(sprBase.transform.localPosition.x, oYPosition,
+                    sprBase.transform.localPosition.z);
+                shakeYA = 0;
+                shakeYH = 0;
+                shakeTimeY = 0;
                 yShaking = false;
             }
             else
             {
-                sprBase.transform.localPosition = new Vector3(sprBase.transform.localPosition.x, Mathf.Sin(shakeTimeY * Mathf.PI * shakeYA) * shakeYH + oYPosition, sprBase.transform.localPosition.z);
+                sprBase.transform.localPosition = new Vector3(sprBase.transform.localPosition.x,
+                    Mathf.Sin(shakeTimeY * Mathf.PI * shakeYA) * shakeYH + oYPosition,
+                    sprBase.transform.localPosition.z);
             }
         }
     }
 
     public void SetX(string x)
     {
-        sprBase.transform.localPosition = new Vector3(int.Parse(x), sprBase.transform.localPosition.y, sprBase.transform.localPosition.z);
+        sprBase.transform.localPosition = new Vector3(int.Parse(x), sprBase.transform.localPosition.y,
+            sprBase.transform.localPosition.z);
     }
 
     public void SetZ(string z)
     {
-        sprBase.transform.localPosition = new Vector3(sprBase.transform.localPosition.x, sprBase.transform.localPosition.y, -int.Parse(z));
+        sprBase.transform.localPosition = new Vector3(sprBase.transform.localPosition.x,
+            sprBase.transform.localPosition.y, -int.Parse(z));
     }
 
     public void Move(string x, string speed)
@@ -100,14 +112,18 @@ public class C_SprMove : MonoBehaviour
 
     public void ShakeX(string xa, string xh, string xt)
     {
-        shakeXA = float.Parse(xa); shakeXH = float.Parse(xh) * 0.2f; shakeXT = float.Parse(xt);
+        shakeXA = float.Parse(xa);
+        shakeXH = float.Parse(xh) * 0.2f;
+        shakeXT = float.Parse(xt);
         oXPosition = sprBase.transform.localPosition.x;
         xShaking = true;
     }
 
     public void ShakeY(string ya, string yh, string yt)
     {
-        shakeYA = float.Parse(ya); shakeYH = float.Parse(yh) * 0.4f; shakeYT = float.Parse(yt);
+        shakeYA = float.Parse(ya);
+        shakeYH = float.Parse(yh) * 0.4f;
+        shakeYT = float.Parse(yt);
         oYPosition = sprBase.transform.localPosition.y;
         yShaking = true;
     }

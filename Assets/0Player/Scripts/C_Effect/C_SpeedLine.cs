@@ -1,16 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class C_SpeedLine : MonoBehaviour
 {
     bool sl;
     float slTimer = 0;
     float slSeconds = 1;
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()

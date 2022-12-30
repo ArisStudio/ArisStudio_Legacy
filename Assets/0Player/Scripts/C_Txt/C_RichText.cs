@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace RichText
@@ -13,6 +12,7 @@ namespace RichText
             {
                 m.Consume();
             }
+
             return m.GetRichText();
         }
 
@@ -27,6 +27,7 @@ namespace RichText
                     length += 1;
                 }
             }
+
             return length;
         }
     }
@@ -34,12 +35,10 @@ namespace RichText
     class RichTextTag
     {
         public string tagName;
+
         public string endTag
         {
-            get
-            {
-                return "</" + tagName + ">";
-            }
+            get { return "</" + tagName + ">"; }
         }
     }
 
@@ -75,6 +74,7 @@ namespace RichText
             {
                 ret += copiedQueue.Dequeue().endTag;
             }
+
             return ret;
         }
 
@@ -125,6 +125,7 @@ namespace RichText
             {
                 return null;
             }
+
             return originalText[consumedLength + 1];
         }
 
@@ -246,6 +247,7 @@ namespace RichText
             {
                 return null;
             }
+
             var peeked = PeekNextOriginChar();
             this.middleText += peeked;
             this.consumedLength += 1;

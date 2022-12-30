@@ -12,10 +12,6 @@ public class C_Character : MonoBehaviour
     float changeShowTime = 0.4f;
 
     bool showing, hiding;
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
@@ -51,6 +47,7 @@ public class C_Character : MonoBehaviour
             }
         }
     }
+
     public void Init()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -97,4 +94,3 @@ public class C_Character : MonoBehaviour
         sr.material.shader = comm;
     }
 }
-

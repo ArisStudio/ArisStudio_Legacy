@@ -2,15 +2,6 @@
 
 public class C_Screen : MonoBehaviour
 {
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-    }
-
     public void SetFullScreen()
     {
         Screen.fullScreen = !Screen.fullScreen;

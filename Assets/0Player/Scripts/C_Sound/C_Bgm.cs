@@ -9,10 +9,6 @@ public class C_Bgm : MonoBehaviour
     float changeDownTime = 1;
     float ov;
 
-    void Start()
-    {
-    }
-
     void Update()
     {
         if (down)
@@ -55,12 +51,12 @@ public class C_Bgm : MonoBehaviour
 
     public void V(string v)
     {
-        bgm.volume=float.Parse(v);
+        bgm.volume = float.Parse(v);
     }
 
     public void Down()
     {
         ov = bgm.volume;
-        down=true;
+        down = true;
     }
 }

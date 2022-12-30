@@ -13,21 +13,17 @@ public class C_Text : MonoBehaviour
     float timer;
     bool typing;
 
-    void Start()
-    {
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if(typing)
+        if (typing)
         {
             timer += Time.deltaTime;
             if (timer >= 0.02f)
             {
                 timer = 0;
                 currentPos++;
-                contentTxt.text = tmpContent.RichTextSubString( currentPos);
+                contentTxt.text = tmpContent.RichTextSubString(currentPos);
 
                 if (currentPos >= tmpContent.RichTextLength())
                 {
@@ -43,6 +39,7 @@ public class C_Text : MonoBehaviour
         {
             gameObject.SetActive(true);
         }
+
         timer = 0;
         nameTxt.text = name;
         groupTxt.text = group;
@@ -61,7 +58,8 @@ public class C_Text : MonoBehaviour
         else if (size == "small")
         {
             contentTxt.fontSize = 24;
-        }else if (size == "medium")
+        }
+        else if (size == "medium")
         {
             contentTxt.fontSize = 32;
         }

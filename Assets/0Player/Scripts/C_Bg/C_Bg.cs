@@ -9,10 +9,6 @@ public class C_Bg : MonoBehaviour
     float changeShowTime = 0.5f;
     bool showing, hiding;
 
-    void Start()
-    {
-    }
-
     void Update()
     {
         if (showing)

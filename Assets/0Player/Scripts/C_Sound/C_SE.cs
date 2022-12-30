@@ -4,15 +4,6 @@ public class C_SE : MonoBehaviour
 {
     public AudioSource se;
 
-    void Start()
-    {
-    }
-
-    void Update()
-    {
-        
-    }
-
     public void SetSE(AudioClip ac)
     {
         se.clip = ac;

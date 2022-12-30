@@ -7,17 +7,13 @@ public class C_Emoticon : MonoBehaviour
     bool playing;
     string animName;
 
-    void Start()
-    {
-        
-    }
-
     public void EmoPlay(string emoticon)
     {
         if (gm != null && gm.activeSelf)
         {
             gm.SetActive(false);
         }
+
         animName = emoticon;
         gm = transform.Find(emoticon).gameObject;
         anim = gm.GetComponent<Animator>();

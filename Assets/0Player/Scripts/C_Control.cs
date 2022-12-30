@@ -10,7 +10,24 @@ using System;
 
 public class C_Control : MonoBehaviour
 {
-    public GameObject sprBase, emoBase, chBase, lableGo, bannerGo, banner2Go, txtGo, selectButtonGo, coverGo, cGo, smokeGo, dustGo, rainGo, snowGo, curtainGo, blurGo, mGo;
+    public GameObject sprBase,
+        emoBase,
+        chBase,
+        lableGo,
+        bannerGo,
+        banner2Go,
+        txtGo,
+        selectButtonGo,
+        coverGo,
+        cGo,
+        smokeGo,
+        dustGo,
+        rainGo,
+        snowGo,
+        curtainGo,
+        blurGo,
+        mGo;
+
     public AudioSource bgmGo, seGo;
     public RawImage bgGo;
 
@@ -29,7 +46,14 @@ public class C_Control : MonoBehaviour
     string[] texts;
 
     // FolderPath
-    string dataFolderPath, sprFolderPath, characterFolderPath, bgmFolderPath, seFolderPath, backgroundFolderPath, coverFolderPath, txtFolderPath;
+    string dataFolderPath,
+        sprFolderPath,
+        characterFolderPath,
+        bgmFolderPath,
+        seFolderPath,
+        backgroundFolderPath,
+        coverFolderPath,
+        txtFolderPath;
 
     Dictionary<string, SkeletonAnimation> sprList = new Dictionary<string, SkeletonAnimation>();
     Dictionary<string, AudioClip> bgmList = new Dictionary<string, AudioClip>();
@@ -38,6 +62,8 @@ public class C_Control : MonoBehaviour
     Dictionary<string, Texture2D> coverList = new Dictionary<string, Texture2D>();
     Dictionary<string, int> targetList = new Dictionary<string, int>();
     Dictionary<string, GameObject> chList = new Dictionary<string, GameObject>();
+
+    List<string> showList = new List<string>();
 
     void Start()
     {
@@ -59,6 +85,7 @@ public class C_Control : MonoBehaviour
                 isWait = false;
                 isClick = true;
             }
+
             return;
         }
 
@@ -137,6 +164,7 @@ public class C_Control : MonoBehaviour
         isClick = b;
         autoTimer = 0;
     }
+
     public void SetAuto(bool b)
     {
         isAuto = b;
@@ -191,6 +219,7 @@ public class C_Control : MonoBehaviour
             yield return uwr.SendWebRequest();
             texts = uwr.downloadHandler.text.Split('\n');
         }
+
         textLength = texts.Length;
         PreLoad(texts);
     }
@@ -218,6 +247,7 @@ public class C_Control : MonoBehaviour
             yield return uwr.SendWebRequest();
             atlasTxt = uwr.downloadHandler.text;
         }
+
         TextAsset atlasTextAsset = new TextAsset(atlasTxt);
 
         using (UnityWebRequest uwr = UnityWebRequest.Get(sprPath + ".png"))
@@ -225,6 +255,7 @@ public class C_Control : MonoBehaviour
             yield return uwr.SendWebRequest();
             imageData = uwr.downloadHandler.data;
         }
+
         Texture2D texture = new Texture2D(1, 1);
         texture.LoadImage(imageData);
         texture.name = sprName;
@@ -260,6 +291,7 @@ public class C_Control : MonoBehaviour
         {
             sprAnim.AnimationState.SetAnimation(0, "00", true);
         }
+
         sprGo.SetActive(false);
 
         sprGo.GetComponent<C_SprEmo>().InitEmoticon();
@@ -291,11 +323,13 @@ public class C_Control : MonoBehaviour
 
     IEnumerator LoadBgm(string nameId, string bgmName)
     {
-        using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip(Path.Combine(bgmFolderPath, bgmName), SelectAudioType(bgmName)))
+        using (UnityWebRequest uwr =
+               UnityWebRequestMultimedia.GetAudioClip(Path.Combine(bgmFolderPath, bgmName), SelectAudioType(bgmName)))
         {
             yield return uwr.SendWebRequest();
             bgmList.Add(nameId, DownloadHandlerAudioClip.GetContent(uwr));
         }
+
         Print("Load Bgm: <color=cyan>" + nameId + "</color>");
     }
 
@@ -335,11 +369,13 @@ public class C_Control : MonoBehaviour
 
     IEnumerator LoadSe(string nameId, string seName)
     {
-        using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip(Path.Combine(seFolderPath, seName), SelectAudioType(seName)))
+        using (UnityWebRequest uwr =
+               UnityWebRequestMultimedia.GetAudioClip(Path.Combine(seFolderPath, seName), SelectAudioType(seName)))
         {
             yield return uwr.SendWebRequest();
             seList.Add(nameId, DownloadHandlerAudioClip.GetContent(uwr));
         }
+
         Print("Load SE: <color=cyan>" + nameId + "</color>");
     }
 
@@ -362,6 +398,7 @@ public class C_Control : MonoBehaviour
             yield return uwr.SendWebRequest();
             chData = uwr.downloadHandler.data;
         }
+
         texture.LoadImage(chData);
         texture.name = nameId;
 
@@ -394,49 +431,51 @@ public class C_Control : MonoBehaviour
             {
                 // Load spr,bgm,bg(Background),se(Sound Effect)
                 case "load":
+                {
+                    if (l[1] == "spr")
                     {
-                        if (l[1] == "spr")
-                        {
-                            StartCoroutine(LoadAndCreateSprGameObject(l[2], l[3], def));
-                        }
-                        else if (l[1] == "sprC")
-                        {
-                            StartCoroutine(LoadAndCreateSprGameObject(l[2], l[3], comm));
-                        }
-                        else if (l[1] == "bgm")
-                        {
-                            StartCoroutine(LoadBgm(l[2], l[3]));
-                        }
-                        else if (l[1] == "bg")
-                        {
-                            StartCoroutine(LoadBackground(l[2], l[3]));
-                        }
-                        else if (l[1] == "cover")
-                        {
-                            StartCoroutine(LoadCover(l[2], l[3]));
-                        }
-                        else if (l[1] == "se")
-                        {
-                            StartCoroutine(LoadSe(l[2], l[3]));
-                        }
-                        else if (l[1] == "ch")
-                        {
-                            StartCoroutine(LoadCharacter(l[2], l[3], l[4], l[5]));
-                        }
-                        else if (l[1] == "end")
-                        {
-                            lineIndex = iTmp;
-                            isClick = false;
-                        }
-                        break;
+                        StartCoroutine(LoadAndCreateSprGameObject(l[2], l[3], def));
+                    }
+                    else if (l[1] == "sprC")
+                    {
+                        StartCoroutine(LoadAndCreateSprGameObject(l[2], l[3], comm));
+                    }
+                    else if (l[1] == "bgm")
+                    {
+                        StartCoroutine(LoadBgm(l[2], l[3]));
+                    }
+                    else if (l[1] == "bg")
+                    {
+                        StartCoroutine(LoadBackground(l[2], l[3]));
+                    }
+                    else if (l[1] == "cover")
+                    {
+                        StartCoroutine(LoadCover(l[2], l[3]));
+                    }
+                    else if (l[1] == "se")
+                    {
+                        StartCoroutine(LoadSe(l[2], l[3]));
+                    }
+                    else if (l[1] == "ch")
+                    {
+                        StartCoroutine(LoadCharacter(l[2], l[3], l[4], l[5]));
+                    }
+                    else if (l[1] == "end")
+                    {
+                        lineIndex = iTmp;
+                        isClick = false;
                     }
 
+                    break;
+                }
+
                 case "target":
-                    {
-                        targetList.Add(l[1], iTmp);
-                        break;
-                    }
+                {
+                    targetList.Add(l[1], iTmp);
+                    break;
+                }
             }
+
             iTmp++;
         }
     }
@@ -454,500 +493,561 @@ public class C_Control : MonoBehaviour
             switch (l[0])
             {
                 case "load":
+                {
+                    if (l[1] == "spr")
                     {
-                        if (l[1] == "spr")
-                        {
-                            StartCoroutine(LoadAndCreateSprGameObject(l[2], l[3], def));
-                        }
-                        else if (l[1] == "sprC")
-                        {
-                            StartCoroutine(LoadAndCreateSprGameObject(l[2], l[3], comm));
-                        }
-                        else if (l[1] == "bgm")
-                        {
-                            StartCoroutine(LoadBgm(l[2], l[3]));
-                        }
-                        else if (l[1] == "bg")
-                        {
-                            StartCoroutine(LoadBackground(l[2], l[3]));
-                        }
-                        else if (l[1] == "cover")
-                        {
-                            StartCoroutine(LoadCover(l[2], l[3]));
-                        }
-                        else if (l[1] == "se")
-                        {
-                            StartCoroutine(LoadSe(l[2], l[3]));
-                        }
-                        else if (l[1] == "ch")
-                        {
-                            StartCoroutine(LoadCharacter(l[2], l[3], l[4], l[5]));
-                        }
-                        break;
+                        StartCoroutine(LoadAndCreateSprGameObject(l[2], l[3], def));
                     }
+                    else if (l[1] == "sprC")
+                    {
+                        StartCoroutine(LoadAndCreateSprGameObject(l[2], l[3], comm));
+                    }
+                    else if (l[1] == "bgm")
+                    {
+                        StartCoroutine(LoadBgm(l[2], l[3]));
+                    }
+                    else if (l[1] == "bg")
+                    {
+                        StartCoroutine(LoadBackground(l[2], l[3]));
+                    }
+                    else if (l[1] == "cover")
+                    {
+                        StartCoroutine(LoadCover(l[2], l[3]));
+                    }
+                    else if (l[1] == "se")
+                    {
+                        StartCoroutine(LoadSe(l[2], l[3]));
+                    }
+                    else if (l[1] == "ch")
+                    {
+                        StartCoroutine(LoadCharacter(l[2], l[3], l[4], l[5]));
+                    }
+
+                    break;
+                }
 
                 case "wait":
-                    {
-                        waitSeconds = float.Parse(l[1]);
-                        isWait = true;
-                        Print("wait: " + waitSeconds);
-                        break;
-                    }
+                {
+                    waitSeconds = float.Parse(l[1]);
+                    isWait = true;
+                    Print("wait: " + waitSeconds);
+                    break;
+                }
 
                 case "jump":
-                    {
-                        lineIndex = targetList[l[1]];
-                        Print("Jump to Line: " + lineIndex);
-                        break;
-                    }
+                {
+                    lineIndex = targetList[l[1]];
+                    Print("Jump to Line: " + lineIndex);
+                    break;
+                }
 
                 // Front
                 case "label":
-                    {
-                        lableGo.GetComponent<C_Label>().SetLabelText(lt.Split('\'')[1]);
-                        break;
-                    }
+                {
+                    lableGo.GetComponent<C_Label>().SetLabelText(lt.Split('\'')[1]);
+                    break;
+                }
                 case "banner":
-                    {
-                        mGo.SetActive(false);
-                        blurGo.SetActive(true);
-                        bannerGo.GetComponent<C_Banner>().SetBannerText(lt.Split('\'')[1]);
-                        isBanner = true;
-                        isClick = false;
-                        break;
-                    }
+                {
+                    mGo.SetActive(false);
+                    blurGo.SetActive(true);
+                    bannerGo.GetComponent<C_Banner>().SetBannerText(lt.Split('\'')[1]);
+                    isBanner = true;
+                    isClick = false;
+                    break;
+                }
                 case "banner2":
-                    {
-                        mGo.SetActive(false);
-                        blurGo.SetActive(true);
-                        string[] bt = lt.Split('\'');
-                        banner2Go.GetComponent<C_Banner2>().SetBanner2Text(bt[1], bt[3]);
-                        isBanner = true;
-                        isClick = false;
-                        break;
-                    }
+                {
+                    mGo.SetActive(false);
+                    blurGo.SetActive(true);
+                    string[] bt = lt.Split('\'');
+                    banner2Go.GetComponent<C_Banner2>().SetBanner2Text(bt[1], bt[3]);
+                    isBanner = true;
+                    isClick = false;
+                    break;
+                }
+
+
+                case "t":
+                {
+                    string[] tt = lt.Split('\'');
+                    txtGo.GetComponent<C_Text>().SetTxt(tt[1], tt[3], tt[5]);
+                    txtTyping = true;
+                    isClick = false;
+                    break;
+                }
+                
                 case "txt":
+                {
+                    string[] tt = lt.Split('\'');
+                    txtGo.GetComponent<C_Text>().SetTxt(tt[1], tt[3], tt[5]);
+                    txtTyping = true;
+                    isClick = false;
+                    break;
+                }
+
+                case "th":
+                {
+                    foreach (string s in showList)
                     {
-                        string[] tt = lt.Split('\'');
-                        txtGo.GetComponent<C_Text>().SetTxt(tt[1], tt[3], tt[5]);
-                        txtTyping = true;
-                        isClick = false;
-                        break;
+                        if (s == l[1])
+                        {
+                            sprList[s].GetComponent<C_Spr>().HighLight("1");
+                        }
+                        else
+                        {
+                            sprList[s].GetComponent<C_Spr>().HighLight("0.5");
+                        }
                     }
-                case "txtSize":
+
+                    string[] tt = lt.Split('\'');
+                    txtGo.GetComponent<C_Text>().SetTxt(tt[1], tt[3], tt[5]);
+                    txtTyping = true;
+                    isClick = false;
+                    break;
+                }
+                case "text":
+                {
+                    if (l[1] == "size")
                     {
-                        txtGo.GetComponent<C_Text>().SetTxtSize(l[1]);
-                        break;
+                        txtGo.GetComponent<C_Text>().SetTxtSize(l[2]);
                     }
-                case "txtHide":
+                    else if (l[1] == "hide")
                     {
                         txtGo.SetActive(false);
-                        break;
                     }
+
+                    break;
+                }
                 case "button":
-                    {
-                        selectButtonGo.GetComponent<C_SelectButton>().SetSelectButton(lt);
-                        selecting = true;
-                        isClick = false;
-                        break;
-                    }
+                {
+                    selectButtonGo.GetComponent<C_SelectButton>().SetSelectButton(lt);
+                    selecting = true;
+                    isClick = false;
+                    break;
+                }
                 case "speedline":
-                    {
-                        cGo.GetComponent<C_SpeedLine>().Set(l[1]);
-                        break;
-                    }
-                case "speedlineShow":
+                {
+                    if (l[1] == "show")
                     {
                         cGo.GetComponent<S_SpeedLine>().enabled = true;
-                        break;
                     }
-                case "speedlineHide":
+                    else if (l[1] == "hide")
                     {
                         cGo.GetComponent<S_SpeedLine>().enabled = false;
-                        break;
                     }
+                    else if (l[1] == "s")
+                    {
+                        cGo.GetComponent<C_SpeedLine>().Set(l[2]);
+                    }
+
+                    break;
+                }
                 case "smoke":
+                {
+                    if (l[1] == "show")
                     {
-                        if (l[1] == "show")
-                        {
-                            smokeGo.GetComponent<C_Smoke>().Show();
-                        }
-                        else if (l[1] == "hide")
-                        {
-                            smokeGo.GetComponent<C_Smoke>().Hide();
-                        }
-                        break;
+                        smokeGo.GetComponent<C_Smoke>().Show();
                     }
+                    else if (l[1] == "hide")
+                    {
+                        smokeGo.GetComponent<C_Smoke>().Hide();
+                    }
+
+                    break;
+                }
                 case "dust":
+                {
+                    if (l[1] == "show")
                     {
-                        if (l[1] == "show")
-                        {
-                            dustGo.SetActive(true);
-                        }
-                        else if (l[1] == "hide")
-                        {
-                            dustGo.SetActive(false);
-                        }
-                        break;
+                        dustGo.SetActive(true);
                     }
+                    else if (l[1] == "hide")
+                    {
+                        dustGo.SetActive(false);
+                    }
+
+                    break;
+                }
                 case "rain":
+                {
+                    if (l[1] == "show")
                     {
-                        if (l[1] == "show")
-                        {
-                            rainGo.SetActive(true);
-                        }
-                        else if (l[1] == "hide")
-                        {
-                            rainGo.SetActive(false);
-                        }
-                        break;
+                        rainGo.SetActive(true);
                     }
+                    else if (l[1] == "hide")
+                    {
+                        rainGo.SetActive(false);
+                    }
+
+                    break;
+                }
                 case "snow":
+                {
+                    if (l[1] == "show")
                     {
-                        if (l[1] == "show")
-                        {
-                            snowGo.SetActive(true);
-                        }
-                        else if (l[1] == "hide")
-                        {
-                            snowGo.SetActive(false);
-                        }
-                        break;
+                        snowGo.SetActive(true);
                     }
+                    else if (l[1] == "hide")
+                    {
+                        snowGo.SetActive(false);
+                    }
+
+                    break;
+                }
 
                 // Bgm
                 case "bgm":
+                {
+                    if (l[1] == "set")
                     {
-                        if (l[1] == "set")
-                        {
-                            bgmGo.GetComponent<C_Bgm>().SetBgm(bgmList[l[2]]);
-                        }
-                        else if (l[1] == "play")
-                        {
-                            bgmGo.GetComponent<C_Bgm>().Play();
-                        }
-                        else if (l[1] == "pause")
-                        {
-                            bgmGo.GetComponent<C_Bgm>().Pause();
-                        }
-                        else if (l[1] == "stop")
-                        {
-                            bgmGo.GetComponent<C_Bgm>().Stop();
-                        }
-                        else if (l[1] == "down")
-                        {
-                            bgmGo.GetComponent<C_Bgm>().Down();
-                        }
-                        else if (l[1] == "v")
-                        {
-                            bgmGo.GetComponent<C_Bgm>().V(l[2]);
-                        }
-                        break;
+                        bgmGo.GetComponent<C_Bgm>().SetBgm(bgmList[l[2]]);
                     }
+                    else if (l[1] == "play")
+                    {
+                        bgmGo.GetComponent<C_Bgm>().Play();
+                    }
+                    else if (l[1] == "pause")
+                    {
+                        bgmGo.GetComponent<C_Bgm>().Pause();
+                    }
+                    else if (l[1] == "stop")
+                    {
+                        bgmGo.GetComponent<C_Bgm>().Stop();
+                    }
+                    else if (l[1] == "down")
+                    {
+                        bgmGo.GetComponent<C_Bgm>().Down();
+                    }
+                    else if (l[1] == "v")
+                    {
+                        bgmGo.GetComponent<C_Bgm>().V(l[2]);
+                    }
+
+                    break;
+                }
 
                 // SE
                 case "se":
+                {
+                    if (l[1] == "set")
                     {
-                        if (l[1] == "set")
-                        {
-                            seGo.GetComponent<C_SE>().SetSE(seList[l[2]]);
-                        }
-                        else if (l[1] == "play")
-                        {
-                            seGo.GetComponent<C_SE>().Play();
-                        }
-                        else if (l[1] == "pause")
-                        {
-                            seGo.GetComponent<C_SE>().Pause();
-                        }
-                        else if (l[1] == "stop")
-                        {
-                            seGo.GetComponent<C_SE>().Stop();
-                        }
-                        else if (l[1] == "v")
-                        {
-                            seGo.GetComponent<C_SE>().V(l[2]);
-                        }
-                        else if (l[1] == "loop")
-                        {
-                            seGo.GetComponent<C_SE>().Loop();
-                        }
-                        else if (l[1] == "once")
-                        {
-                            seGo.GetComponent<C_SE>().Once();
-                        }
-                        break;
+                        seGo.GetComponent<C_SE>().SetSE(seList[l[2]]);
                     }
+                    else if (l[1] == "play")
+                    {
+                        seGo.GetComponent<C_SE>().Play();
+                    }
+                    else if (l[1] == "pause")
+                    {
+                        seGo.GetComponent<C_SE>().Pause();
+                    }
+                    else if (l[1] == "stop")
+                    {
+                        seGo.GetComponent<C_SE>().Stop();
+                    }
+                    else if (l[1] == "v")
+                    {
+                        seGo.GetComponent<C_SE>().V(l[2]);
+                    }
+                    else if (l[1] == "loop")
+                    {
+                        seGo.GetComponent<C_SE>().Loop();
+                    }
+                    else if (l[1] == "once")
+                    {
+                        seGo.GetComponent<C_SE>().Once();
+                    }
+
+                    break;
+                }
 
                 // Background
                 case "bg":
+                {
+                    if (l[1] == "set")
                     {
-                        if (l[1] == "set")
-                        {
-                            bgGo.GetComponent<C_Bg>().SetBg(backgroundList[l[2]]);
-                        }
-                        else if (l[1] == "show")
-                        {
-                            bgGo.GetComponent<C_Bg>().Show();
-                        }
-                        else if (l[1] == "hide")
-                        {
-                            bgGo.GetComponent<C_Bg>().Hide();
-                        }
-                        else if (l[1] == "showD")
-                        {
-                            bgGo.GetComponent<C_Bg>().ShowD();
-                        }
-                        else if (l[1] == "hideD")
-                        {
-                            bgGo.GetComponent<C_Bg>().HideD();
-                        }
-                        else if (l[1] == "shakeX")
-                        {
-                            bgGo.GetComponent<C_BgShake>().ShakeX(l[2], l[3], l[4]);
-                        }
-                        else if (l[1] == "shakeY")
-                        {
-                            bgGo.GetComponent<C_BgShake>().ShakeY(l[2], l[3], l[4]);
-                        }
-                        break;
+                        bgGo.GetComponent<C_Bg>().SetBg(backgroundList[l[2]]);
                     }
+                    else if (l[1] == "show")
+                    {
+                        bgGo.GetComponent<C_Bg>().Show();
+                    }
+                    else if (l[1] == "hide")
+                    {
+                        bgGo.GetComponent<C_Bg>().Hide();
+                    }
+                    else if (l[1] == "showD")
+                    {
+                        bgGo.GetComponent<C_Bg>().ShowD();
+                    }
+                    else if (l[1] == "hideD")
+                    {
+                        bgGo.GetComponent<C_Bg>().HideD();
+                    }
+                    else if (l[1] == "shakeX")
+                    {
+                        bgGo.GetComponent<C_BgShake>().ShakeX(l[2], l[3], l[4]);
+                    }
+                    else if (l[1] == "shakeY")
+                    {
+                        bgGo.GetComponent<C_BgShake>().ShakeY(l[2], l[3], l[4]);
+                    }
+
+                    break;
+                }
 
                 // Curtain
                 case "curtain":
+                {
+                    if (l[1] == "show")
                     {
-                        if (l[1] == "show")
-                        {
-                            curtainGo.GetComponent<C_Curtain>().Show();
-                        }
-                        else if (l[1] == "showD")
-                        {
-                            curtainGo.SetActive(true);
-                        }
-                        else if (l[1] == "hide")
-                        {
-                            curtainGo.SetActive(false);
-                        }
-                        else if (l[1] == "black")
-                        {
-                            curtainGo.GetComponent<C_Curtain>().Black();
-                        }
-                        else if (l[1] == "white")
-                        {
-                            curtainGo.GetComponent<C_Curtain>().White();
-                        }
-                        break;
+                        curtainGo.GetComponent<C_Curtain>().Show();
                     }
+                    else if (l[1] == "hide")
+                    {
+                        curtainGo.GetComponent<C_Curtain>().Hide();
+                    }
+                    else if (l[1] == "showD")
+                    {
+                        curtainGo.SetActive(true);
+                    }
+                    else if (l[1] == "hideD")
+                    {
+                        curtainGo.SetActive(false);
+                    }
+                    else if (l[1] == "black")
+                    {
+                        curtainGo.GetComponent<C_Curtain>().Black();
+                    }
+                    else if (l[1] == "white")
+                    {
+                        curtainGo.GetComponent<C_Curtain>().White();
+                    }
+                    else if (l[1] == "red")
+                    {
+                        curtainGo.GetComponent<C_Curtain>().Red();
+                    }
+
+                    break;
+                }
 
                 //Cover
                 case "cover":
+                {
+                    if (l[1] == "set")
                     {
-                        if (l[1] == "set")
-                        {
-                            coverGo.GetComponent<C_Cover>().SetCover(coverList[l[2]]);
-                        }
-                        else if (l[1] == "show")
-                        {
-                            coverGo.GetComponent<C_Cover>().Show();
-                        }
-                        else if (l[1] == "hide")
-                        {
-                            coverGo.GetComponent<C_Cover>().Hide();
-                        }
-                        break;
+                        coverGo.GetComponent<C_Cover>().SetCover(coverList[l[2]]);
                     }
+                    else if (l[1] == "show")
+                    {
+                        coverGo.GetComponent<C_Cover>().Show();
+                    }
+                    else if (l[1] == "hide")
+                    {
+                        coverGo.GetComponent<C_Cover>().Hide();
+                    }
+
+                    break;
+                }
 
                 //Character
                 case "ch":
+                {
+                    if (l[1] == "show")
                     {
-                        if (l[1] == "show")
-                        {
-                            chList[l[2]].GetComponent<C_Character>().Show();
-                        }
-                        else if (l[1] == "hide")
-                        {
-                            chList[l[2]].GetComponent<C_Character>().Hide();
-                        }
-                        else if (l[1] == "showD")
-                        {
-                            chList[l[2]].gameObject.SetActive(true);
-                        }
-                        else if (l[1] == "hideD")
-                        {
-                            chList[l[2]].gameObject.SetActive(false);
-                        }
-                        else if (l[1] == "highlight" || l[1] == "hl")
-                        {
-                            chList[l[2]].GetComponent<C_Character>().HighLight(l[3]);
-                        }
-
-                        //Comm
-                        else if (l[1] == "default" || l[1] == "def")
-                        {
-                            chList[l[2]].GetComponent<C_Character>().Def();
-                        }
-                        else if (l[1] == "communication" || l[1] == "comm")
-                        {
-                            chList[l[2]].GetComponent<C_Character>().Comm();
-                        }
-                        else if (l[1] == "showC")
-                        {
-                            chList[l[2]].GetComponent<C_Character>().ShowC();
-                        }
-                        else if (l[1] == "hideC")
-                        {
-                            chList[l[2]].GetComponent<C_Character>().HideC();
-                        }
-
-                        //Emoticon
-                        else if (l[1] == "emoticon" || l[1] == "emo")
-                        {
-                            chList[l[2]].GetComponent<C_SprEmo>().PlayEmoticon(l[3]);
-                        }
-
-                        //Animation
-                        else if (l[1] == "empty")
-                        {
-                            chList[l[2]].GetComponent<C_SprAnimation>().Empty();
-                        }
-                        else if (l[1] == "down")
-                        {
-                            chList[l[2]].GetComponent<C_SprAnimation>().Down();
-                        }
-                        else if (l[1] == "up")
-                        {
-                            chList[l[2]].GetComponent<C_SprAnimation>().Up();
-                        }
-
-                        // Position
-                        else if (l[1] == "x")
-                        {
-                            chList[l[2]].GetComponent<C_SprMove>().SetX(l[3]);
-                        }
-                        else if (l[1] == "move")
-                        {
-                            chList[l[2]].GetComponent<C_SprMove>().Move(l[3], l[4]);
-                        }
-                        else if (l[1] == "z")
-                        {
-                            chList[l[2]].GetComponent<C_SprMove>().SetZ(l[3]);
-                        }
-                        else if (l[1] == "close")
-                        {
-                            chList[l[2]].GetComponent<C_SprMove>().Close();
-                        }
-                        else if (l[1] == "back")
-                        {
-                            chList[l[2]].GetComponent<C_SprMove>().Back();
-                        }
-                        else if (l[1] == "shakeX")
-                        {
-                            chList[l[2]].GetComponent<C_SprMove>().ShakeX(l[3], l[4], l[5]);
-                        }
-                        else if (l[1] == "shakeY")
-                        {
-                            chList[l[2]].GetComponent<C_SprMove>().ShakeY(l[3], l[4], l[5]);
-                        }
-                        break;
+                        chList[l[2]].GetComponent<C_Character>().Show();
                     }
+                    else if (l[1] == "hide")
+                    {
+                        chList[l[2]].GetComponent<C_Character>().Hide();
+                    }
+                    else if (l[1] == "showD")
+                    {
+                        chList[l[2]].gameObject.SetActive(true);
+                    }
+                    else if (l[1] == "hideD")
+                    {
+                        chList[l[2]].gameObject.SetActive(false);
+                    }
+                    else if (l[1] == "highlight" || l[1] == "hl")
+                    {
+                        chList[l[2]].GetComponent<C_Character>().HighLight(l[3]);
+                    }
+
+                    //Comm
+                    else if (l[1] == "default" || l[1] == "def")
+                    {
+                        chList[l[2]].GetComponent<C_Character>().Def();
+                    }
+                    else if (l[1] == "communication" || l[1] == "comm")
+                    {
+                        chList[l[2]].GetComponent<C_Character>().Comm();
+                    }
+                    else if (l[1] == "showC")
+                    {
+                        chList[l[2]].GetComponent<C_Character>().ShowC();
+                    }
+                    else if (l[1] == "hideC")
+                    {
+                        chList[l[2]].GetComponent<C_Character>().HideC();
+                    }
+
+                    //Emoticon
+                    else if (l[1] == "emoticon" || l[1] == "emo")
+                    {
+                        chList[l[2]].GetComponent<C_SprEmo>().PlayEmoticon(l[3]);
+                    }
+
+                    //Animation
+                    else if (l[1] == "empty")
+                    {
+                        chList[l[2]].GetComponent<C_SprAnimation>().Empty();
+                    }
+                    else if (l[1] == "down")
+                    {
+                        chList[l[2]].GetComponent<C_SprAnimation>().Down();
+                    }
+                    else if (l[1] == "up")
+                    {
+                        chList[l[2]].GetComponent<C_SprAnimation>().Up();
+                    }
+
+                    // Position
+                    else if (l[1] == "x")
+                    {
+                        chList[l[2]].GetComponent<C_SprMove>().SetX(l[3]);
+                    }
+                    else if (l[1] == "move")
+                    {
+                        chList[l[2]].GetComponent<C_SprMove>().Move(l[3], l[4]);
+                    }
+                    else if (l[1] == "z")
+                    {
+                        chList[l[2]].GetComponent<C_SprMove>().SetZ(l[3]);
+                    }
+                    else if (l[1] == "close")
+                    {
+                        chList[l[2]].GetComponent<C_SprMove>().Close();
+                    }
+                    else if (l[1] == "back")
+                    {
+                        chList[l[2]].GetComponent<C_SprMove>().Back();
+                    }
+                    else if (l[1] == "shakeX")
+                    {
+                        chList[l[2]].GetComponent<C_SprMove>().ShakeX(l[3], l[4], l[5]);
+                    }
+                    else if (l[1] == "shakeY")
+                    {
+                        chList[l[2]].GetComponent<C_SprMove>().ShakeY(l[3], l[4], l[5]);
+                    }
+
+                    break;
+                }
 
                 // Spr
                 case "spr":
+                {
+                    if (l[1] == "show")
                     {
-                        if (l[1] == "show")
-                        {
-                            sprList[l[2]].GetComponent<C_Spr>().Show();
-                        }
-                        else if (l[1] == "hide")
-                        {
-                            sprList[l[2]].GetComponent<C_Spr>().Hide();
-                        }
-                        else if (l[1] == "showD")
-                        {
-                            sprList[l[2]].gameObject.SetActive(true);
-                        }
-                        else if (l[1] == "hideD")
-                        {
-                            sprList[l[2]].gameObject.SetActive(false);
-                        }
-                        else if (l[1] == "highlight" || l[1] == "hl")
-                        {
-                            sprList[l[2]].GetComponent<C_Spr>().HighLight(l[3]);
-                        }
-                        else if (l[1] == "state")
-                        {
-                            sprList[l[2]].GetComponent<C_Spr>().SetState(l[3]);
-                        }
-
-                        //Emoticon
-                        else if (l[1] == "emoticon" || l[1] == "emo")
-                        {
-                            sprList[l[2]].GetComponent<C_SprEmo>().PlayEmoticon(l[3]);
-                        }
-
-                        //Animation
-                        else if (l[1] == "empty")
-                        {
-                            sprList[l[2]].GetComponent<C_SprAnimation>().Empty();
-                        }
-                        else if (l[1] == "down")
-                        {
-                            sprList[l[2]].GetComponent<C_SprAnimation>().Down();
-                        }
-                        else if (l[1] == "up")
-                        {
-                            sprList[l[2]].GetComponent<C_SprAnimation>().Up();
-                        }
-
-                        // Position
-                        else if (l[1] == "x")
-                        {
-                            sprList[l[2]].GetComponent<C_SprMove>().SetX(l[3]);
-                        }
-                        else if (l[1] == "move")
-                        {
-                            sprList[l[2]].GetComponent<C_SprMove>().Move(l[3], l[4]);
-                        }
-                        else if (l[1] == "z")
-                        {
-                            sprList[l[2]].GetComponent<C_SprMove>().SetZ(l[3]);
-                        }
-                        else if (l[1] == "close")
-                        {
-                            sprList[l[2]].GetComponent<C_SprMove>().Close();
-                        }
-                        else if (l[1] == "back")
-                        {
-                            sprList[l[2]].GetComponent<C_SprMove>().Back();
-                        }
-                        else if (l[1] == "shakeX")
-                        {
-                            sprList[l[2]].GetComponent<C_SprMove>().ShakeX(l[3], l[4], l[5]);
-                        }
-                        else if (l[1] == "shakeY")
-                        {
-                            sprList[l[2]].GetComponent<C_SprMove>().ShakeY(l[3], l[4], l[5]);
-                        }
-
-                        //Comm
-                        else if (l[1] == "default" || l[1] == "def")
-                        {
-                            sprList[l[2]].GetComponent<C_Spr>().Def();
-                        }
-                        else if (l[1] == "communication" || l[1] == "comm")
-                        {
-                            sprList[l[2]].GetComponent<C_Spr>().Comm();
-                        }
-                        else if (l[1] == "showC")
-                        {
-                            sprList[l[2]].GetComponent<C_Spr>().ShowC();
-                        }
-                        else if (l[1] == "hideC")
-                        {
-                            sprList[l[2]].GetComponent<C_Spr>().HideC();
-                        }
-                        break;
+                        sprList[l[2]].GetComponent<C_Spr>().Show();
+                        showList.Add(l[2]);
                     }
+                    else if (l[1] == "hide")
+                    {
+                        showList.Remove(l[2]);
+                        sprList[l[2]].GetComponent<C_Spr>().Hide();
+                    }
+                    else if (l[1] == "showD")
+                    {
+                        sprList[l[2]].gameObject.SetActive(true);
+                        showList.Add(l[2]);
+                    }
+                    else if (l[1] == "hideD")
+                    {
+                        showList.Remove(l[2]);
+                        sprList[l[2]].gameObject.SetActive(false);
+                    }
+                    else if (l[1] == "highlight" || l[1] == "hl")
+                    {
+                        sprList[l[2]].GetComponent<C_Spr>().HighLight(l[3]);
+                    }
+                    else if (l[1] == "state")
+                    {
+                        sprList[l[2]].GetComponent<C_Spr>().SetState(l[3]);
+                    }
+
+                    //Emoticon
+                    else if (l[1] == "emoticon" || l[1] == "emo")
+                    {
+                        sprList[l[2]].GetComponent<C_SprEmo>().PlayEmoticon(l[3]);
+                    }
+
+                    //Animation
+                    else if (l[1] == "empty")
+                    {
+                        sprList[l[2]].GetComponent<C_SprAnimation>().Empty();
+                    }
+                    else if (l[1] == "down")
+                    {
+                        sprList[l[2]].GetComponent<C_SprAnimation>().Down();
+                    }
+                    else if (l[1] == "up")
+                    {
+                        sprList[l[2]].GetComponent<C_SprAnimation>().Up();
+                    }
+
+                    // Position
+                    else if (l[1] == "x")
+                    {
+                        sprList[l[2]].GetComponent<C_SprMove>().SetX(l[3]);
+                    }
+                    else if (l[1] == "move")
+                    {
+                        sprList[l[2]].GetComponent<C_SprMove>().Move(l[3], l[4]);
+                    }
+                    else if (l[1] == "z")
+                    {
+                        sprList[l[2]].GetComponent<C_SprMove>().SetZ(l[3]);
+                    }
+                    else if (l[1] == "close")
+                    {
+                        sprList[l[2]].GetComponent<C_SprMove>().Close();
+                    }
+                    else if (l[1] == "back")
+                    {
+                        sprList[l[2]].GetComponent<C_SprMove>().Back();
+                    }
+                    else if (l[1] == "shakeX")
+                    {
+                        sprList[l[2]].GetComponent<C_SprMove>().ShakeX(l[3], l[4], l[5]);
+                    }
+                    else if (l[1] == "shakeY")
+                    {
+                        sprList[l[2]].GetComponent<C_SprMove>().ShakeY(l[3], l[4], l[5]);
+                    }
+
+                    //Comm
+                    else if (l[1] == "default" || l[1] == "def")
+                    {
+                        sprList[l[2]].GetComponent<C_Spr>().Def();
+                    }
+                    else if (l[1] == "communication" || l[1] == "comm")
+                    {
+                        sprList[l[2]].GetComponent<C_Spr>().Comm();
+                    }
+                    else if (l[1] == "showC")
+                    {
+                        sprList[l[2]].GetComponent<C_Spr>().ShowC();
+                    }
+                    else if (l[1] == "hideC")
+                    {
+                        sprList[l[2]].GetComponent<C_Spr>().HideC();
+                    }
+
+                    break;
+                }
             }
         }
     }

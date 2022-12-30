@@ -6,20 +6,11 @@ public class C_Select : MonoBehaviour, IPointerClickHandler, IPointerExitHandler
     public int i;
     public GameObject selectbuttonGo;
 
-    void Start()
-    {
-
-    }
-
     void OnEnable()
     {
         transform.localScale = new Vector3(1, 1, 1);
     }
 
-    void Update()
-    {
-
-    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -31,6 +22,7 @@ public class C_Select : MonoBehaviour, IPointerClickHandler, IPointerExitHandler
     {
         transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
     }
+
     public void OnPointerExit(PointerEventData eventData)
     {
         transform.localScale = new Vector3(1, 1, 1);

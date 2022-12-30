@@ -20,9 +20,6 @@ public class C_Spr : MonoBehaviour
     float changeShowTime = 0.4f;
 
     bool showing, hiding;
-    void Start()
-    {
-    }
 
     // Update is called once per frame
     void Update()
@@ -100,6 +97,7 @@ public class C_Spr : MonoBehaviour
             isEyeClose = false;
             closeTimer = 0;
         }
+
         sa.AnimationState.SetAnimation(1, s, true);
     }
 

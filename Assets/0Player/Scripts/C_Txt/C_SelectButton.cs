@@ -11,26 +11,21 @@ public class C_SelectButton : MonoBehaviour
     string t1, t2, t3;
     bool selecting;
 
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                Select(1);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                Select(2);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                Select(3);
-            }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Select(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            Select(2);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            Select(3);
+        }
     }
 
     public void Select(int n)
@@ -73,7 +68,8 @@ public class C_SelectButton : MonoBehaviour
         {
             txt1.text = l[1];
             txt2.text = l[5];
-            t1 = l[3]; t2 = l[7];
+            t1 = l[3];
+            t2 = l[7];
             s1.gameObject.SetActive(true);
             s2.gameObject.SetActive(true);
         }
@@ -82,11 +78,14 @@ public class C_SelectButton : MonoBehaviour
             txt1.text = l[1];
             txt2.text = l[5];
             txt3.text = l[9];
-            t1 = l[3]; t2 = l[7]; t3 = l[11];
+            t1 = l[3];
+            t2 = l[7];
+            t3 = l[11];
             s1.gameObject.SetActive(true);
             s2.gameObject.SetActive(true);
             s3.gameObject.SetActive(true);
         }
+
         selecting = true;
     }
 }

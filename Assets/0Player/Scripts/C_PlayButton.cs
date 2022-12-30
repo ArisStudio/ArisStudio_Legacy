@@ -6,6 +6,7 @@ public class C_PlayButton : MonoBehaviour, IPointerClickHandler
     public GameObject txtGo;
 
     GameObject control;
+
     void Start()
     {
         control = transform.parent.gameObject;

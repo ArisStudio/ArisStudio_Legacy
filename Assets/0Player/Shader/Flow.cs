@@ -1,16 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Flow : MonoBehaviour
 {
-
-    public float speed=80;
-    public int split=3;
-    public bool moveRight=true;
+    public float speed = 80;
+    public int split = 3;
+    public bool moveRight = true;
 
     float w;
     float targetX;
+
     void Start()
     {
         w = gameObject.GetComponent<RectTransform>().rect.width / split;
@@ -18,6 +16,7 @@ public class Flow : MonoBehaviour
         {
             w = -w;
         }
+
         targetX = transform.localPosition.x + w;
     }
 
@@ -28,24 +27,27 @@ public class Flow : MonoBehaviour
         {
             if (transform.localPosition.x >= targetX)
             {
-                transform.localPosition = new Vector3(targetX - w, transform.localPosition.y, transform.localPosition.z);
+                transform.localPosition =
+                    new Vector3(targetX - w, transform.localPosition.y, transform.localPosition.z);
             }
             else
             {
-                transform.localPosition = Vector3.MoveTowards(transform.localPosition, new Vector3(targetX, transform.localPosition.y, transform.localPosition.z), speed * Time.deltaTime);
+                transform.localPosition = Vector3.MoveTowards(transform.localPosition,
+                    new Vector3(targetX, transform.localPosition.y, transform.localPosition.z), speed * Time.deltaTime);
             }
         }
         else
         {
             if (transform.localPosition.x <= targetX)
             {
-                transform.localPosition = new Vector3(targetX - w, transform.localPosition.y, transform.localPosition.z);
+                transform.localPosition =
+                    new Vector3(targetX - w, transform.localPosition.y, transform.localPosition.z);
             }
             else
             {
-                transform.localPosition = Vector3.MoveTowards(transform.localPosition, new Vector3(targetX, transform.localPosition.y, transform.localPosition.z), speed * Time.deltaTime);
+                transform.localPosition = Vector3.MoveTowards(transform.localPosition,
+                    new Vector3(targetX, transform.localPosition.y, transform.localPosition.z), speed * Time.deltaTime);
             }
-
         }
     }
 }

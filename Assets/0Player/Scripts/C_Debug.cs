@@ -7,11 +7,6 @@ public class C_Debug : MonoBehaviour
 
     public InputField input;
 
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -20,7 +15,6 @@ public class C_Debug : MonoBehaviour
             RunCommand();
             input.ActivateInputField();
         }
-
     }
 
     public void RunCommand()
