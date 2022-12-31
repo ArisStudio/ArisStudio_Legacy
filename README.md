@@ -1,5 +1,7 @@
 # 碧蓝播放器 baPlayer
 
+![demo.png](./demo.png)
+
 适用于碧蓝档案的二创工具(点击蓝色超链接下载
 
 - 播放器 PC [baPlayer](https://github.com/Tualin14/baPlayer/releases)
