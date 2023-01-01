@@ -8,8 +8,8 @@
 
 - [素材 Data](https://oss.dza.vin/share@dzaaaaaa.com/baPlayer%E5%8F%AF%E7%94%A8%E7%B4%A0%E6%9D%90%E9%9B%86)
 
-  - 解压到对应文件夹
-  - 素材收集于网络，如没有找到自己需要的素材请自行添加。
+  - 解压到 Data 文件夹中
+  - 素材收集于网络，如没有找到自己需要的素材请自行添加
 
 - [WebGl 版](https://baplayer.dza.vin/)(有放弃计划)
 
@@ -19,7 +19,7 @@
   - Data Url 可用来设置素材外链，以便使用自己的素材
   - 素材在线仅为临时计划，后续有删除可能
 
-# [如何使用](https://github.com/Tualin14/baPlayer/wiki)
+# [如何使用 How to Use](https://github.com/Tualin14/baPlayer/wiki)
 
 # [Issues](https://github.com/Tualin14/baPlayer/issues)
 
