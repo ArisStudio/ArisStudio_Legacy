@@ -7,6 +7,7 @@ public class C_Cover : MonoBehaviour
 
     public void SetCover(Texture2D cover)
     {
+        coverGo.rectTransform.sizeDelta = new Vector2(cover.width, cover.height) / 3;
         coverGo.texture = cover;
         Show();
     }
