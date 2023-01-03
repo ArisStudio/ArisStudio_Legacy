@@ -541,6 +541,13 @@ public class C_Control : MonoBehaviour
                     break;
                 }
 
+                case "auto":
+                {
+                    autoSeconds = float.Parse(l[1]);
+                    Print("Auto: " + autoSeconds);
+                    break;
+                }
+
                 // Front
                 case "label":
                 {
@@ -576,7 +583,7 @@ public class C_Control : MonoBehaviour
                     isClick = false;
                     break;
                 }
-                
+
                 case "txt":
                 {
                     string[] tt = lt.Split('\'');
