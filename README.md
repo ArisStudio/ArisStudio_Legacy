@@ -11,13 +11,7 @@
   - 解压到 Data 文件夹中
   - 素材收集于网络，如没有找到自己需要的素材请自行添加
 
-- [WebGl 版](https://baplayer.dza.vin/)(有放弃计划)
-
-  - WebGL 版本吃浏览器性能，不建议使用
-  - 在线版音乐不能使用 ogg，应使用 mp3 代替
-  - 为节约空间，不提供 se 和 cover 的在线素材
-  - Data Url 可用来设置素材外链，以便使用自己的素材
-  - 素材在线仅为临时计划，后续有删除可能
+- [WebGl 版 (仅播放 Demo 演示](https://baplayer.dza.vin/)
 
 # [如何使用 How to Use](https://github.com/Tualin14/baPlayer/wiki)
 
@@ -30,7 +24,7 @@
 # 贡献
 
 - unity 版本 2019.3.15f1
-- 需要: 更好的UI，更好的还原动画
+- 需要: 更好的 UI，更好的还原动画
 - 直接往主分支提交就行
 
 # Credits
