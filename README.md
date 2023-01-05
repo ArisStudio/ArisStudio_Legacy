@@ -1,6 +1,6 @@
 # 碧蓝播放器 baPlayer
 
-<img align="right" src="./demo.png" width="200">
+<img align="right" src="./demo.png" width="400">
 
 适用于碧蓝档案的二创工具(点击蓝色超链接下载
 
