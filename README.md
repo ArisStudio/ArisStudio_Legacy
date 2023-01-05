@@ -1,6 +1,6 @@
 # 碧蓝播放器 baPlayer
 
-![demo.png](./demo.png)
+<img align="right" src="./demo.png" width="200">
 
 适用于碧蓝档案的二创工具(点击蓝色超链接下载
 
@@ -14,6 +14,13 @@
 - [WebGl 版 (仅播放 Demo 演示](https://baplayer.dza.vin/)
 
 # [如何使用 How to Use](https://github.com/Tualin14/baPlayer/wiki)
+
+# 来看看一些使用播放器完成的作品吧ヾ(≧▽≦\*)o
+
+- [游戏开发部要做 H-game？！](https://b23.tv/QaqP4Ew)
+- [诺亚与优香与老师 1](https://b23.tv/rkZMNXg)
+- [“最伟大的游戏”](https://b23.tv/z18G8Fs)
+- [才羽绿的新年礼物 Part.1](https://b23.tv/V9oeqd5)
 
 # [Issues](https://github.com/Tualin14/baPlayer/issues)
 
