@@ -42,8 +42,9 @@ public class C_Bg : MonoBehaviour
         }
     }
 
-    public void SetBg(Texture2D bg)
+    public void SetBg(Texture2D bg, string scale)
     {
+        bgGo.rectTransform.sizeDelta = new Vector2(bg.width, bg.height) * (float.Parse(scale) * 1.1f);
         bgGo.texture = bg;
         Show();
     }

@@ -1,30 +1,43 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class C_Select : MonoBehaviour, IPointerClickHandler, IPointerExitHandler, IPointerEnterHandler
+public class C_Select : MonoBehaviour, IPointerClickHandler
 {
     public int i;
     public GameObject selectbuttonGo;
+
+    bool t;
+    float tTime = 0;
+    float changeTTime = 1.5f;
 
     void OnEnable()
     {
         transform.localScale = new Vector3(1, 1, 1);
     }
 
+    void Update()
+    {
+        if (t)
+        {
+            tTime += Time.deltaTime;
+            if (tTime > changeTTime)
+            {
+                tTime = 0;
+                t = false;
+                gameObject.SetActive(false);
+            }
+        }
+    }
+
 
     public void OnPointerClick(PointerEventData eventData)
     {
         selectbuttonGo.GetComponent<C_SelectButton>().Select(i);
-        transform.localScale = new Vector3(1f, 1f, 1f);
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public void Select()
     {
         transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        transform.localScale = new Vector3(1, 1, 1);
+        t = true;
     }
 }

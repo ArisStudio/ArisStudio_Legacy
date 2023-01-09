@@ -36,12 +36,16 @@ public class C_Control : MonoBehaviour
     Shader comm;
 
     //Run
-    bool isAuto, isWait, isClick, isBanner, txtTyping, selecting;
+    bool isAuto, isWait, isClick, isBanner, txtTyping, selecting, haveSelect;
     int lineIndex, textLength;
     float autoTimer = 0;
     float autoSeconds = 2.3f;
     float waitTimer = 0;
     float waitSeconds = 2;
+
+    private int selectNum;
+    float selectTimer = 0;
+    float selectSeconds = 3f;
 
     string[] texts;
 
@@ -109,6 +113,17 @@ public class C_Control : MonoBehaviour
 
         if (selecting)
         {
+            if (haveSelect)
+            {
+                selectTimer += Time.deltaTime;
+                if (selectTimer > selectSeconds)
+                {
+                    selectTimer = 0;
+                    haveSelect = false;
+                    selectButtonGo.GetComponent<C_SelectButton>().Select(selectNum);
+                }
+            }
+
             isClick = false;
             return;
         }
@@ -626,6 +641,7 @@ public class C_Control : MonoBehaviour
 
                     break;
                 }
+
                 case "button":
                 {
                     selectButtonGo.GetComponent<C_SelectButton>().SetSelectButton(lt);
@@ -633,6 +649,17 @@ public class C_Control : MonoBehaviour
                     isClick = false;
                     break;
                 }
+
+                case "buttonS":
+                {
+                    selectButtonGo.GetComponent<C_SelectButton>().SetSelectButton(lt);
+                    selecting = true;
+                    isClick = false;
+                    selectNum = int.Parse(l[1]);
+                    haveSelect = true;
+                    break;
+                }
+
                 case "speedline":
                 {
                     if (l[1] == "show")
@@ -774,7 +801,14 @@ public class C_Control : MonoBehaviour
                 {
                     if (l[1] == "set")
                     {
-                        bgGo.GetComponent<C_Bg>().SetBg(backgroundList[l[2]]);
+                        try
+                        {
+                            bgGo.GetComponent<C_Bg>().SetBg(backgroundList[l[2]], l[3]);
+                        }
+                        catch (Exception e)
+                        {
+                            bgGo.GetComponent<C_Bg>().SetBg(backgroundList[l[2]], "1");
+                        }
                     }
                     else if (l[1] == "show")
                     {

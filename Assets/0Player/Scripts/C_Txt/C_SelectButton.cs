@@ -8,8 +8,10 @@ public class C_SelectButton : MonoBehaviour
     public GameObject control;
     public AudioSource bas;
 
-    string t1, t2, t3;
-    bool selecting;
+    string t1, t2, t3, select;
+    bool selecting, selected;
+    float timer;
+    float time = 1.5f;
 
     // Update is called once per frame
     void Update()
@@ -26,6 +28,17 @@ public class C_SelectButton : MonoBehaviour
         {
             Select(3);
         }
+
+        if (selected)
+        {
+            timer += Time.deltaTime;
+            if (timer >= time)
+            {
+                timer = 0;
+                control.GetComponent<C_Control>().SetSelecting(select);
+                selected = false;
+            }
+        }
     }
 
     public void Select(int n)
@@ -36,20 +49,28 @@ public class C_SelectButton : MonoBehaviour
 
             if (n == 1)
             {
-                control.GetComponent<C_Control>().SetSelecting(t1);
+                s1.GetComponent<C_Select>().Select();
+                select = t1;
+                selected = true;
+                s2.gameObject.SetActive(false);
+                s3.gameObject.SetActive(false);
             }
             else if (n == 2)
             {
-                control.GetComponent<C_Control>().SetSelecting(t2);
+                s2.GetComponent<C_Select>().Select();
+                select = t2;
+                selected = true;
+                s1.gameObject.SetActive(false);
+                s3.gameObject.SetActive(false);
             }
             else if (n == 3)
             {
-                control.GetComponent<C_Control>().SetSelecting(t3);
+                s3.GetComponent<C_Select>().Select();
+                select = t3;
+                selected = true;
+                s1.gameObject.SetActive(false);
+                s2.gameObject.SetActive(false);
             }
-
-            s1.gameObject.SetActive(false);
-            s2.gameObject.SetActive(false);
-            s3.gameObject.SetActive(false);
 
             selecting = false;
         }
