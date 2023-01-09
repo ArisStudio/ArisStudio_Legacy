@@ -1,0 +1,133 @@
+load spr hihumi hihumi_spr
+load bg ClassRoom BG_ClassRoom2.jpg
+load bgm Theme_04 Theme_04.ogg
+
+load end
+
+bg set ClassRoom
+banner '新产品'
+
+label '三一学院教室'
+bgm set Theme_04
+
+spr show hihumi
+spr emo hihumi Action
+spr state hihumi 03
+txt '日步美' '补课部' '啊，老师！你来了啊！'
+
+spr state hihumi 00
+txt '日步美' '补课部' '嘿嘿，就跟我在MomoTalk上和你说的一样，我刚拿到新的周边商品呢。'
+
+spr state hihumi 03
+spr shakeY hihumi 3 -1 1
+txt '日步美' '补课部' '请看！锵~'
+
+spr state hihumi 00
+spr emo hihumi Twinkle
+spr shakeY hihumi 8 1 3
+txt '日步美' '补课部' '是〈波浪猫〉造型的头枕，好软好蓬松啊！'
+
+spr state hihumi 03
+txt '日步美' '补课部' '只要有了这个，不管在哪里都能舒服的睡午觉！'
+
+button '......波浪猫？' 't1'
+
+target t1
+
+spr state hihumi 02
+spr shakeX hihumi 20 1 6
+spr emo hihumi Q
+txt '日步美' '补课部' '咦...？老师，难道你不知道波浪猫吗？'
+
+spr state hihumi 03
+spr emo hihumi Twinkle
+spr shakeY hihumi 8 1 3
+txt '日步美' '补课部' '波浪猫是在Momo好友中登场的角色，是一双身体长长的猫，也是佩洛洛独一无二的好朋友!'
+
+spr state hihumi 00
+txt '日步美' '补课部' '一向充满魅力的舞蹈是他的特色，虽然不如佩洛洛舞，但在Momo好友的发烧友之间还是人气很高。'
+
+spr move hihumi -5 25
+spr emo hihumi Chat
+txt '日步美' '补课部' '还有在波浪猫身上的这只小猫头鹰叫做大哥！'
+
+spr state hihumi 03
+spr move hihumi 0 25
+txt '日步美' '补课部' '因为只要大哥只要凝视对方的眼睛，就能得知一切真相，所以是考生之间很受欢迎的护身符。'
+
+spr state hihumi 00
+spr move hihumi 5 25
+txt '日步美' '补课部' '还有这旁边的短尾袋鼠叫做Mr.尼科莱......'
+
+spr state hihumi 04
+spr emo hihumi Sweat
+spr shakeX hihumi 20 1 6
+txt '日步美' '补课部' '哎呀呀，就我自己一个人说个不停。对不起！'
+
+spr state hihumi 01
+spr move hihumi 0 25
+txt '日步美' '补课部' '一聊到Momo好友的事，我就不禁嗨了起来......'
+
+button '没关系，很有意思。' 't2'
+target t2
+
+spr state hihumi 99
+spr emo hihumi Idea
+txt '日步美' '补课部' '虽然只要老师觉得好玩就太好了......'
+
+spr state hihumi 01
+txt '日步美' '补课部' '也有很多朋友不喜欢听我聊Momo好友的事。'
+
+spr state hihumi 04
+spr shakeX hihumi 20 1 6
+txt '日步美' '补课部' 'Momo好友的全部只有看起来扭曲又奇特的角色......'
+
+spr state hihumi 02
+spr emo hihumi Q
+txt '日步美' '补课部' '不过这一点不是很有魅力吗？一点都不平凡，拥有其他角色没有的个性，这一点真的很迷人。'
+
+spr state hihumi 01
+txt '日步美' '补课部' '我没有特别之处，平凡得不能再平凡了......所以看到这种个性的角色，总会觉得很憧憬......'
+
+button '我也喜欢平凡的东西' 't3'
+target t3
+
+spr state hihumi 04
+spr emo hihumi Sweat
+txt '日步美' '补课部' '哈、哈哈......是吗？听你这么说，总觉得好害羞......'
+
+spr state hihumi 02
+txt '日步美' '补课部' '对了，老师。你要用用看这个波浪猫头枕吗？'
+
+spr state hihumi 03
+spr emo hihumi Twinkle
+txt '日步美' '补课部' '软绵绵的，心情好好~'
+
+spr state hihumi 01
+spr hide hihumi
+===
+
+spr close hihumi
+spr show hihumi
+===
+
+spr shakeY hihumi 3 -1 1
+===
+
+spr state hihumi 03
+spr emo hihumi Chat
+txt '日步美' '补课部' '哈哈，好适合你！好像Momo好友的新角色一样！'
+
+spr state hihumi 00
+txt '日步美' '补课部' '怎么样？光是挂在脖子上就慢慢有睡意了吧？'
+
+spr state hihumi 04
+txt '日步美' '补课部' '...不过这个头枕不能给你。因为我也是好不容易才得到这个东西！'
+
+spr state hihumi 99
+spr emo hihumi Idea
+===
+
+spr state hihumi 01
+spr emo hihumi Shy
+txt '日步美' '补课部' '不过有需要的话...可以偶尔借给你。'
