@@ -1,15 +1,23 @@
-# 碧蓝播放器 baPlayer
+# Aris Studio 爱丽丝工坊
 
-<img align="right" src="./demo.png" width="400">
+<center>
 
-适用于碧蓝档案的二创工具(点击蓝色超链接下载
+![Logo](Logo.jpg)
+
+做你自己的碧蓝档案故事 | Make your own BlueArchive story
+
+图标由 [無花果洋\_wzy](https://b23.tv/RbW7CyF) 制作
+
+</center>
+
+<img align="right" src="./demo.png" width="360">
 
 - 播放器 PC [baPlayer](https://github.com/Tualin14/baPlayer/releases)
 
 - [素材 Data](https://oss.dza.vin/share@dzaaaaaa.com/baPlayer%E5%8F%AF%E7%94%A8%E7%B4%A0%E6%9D%90%E9%9B%86)
 
   - 解压到 Data 文件夹中
-  - 素材收集于网络，如没有找到自己需要的素材请自行添加
+  - 素材收集于网络，如有缺少请自行添加
 
 - [WebGl 版 (仅播放 Demo 演示](https://baplayer.dza.vin/)
 
