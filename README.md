@@ -1,14 +1,14 @@
 # Aris Studio 爱丽丝工坊
 
-<center>
+<div align="center">
 
-![Logo](Logo.jpg)
+<img src="./Logo.jpg" width="800">
 
 做你自己的碧蓝档案故事 | Make your own BlueArchive story
 
 图标由 [無花果洋\_wzy](https://b23.tv/RbW7CyF) 制作
 
-</center>
+</div>
 
 <img align="right" src="./demo.png" width="360">
 
