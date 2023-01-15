@@ -65,7 +65,7 @@ namespace ArisStudio.Spr
             var sprGo = sprBaseClone.transform.Find("SprObject").gameObject;
 
             var emoClone = Instantiate(emoBaseGo, sprGo.transform, false);
-            emoClone.name = "EmotionBase";
+            emoClone.name = "Emotion";
 
             # region LoadSpr
 
@@ -129,6 +129,7 @@ namespace ArisStudio.Spr
             }
 
             sprGo.GetComponent<SprState>().Init();
+            sprGo.GetComponent<OldSprEmotion>().InitEmoticon();
 
             sprList.Add(nameId, skeletonAnimation);
 
@@ -186,7 +187,7 @@ namespace ArisStudio.Spr
                 // SprEmotion
                 case "emo":
                 {
-                    // sprList[l[2]].GetComponent<SprEmotion>().SetEmotion(l[3]);
+                    sprList[l[2]].GetComponent<OldSprEmotion>().PlayEmoticon(l[3]);
                     break;
                 }
 

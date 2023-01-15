@@ -92,12 +92,16 @@
      <Compile Include="Assets\0Player\SkipSplash.cs" />
      <Compile Include="Assets\ArisStudio\DebugConsole.cs" />
      <Compile Include="Assets\ArisStudio\Image\ImageFactory.cs" />
+     <Compile Include="Assets\ArisStudio\Image\ImageShake.cs" />
      <Compile Include="Assets\ArisStudio\MainControl.cs" />
+     <Compile Include="Assets\ArisStudio\OtherShortcut.cs" />
      <Compile Include="Assets\ArisStudio\RichText.cs" />
      <Compile Include="Assets\ArisStudio\SelectButton.cs" />
+     <Compile Include="Assets\ArisStudio\SettingMenu.cs" />
      <Compile Include="Assets\ArisStudio\Sound\SoundFactory.cs" />
+     <Compile Include="Assets\ArisStudio\Spr\OldEmoticonScript.cs" />
+     <Compile Include="Assets\ArisStudio\Spr\OldSprEmotion.cs" />
      <Compile Include="Assets\ArisStudio\Spr\SprAnimation.cs" />
-     <Compile Include="Assets\ArisStudio\Spr\SprEmotion.cs" />
      <Compile Include="Assets\ArisStudio\Spr\SprFactory.cs" />
      <Compile Include="Assets\ArisStudio\Spr\SprMove.cs" />
      <Compile Include="Assets\ArisStudio\Spr\SprState.cs" />

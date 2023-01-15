@@ -3,7 +3,6 @@ obj/
 Packages/
 Logs/
 Data/
-*.meta
 Temp/
 0E/
 .idea/

@@ -27,6 +27,8 @@ namespace ArisStudio.Sound
             soundEffectList.Clear();
         }
 
+        # region Load Sound
+
         public void LoadBgm(string nameId, string bgmName)
         {
             StartCoroutine(LoadSound(nameId, bgmName, "Bgm"));
@@ -37,7 +39,7 @@ namespace ArisStudio.Sound
             StartCoroutine(LoadSound(nameId, soundEffectName, "SoundEffect"));
         }
 
-        AudioType SelectAudioType(string soundName)
+        private AudioType SelectAudioType(string soundName)
         {
             if (soundName.EndsWith(".ogg"))
             {
@@ -53,25 +55,33 @@ namespace ArisStudio.Sound
             }
         }
 
-        IEnumerator LoadSound(string nameId, string soundName, string soundType)
+        private IEnumerator LoadSound(string nameId, string soundName, string soundType)
         {
-            if (soundType == "Bgm")
+            switch (soundType)
             {
-                var bgmPath = Path.Combine(bgmDataPath, soundName);
-                var www = UnityWebRequestMultimedia.GetAudioClip(bgmPath, SelectAudioType(soundName));
-                yield return www.SendWebRequest();
-                bgmList.Add(nameId, DownloadHandlerAudioClip.GetContent(www));
-            }
-            else if (soundType == "SoundEffect")
-            {
-                var soundEffectPath = Path.Combine(soundEffectDataPath, soundName);
-                var www = UnityWebRequestMultimedia.GetAudioClip(soundEffectPath, SelectAudioType(soundName));
-                yield return www.SendWebRequest();
-                soundEffectList.Add(nameId, DownloadHandlerAudioClip.GetContent(www));
+                case "Bgm":
+                {
+                    var bgmPath = Path.Combine(bgmDataPath, soundName);
+                    var www = UnityWebRequestMultimedia.GetAudioClip(bgmPath, SelectAudioType(soundName));
+                    yield return www.SendWebRequest();
+                    bgmList.Add(nameId, DownloadHandlerAudioClip.GetContent(www));
+                    break;
+                }
+                case "SoundEffect":
+                {
+                    var soundEffectPath = Path.Combine(soundEffectDataPath, soundName);
+                    var www = UnityWebRequestMultimedia.GetAudioClip(soundEffectPath, SelectAudioType(soundName));
+                    yield return www.SendWebRequest();
+                    soundEffectList.Add(nameId, DownloadHandlerAudioClip.GetContent(www));
+                    break;
+                }
             }
 
             debugConsole.PrintLog($"Load {soundType}: <color=lime>{soundName}</color>");
         }
+
+        #endregion
+
 
         public void SoundCommand(string soundCommand)
         {
