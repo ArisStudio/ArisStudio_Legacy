@@ -83,6 +83,7 @@ namespace RichText
             return consumedLength < originalText.Length;
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         // Return if real character is consumed
         // If line's last part is closing tag, this function return false when consumed last closing tag.
         public bool Consume()

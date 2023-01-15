@@ -105,14 +105,14 @@ txt '日步美' '补课部' '软绵绵的，心情好好~'
 
 spr state hihumi 01
 spr hide hihumi
-===
+wait 1
 
 spr close hihumi
 spr show hihumi
-===
+wait 1
 
 spr shakeY hihumi 3 -1 1
-===
+wait 1
 
 spr state hihumi 03
 spr emo hihumi Chat

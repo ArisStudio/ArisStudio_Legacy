@@ -12,7 +12,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{9A075D0D-57F8-E455-9096-F6D0C9B31350}</ProjectGuid>
+    <ProjectGuid>{B487A4E9-DA53-4160-EF1A-135A3D38BB1A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -83,13 +83,25 @@
      <Compile Include="Assets\0Player\Scripts\C_Txt\C_Banner.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Txt\C_Banner2.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Txt\C_Label.cs" />
-     <Compile Include="Assets\0Player\Scripts\C_Txt\C_RichText.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Txt\C_Select.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Txt\C_SelectButton.cs" />
      <Compile Include="Assets\0Player\Scripts\C_Txt\C_Text.cs" />
+     <Compile Include="Assets\0Player\Scripts\C_Txt\RichTextS.cs" />
      <Compile Include="Assets\0Player\Shader\Flow.cs" />
      <Compile Include="Assets\0Player\Shader\S_SpeedLine.cs" />
      <Compile Include="Assets\0Player\SkipSplash.cs" />
+     <Compile Include="Assets\ArisStudio\DebugConsole.cs" />
+     <Compile Include="Assets\ArisStudio\Image\ImageFactory.cs" />
+     <Compile Include="Assets\ArisStudio\MainControl.cs" />
+     <Compile Include="Assets\ArisStudio\RichText.cs" />
+     <Compile Include="Assets\ArisStudio\SelectButton.cs" />
+     <Compile Include="Assets\ArisStudio\Sound\SoundFactory.cs" />
+     <Compile Include="Assets\ArisStudio\Spr\SprAnimation.cs" />
+     <Compile Include="Assets\ArisStudio\Spr\SprEmotion.cs" />
+     <Compile Include="Assets\ArisStudio\Spr\SprFactory.cs" />
+     <Compile Include="Assets\ArisStudio\Spr\SprMove.cs" />
+     <Compile Include="Assets\ArisStudio\Spr\SprState.cs" />
+     <Compile Include="Assets\ArisStudio\TextArea.cs" />
      <Compile Include="Assets\WebGLSupport\WebGLInput\Detail\RebuildChecker.cs" />
      <Compile Include="Assets\WebGLSupport\WebGLInput\Mobile\WebGLInputMobile.cs" />
      <Compile Include="Assets\WebGLSupport\WebGLInput\WebGLInput.cs" />
@@ -97,100 +109,44 @@
      <Compile Include="Assets\WebGLSupport\WebGLInput\Wrapper\WrappedInputField.cs" />
      <Compile Include="Assets\WebGLSupport\WebGLInput\Wrapper\WrappedTMPInputField.cs" />
      <Compile Include="Assets\WebGLSupport\WebGLWindow\WebGLWindow.cs" />
-     <None Include="Assets\Spine\version.txt" />
      <None Include="Assets\0Player\Shader\SpeedLine.shader" />
+     <None Include="Assets\0Player\Shader\Comm.shader" />
      <None Include="Assets\0Player\Shader\Blur.shader" />
      <None Include="Assets\0Player\Shader\SFill.shader" />
-     <None Include="Assets\0Player\Shader\Comm.shader" />
+     <None Include="Assets\ArisStudio\Reference\Spr\yuuka_spr.atlas.txt" />
+     <None Include="Assets\Spine\version.txt" />
  <Reference Include="Unity.Timeline.Editor">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Animation.Runtime">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.2D.Animation.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.PixelPerfect.Editor">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.2D.PixelPerfect.Editor.dll</HintPath>
+ <HintPath>D:/1project/ArisStudio/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.VSCode.Editor">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.SpriteShape.Editor">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.2D.SpriteShape.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Recorder.Editor">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.Recorder.Editor.dll</HintPath>
+ <HintPath>D:/1project/ArisStudio/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Path.Editor">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.2D.Path.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Recorder">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.Recorder.dll</HintPath>
+ <HintPath>D:/1project/ArisStudio/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ <HintPath>D:/1project/ArisStudio/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Timeline">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Animation.Triangle.Runtime">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.2D.Animation.Triangle.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="PsdPlugin">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/PsdPlugin.dll</HintPath>
+ <HintPath>D:/1project/ArisStudio/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
  </Reference>
  <Reference Include="Unity.CollabProxy.Editor">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+ <HintPath>D:/1project/ArisStudio/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Rider.Editor">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Recorder.Base">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.Recorder.Base.dll</HintPath>
+ <HintPath>D:/1project/ArisStudio/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Mathematics">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Psdimporter.Editor">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.2D.Psdimporter.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.InternalAPIEngineBridge.001">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.001.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Sprite.Editor">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Common.Runtime">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.2D.Common.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Tilemap.Editor">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.SpriteShape.Runtime">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.2D.SpriteShape.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.PixelPerfect">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.2D.PixelPerfect.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Animation.Editor">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
+ <HintPath>D:/1project/ArisStudio/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Mathematics.Editor">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
+ <HintPath>D:/1project/ArisStudio/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Common.Editor">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.2D.Common.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.InternalAPIEditorBridge.001">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.001.dll</HintPath>
+ <HintPath>D:/1project/ArisStudio/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
- <HintPath>D:/1project/baPlayer/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ <HintPath>D:/1project/ArisStudio/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>D:/Unity3d/2019.3.15f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -717,11 +673,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="spine-unity.csproj">
-      <Project>{D2ED33BE-A0D3-DD98-6848-F8EF9DFDCB02}</Project>
+      <Project>{A43CB4CC-CF4D-0562-CC4D-F13FDE982A83}</Project>
       <Name>spine-unity</Name>
     </ProjectReference>
     <ProjectReference Include="spine-unity-editor.csproj">
-      <Project>{1CC497D1-0EBB-2279-4E31-E8920341AE94}</Project>
+      <Project>{18CB7A3C-1B4D-8843-C1AD-E6E8A974B280}</Project>
       <Name>spine-unity-editor</Name>
     </ProjectReference>
   </ItemGroup>
