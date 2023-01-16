@@ -22,6 +22,8 @@ namespace ArisStudio.Spr
 
         Dictionary<string, SkeletonAnimation> sprList = new Dictionary<string, SkeletonAnimation>();
 
+        List<string> showList = new List<string>();
+
         private void Start()
         {
             defShader = Shader.Find("SFill");
@@ -138,6 +140,21 @@ namespace ArisStudio.Spr
             sprGo.SetActive(false);
         }
 
+        public void TextWithHl(string nameId)
+        {
+            foreach (var s in showList)
+            {
+                if (s == nameId)
+                {
+                    sprList[s].GetComponent<SprState>().HighLight(1);
+                }
+                else
+                {
+                    sprList[s].GetComponent<SprState>().HighLight(0.5f);
+                }
+            }
+        }
+
         public void SprCommand(string sprCommand)
         {
             if (sprCommand.StartsWith("spr"))
@@ -156,21 +173,25 @@ namespace ArisStudio.Spr
                 case "show":
                 {
                     sprList[l[2]].GetComponent<SprState>().Show();
+                    showList.Add(l[2]);
                     break;
                 }
                 case "hide":
                 {
                     sprList[l[2]].GetComponent<SprState>().Hide();
+                    showList.Remove(l[2]);
                     break;
                 }
-                case "showC":
+                case "showD":
                 {
                     sprList[l[2]].gameObject.SetActive(true);
+                    showList.Add(l[2]);
                     break;
                 }
-                case "hideC":
+                case "hideD":
                 {
                     sprList[l[2]].gameObject.SetActive(false);
+                    showList.Remove(l[2]);
                     break;
                 }
                 case "hl":

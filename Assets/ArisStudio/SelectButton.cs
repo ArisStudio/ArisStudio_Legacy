@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ namespace ArisStudio
     public class SelectButton : MonoBehaviour
     {
         public MainControl mainControl;
+        public AudioSource selectSound;
 
         [Header("B1")] public Button button1;
         public Text text1;
@@ -26,20 +28,22 @@ namespace ArisStudio
         private string t1, t2, t3;
         private bool isSelecting;
 
+        private const float WaitTime = 0.3f;
+
 
         private void Update()
         {
             if (!isSelecting) return;
 
-            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha1))
+            if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 Select(1);
             }
-            else if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha2))
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 Select(2);
             }
-            else if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha3))
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
                 Select(3);
             }
@@ -49,15 +53,30 @@ namespace ArisStudio
         {
             isSelecting = false;
 
+            selectSound.Play();
+            StartCoroutine(WaitAndSelect(i));
+        }
+
+        private IEnumerator WaitAndSelect(int i)
+        {
             switch (i)
             {
                 case 1:
+                    button1.transform.localScale = Vector3.one * 0.9f;
+                    button21.transform.localScale = Vector3.one * 0.9f;
+                    button31.transform.localScale = Vector3.one * 0.9f;
+                    yield return new WaitForSeconds(WaitTime);
                     mainControl.SetSelect(t1);
                     break;
                 case 2:
+                    button22.transform.localScale = Vector3.one * 0.9f;
+                    button32.transform.localScale = Vector3.one * 0.9f;
+                    yield return new WaitForSeconds(WaitTime);
                     mainControl.SetSelect(t2);
                     break;
                 case 3:
+                    button33.transform.localScale = Vector3.one * 0.9f;
+                    yield return new WaitForSeconds(WaitTime);
                     mainControl.SetSelect(t3);
                     break;
             }
@@ -72,6 +91,14 @@ namespace ArisStudio
 
         public void SelectCommand(string selectCommand)
         {
+            button1.transform.localScale = Vector3.one;
+            button21.transform.localScale = Vector3.one;
+            button22.transform.localScale = Vector3.one;
+            button31.transform.localScale = Vector3.one;
+            button32.transform.localScale = Vector3.one;
+            button33.transform.localScale = Vector3.one;
+
+
             var l = selectCommand.Split('\'');
             switch (l.Length)
             {

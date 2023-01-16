@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/ArisStudio.unity
+    guid: 0fb3ac03249b21f40ac959c7c4f52090
   m_configObjects: {}

@@ -138,13 +138,13 @@ namespace ArisStudio.Spr
         public void Close()
         {
             sprBase.transform.localScale = new Vector3(1.5f, 1.5f, 1);
-            sprBase.transform.localPosition = new Vector3(sprBase.transform.localPosition.x, -8.5f, 0);
+            sprBase.transform.localPosition = new Vector3(sprBase.transform.localPosition.x, sprBase.transform.localPosition.y - 8.5f, 0);
         }
 
         public void Back()
         {
             sprBase.transform.localScale = Vector3.one;
-            sprBase.transform.localPosition = new Vector3(sprBase.transform.localPosition.x, 0, 0);
+            sprBase.transform.localPosition = new Vector3(sprBase.transform.localPosition.x, sprBase.transform.localPosition.y + 8.5f, 0);
         }
 
         public void ShakeX(float xa, float xh, float xt)

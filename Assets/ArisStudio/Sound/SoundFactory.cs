@@ -10,6 +10,9 @@ namespace ArisStudio.Sound
     {
         public DebugConsole debugConsole;
 
+        public Bgm bgm;
+        public SoundEffect se;
+
         private string bgmDataPath, soundEffectDataPath;
 
         Dictionary<string, AudioClip> bgmList = new Dictionary<string, AudioClip>();
@@ -24,7 +27,10 @@ namespace ArisStudio.Sound
         public void Initialize()
         {
             bgmList.Clear();
+            bgm.Stop();
+
             soundEffectList.Clear();
+            se.Stop();
         }
 
         # region Load Sound
@@ -85,6 +91,72 @@ namespace ArisStudio.Sound
 
         public void SoundCommand(string soundCommand)
         {
+            var l = soundCommand.Split(' ');
+            switch (l[0])
+            {
+                case "bgm":
+                    switch (l[1])
+                    {
+                        case "set":
+                            bgm.SetBgm(bgmList[l[2]]);
+                            debugConsole.PrintLog($"Set Bgm: <color=lime>{l[2]}</color>");
+                            break;
+                        case "play":
+                            bgm.Play();
+                            break;
+                        case "stop":
+                            bgm.Stop();
+                            break;
+                        case "pause":
+                            bgm.Pause();
+                            break;
+                        case "v":
+                            bgm.SetVolume(float.Parse(l[2]));
+                            break;
+                        case "loop":
+                            bgm.Loop();
+                            break;
+                        case "once":
+                            bgm.Once();
+                            break;
+                        case "down":
+                            bgm.Down();
+                            break;
+                    }
+
+                    break;
+                case "se":
+                    switch (l[1])
+                    {
+                        case "set":
+                            se.SetSoundEffect(soundEffectList[l[2]]);
+                            debugConsole.PrintLog($"Set SoundEffect: <color=lime>{l[2]}</color>");
+                            break;
+                        case "play":
+                            se.Play();
+                            break;
+                        case "stop":
+                            se.Stop();
+                            break;
+                        case "pause":
+                            se.Pause();
+                            break;
+                        case "v":
+                            se.SetVolume(float.Parse(l[2]));
+                            break;
+                        case "loop":
+                            se.Loop();
+                            break;
+                        case "once":
+                            se.Once();
+                            break;
+                        case "down":
+                            se.Down();
+                            break;
+                    }
+
+                    break;
+            }
         }
     }
 }

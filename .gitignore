@@ -7,7 +7,6 @@ Temp/
 0E/
 .idea/
 Library/
-0Player/
 Assets/ArisStudio/Reference/
-Assets/ArisStudio/Components/
-Assets/ArisStudio/Spr/Emoticon/
+Assets/ArisStudio/Spr/Emoticon/EmoticonImage
+Assets/ArisStudio/Spr/Emoticon/EmoticonSound

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using ArisStudio.Image;
+using ArisStudio.ScreenEffect;
 using ArisStudio.Sound;
 using ArisStudio.Spr;
 using UnityEngine;
@@ -22,11 +23,16 @@ namespace ArisStudio
 
         [Header("SelectButton")] public SelectButton selectButton;
 
+        [Header("Label")] public Label label;
+
+        [Header("Banner")] public Banner banner;
+
         private SprFactory sprFactory;
         private ImageFactory imageFactory;
         private SoundFactory soundFactory;
+        private ScreenEffectFactory screenEffectFactory;
 
-        private bool isPlaying, isTyping, isSelecting;
+        private bool isPlaying, isTyping, isSelecting, isBanner;
 
         private bool isAuto;
         private float autoTimer;
@@ -49,12 +55,18 @@ namespace ArisStudio
             sprFactory = GetComponent<SprFactory>();
             imageFactory = GetComponent<ImageFactory>();
             soundFactory = GetComponent<SoundFactory>();
+            screenEffectFactory = GetComponent<ScreenEffectFactory>();
 
             SetLocalDataPath();
         }
 
         private void Update()
         {
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.R))
+            {
+                LoadTextData();
+            }
+
             if (isWaiting)
             {
                 autoTimer = 0;
@@ -95,6 +107,13 @@ namespace ArisStudio
 
             if (!isPlaying) return;
 
+            if (isBanner)
+            {
+                banner.CloseBanner();
+                isBanner = false;
+                return;
+            }
+
             if (runLineNumber < textsLength)
             {
                 RunText(textsData[runLineNumber].Trim());
@@ -129,10 +148,10 @@ namespace ArisStudio
 
         # region Set PlayState
 
-        public void SetAuto()
+        public void SetAuto(bool b)
         {
-            isAuto = true;
-            debugConsole.PrintLog("Auto");
+            isAuto = b;
+            debugConsole.PrintLog($"Auto {(isAuto ? "On" : "Off")}");
         }
 
         public void SetPlay()
@@ -181,7 +200,12 @@ namespace ArisStudio
 
         public void LoadTextData()
         {
-            StartCoroutine(SetTextData(Path.Combine(textDataPath, loadTxtInputField.text + ".txt")));
+            StartCoroutine(SetTextData(Path.Combine(textDataPath, $"{loadTxtInputField.text}.txt")));
+        }
+
+        private void LoadTextData(string txtName)
+        {
+            StartCoroutine(SetTextData(Path.Combine(textDataPath, $"{txtName}.txt")));
         }
 
         private IEnumerator SetTextData(string textPath)
@@ -202,8 +226,52 @@ namespace ArisStudio
             sprFactory.Initialize();
             imageFactory.Initialize();
             soundFactory.Initialize();
+            screenEffectFactory.Initialize();
+
             targetList.Clear();
-            debugConsole.PrintLog("<color=orange>Initialize</color>");
+
+            label.gameObject.SetActive(false);
+            banner.CloseBanner();
+
+            debugConsole.PrintLog("\n<color=orange>Initialize</color>");
+        }
+
+        public void PreLoad(string text)
+        {
+            var textSplit = text.Split(' ');
+            switch (textSplit[1])
+            {
+                case "spr":
+                {
+                    sprFactory.CreateSprGameObjectWithDef(textSplit[2], textSplit[3]);
+                    break;
+                }
+                case "sprC":
+                {
+                    sprFactory.CreateSprGameObjectWithComm(textSplit[2], textSplit[3]);
+                    break;
+                }
+                case "bg":
+                {
+                    imageFactory.LoadBackground(textSplit[2], textSplit[3]);
+                    break;
+                }
+                case "cover":
+                {
+                    imageFactory.LoadCover(textSplit[2], textSplit[3]);
+                    break;
+                }
+                case "bgm":
+                {
+                    soundFactory.LoadBgm(textSplit[2], textSplit[3]);
+                    break;
+                }
+                case "se":
+                {
+                    soundFactory.LoadSoundEffect(textSplit[2], textSplit[3]);
+                    break;
+                }
+            }
         }
 
         private void PreLoad(string[] texts)
@@ -217,48 +285,15 @@ namespace ArisStudio
                 {
                     targetList.Add(text.Replace("target ", ""), lineIndex);
                 }
+                else if (text.StartsWith("load end"))
+                {
+                    runLineNumber = lineIndex;
+                    isPlaying = false;
+                    debugConsole.PrintLog($"PreLoad End at {runLineNumber}");
+                }
                 else if (text.StartsWith("load"))
                 {
-                    var textSplit = text.Split(' ');
-                    switch (textSplit[1])
-                    {
-                        case "spr":
-                        {
-                            sprFactory.CreateSprGameObjectWithDef(textSplit[2], textSplit[3]);
-                            break;
-                        }
-                        case "sprC":
-                        {
-                            sprFactory.CreateSprGameObjectWithComm(textSplit[2], textSplit[3]);
-                            break;
-                        }
-                        case "bg":
-                        {
-                            imageFactory.LoadBackground(textSplit[2], textSplit[3]);
-                            break;
-                        }
-                        case "cover":
-                        {
-                            imageFactory.LoadCover(textSplit[2], textSplit[3]);
-                            break;
-                        }
-                        case "bgm":
-                        {
-                            soundFactory.LoadBgm(textSplit[2], textSplit[3]);
-                            break;
-                        }
-                        case "se":
-                        {
-                            soundFactory.LoadSoundEffect(textSplit[2], textSplit[3]);
-                            break;
-                        }
-                        case "end":
-                        {
-                            runLineNumber = lineIndex;
-                            isPlaying = false;
-                            break;
-                        }
-                    }
+                    PreLoad(text);
                 }
             }
 
@@ -280,6 +315,10 @@ namespace ArisStudio
                 string[] tt;
                 switch (l[0])
                 {
+                    case "ChangeTxt":
+                        LoadTextData(l[1]);
+                        break;
+
                     case "wait":
                         waitSeconds = float.Parse(l[1]);
                         isWaiting = true;
@@ -310,17 +349,67 @@ namespace ArisStudio
                         textArea.SetText(tt[1], tt[3], tt[5]);
                         break;
 
+                    case "th":
+                        sprFactory.TextWithHl(l[1]);
+                        isPlaying = false;
+                        tt = text.Split('\'');
+                        textArea.SetText(tt[1], tt[3], tt[5]);
+                        break;
+
                     case "text":
                         textArea.TextCommand(text);
                         break;
 
-
+                    // Button
                     case "button":
                         isPlaying = false;
                         isSelecting = true;
                         selectButton.SelectCommand(text);
                         break;
+                    case "buttonS":
+                        isPlaying = false;
+                        isSelecting = true;
+                        selectButton.SelectCommand(text);
+                        break;
 
+                    // Label
+                    case "label":
+                        label.SetLabelText(l[1]);
+                        break;
+                    // Banner
+                    case "banner":
+                        banner.SetBanner1Text(text);
+                        isPlaying = false;
+                        isBanner = true;
+                        break;
+                    case "banner2":
+                        banner.SetBanner2Text(text);
+                        isPlaying = false;
+                        isBanner = true;
+                        break;
+
+                    // ScreenEffect
+                    case "screen":
+                        screenEffectFactory.ScreenEffectCommand(text);
+                        break;
+                    case "curtain":
+                        screenEffectFactory.ScreenEffectCommand(text);
+                        break;
+                    case "speedline":
+                        screenEffectFactory.ScreenEffectCommand(text);
+                        break;
+                    case "smoke":
+                        screenEffectFactory.ScreenEffectCommand(text);
+                        break;
+                    case "dust":
+                        screenEffectFactory.ScreenEffectCommand(text);
+                        break;
+                    case "snow":
+                        screenEffectFactory.ScreenEffectCommand(text);
+                        break;
+                    case "rain":
+                        screenEffectFactory.ScreenEffectCommand(text);
+                        break;
 
                     // Spr
                     case "spr":

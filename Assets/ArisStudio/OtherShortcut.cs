@@ -17,6 +17,11 @@ namespace ArisStudio
             {
                 debugConsole.SetActive(!debugConsole.activeSelf);
             }
+
+            else if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F))
+            {
+                Screen.fullScreen = !Screen.fullScreen;
+            }
         }
     }
 }

@@ -97,10 +97,10 @@ namespace ArisStudio
             switch (size)
             {
                 case "big":
-                    tContent.fontSize = 48;
+                    tContent.fontSize = 60;
                     break;
                 case "small":
-                    tContent.fontSize = 24;
+                    tContent.fontSize = 32;
                     break;
                 case "medium":
                     tContent.fontSize = 42;

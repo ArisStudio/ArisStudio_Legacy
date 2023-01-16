@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace ArisStudio.Image
@@ -15,7 +13,6 @@ namespace ArisStudio.Image
 
         [Header("Background")] public RawImage backgroundImage;
         public ImageShake bgShake;
-        public Texture bgDefaultImage;
 
         [Header("Cover")] public RawImage coverImage;
 
