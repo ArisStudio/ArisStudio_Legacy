@@ -28,22 +28,23 @@ namespace ArisStudio
         private string t1, t2, t3;
         private bool isSelecting;
 
-        private const float WaitTime = 0.3f;
+        private const float WaitSelectTime = 3f;
+        private const float SelectWaitTime = 0.3f;
 
 
         private void Update()
         {
             if (!isSelecting) return;
 
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            if (t1 != string.Empty && Input.GetKeyDown(KeyCode.Alpha1))
             {
                 Select(1);
             }
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            else if (t2 != string.Empty && Input.GetKeyDown(KeyCode.Alpha2))
             {
                 Select(2);
             }
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            else if (t3 != string.Empty && Input.GetKeyDown(KeyCode.Alpha3))
             {
                 Select(3);
             }
@@ -54,10 +55,16 @@ namespace ArisStudio
             isSelecting = false;
 
             selectSound.Play();
-            StartCoroutine(WaitAndSelect(i));
+            StartCoroutine(SelectAndWait(i));
         }
 
         private IEnumerator WaitAndSelect(int i)
+        {
+            yield return new WaitForSeconds(WaitSelectTime);
+            Select(i);
+        }
+
+        private IEnumerator SelectAndWait(int i)
         {
             switch (i)
             {
@@ -65,21 +72,23 @@ namespace ArisStudio
                     button1.transform.localScale = Vector3.one * 0.9f;
                     button21.transform.localScale = Vector3.one * 0.9f;
                     button31.transform.localScale = Vector3.one * 0.9f;
-                    yield return new WaitForSeconds(WaitTime);
+                    yield return new WaitForSeconds(SelectWaitTime);
                     mainControl.SetSelect(t1);
                     break;
                 case 2:
                     button22.transform.localScale = Vector3.one * 0.9f;
                     button32.transform.localScale = Vector3.one * 0.9f;
-                    yield return new WaitForSeconds(WaitTime);
+                    yield return new WaitForSeconds(SelectWaitTime);
                     mainControl.SetSelect(t2);
                     break;
                 case 3:
                     button33.transform.localScale = Vector3.one * 0.9f;
-                    yield return new WaitForSeconds(WaitTime);
+                    yield return new WaitForSeconds(SelectWaitTime);
                     mainControl.SetSelect(t3);
                     break;
             }
+
+            t1 = t2 = t3 = string.Empty;
 
             button1.gameObject.SetActive(false);
             button21.gameObject.SetActive(false);
@@ -88,6 +97,13 @@ namespace ArisStudio
             button32.gameObject.SetActive(false);
             button33.gameObject.SetActive(false);
         }
+
+        public void SelectCommandWithSelect(int i, string selectCommand)
+        {
+            SelectCommand(selectCommand);
+            StartCoroutine(WaitAndSelect(i));
+        }
+
 
         public void SelectCommand(string selectCommand)
         {

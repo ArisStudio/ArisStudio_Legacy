@@ -62,11 +62,6 @@ namespace ArisStudio
 
         private void Update()
         {
-            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.R))
-            {
-                LoadTextData();
-            }
-
             if (isWaiting)
             {
                 autoTimer = 0;
@@ -236,41 +231,50 @@ namespace ArisStudio
             debugConsole.PrintLog("\n<color=orange>Initialize</color>");
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         public void PreLoad(string text)
         {
-            var textSplit = text.Split(' ');
-            switch (textSplit[1])
+            try
             {
-                case "spr":
+                var textSplit = text.Split(' ');
+                switch (textSplit[1])
                 {
-                    sprFactory.CreateSprGameObjectWithDef(textSplit[2], textSplit[3]);
-                    break;
+                    case "spr":
+                    {
+                        sprFactory.CreateSprGameObjectWithDef(textSplit[2], textSplit[3]);
+                        break;
+                    }
+                    case "sprC":
+                    {
+                        sprFactory.CreateSprGameObjectWithComm(textSplit[2], textSplit[3]);
+                        break;
+                    }
+                    case "bg":
+                    {
+                        imageFactory.LoadBackground(textSplit[2], textSplit[3]);
+                        break;
+                    }
+                    case "cover":
+                    {
+                        imageFactory.LoadCover(textSplit[2], textSplit[3]);
+                        break;
+                    }
+                    case "bgm":
+                    {
+                        soundFactory.LoadBgm(textSplit[2], textSplit[3]);
+                        break;
+                    }
+                    case "se":
+                    {
+                        soundFactory.LoadSoundEffect(textSplit[2], textSplit[3]);
+                        break;
+                    }
                 }
-                case "sprC":
-                {
-                    sprFactory.CreateSprGameObjectWithComm(textSplit[2], textSplit[3]);
-                    break;
-                }
-                case "bg":
-                {
-                    imageFactory.LoadBackground(textSplit[2], textSplit[3]);
-                    break;
-                }
-                case "cover":
-                {
-                    imageFactory.LoadCover(textSplit[2], textSplit[3]);
-                    break;
-                }
-                case "bgm":
-                {
-                    soundFactory.LoadBgm(textSplit[2], textSplit[3]);
-                    break;
-                }
-                case "se":
-                {
-                    soundFactory.LoadSoundEffect(textSplit[2], textSplit[3]);
-                    break;
-                }
+            }
+            catch (Exception e)
+            {
+                debugConsole.PrintLog(e.Message);
+                Debug.LogException(e);
             }
         }
 
@@ -316,6 +320,7 @@ namespace ArisStudio
                 switch (l[0])
                 {
                     case "ChangeTxt":
+                        autoTimer = 0;
                         LoadTextData(l[1]);
                         break;
 
@@ -369,7 +374,7 @@ namespace ArisStudio
                     case "buttonS":
                         isPlaying = false;
                         isSelecting = true;
-                        selectButton.SelectCommand(text);
+                        selectButton.SelectCommandWithSelect(int.Parse(l[1]), text);
                         break;
 
                     // Label

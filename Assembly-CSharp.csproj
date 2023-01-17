@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\ArisStudio\Banner.cs" />
+     <Compile Include="Assets\ArisStudio\Components\Button\ButtonLightFlow.cs" />
      <Compile Include="Assets\ArisStudio\DebugConsole.cs" />
      <Compile Include="Assets\ArisStudio\Image\ImageFactory.cs" />
      <Compile Include="Assets\ArisStudio\Image\ImageShake.cs" />
@@ -91,6 +92,7 @@
      <Compile Include="Assets\WebGLSupport\WebGLInput\Wrapper\WrappedInputField.cs" />
      <Compile Include="Assets\WebGLSupport\WebGLInput\Wrapper\WrappedTMPInputField.cs" />
      <Compile Include="Assets\WebGLSupport\WebGLWindow\WebGLWindow.cs" />
+     <None Include="Assets\ArisStudio\Components\Button\ButtonLight.shader" />
      <None Include="Assets\ArisStudio\Spr\Comm.shader" />
      <None Include="Assets\ArisStudio\Spr\SFill.shader" />
      <None Include="Assets\ArisStudio\Components\Banner\Blur.shader" />

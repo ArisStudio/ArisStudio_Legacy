@@ -14,11 +14,6 @@ namespace ArisStudio
         {
             var fpsNow = 1 / Time.deltaTime;
             fpsText.text = $"{fpsNow:F2} FPS";
-
-            if (!Input.GetKey(KeyCode.LeftControl) || !Input.GetKeyDown(KeyCode.Return)) return;
-
-            consoleInputField.ActivateInputField();
-            RunCommand();
         }
 
         public void PrintLog(string debugMessage)
@@ -28,10 +23,11 @@ namespace ArisStudio
 
         public void RunCommand()
         {
+            consoleInputField.ActivateInputField();
             var sTmp = consoleInputField.text.Trim();
             mainControl.PreLoad(sTmp);
             mainControl.RunText(sTmp);
-            PrintLog($"> <b>{sTmp}</b>");
+            PrintLog($"> <color=cyan><b>{sTmp}</b></color>");
             consoleInputField.text = string.Empty;
         }
     }
