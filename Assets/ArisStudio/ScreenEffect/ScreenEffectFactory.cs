@@ -42,7 +42,7 @@ namespace ArisStudio.ScreenEffect
             snow.SetActive(false);
             rain.SetActive(false);
         }
-        
+
         public void ScreenEffectCommand(string sec)
         {
             var l = sec.Split(' ');

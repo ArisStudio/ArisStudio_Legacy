@@ -31,6 +31,7 @@ namespace ArisStudio
         private ImageFactory imageFactory;
         private SoundFactory soundFactory;
         private ScreenEffectFactory screenEffectFactory;
+        private End end;
 
         private bool isPlaying, isTyping, isSelecting, isBanner;
 
@@ -56,6 +57,8 @@ namespace ArisStudio
             imageFactory = GetComponent<ImageFactory>();
             soundFactory = GetComponent<SoundFactory>();
             screenEffectFactory = GetComponent<ScreenEffectFactory>();
+
+            end = GetComponent<End>();
 
             SetLocalDataPath();
         }
@@ -222,11 +225,14 @@ namespace ArisStudio
             imageFactory.Initialize();
             soundFactory.Initialize();
             screenEffectFactory.Initialize();
+            end.Clear();
 
             targetList.Clear();
 
             label.gameObject.SetActive(false);
             banner.CloseBanner();
+
+            autoTimer = 0;
 
             debugConsole.PrintLog("\n<color=orange>Initialize</color>");
         }
@@ -319,7 +325,14 @@ namespace ArisStudio
                 string[] tt;
                 switch (l[0])
                 {
+                    // End
+                    case "end":
+                        end.EndCommand(text);
+                        isPlaying = false;
+                        break;
+
                     case "ChangeTxt":
+                        isPlaying = false;
                         autoTimer = 0;
                         LoadTextData(l[1]);
                         break;

@@ -61,6 +61,7 @@
      <Compile Include="Assets\ArisStudio\Banner.cs" />
      <Compile Include="Assets\ArisStudio\Components\Button\ButtonLightFlow.cs" />
      <Compile Include="Assets\ArisStudio\DebugConsole.cs" />
+     <Compile Include="Assets\ArisStudio\End.cs" />
      <Compile Include="Assets\ArisStudio\Image\ImageFactory.cs" />
      <Compile Include="Assets\ArisStudio\Image\ImageShake.cs" />
      <Compile Include="Assets\ArisStudio\Label.cs" />
