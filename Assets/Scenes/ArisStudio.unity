@@ -4678,6 +4678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   endFinish: {fileID: 1713309636}
   endContinue: {fileID: 1622208629}
+  endText: {fileID: 362968538}
 --- !u!1 &438092911
 GameObject:
   m_ObjectHideFlags: 0
