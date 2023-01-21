@@ -131,11 +131,17 @@ namespace ArisStudio.Image
                     switch (l[1])
                     {
                         case "set":
-                            var bgTmp = backgroundList[l[2]];
-                            backgroundImage.rectTransform.sizeDelta = new Vector2(bgTmp.width, bgTmp.height) * 1.6f;
-                            backgroundImage.texture = bgTmp;
+                            var bgSetTmp = backgroundList[l[2]];
+                            backgroundImage.rectTransform.sizeDelta = new Vector2(bgSetTmp.width, bgSetTmp.height) * 1.6f;
+                            backgroundImage.texture = bgSetTmp;
                             backgroundImage.color = new Color(1, 1, 1, 0);
                             bgShowing = true;
+                            break;
+
+                        case "change":
+                            var bgChangeTmp = backgroundList[l[2]];
+                            backgroundImage.rectTransform.sizeDelta = new Vector2(bgChangeTmp.width, bgChangeTmp.height) * 1.6f;
+                            backgroundImage.texture = bgChangeTmp;
                             break;
 
                         case "show":

@@ -5,6 +5,7 @@ namespace ArisStudio.ScreenEffect
 {
     public class ScreenEffectFactory : MonoBehaviour
     {
+        public GameObject shot;
         [Header("Curtain")] public Curtain curtain;
         [Header("SpeedLine")] public SpeedLine speedLine;
 
@@ -41,6 +42,7 @@ namespace ArisStudio.ScreenEffect
             dust.SetActive(false);
             snow.SetActive(false);
             rain.SetActive(false);
+            shot.SetActive(false);
         }
 
         public void ScreenEffectCommand(string sec)
@@ -156,6 +158,11 @@ namespace ArisStudio.ScreenEffect
                 case "screen":
                     switch (l[1])
                     {
+                        case "shot":
+                            shot.SetActive(false);
+                            shot.SetActive(true);
+                            break;
+
                         case "smoke":
                             switch (l[2])
                             {
