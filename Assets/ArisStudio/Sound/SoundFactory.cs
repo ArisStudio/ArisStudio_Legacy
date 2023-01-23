@@ -28,6 +28,7 @@ namespace ArisStudio.Sound
         {
             bgmList.Clear();
             bgm.Stop();
+            bgm.ChangeVolume();
 
             soundEffectList.Clear();
             se.Stop();
