@@ -86,13 +86,6 @@
      <Compile Include="Assets\ArisStudio\Spr\SprState.cs" />
      <Compile Include="Assets\ArisStudio\TextArea.cs" />
      <Compile Include="Assets\SkipSplash.cs" />
-     <Compile Include="Assets\WebGLSupport\WebGLInput\Detail\RebuildChecker.cs" />
-     <Compile Include="Assets\WebGLSupport\WebGLInput\Mobile\WebGLInputMobile.cs" />
-     <Compile Include="Assets\WebGLSupport\WebGLInput\WebGLInput.cs" />
-     <Compile Include="Assets\WebGLSupport\WebGLInput\Wrapper\IInputField.cs" />
-     <Compile Include="Assets\WebGLSupport\WebGLInput\Wrapper\WrappedInputField.cs" />
-     <Compile Include="Assets\WebGLSupport\WebGLInput\Wrapper\WrappedTMPInputField.cs" />
-     <Compile Include="Assets\WebGLSupport\WebGLWindow\WebGLWindow.cs" />
      <None Include="Assets\ArisStudio\Components\Button\ButtonLight.shader" />
      <None Include="Assets\ArisStudio\Spr\Comm.shader" />
      <None Include="Assets\ArisStudio\Spr\SFill.shader" />
@@ -135,15 +128,6 @@
  </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>D:/1project/ArisStudio/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Recorder.Editor">
- <HintPath>D:/1project/ArisStudio/Library/ScriptAssemblies/Unity.Recorder.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Recorder">
- <HintPath>D:/1project/ArisStudio/Library/ScriptAssemblies/Unity.Recorder.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Recorder.Base">
- <HintPath>D:/1project/ArisStudio/Library/ScriptAssemblies/Unity.Recorder.Base.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>D:/Unity3d/2019.3.15f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

@@ -21,7 +21,9 @@
 
 - [WebGl版 1.3.4 (仅播放 Demo 演示](https://baplayer.dza.vin/)
 
-# [如何使用 How to Use](https://github.com/Tualin14/ArisStudio/wiki)
+# [如何使用 How to Use(New Doc)](https://github.com/Tualin14/ArisStudio/wiki) 
+
+# [旧版文档 Old Doc](https://github.com/Tualin14/ArisStudio/tree/1.3.4.BackUp/Doc)
 
 # 来看看一些使用播放器完成的作品吧ヾ(≧▽≦\*)o
 
@@ -46,7 +48,6 @@
 - [spine-unity](http://zh.esotericsoftware.com/spine-unity)
 - [UnitySkipSplash](https://github.com/psygames/UnitySkipSplash)
 - [Unity3dRichTextHelper](https://github.com/majecty/Unity3dRichTextHelper)
-- [WebGLInput](https://github.com/kou-yeung/WebGLInput)
 
 # Licence
 
