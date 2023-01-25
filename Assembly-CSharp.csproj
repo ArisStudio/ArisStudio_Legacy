@@ -72,6 +72,7 @@
      <Compile Include="Assets\ArisStudio\ScreenEffect\Flow.cs" />
      <Compile Include="Assets\ArisStudio\ScreenEffect\ScreenEffectFactory.cs" />
      <Compile Include="Assets\ArisStudio\ScreenEffect\SpeedLine.cs" />
+     <Compile Include="Assets\ArisStudio\ScreenRecorder.cs" />
      <Compile Include="Assets\ArisStudio\ScreenSetting.cs" />
      <Compile Include="Assets\ArisStudio\SelectButton.cs" />
      <Compile Include="Assets\ArisStudio\SettingMenu.cs" />

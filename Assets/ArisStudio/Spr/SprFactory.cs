@@ -161,6 +161,129 @@ namespace ArisStudio.Spr
             {
                 OldSprCommand(sprCommand);
             }
+            else if (sprCommand.StartsWith("s"))
+            {
+                SCommand(sprCommand);
+            }
+        }
+
+        private void SCommand(string sCommand)
+        {
+            var l = sCommand.Split(' ');
+            switch (l[2])
+            {
+                // SprState
+                case "show":
+                {
+                    sprList[l[1]].GetComponent<SprState>().Show();
+                    showList.Add(l[1]);
+                    break;
+                }
+                case "hide":
+                {
+                    sprList[l[1]].GetComponent<SprState>().Hide();
+                    showList.Remove(l[1]);
+                    break;
+                }
+                case "showD":
+                {
+                    sprList[l[1]].gameObject.SetActive(true);
+                    showList.Add(l[1]);
+                    break;
+                }
+                case "hideD":
+                {
+                    sprList[l[1]].gameObject.SetActive(false);
+                    showList.Remove(l[1]);
+                    break;
+                }
+                case "hl":
+                {
+                    sprList[l[1]].GetComponent<SprState>().HighLight(float.Parse(l[3]));
+                    break;
+                }
+                case "state":
+                {
+                    sprList[l[1]].GetComponent<SprState>().SetState(l[3]);
+                    break;
+                }
+
+                // SprEmotion
+                case "emo":
+                {
+                    sprList[l[1]].GetComponent<OldSprEmotion>().PlayEmoticon(l[3]);
+                    break;
+                }
+
+                // SprAnimation
+                case "empty":
+                {
+                    sprList[l[1]].GetComponent<SprAnimation>().Empty();
+                    break;
+                }
+                case "up":
+                {
+                    sprList[l[1]].GetComponent<SprAnimation>().Up();
+                    break;
+                }
+                case "down":
+                {
+                    sprList[l[1]].GetComponent<SprAnimation>().Down();
+                    break;
+                }
+
+                // SprMove
+                case "x":
+                {
+                    sprList[l[1]].GetComponent<SprMove>().SetX(float.Parse(l[3]));
+                    break;
+                }
+                case "y":
+                {
+                    sprList[l[1]].GetComponent<SprMove>().SetY(float.Parse(l[3]));
+                    break;
+                }
+                case "z":
+                {
+                    sprList[l[1]].GetComponent<SprMove>().SetZ(float.Parse(l[3]));
+                    break;
+                }
+                case "move":
+                {
+                    sprList[l[1]].GetComponent<SprMove>().Move2X(float.Parse(l[3]), float.Parse(l[4]));
+                    break;
+                }
+                case "moveX":
+                {
+                    sprList[l[1]].GetComponent<SprMove>().Move2X(float.Parse(l[3]), float.Parse(l[4]));
+                    break;
+                }
+                case "moveY":
+                {
+                    sprList[l[1]].GetComponent<SprMove>().Move2Y(float.Parse(l[3]), float.Parse(l[4]));
+                    break;
+                }
+                case "close":
+                {
+                    sprList[l[1]].GetComponent<SprMove>().Close();
+                    break;
+                }
+                case "back":
+                {
+                    sprList[l[1]].GetComponent<SprMove>().Back();
+                    break;
+                }
+                case "shakeX":
+                {
+                    sprList[l[1]].GetComponent<SprMove>().ShakeX(float.Parse(l[3]), float.Parse(l[4]), float.Parse(l[5]));
+                    break;
+                }
+                case "shakeY":
+                {
+                    sprList[l[1]].GetComponent<SprMove>().ShakeY(float.Parse(l[3]), float.Parse(l[4]), float.Parse(l[5]));
+                    break;
+                }
+            }
         }
 
         // ReSharper disable Unity.PerformanceAnalysis

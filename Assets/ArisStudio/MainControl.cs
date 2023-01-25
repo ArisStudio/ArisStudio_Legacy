@@ -433,6 +433,9 @@ namespace ArisStudio
                     case "spr":
                         sprFactory.SprCommand(text);
                         break;
+                    case "s":
+                        sprFactory.SprCommand(text);
+                        break;
 
                     // Image
                     case "bg":
@@ -448,6 +451,10 @@ namespace ArisStudio
                         break;
                     case "se":
                         soundFactory.SoundCommand(text);
+                        break;
+
+                    default:
+                        sprFactory.SprCommand($"s {text}");
                         break;
                 }
             }
