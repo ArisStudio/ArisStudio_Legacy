@@ -11,10 +11,9 @@ namespace ArisStudio.Spr
     public class SprFactory : MonoBehaviour
     {
         public DebugConsole debugConsole;
-
+        public Material defMaterial, commMaterial;
 
         private GameObject sprBaseGo, emoBaseGo;
-        private Shader defShader, commShader;
 
         private string sprDataPath;
         private const float SprScale = 0.0136f;
@@ -26,9 +25,6 @@ namespace ArisStudio.Spr
 
         private void Start()
         {
-            defShader = Shader.Find("SFill");
-            commShader = Shader.Find("Comm");
-
             sprBaseGo = GameObject.Find("SprBase").gameObject;
             emoBaseGo = GameObject.Find("EmotionBase").gameObject;
         }
@@ -51,16 +47,16 @@ namespace ArisStudio.Spr
 
         public void CreateSprGameObjectWithDef(string nameId, string sprName)
         {
-            StartCoroutine(LoadAndCreateSprGameObject(nameId, sprName, defShader));
+            StartCoroutine(LoadAndCreateSprGameObject(nameId, sprName, defMaterial));
         }
 
         public void CreateSprGameObjectWithComm(string nameId, string sprName)
         {
-            StartCoroutine(LoadAndCreateSprGameObject(nameId, sprName, commShader));
+            StartCoroutine(LoadAndCreateSprGameObject(nameId, sprName, commMaterial));
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
-        private IEnumerator LoadAndCreateSprGameObject(string nameId, string sprName, Shader stateShader)
+        private IEnumerator LoadAndCreateSprGameObject(string nameId, string sprName, Material stateMaterial)
         {
             var sprBaseClone = Instantiate(sprBaseGo);
             sprBaseClone.name = nameId;
@@ -97,7 +93,7 @@ namespace ArisStudio.Spr
             var textures = new Texture2D[1];
             textures[0] = texture;
 
-            var sprAtlasAsset = SpineAtlasAsset.CreateRuntimeInstance(atlasTextAsset, textures, stateShader, true);
+            var sprAtlasAsset = SpineAtlasAsset.CreateRuntimeInstance(atlasTextAsset, textures, stateMaterial, true);
 
             var attachmentLoader = new AtlasAttachmentLoader(sprAtlasAsset.GetAtlas());
             var binary = new SkeletonBinary(attachmentLoader);
@@ -144,13 +140,16 @@ namespace ArisStudio.Spr
         {
             foreach (var s in showList)
             {
+                var sprState = sprList[s].GetComponent<SprState>();
+                if (sprState.IsComm) break;
+
                 if (s == nameId)
                 {
-                    sprList[s].GetComponent<SprState>().HighLight(1);
+                    sprState.HighLight(1);
                 }
                 else
                 {
-                    sprList[s].GetComponent<SprState>().HighLight(0.5f);
+                    sprState.HighLight(0.5f);
                 }
             }
         }

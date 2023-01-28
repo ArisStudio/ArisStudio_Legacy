@@ -23,10 +23,13 @@ namespace ArisStudio.Spr
 
         private bool showing, hiding;
 
+        public bool IsComm { get; private set; }
+
         private static readonly int FillPhase = Shader.PropertyToID("_FillPhase");
+        private static readonly int Color1 = Shader.PropertyToID("_Color");
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             if (isEyeClose)
             {
@@ -41,17 +44,32 @@ namespace ArisStudio.Spr
             if (showing)
             {
                 showTimer += Time.deltaTime;
-                if (showTimer >= ChangeShowTime || 1 - showTimer / ChangeShowTime <= 0.05f)
+                if (showTimer >= ChangeShowTime || showTimer / ChangeShowTime >= 0.95f)
                 {
                     showTimer = 0;
-                    mpb.SetFloat(FillPhase, 0);
-                    md.SetPropertyBlock(mpb);
+                    if (IsComm)
+                    {
+                        md.material.SetColor(Color1, new Color(1, 1, 1, 1));
+                    }
+                    else
+                    {
+                        mpb.SetFloat(FillPhase, 0);
+                        md.SetPropertyBlock(mpb);
+                    }
+
                     showing = false;
                 }
                 else
                 {
-                    mpb.SetFloat(FillPhase, 1 - showTimer / ChangeShowTime);
-                    md.SetPropertyBlock(mpb);
+                    if (IsComm)
+                    {
+                        md.material.SetColor(Color1, new Color(1, 1, 1, showTimer / ChangeShowTime));
+                    }
+                    else
+                    {
+                        mpb.SetFloat(FillPhase, 1 - showTimer / ChangeShowTime);
+                        md.SetPropertyBlock(mpb);
+                    }
                 }
             }
 
@@ -61,15 +79,30 @@ namespace ArisStudio.Spr
                 if (hideTimer >= ChangeHideTime || hideTimer / ChangeHideTime >= 0.95f)
                 {
                     hideTimer = 0;
-                    mpb.SetFloat(FillPhase, 1);
-                    md.SetPropertyBlock(mpb);
+                    if (IsComm)
+                    {
+                        md.material.SetColor(Color1, new Color(1, 1, 1, 0));
+                    }
+                    else
+                    {
+                        mpb.SetFloat(FillPhase, 1);
+                        md.SetPropertyBlock(mpb);
+                    }
+
                     hiding = false;
                     sa.gameObject.SetActive(false);
                 }
                 else
                 {
-                    mpb.SetFloat(FillPhase, hideTimer / ChangeHideTime);
-                    md.SetPropertyBlock(mpb);
+                    if (IsComm)
+                    {
+                        md.material.SetColor(Color1, new Color(1, 1, 1, 1 - hideTimer / ChangeHideTime));
+                    }
+                    else
+                    {
+                        mpb.SetFloat(FillPhase, hideTimer / ChangeHideTime);
+                        md.SetPropertyBlock(mpb);
+                    }
                 }
             }
         }
@@ -78,6 +111,7 @@ namespace ArisStudio.Spr
         {
             sa = GetComponent<SkeletonAnimation>();
             md = GetComponent<MeshRenderer>();
+            IsComm = md.material.name == "Comm (Instance)";
         }
 
         public void Show()
@@ -95,9 +129,16 @@ namespace ArisStudio.Spr
 
         public void HighLight(float f)
         {
-            mpb = new MaterialPropertyBlock();
-            mpb.SetFloat(FillPhase, 1 - f);
-            md.SetPropertyBlock(mpb);
+            if (IsComm)
+            {
+                md.material.SetColor(Color1, new Color(1, 1, 1, f));
+            }
+            else
+            {
+                mpb = new MaterialPropertyBlock();
+                mpb.SetFloat(FillPhase, 1 - f);
+                md.SetPropertyBlock(mpb);
+            }
         }
 
         public void SetState(string stateName)

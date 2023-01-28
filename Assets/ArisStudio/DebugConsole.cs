@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace ArisStudio
@@ -25,6 +26,8 @@ namespace ArisStudio
         {
             consoleInputField.ActivateInputField();
             var sTmp = consoleInputField.text.Trim();
+            if (sTmp == string.Empty) return;
+
             mainControl.PreLoad(sTmp);
             mainControl.RunText(sTmp);
             PrintLog($"> <color=cyan><b>{sTmp}</b></color>");

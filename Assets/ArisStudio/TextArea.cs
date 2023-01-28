@@ -83,10 +83,10 @@ namespace ArisStudio
             }
 
             timer = 0;
-            tName.text = sName;
-            tGroup.text = sGroup;
+            tName.text = sName == string.Empty ? " " : sName;
+            tGroup.text = sGroup == string.Empty ? " " : sGroup;
             tContent.text = string.Empty;
-            tmpContent = sContent;
+            tmpContent = sContent == string.Empty ? " " : sContent;
             typing = true;
             br.SetActive(false);
         }
