@@ -122,7 +122,13 @@ namespace ArisStudio
 
         public void SetLocalDataPath()
         {
+#if UNITY_ANDROID
+            var rootPath = $"file:///{Application.persistentDataPath}";
+#elif UNITY_STANDALONE_OSX
+            var rootPath = Directory.GetParent($"file://{Application.dataPath}").ToString();
+#else
             var rootPath = Directory.GetParent(Application.dataPath).ToString();
+#endif
             var localDataPath = Path.Combine(rootPath, "Data");
             sprFactory.SetSprDataPath(localDataPath);
             imageFactory.SetImageDataPath(localDataPath);
