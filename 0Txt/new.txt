@@ -8,6 +8,9 @@ load end
 
 bg set classroom
 
+button 'Test new Command.' 't12'
+target t12
+
 tt x -12
 tt y 6
 tt show
@@ -24,11 +27,20 @@ hc show
 ===
 
 tt state 04
-tc state 04
-h state 04
-hc state 04
+tc state 02
+h state 05
+hc state 03
 ===
 
+tt emo Action
+tc emo Action
+h emo Action
+hc emo Action
 th tt 't' 'T' 'tttttttttttttttttttt'
 
+
+tt down
+tc down
+h down
+hc down
 th h 'h' 'H' 'hhhhhhhhhhhhh'

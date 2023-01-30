@@ -16,6 +16,9 @@ namespace ArisStudio
         public Font defaultFont;
         public GameObject br;
 
+        [Header("SelectButtonText")] public Text s1;
+        public Text s21, s22, s31, s32, s33;
+
         private string tmpContent;
 
         private int currentPos;
@@ -51,6 +54,12 @@ namespace ArisStudio
             tName.font = f;
             tGroup.font = f;
             tContent.font = f;
+            s1.font = f;
+            s21.font = f;
+            s22.font = f;
+            s31.font = f;
+            s32.font = f;
+            s33.font = f;
         }
 
         public void SetDefaultFont()

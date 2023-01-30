@@ -9112,6 +9112,12 @@ MonoBehaviour:
   dDropdown: {fileID: 1411493895}
   defaultFont: {fileID: 12800000, guid: 8abed8334531ef34ab464f0cc177f5bd, type: 3}
   br: {fileID: 54675219}
+  s1: {fileID: 1862767663}
+  s21: {fileID: 1697707796}
+  s22: {fileID: 1394511026}
+  s31: {fileID: 1310583526}
+  s32: {fileID: 1862335029}
+  s33: {fileID: 644174667}
 --- !u!1 &907360430
 GameObject:
   m_ObjectHideFlags: 0
@@ -10333,7 +10339,7 @@ GameObject:
   - component: {fileID: 1051435514}
   - component: {fileID: 1051435513}
   m_Layer: 0
-  m_Name: EmotionBase
+  m_Name: Emotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32333,7 +32339,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.000015258789}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 580, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &2093432561

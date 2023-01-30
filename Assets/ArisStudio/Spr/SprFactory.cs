@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,7 +14,7 @@ namespace ArisStudio.Spr
         public DebugConsole debugConsole;
         public Material defMaterial, commMaterial;
 
-        private GameObject sprBaseGo, emoBaseGo;
+        private GameObject sprBaseGo;
 
         private string sprDataPath, charDataPath;
         private const float SprScale = 0.0136f;
@@ -29,7 +28,6 @@ namespace ArisStudio.Spr
         private void Start()
         {
             sprBaseGo = GameObject.Find("SprBase").gameObject;
-            emoBaseGo = GameObject.Find("EmotionBase").gameObject;
         }
 
         public void SetSprDataPath(string rootPath)
@@ -65,9 +63,6 @@ namespace ArisStudio.Spr
             var sprBaseClone = Instantiate(sprBaseGo);
             sprBaseClone.name = nameId;
             var sprGo = sprBaseClone.transform.Find("SprObject").gameObject;
-
-            var emoClone = Instantiate(emoBaseGo, sprGo.transform, false);
-            emoClone.name = "Emotion";
 
             # region LoadSpr
 

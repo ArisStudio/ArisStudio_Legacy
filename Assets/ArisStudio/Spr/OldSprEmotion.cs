@@ -6,10 +6,9 @@ namespace ArisStudio.Spr
     {
         private GameObject emo;
 
-        public void InitEmoticon()
+        private void Start()
         {
             emo = transform.Find("Emotion").gameObject;
-            emo.transform.position = new Vector3(-3.5f, 16, -1);
         }
 
         public void PlayEmoticon(string emoticon)
