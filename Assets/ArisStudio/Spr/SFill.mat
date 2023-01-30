@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: SFill
   m_Shader: {fileID: 4800000, guid: ca300b7c8498e0f4e895758b444befc7, type: 3}
-  m_ShaderKeywords: _USE8NEIGHBOURHOOD_ON
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA _USE8NEIGHBOURHOOD_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

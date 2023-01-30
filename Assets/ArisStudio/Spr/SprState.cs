@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Spine.Unity;
 using UnityEngine;
 
@@ -8,7 +10,9 @@ namespace ArisStudio.Spr
     {
         private SkeletonAnimation sa;
         private MaterialPropertyBlock mpb;
-        MeshRenderer md;
+        private MeshRenderer md;
+
+        private CharState cs;
 
         //EyeClose
         private bool isEyeClose;
@@ -16,14 +20,16 @@ namespace ArisStudio.Spr
         private string eyeCloseName;
         private const float CloseInterval = 5;
 
-        //Show,Hide
+        //Show, Hide
         private float showTimer, hideTimer;
         private const float ChangeShowTime = 0.4f;
         private const float ChangeHideTime = 0.4f;
 
         private bool showing, hiding;
 
-        public bool IsComm { get; private set; }
+        private bool isSpr;
+
+        public bool IsComm { get; set; }
 
         private static readonly int FillPhase = Shader.PropertyToID("_FillPhase");
         private static readonly int Color1 = Shader.PropertyToID("_Color");
@@ -107,57 +113,93 @@ namespace ArisStudio.Spr
             }
         }
 
-        public void Init()
+        public void SprInit()
         {
             sa = GetComponent<SkeletonAnimation>();
             md = GetComponent<MeshRenderer>();
             IsComm = md.material.name == "Comm (Instance)";
+            isSpr = true;
+        }
+
+        public void CharInit(Dictionary<string, Sprite> charSpriteList)
+        {
+            cs = GetComponent<CharState>();
+            cs.Init(charSpriteList);
+            isSpr = false;
         }
 
         public void Show()
         {
-            mpb = new MaterialPropertyBlock();
-            showing = true;
-            gameObject.SetActive(true);
+            if (isSpr)
+            {
+                mpb = new MaterialPropertyBlock();
+                showing = true;
+                gameObject.SetActive(true);
+            }
+            else
+            {
+                cs.Show();
+            }
         }
 
         public void Hide()
         {
-            mpb = new MaterialPropertyBlock();
-            hiding = true;
+            if (isSpr)
+            {
+                mpb = new MaterialPropertyBlock();
+                hiding = true;
+            }
+            else
+            {
+                cs.Hide();
+            }
         }
 
         public void HighLight(float f)
         {
-            if (IsComm)
+            if (isSpr)
             {
-                md.material.SetColor(Color1, new Color(1, 1, 1, f));
+                if (IsComm)
+                {
+                    md.material.SetColor(Color1, new Color(1, 1, 1, f));
+                }
+                else
+                {
+                    mpb = new MaterialPropertyBlock();
+                    mpb.SetFloat(FillPhase, 1 - f);
+                    md.SetPropertyBlock(mpb);
+                }
             }
             else
             {
-                mpb = new MaterialPropertyBlock();
-                mpb.SetFloat(FillPhase, 1 - f);
-                md.SetPropertyBlock(mpb);
+                cs.HighLight(f);
             }
         }
 
         public void SetState(string stateName)
         {
-            if (stateName.EndsWith("01"))
+            if (isSpr)
             {
-                foreach (var a in sa.skeleton.Data.Animations.Where(a => a.Name.EndsWith("lose_" + stateName)))
+                if (stateName.EndsWith("01"))
                 {
-                    eyeCloseName = a.Name;
-                    isEyeClose = true;
+                    foreach (var a in sa.skeleton.Data.Animations.Where(a => a.Name.EndsWith("lose_" + stateName)))
+                    {
+                        eyeCloseName = a.Name;
+                        isEyeClose = true;
+                    }
                 }
+                else
+                {
+                    isEyeClose = false;
+                    closeTimer = 0;
+                }
+
+                sa.AnimationState.SetAnimation(1, stateName, true);
             }
             else
             {
-                isEyeClose = false;
-                closeTimer = 0;
+                cs.SetState(stateName);
             }
-
-            sa.AnimationState.SetAnimation(1, stateName, true);
         }
     }
 }

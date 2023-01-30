@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Spine;
 using Spine.Unity;
 using UnityEngine;
@@ -15,11 +17,12 @@ namespace ArisStudio.Spr
 
         private GameObject sprBaseGo, emoBaseGo;
 
-        private string sprDataPath;
+        private string sprDataPath, charDataPath;
         private const float SprScale = 0.0136f;
 
 
-        Dictionary<string, SkeletonAnimation> sprList = new Dictionary<string, SkeletonAnimation>();
+        Dictionary<string, GameObject> ssList = new Dictionary<string, GameObject>();
+        // Dictionary<string, GameObject> charList = new Dictionary<string, GameObject>();
 
         List<string> showList = new List<string>();
 
@@ -32,17 +35,18 @@ namespace ArisStudio.Spr
         public void SetSprDataPath(string rootPath)
         {
             sprDataPath = Path.Combine(rootPath, "Spr");
+            charDataPath = Path.Combine(rootPath, "Character");
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
         public void Initialize()
         {
-            foreach (var sprName in sprList)
+            foreach (var sprName in ssList)
             {
                 Destroy(GameObject.Find(sprName.Key));
             }
 
-            sprList.Clear();
+            ssList.Clear();
         }
 
         public void CreateSprGameObjectWithDef(string nameId, string sprName)
@@ -126,23 +130,75 @@ namespace ArisStudio.Spr
                 skeletonAnimation.AnimationState.SetAnimation(0, "00", true);
             }
 
-            sprGo.GetComponent<SprState>().Init();
-            sprGo.GetComponent<OldSprEmotion>().InitEmoticon();
+            sprGo.GetComponent<SprState>().SprInit();
+            // sprGo.GetComponent<OldSprEmotion>().InitEmoticon();
 
-            sprList.Add(nameId, skeletonAnimation);
+            ssList.Add(nameId, sprGo);
 
             debugConsole.PrintLog($"Load Spr: <color=lime>{nameId}</color>");
 
             sprGo.SetActive(false);
         }
 
+        public void CreateCharGameObjectWithDef(string nameId, float scale, string charFolder, string[] charImgList)
+        {
+            StartCoroutine(LoadAndCreateCharacterGameObject(nameId, scale, charFolder, charImgList, defMaterial));
+        }
+
+        public void CreateCharGameObjectWithComm(string nameId, float scale, string charFolder, string[] charImgList)
+        {
+            StartCoroutine(LoadAndCreateCharacterGameObject(nameId, scale, charFolder, charImgList, commMaterial));
+        }
+
+        // ReSharper disable Unity.PerformanceAnalysis
+        private IEnumerator LoadAndCreateCharacterGameObject(string nameId, float scale, string charFolder, string[] charImgList,
+            Material stateMaterial)
+        {
+            var charSpriteDic = new Dictionary<string, Sprite>();
+            var charPath = Path.Combine(charDataPath, charFolder);
+
+            var charBaseClone = Instantiate(sprBaseGo);
+            charBaseClone.name = nameId;
+            var charGo = charBaseClone.transform.Find("SprObject").gameObject;
+            charGo.transform.localScale = new Vector3(scale, scale, 1);
+
+            var charSprite = charGo.AddComponent(typeof(SpriteRenderer)) as SpriteRenderer;
+
+            foreach (var i in charImgList)
+            {
+                var sImg = i.Trim();
+                byte[] imageData;
+                using (var uwr = UnityWebRequest.Get($"{charPath}/{sImg}"))
+                {
+                    yield return uwr.SendWebRequest();
+                    imageData = uwr.downloadHandler.data;
+                }
+
+                var texture = new Texture2D(1, 1);
+                texture.LoadImage(imageData);
+                charSpriteDic.Add(
+                    sImg.Trim().Split('.')[0],
+                    Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f)));
+            }
+
+            if (charSprite != null)
+            {
+                charSprite.sprite = charSpriteDic.First().Value;
+                charSprite.material = stateMaterial;
+            }
+
+            charGo.GetComponent<SprState>().CharInit(charSpriteDic);
+
+            ssList.Add(nameId, charGo);
+            charGo.SetActive(false);
+        }
+
         public void TextWithHl(string nameId)
         {
             foreach (var s in showList)
             {
-                var sprState = sprList[s].GetComponent<SprState>();
-                if (sprState.IsComm) break;
-
+                var sprState = ssList[s].GetComponent<SprState>();
+                if (sprState.IsComm) continue;
                 if (s == nameId)
                 {
                     sprState.HighLight(1);
@@ -169,117 +225,118 @@ namespace ArisStudio.Spr
         private void SCommand(string sCommand)
         {
             var l = sCommand.Split(' ');
+
             switch (l[2])
             {
                 // SprState
                 case "show":
                 {
-                    sprList[l[1]].GetComponent<SprState>().Show();
+                    ssList[l[1]].GetComponent<SprState>().Show();
                     showList.Add(l[1]);
                     break;
                 }
                 case "hide":
                 {
-                    sprList[l[1]].GetComponent<SprState>().Hide();
+                    ssList[l[1]].GetComponent<SprState>().Hide();
                     showList.Remove(l[1]);
                     break;
                 }
                 case "showD":
                 {
-                    sprList[l[1]].gameObject.SetActive(true);
+                    ssList[l[1]].gameObject.SetActive(true);
                     showList.Add(l[1]);
                     break;
                 }
                 case "hideD":
                 {
-                    sprList[l[1]].gameObject.SetActive(false);
+                    ssList[l[1]].gameObject.SetActive(false);
                     showList.Remove(l[1]);
                     break;
                 }
                 case "hl":
                 {
-                    sprList[l[1]].GetComponent<SprState>().HighLight(float.Parse(l[3]));
+                    ssList[l[1]].GetComponent<SprState>().HighLight(float.Parse(l[3]));
                     break;
                 }
                 case "state":
                 {
-                    sprList[l[1]].GetComponent<SprState>().SetState(l[3]);
+                    ssList[l[1]].GetComponent<SprState>().SetState(l[3]);
                     break;
                 }
 
                 // SprEmotion
                 case "emo":
                 {
-                    sprList[l[1]].GetComponent<OldSprEmotion>().PlayEmoticon(l[3]);
+                    ssList[l[1]].GetComponent<OldSprEmotion>().PlayEmoticon(l[3]);
                     break;
                 }
 
                 // SprAnimation
                 case "empty":
                 {
-                    sprList[l[1]].GetComponent<SprAnimation>().Empty();
+                    ssList[l[1]].GetComponent<SprAnimation>().Empty();
                     break;
                 }
                 case "up":
                 {
-                    sprList[l[1]].GetComponent<SprAnimation>().Up();
+                    ssList[l[1]].GetComponent<SprAnimation>().Up();
                     break;
                 }
                 case "down":
                 {
-                    sprList[l[1]].GetComponent<SprAnimation>().Down();
+                    ssList[l[1]].GetComponent<SprAnimation>().Down();
                     break;
                 }
 
                 // SprMove
                 case "x":
                 {
-                    sprList[l[1]].GetComponent<SprMove>().SetX(float.Parse(l[3]));
+                    ssList[l[1]].GetComponent<SprMove>().SetX(float.Parse(l[3]));
                     break;
                 }
                 case "y":
                 {
-                    sprList[l[1]].GetComponent<SprMove>().SetY(float.Parse(l[3]));
+                    ssList[l[1]].GetComponent<SprMove>().SetY(float.Parse(l[3]));
                     break;
                 }
                 case "z":
                 {
-                    sprList[l[1]].GetComponent<SprMove>().SetZ(float.Parse(l[3]));
+                    ssList[l[1]].GetComponent<SprMove>().SetZ(float.Parse(l[3]));
                     break;
                 }
                 case "move":
                 {
-                    sprList[l[1]].GetComponent<SprMove>().Move2X(float.Parse(l[3]), float.Parse(l[4]));
+                    ssList[l[1]].GetComponent<SprMove>().Move2X(float.Parse(l[3]), float.Parse(l[4]));
                     break;
                 }
                 case "moveX":
                 {
-                    sprList[l[1]].GetComponent<SprMove>().Move2X(float.Parse(l[3]), float.Parse(l[4]));
+                    ssList[l[1]].GetComponent<SprMove>().Move2X(float.Parse(l[3]), float.Parse(l[4]));
                     break;
                 }
                 case "moveY":
                 {
-                    sprList[l[1]].GetComponent<SprMove>().Move2Y(float.Parse(l[3]), float.Parse(l[4]));
+                    ssList[l[1]].GetComponent<SprMove>().Move2Y(float.Parse(l[3]), float.Parse(l[4]));
                     break;
                 }
                 case "close":
                 {
-                    sprList[l[1]].GetComponent<SprMove>().Close();
+                    ssList[l[1]].GetComponent<SprMove>().Close();
                     break;
                 }
                 case "back":
                 {
-                    sprList[l[1]].GetComponent<SprMove>().Back();
+                    ssList[l[1]].GetComponent<SprMove>().Back();
                     break;
                 }
                 case "shakeX":
                 {
-                    sprList[l[1]].GetComponent<SprMove>().ShakeX(float.Parse(l[3]), float.Parse(l[4]), float.Parse(l[5]));
+                    ssList[l[1]].GetComponent<SprMove>().ShakeX(float.Parse(l[3]), float.Parse(l[4]), float.Parse(l[5]));
                     break;
                 }
                 case "shakeY":
                 {
-                    sprList[l[1]].GetComponent<SprMove>().ShakeY(float.Parse(l[3]), float.Parse(l[4]), float.Parse(l[5]));
+                    ssList[l[1]].GetComponent<SprMove>().ShakeY(float.Parse(l[3]), float.Parse(l[4]), float.Parse(l[5]));
                     break;
                 }
             }
@@ -294,112 +351,112 @@ namespace ArisStudio.Spr
                 // SprState
                 case "show":
                 {
-                    sprList[l[2]].GetComponent<SprState>().Show();
+                    ssList[l[2]].GetComponent<SprState>().Show();
                     showList.Add(l[2]);
                     break;
                 }
                 case "hide":
                 {
-                    sprList[l[2]].GetComponent<SprState>().Hide();
+                    ssList[l[2]].GetComponent<SprState>().Hide();
                     showList.Remove(l[2]);
                     break;
                 }
                 case "showD":
                 {
-                    sprList[l[2]].gameObject.SetActive(true);
+                    ssList[l[2]].gameObject.SetActive(true);
                     showList.Add(l[2]);
                     break;
                 }
                 case "hideD":
                 {
-                    sprList[l[2]].gameObject.SetActive(false);
+                    ssList[l[2]].gameObject.SetActive(false);
                     showList.Remove(l[2]);
                     break;
                 }
                 case "hl":
                 {
-                    sprList[l[2]].GetComponent<SprState>().HighLight(float.Parse(l[3]));
+                    ssList[l[2]].GetComponent<SprState>().HighLight(float.Parse(l[3]));
                     break;
                 }
                 case "state":
                 {
-                    sprList[l[2]].GetComponent<SprState>().SetState(l[3]);
+                    ssList[l[2]].GetComponent<SprState>().SetState(l[3]);
                     break;
                 }
 
                 // SprEmotion
                 case "emo":
                 {
-                    sprList[l[2]].GetComponent<OldSprEmotion>().PlayEmoticon(l[3]);
+                    ssList[l[2]].GetComponent<OldSprEmotion>().PlayEmoticon(l[3]);
                     break;
                 }
 
                 // SprAnimation
                 case "empty":
                 {
-                    sprList[l[2]].GetComponent<SprAnimation>().Empty();
+                    ssList[l[2]].GetComponent<SprAnimation>().Empty();
                     break;
                 }
                 case "up":
                 {
-                    sprList[l[2]].GetComponent<SprAnimation>().Up();
+                    ssList[l[2]].GetComponent<SprAnimation>().Up();
                     break;
                 }
                 case "down":
                 {
-                    sprList[l[2]].GetComponent<SprAnimation>().Down();
+                    ssList[l[2]].GetComponent<SprAnimation>().Down();
                     break;
                 }
 
                 // SprMove
                 case "x":
                 {
-                    sprList[l[2]].GetComponent<SprMove>().SetX(float.Parse(l[3]));
+                    ssList[l[2]].GetComponent<SprMove>().SetX(float.Parse(l[3]));
                     break;
                 }
                 case "y":
                 {
-                    sprList[l[2]].GetComponent<SprMove>().SetY(float.Parse(l[3]));
+                    ssList[l[2]].GetComponent<SprMove>().SetY(float.Parse(l[3]));
                     break;
                 }
                 case "z":
                 {
-                    sprList[l[2]].GetComponent<SprMove>().SetZ(float.Parse(l[3]));
+                    ssList[l[2]].GetComponent<SprMove>().SetZ(float.Parse(l[3]));
                     break;
                 }
                 case "move":
                 {
-                    sprList[l[2]].GetComponent<SprMove>().Move2X(float.Parse(l[3]), float.Parse(l[4]));
+                    ssList[l[2]].GetComponent<SprMove>().Move2X(float.Parse(l[3]), float.Parse(l[4]));
                     break;
                 }
                 case "moveX":
                 {
-                    sprList[l[2]].GetComponent<SprMove>().Move2X(float.Parse(l[3]), float.Parse(l[4]));
+                    ssList[l[2]].GetComponent<SprMove>().Move2X(float.Parse(l[3]), float.Parse(l[4]));
                     break;
                 }
                 case "moveY":
                 {
-                    sprList[l[2]].GetComponent<SprMove>().Move2Y(float.Parse(l[3]), float.Parse(l[4]));
+                    ssList[l[2]].GetComponent<SprMove>().Move2Y(float.Parse(l[3]), float.Parse(l[4]));
                     break;
                 }
                 case "close":
                 {
-                    sprList[l[2]].GetComponent<SprMove>().Close();
+                    ssList[l[2]].GetComponent<SprMove>().Close();
                     break;
                 }
                 case "back":
                 {
-                    sprList[l[2]].GetComponent<SprMove>().Back();
+                    ssList[l[2]].GetComponent<SprMove>().Back();
                     break;
                 }
                 case "shakeX":
                 {
-                    sprList[l[2]].GetComponent<SprMove>().ShakeX(float.Parse(l[3]), float.Parse(l[4]), float.Parse(l[5]));
+                    ssList[l[2]].GetComponent<SprMove>().ShakeX(float.Parse(l[3]), float.Parse(l[4]), float.Parse(l[5]));
                     break;
                 }
                 case "shakeY":
                 {
-                    sprList[l[2]].GetComponent<SprMove>().ShakeY(float.Parse(l[3]), float.Parse(l[4]), float.Parse(l[5]));
+                    ssList[l[2]].GetComponent<SprMove>().ShakeY(float.Parse(l[3]), float.Parse(l[4]), float.Parse(l[5]));
                     break;
                 }
             }

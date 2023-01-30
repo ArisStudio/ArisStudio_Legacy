@@ -1,0 +1,34 @@
+load char tt 2 test [01.png, 02.png,  03.png, 04.png]
+load charC tc 2 test [01.png, 02.png,  03.png, 04.png]
+load spr h hihumi_spr
+load sprC hc hihumi_spr
+load bg classroom BG_ClassRoom2.jpg
+
+load end
+
+bg set classroom
+
+tt x -12
+tt y 6
+tt show
+
+tc x 12
+tc show
+tc y 6
+
+h x 2
+h show
+
+hc x -2
+hc show
+===
+
+tt state 04
+tc state 04
+h state 04
+hc state 04
+===
+
+th tt 't' 'T' 'tttttttttttttttttttt'
+
+th h 'h' 'H' 'hhhhhhhhhhhhh'

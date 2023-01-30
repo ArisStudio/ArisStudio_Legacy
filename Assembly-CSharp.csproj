@@ -79,6 +79,7 @@
      <Compile Include="Assets\ArisStudio\Sound\Bgm.cs" />
      <Compile Include="Assets\ArisStudio\Sound\SoundEffect.cs" />
      <Compile Include="Assets\ArisStudio\Sound\SoundFactory.cs" />
+     <Compile Include="Assets\ArisStudio\Spr\CharState.cs" />
      <Compile Include="Assets\ArisStudio\Spr\OldEmoticonScript.cs" />
      <Compile Include="Assets\ArisStudio\Spr\OldSprEmotion.cs" />
      <Compile Include="Assets\ArisStudio\Spr\SprAnimation.cs" />

@@ -261,6 +261,18 @@ namespace ArisStudio
                         sprFactory.CreateSprGameObjectWithComm(textSplit[2], textSplit[3]);
                         break;
                     }
+                    case "char":
+                    {
+                        var charImgList = text.Split('[')[1].Split(']')[0].Split(',');
+                        sprFactory.CreateCharGameObjectWithDef(textSplit[2], float.Parse(textSplit[3]), textSplit[4], charImgList);
+                        break;
+                    }
+                    case "charC":
+                    {
+                        var charImgList = text.Split('[')[1].Split(']')[0].Split(',');
+                        sprFactory.CreateCharGameObjectWithComm(textSplit[2], float.Parse(textSplit[3]), textSplit[4], charImgList);
+                        break;
+                    }
                     case "bg":
                     {
                         imageFactory.LoadBackground(textSplit[2], textSplit[3]);
