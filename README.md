@@ -14,9 +14,9 @@
 
 # 下载 Download
 
-- [下载 ArisStudio](https://github.com/Tualin14/ArisStudio/releases)
+> [下载 ArisStudio](https://github.com/Tualin14/ArisStudio/releases)
 
-- [下载 素材 Data](https://oss.dza.vin/share@dzaaaaaa.com/baPlayer%E5%8F%AF%E7%94%A8%E7%B4%A0%E6%9D%90%E9%9B%86)
+> [下载 素材 Data](https://oss.dza.vin/share@dzaaaaaa.com/baPlayer%E5%8F%AF%E7%94%A8%E7%B4%A0%E6%9D%90%E9%9B%86)
 
   - 解压到 Data 中相应文件夹
   - 素材收集于网络，如有缺少请自行添加

@@ -126,7 +126,7 @@ namespace ArisStudio.Spr
             }
 
             sprGo.GetComponent<SprState>().SprInit();
-            // sprGo.GetComponent<OldSprEmotion>().InitEmoticon();
+            sprGo.GetComponent<OldSprEmotion>().InitEmoticon();
 
             ssList.Add(nameId, sprGo);
 
@@ -162,6 +162,8 @@ namespace ArisStudio.Spr
             foreach (var i in charImgList)
             {
                 var sImg = i.Trim();
+                if (sImg == string.Empty) continue;
+
                 byte[] imageData;
                 using (var uwr = UnityWebRequest.Get($"{charPath}/{sImg}"))
                 {
@@ -173,7 +175,7 @@ namespace ArisStudio.Spr
                 texture.LoadImage(imageData);
                 charSpriteDic.Add(
                     sImg.Trim().Split('.')[0],
-                    Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f)));
+                    Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.4f)));
             }
 
             if (charSprite != null)
@@ -183,6 +185,7 @@ namespace ArisStudio.Spr
             }
 
             charGo.GetComponent<SprState>().CharInit(charSpriteDic);
+            charGo.GetComponent<OldSprEmotion>().InitEmoticon(scale);
 
             ssList.Add(nameId, charGo);
             charGo.SetActive(false);

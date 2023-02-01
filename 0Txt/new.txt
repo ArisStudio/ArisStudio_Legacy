@@ -1,41 +1,31 @@
-load char tt 2 test [01.png, 02.png,  03.png, 04.png]
-load charC tc 2 test [01.png, 02.png,  03.png, 04.png]
+load char tt 2.7 test [01.png]
 load spr h hihumi_spr
-load sprC hc hihumi_spr
 load bg classroom BG_ClassRoom2.jpg
 
 load end
 
+curtain show
 bg set classroom
-
-button 'Test new Command.' 't12'
-target t12
-
-tt x -12
-tt y 6
-tt show
-
-tc x 12
-tc show
-tc y 6
-
-h x 2
-h show
-
-hc x -2
-hc show
+===
+curtain a 0.5
+===
+curtain a 1
 ===
 
-tt state 04
-tc state 02
-h state 05
-hc state 03
+curtain color #ffffff
+===
+curtain hide
+===
+
+tt x -10
+tt show
+
+h x 10
+h show
 ===
 
 tt emo Action
-tc emo Action
 h emo Action
-hc emo Action
 th tt 't' 'T' 'tttttttttttttttttttt'
 
 

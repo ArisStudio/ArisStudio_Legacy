@@ -88,6 +88,11 @@ namespace ArisStudio
                     break;
             }
 
+            Initialize();
+        }
+
+        public void Initialize()
+        {
             t1 = t2 = t3 = string.Empty;
 
             button1.gameObject.SetActive(false);

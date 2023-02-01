@@ -65,11 +65,16 @@ namespace ArisStudio.ScreenEffect
             gameObject.SetActive(true);
         }
 
+        public void Alpha(float alpha)
+        {
+            curtain.color = new Color(curtain.color.r, curtain.color.g, curtain.color.b, alpha);
+        }
+
         public void Hide()
         {
             hiding = true;
         }
-        
+
         public void HideD()
         {
             gameObject.SetActive(false);
@@ -88,6 +93,12 @@ namespace ArisStudio.ScreenEffect
         public void Red()
         {
             curtain.color = Color.red;
+        }
+
+        public void SetColor(string color)
+        {
+            Debug.Log(color);
+            curtain.color = ColorUtility.TryParseHtmlString(color, out var c) ? c : curtain.color;
         }
     }
 }

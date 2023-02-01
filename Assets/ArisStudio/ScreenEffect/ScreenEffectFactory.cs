@@ -142,6 +142,9 @@ namespace ArisStudio.ScreenEffect
                         case "hideD":
                             curtain.HideD();
                             break;
+                        case "a":
+                            curtain.Alpha(float.Parse(l[2]));
+                            break;
                         case "black":
                             curtain.Black();
                             break;
@@ -150,6 +153,9 @@ namespace ArisStudio.ScreenEffect
                             break;
                         case "red":
                             curtain.Red();
+                            break;
+                        case "color":
+                            curtain.SetColor(l[2]);
                             break;
                     }
 

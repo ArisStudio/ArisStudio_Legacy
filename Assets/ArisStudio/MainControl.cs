@@ -232,6 +232,7 @@ namespace ArisStudio
             soundFactory.Initialize();
             screenEffectFactory.Initialize();
             end.Clear();
+            selectButton.Initialize();
 
             targetList.Clear();
 
@@ -239,6 +240,7 @@ namespace ArisStudio
             banner.CloseBanner();
 
             autoTimer = 0;
+            runLineNumber = 0;
 
             debugConsole.PrintLog("\n<color=orange>Initialize</color>");
         }
