@@ -30,7 +30,5 @@ th tt 't' 'T' 'tttttttttttttttttttt'
 
 
 tt down
-tc down
 h down
-hc down
 th h 'h' 'H' 'hhhhhhhhhhhhh'

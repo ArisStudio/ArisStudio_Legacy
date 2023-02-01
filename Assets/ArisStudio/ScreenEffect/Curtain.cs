@@ -97,7 +97,6 @@ namespace ArisStudio.ScreenEffect
 
         public void SetColor(string color)
         {
-            Debug.Log(color);
             curtain.color = ColorUtility.TryParseHtmlString(color, out var c) ? c : curtain.color;
         }
     }
