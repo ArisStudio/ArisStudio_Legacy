@@ -61,7 +61,6 @@ namespace ArisStudio.ScreenEffect
 
         public void ShowD()
         {
-            curtain.color = new Color(curtain.color.r, curtain.color.g, curtain.color.b, 1);
             gameObject.SetActive(true);
         }
 
