@@ -88,7 +88,7 @@ namespace ArisStudio.Spr
 
             var texture = new Texture2D(1, 1);
             texture.LoadImage(imageData);
-            texture.name = sprName;
+            texture.name = Path.GetFileNameWithoutExtension($"{sprPath}.png");
             var textures = new Texture2D[1];
             textures[0] = texture;
 
