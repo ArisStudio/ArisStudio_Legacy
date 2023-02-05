@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace ArisStudio
 {
@@ -9,6 +10,12 @@ namespace ArisStudio
         public void ChangeMenuState()
         {
             settingArea.SetActive(!settingArea.activeSelf);
+        }
+
+        public void Change2Preview()
+        {
+            Screen.SetResolution(512, 256, false);
+            SceneManager.LoadScene("Preview");
         }
     }
 }

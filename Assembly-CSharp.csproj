@@ -88,6 +88,7 @@
      <Compile Include="Assets\ArisStudio\Spr\SprState.cs" />
      <Compile Include="Assets\ArisStudio\TextArea.cs" />
      <Compile Include="Assets\SkipSplash.cs" />
+     <Compile Include="Assets\StatePreview\PreSpr.cs" />
      <None Include="Assets\ArisStudio\Components\Button\ButtonLight.shader" />
      <None Include="Assets\ArisStudio\Spr\Comm.shader" />
      <None Include="Assets\ArisStudio\Spr\SFill.shader" />
