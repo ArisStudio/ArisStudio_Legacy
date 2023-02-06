@@ -18,16 +18,16 @@
 
 > [下载 素材 Data](https://oss.dza.vin/share@dzaaaaaa.com/baPlayer%E5%8F%AF%E7%94%A8%E7%B4%A0%E6%9D%90%E9%9B%86)
 
-  - 解压到 Data 中相应文件夹
-  - 素材收集于网络，如有缺少请自行添加
+- 解压到 Data 中相应文件夹
+- 素材收集于网络，如有缺少请自行添加
 
-# [如何使用 How to Use(New Doc)](https://github.com/Tualin14/ArisStudio/wiki) 
+# [如何使用 How to Use(New Doc)](https://github.com/Tualin14/ArisStudio/wiki)
 
 # [旧版文档 1.3.4 Old Doc](https://github.com/Tualin14/ArisStudio/tree/1.3.4.BackUp/Doc)
 
 # 来看看一些使用播放器完成的作品吧ヾ(≧▽≦\*)o
 
-- [老师，一起来过年吧！](https://www.bilibili.com/video/BV1Es4y1479p/?share_source=copy_web&vd_source=24078f39fc74aad7b8d39a41996c2825)
+- [老师，一起来过年吧！](https://b23.tv/9UdXBxk)
 - [游戏开发部要做 H-game？！](https://b23.tv/QaqP4Ew)
 - [诺亚与优香与老师 1](https://b23.tv/rkZMNXg)
 - [“最伟大的游戏”](https://b23.tv/z18G8Fs)
@@ -52,4 +52,4 @@
 
 # Licence
 
-GPL-3.0 © [Tualin14](https://github.com/Tualin14/baPlayer)
+GPL-3.0 © [Tualin14](https://github.com/Tualin14/ArisStudio)
