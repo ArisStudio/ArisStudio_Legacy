@@ -8,7 +8,7 @@ namespace ArisStudio.Spr
         public GameObject sprBase;
 
         //Move
-        private float moveX, moveY;
+        private float moveX, moveY, distanceX;
         private float moveXSpeed, moveYSpeed;
         private bool xMoving, yMoving;
 
@@ -35,7 +35,8 @@ namespace ArisStudio.Spr
                 else
                 {
                     var sbLp = sprBase.transform.localPosition;
-                    sbLp = Vector3.MoveTowards(sbLp, new Vector3(moveX, sbLp.y, sbLp.z), moveXSpeed * Time.deltaTime);
+                    sbLp = Vector3.MoveTowards(sbLp, new Vector3(moveX, sbLp.y, sbLp.z),
+                        moveXSpeed * Mathf.Sin(Time.deltaTime * Mathf.PI * math.abs(moveX - sbLp.x) / distanceX));
                     sprBase.transform.localPosition = sbLp;
                 }
             }
@@ -124,6 +125,7 @@ namespace ArisStudio.Spr
         public void Move2X(float x, float speed)
         {
             moveX = x;
+            distanceX = math.abs(moveX - sprBase.transform.localPosition.x);
             moveXSpeed = speed;
             xMoving = true;
         }
