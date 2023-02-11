@@ -146,7 +146,8 @@ namespace StatePreview
                 skelData = uwr.downloadHandler.data;
             }
 
-            var skeletonData = binary.ReadSkeletonData(sprName, skelData);
+            // var skeletonData = binary.ReadSkeletonData(sprName, skelData);
+            var skeletonData = binary.ReadSkeletonData(sprName);
             var stateData = new AnimationStateData(skeletonData);
             var sprSkeletonDataAsset = SkeletonDataAsset.CreateSkeletonDataAsset(skeletonData, stateData);
 

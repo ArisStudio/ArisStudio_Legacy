@@ -105,7 +105,8 @@ namespace ArisStudio.Spr
                 skelData = uwr.downloadHandler.data;
             }
 
-            var skeletonData = binary.ReadSkeletonData(sprName, skelData);
+            // var skeletonData = binary.ReadSkeletonData(sprName, skelData);
+            var skeletonData = binary.ReadSkeletonData(skelPath);
             var stateData = new AnimationStateData(skeletonData);
             var sprSkeletonDataAsset = SkeletonDataAsset.CreateSkeletonDataAsset(skeletonData, stateData);
 

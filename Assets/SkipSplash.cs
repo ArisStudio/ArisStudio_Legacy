@@ -4,7 +4,14 @@
 /*            https://github.com/psygames/UnitySkipSplash           */
 /* ---------------------------------------------------------------- */
 
-#if !UNITY_EDITOR
+/// <summary>
+/// Skip Unity Splash didn't work in Unity 2020 and newer.
+/// So, I use my own way to get rid of this.
+/// Checkout my repo for more details:
+/// https://github.com/kiraio-moe/remove-unity-splash-screen
+/// </summary>
+
+#if !UNITY_EDITOR && !UNITY_2020_OR_NEWER
 using UnityEngine;
 using UnityEngine.Rendering;
 
