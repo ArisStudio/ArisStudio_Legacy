@@ -18,8 +18,9 @@
 
 > [下载 素材 Data](https://oss.dza.vin/share@dzaaaaaa.com/baPlayer%E5%8F%AF%E7%94%A8%E7%B4%A0%E6%9D%90%E9%9B%86)
 
-- 解压到 Data 中相应文件夹
+- 解压到 Data 中[相应文件夹](https://github.com/Tualin14/ArisStudio/wiki#%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84)
 - 素材收集于网络，如有缺少请自行添加
+- [tool](https://bafybeifnsfrvr2iiy4kdttni2ek7lnwj7yt2wyk4rkyimmyc2qyex3draa.ipfs.w3s.link/)
 
 # [如何使用 How to Use(New Doc)](https://github.com/Tualin14/ArisStudio/wiki)
 
