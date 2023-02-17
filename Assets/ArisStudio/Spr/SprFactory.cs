@@ -135,6 +135,93 @@ namespace ArisStudio.Spr
             sprGo.SetActive(false);
         }
 
+        public void CreateCustomGameObjectWithDef(string nameId, float scale, string idle, string customName, string[] imgList)
+        {
+            StartCoroutine(LoadAndCreateCustomGameObject(nameId, scale, idle, customName, imgList, defMaterial));
+        }
+
+        public void CreateCustomGameObjectWithComm(string nameId, float scale, string idle, string customName, string[] imgList)
+        {
+            StartCoroutine(LoadAndCreateCustomGameObject(nameId, scale, idle, customName, imgList, commMaterial));
+        }
+
+        // ReSharper disable Unity.PerformanceAnalysis
+        private IEnumerator LoadAndCreateCustomGameObject(string nameId, float scale, string idle, string customName, string[] imgList,
+            Material stateMaterial)
+        {
+            var sprBaseClone = Instantiate(sprBaseGo);
+            sprBaseClone.name = nameId;
+            var sprGo = sprBaseClone.transform.Find("SprObject").gameObject;
+
+            # region LoadSpr
+
+            var sprPath = Path.Combine(sprDataPath, customName);
+            var atlasPath = $"{sprPath}.atlas";
+            var skelPath = $"{sprPath}.skel";
+
+            string atlasTxt;
+            using (var uwr = UnityWebRequest.Get(atlasPath))
+            {
+                yield return uwr.SendWebRequest();
+                atlasTxt = uwr.downloadHandler.text;
+            }
+
+            var atlasTextAsset = new TextAsset(atlasTxt);
+
+            var textures = new Texture2D[imgList.Length];
+            for (var i = 0; i < imgList.Length; i++)
+            {
+                byte[] imageData;
+                var imgPath = Path.Combine(sprDataPath, imgList[i].Trim());
+                using (var uwr = UnityWebRequest.Get(imgPath))
+                {
+                    yield return uwr.SendWebRequest();
+                    imageData = uwr.downloadHandler.data;
+                }
+
+                var texture = new Texture2D(1, 1);
+                texture.LoadImage(imageData);
+                texture.name = Path.GetFileNameWithoutExtension(imgPath);
+                textures[i] = texture;
+            }
+
+            var sprAtlasAsset = SpineAtlasAsset.CreateRuntimeInstance(atlasTextAsset, textures, stateMaterial, true);
+
+            var attachmentLoader = new AtlasAttachmentLoader(sprAtlasAsset.GetAtlas());
+            var binary = new SkeletonBinary(attachmentLoader);
+            binary.Scale *= SprScale * scale;
+
+            byte[] skelData;
+            using (var uwr = UnityWebRequest.Get(skelPath))
+            {
+                yield return uwr.SendWebRequest();
+                skelData = uwr.downloadHandler.data;
+            }
+
+            var skeletonData = binary.ReadSkeletonData(customName, skelData);
+            var stateData = new AnimationStateData(skeletonData);
+            var sprSkeletonDataAsset = SkeletonDataAsset.CreateSkeletonDataAsset(skeletonData, stateData);
+
+            # endregion
+
+            var skeletonAnimation = SkeletonAnimation.AddToGameObject(sprGo, sprSkeletonDataAsset);
+
+            skeletonAnimation.Initialize(false);
+            skeletonAnimation.Skeleton.SetSlotsToSetupPose();
+
+
+            skeletonAnimation.AnimationState.SetAnimation(0, idle, true);
+
+            sprGo.GetComponent<SprState>().SprInit();
+            sprGo.GetComponent<OldSprEmotion>().InitEmoticon();
+
+            ssList.Add(nameId, sprGo);
+
+            debugConsole.PrintLog($"Load Spr: <color=lime>{nameId}</color>");
+
+            sprGo.SetActive(false);
+        }
+
         public void CreateCharGameObjectWithDef(string nameId, float scale, string charFolder, string[] charImgList)
         {
             StartCoroutine(LoadAndCreateCharacterGameObject(nameId, scale, charFolder, charImgList, defMaterial));
@@ -266,6 +353,11 @@ namespace ArisStudio.Spr
                 case "emo":
                 {
                     ssList[l[1]].GetComponent<OldSprEmotion>().PlayEmoticon(l[3]);
+                    break;
+                }
+                case "emoInit":
+                {
+                    ssList[l[1]].GetComponent<OldSprEmotion>().InitEmoticon();
                     break;
                 }
 

@@ -82,7 +82,6 @@ namespace ArisStudio
             if (isTyping)
             {
                 autoTimer = 0;
-                isPlaying = false;
                 return;
             }
 
@@ -263,6 +262,20 @@ namespace ArisStudio
                         sprFactory.CreateSprGameObjectWithComm(textSplit[2], textSplit[3]);
                         break;
                     }
+                    case "custom":
+                    {
+                        var customImgList = text.Split('[')[1].Split(']')[0].Split(',');
+                        sprFactory.CreateCustomGameObjectWithDef(textSplit[2], float.Parse(textSplit[3]), textSplit[4], textSplit[5],
+                            customImgList);
+                        break;
+                    }
+                    case "customC":
+                    {
+                        var customImgList = text.Split('[')[1].Split(']')[0].Split(',');
+                        sprFactory.CreateCustomGameObjectWithComm(textSplit[2], float.Parse(textSplit[3]), textSplit[4], textSplit[5],
+                            customImgList);
+                        break;
+                    }
                     case "char":
                     {
                         var charImgList = text.Split('[')[1].Split(']')[0].Split(',');
@@ -383,6 +396,11 @@ namespace ArisStudio
 
                     case "t":
                         isPlaying = false;
+                        tt = text.Split('\'');
+                        textArea.SetText(tt[1], tt[3], tt[5]);
+                        break;
+
+                    case "tc":
                         tt = text.Split('\'');
                         textArea.SetText(tt[1], tt[3], tt[5]);
                         break;
