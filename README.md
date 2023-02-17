@@ -20,7 +20,7 @@
 
 - 解压到 Data 中[相应文件夹](https://github.com/Tualin14/ArisStudio/wiki#%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84)
 - 素材收集于网络，如有缺少请自行添加
-- [tool](https://bafybeifnsfrvr2iiy4kdttni2ek7lnwj7yt2wyk4rkyimmyc2qyex3draa.ipfs.w3s.link/)
+- [dl_data_tool](https://bafybeifnsfrvr2iiy4kdttni2ek7lnwj7yt2wyk4rkyimmyc2qyex3draa.ipfs.w3s.link/)
 
 # [如何使用 How to Use(New Doc)](https://github.com/Tualin14/ArisStudio/wiki)
 
