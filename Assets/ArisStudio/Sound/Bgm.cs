@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace ArisStudio.Sound
 {
     public class Bgm : MonoBehaviour
     {
         public Slider vSlider;
-        public Text vText;
+        public TMP_Text vText;
 
         private AudioSource bgm;
 
@@ -78,7 +79,7 @@ namespace ArisStudio.Sound
 
         public void ChangeVolume()
         {
-            var vTmp = vSlider.value / 10;
+            var vTmp = vSlider.value;
             vText.text = $"{vTmp:F1} v";
             bgm.volume = vTmp;
         }

@@ -25,7 +25,7 @@
 ## Awesome works done with Aris Studio ヾ(≧▽≦\\*)o
 
 - [Sensei, let's celebrate the New Year together!](https://b23.tv/9UdXBxk "Watch Sensei, let's celebrate the New Year together! on bilibili")
-- [The game development department wants to do H-game?!](https://b23.tv/QaqP4Ew "Watch The game development department wants to do H-game?! on bilibili")
+- [The Game Development Department wants to do H-game?!](https://b23.tv/QaqP4Ew "Watch The Game Development Department wants to do H-game?! on bilibili")
 - [Noah and Yuka and Sensei 1](https://b23.tv/rkZMNXg "Watch Noah and Yuka and Sensei 1 on bilibili")
 - [“Greatest Game Ever”](https://b23.tv/z18G8Fs "Watch “Greatest Game Ever” on bilibili")
 - [Saiba Green's New Year's Gift Part. 1](https://b23.tv/V9oeqd5 "Watch Saiba Green's New Year's Gift Part. 1 on bilibili")
@@ -47,6 +47,14 @@
 - [UnitySkipSplash](https://github.com/psygames/UnitySkipSplash "Visit UnitySkipSplash GitHub repo")
 - [Unity3dRichTextHelper](https://github.com/majecty/Unity3dRichTextHelper "Visit Unity3dRichTextHelper GitHub repo")
 - [remove-unity-splash-screen](https://github.com/kiraio-moe/remove-unity-splash-screen "Visit remove-unity-splash-screen GitHub repo")
+- [UnitySimpleFileBrowser](https://github.com/yasirkula/UnitySimpleFileBrowser "Visit UnitySimpleFileBrowser GitHub repo")
+- [Save-System-For-Unity](https://github.com/IntoTheDev/Save-System-for-Unity "Visit Save-System-for-Unity GitHub repo")
+- [DoTween](https://github.com/Demigiant/dotween "Visit DoTween GitHub repo")
+- [scene-loader](https://github.com/Home-Alone-Studios/scene-loader "Visit scene-loader GitHub repo")
+- [UnityRecyclingListView](https://github.com/sinbad/UnityRecyclingListView "Visit UnityRecyclingListView GitHub repo")
+- [TMP_Typewriter](https://github.com/baba-s/TMP_Typewriter "Visit TMP_Typewriter GitHub repo")
+- [SoftMaskForUGUI](https://github.com/mob-sakai/SoftMaskForUGUI "Visit SoftMaskForUGUI GitHub repo")
+- [Unity_TabsUI](https://github.com/herbou/Unity_TabsUI "Visit Unity_TabsUI GitHub repo")
 
 ## License
 

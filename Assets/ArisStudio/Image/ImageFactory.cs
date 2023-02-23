@@ -1,22 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using ArisStudio.Core;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-namespace ArisStudio.Image
+namespace ArisStudio.UI
 {
     public class ImageFactory : MonoBehaviour
     {
-        public DebugConsole debugConsole;
-
         [Header("Background")] public RawImage backgroundImage;
         public ImageShake bgShake;
 
         [Header("Cover")] public RawImage coverImage;
 
-        private string backgroundDataPath, coverDataPath;
+        // private string backgroundDataPath, coverDataPath;
 
         private float bgShowTimer;
         private const float BgChangeShowTime = 0.5f;
@@ -25,6 +24,15 @@ namespace ArisStudio.Image
 
         Dictionary<string, Texture2D> backgroundList = new Dictionary<string, Texture2D>();
         Dictionary<string, Texture2D> coverList = new Dictionary<string, Texture2D>();
+
+        DebugConsole debugConsole;
+        SettingsManager settingsManager;
+
+        void Awake()
+        {
+            debugConsole = MainControl.Instance.m_DebugConsole;
+            settingsManager = MainControl.Instance.m_SettingsManager;
+        }
 
         private void Update()
         {
@@ -61,9 +69,9 @@ namespace ArisStudio.Image
 
         public void SetImageDataPath(string rootPath)
         {
-            var imageDataPath = Path.Combine(rootPath, "Image");
-            backgroundDataPath = Path.Combine(imageDataPath, "Background");
-            coverDataPath = Path.Combine(imageDataPath, "Cover");
+            // var imageDataPath = Path.Combine(rootPath, "Image");
+            // backgroundDataPath = Path.Combine(imageDataPath, "Background");
+            // coverDataPath = Path.Combine(imageDataPath, "Cover");
         }
 
         public void Initialize()
@@ -97,8 +105,8 @@ namespace ArisStudio.Image
             {
                 case "Background":
                 {
-                    var imagePath = Path.Combine(backgroundDataPath, imageName);
-                    var www = UnityWebRequest.Get(imagePath);
+                    string imagePath = Path.Combine(settingsManager.currentBackgroundPath, imageName);
+                    UnityWebRequest www = UnityWebRequest.Get(imagePath);
                     yield return www.SendWebRequest();
                     imageData = www.downloadHandler.data;
                     texture.LoadImage(imageData);
@@ -107,7 +115,7 @@ namespace ArisStudio.Image
                 }
                 case "Cover":
                 {
-                    var imagePath = Path.Combine(coverDataPath, imageName);
+                    var imagePath = Path.Combine(settingsManager.currentCoverPath, imageName);
                     var www = UnityWebRequest.Get(imagePath);
                     yield return www.SendWebRequest();
                     imageData = www.downloadHandler.data;
@@ -117,7 +125,7 @@ namespace ArisStudio.Image
                 }
             }
 
-            debugConsole.PrintLog($"Loaded {imageType}: <color=lime>{imageName}</color>");
+            debugConsole.PrintLog($"Load {imageType}: <#00ff00>{imageName}</color>");
         }
 
         #endregion

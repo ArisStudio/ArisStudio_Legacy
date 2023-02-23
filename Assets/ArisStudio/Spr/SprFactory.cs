@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ArisStudio.Core;
 using Spine;
 using Spine.Unity;
 using UnityEngine;
@@ -11,12 +12,11 @@ namespace ArisStudio.Spr
 {
     public class SprFactory : MonoBehaviour
     {
-        public DebugConsole debugConsole;
         public Material defMaterial, commMaterial;
 
         private GameObject sprBaseGo;
 
-        private string sprDataPath, charDataPath;
+        // private string sprDataPath, charDataPath;
         private const float SprScale = 0.0136f;
 
 
@@ -25,6 +25,15 @@ namespace ArisStudio.Spr
 
         List<string> showList = new List<string>();
 
+        DebugConsole debugConsole;
+        SettingsManager settingsManager;
+
+        void Awake()
+        {
+            debugConsole = MainControl.Instance.m_DebugConsole;
+            settingsManager = MainControl.Instance.m_SettingsManager;
+        }
+
         private void Start()
         {
             sprBaseGo = GameObject.Find("SprBase").gameObject;
@@ -32,8 +41,8 @@ namespace ArisStudio.Spr
 
         public void SetSprDataPath(string rootPath)
         {
-            sprDataPath = Path.Combine(rootPath, "Spr");
-            charDataPath = Path.Combine(rootPath, "Character");
+            // sprDataPath = Path.Combine(rootPath, "Spr");
+            // charDataPath = Path.Combine(rootPath, "Character");
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
@@ -66,7 +75,7 @@ namespace ArisStudio.Spr
 
             # region LoadSpr
 
-            var sprPath = Path.Combine(sprDataPath, sprName);
+            var sprPath = Path.Combine(settingsManager.currentSprPath, sprName);
             var atlasPath = $"{sprPath}.atlas";
             var skelPath = $"{sprPath}.skel";
 
@@ -131,6 +140,93 @@ namespace ArisStudio.Spr
 
             ssList.Add(nameId, sprGo);
 
+            debugConsole.PrintLog($"Load Spr: <#00ff00>{nameId}</color>");
+
+            sprGo.SetActive(false);
+        }
+
+        public void CreateCustomGameObjectWithDef(string nameId, float scale, string idle, string customName, string[] imgList)
+        {
+            StartCoroutine(LoadAndCreateCustomGameObject(nameId, scale, idle, customName, imgList, defMaterial));
+        }
+
+        public void CreateCustomGameObjectWithComm(string nameId, float scale, string idle, string customName, string[] imgList)
+        {
+            StartCoroutine(LoadAndCreateCustomGameObject(nameId, scale, idle, customName, imgList, commMaterial));
+        }
+
+        // ReSharper disable Unity.PerformanceAnalysis
+        private IEnumerator LoadAndCreateCustomGameObject(string nameId, float scale, string idle, string customName, string[] imgList,
+            Material stateMaterial)
+        {
+            var sprBaseClone = Instantiate(sprBaseGo);
+            sprBaseClone.name = nameId;
+            var sprGo = sprBaseClone.transform.Find("SprObject").gameObject;
+
+            # region LoadSpr
+
+            var sprPath = Path.Combine(settingsManager.currentSprPath, customName);
+            var atlasPath = $"{sprPath}.atlas";
+            var skelPath = $"{sprPath}.skel";
+
+            string atlasTxt;
+            using (var uwr = UnityWebRequest.Get(atlasPath))
+            {
+                yield return uwr.SendWebRequest();
+                atlasTxt = uwr.downloadHandler.text;
+            }
+
+            var atlasTextAsset = new TextAsset(atlasTxt);
+
+            var textures = new Texture2D[imgList.Length];
+            for (var i = 0; i < imgList.Length; i++)
+            {
+                byte[] imageData;
+                var imgPath = Path.Combine(settingsManager.currentSprPath, imgList[i].Trim());
+                using (var uwr = UnityWebRequest.Get(imgPath))
+                {
+                    yield return uwr.SendWebRequest();
+                    imageData = uwr.downloadHandler.data;
+                }
+
+                var texture = new Texture2D(1, 1);
+                texture.LoadImage(imageData);
+                texture.name = Path.GetFileNameWithoutExtension(imgPath);
+                textures[i] = texture;
+            }
+
+            var sprAtlasAsset = SpineAtlasAsset.CreateRuntimeInstance(atlasTextAsset, textures, stateMaterial, true);
+
+            var attachmentLoader = new AtlasAttachmentLoader(sprAtlasAsset.GetAtlas());
+            var binary = new SkeletonBinary(attachmentLoader);
+            binary.Scale *= SprScale * scale;
+
+            byte[] skelData;
+            using (var uwr = UnityWebRequest.Get(skelPath))
+            {
+                yield return uwr.SendWebRequest();
+                skelData = uwr.downloadHandler.data;
+            }
+
+            var skeletonData = binary.ReadSkeletonData(customName);
+            var stateData = new AnimationStateData(skeletonData);
+            var sprSkeletonDataAsset = SkeletonDataAsset.CreateSkeletonDataAsset(skeletonData, stateData);
+
+            # endregion
+
+            var skeletonAnimation = SkeletonAnimation.AddToGameObject(sprGo, sprSkeletonDataAsset);
+
+            skeletonAnimation.Initialize(false);
+            skeletonAnimation.Skeleton.SetSlotsToSetupPose();
+
+
+            skeletonAnimation.AnimationState.SetAnimation(0, idle, true);
+
+            sprGo.GetComponent<SprState>().SprInit();
+            sprGo.GetComponent<OldSprEmotion>().InitEmoticon();
+
+            ssList.Add(nameId, sprGo);
+
             debugConsole.PrintLog($"Load Spr: <color=lime>{nameId}</color>");
 
             sprGo.SetActive(false);
@@ -151,7 +247,7 @@ namespace ArisStudio.Spr
             Material stateMaterial)
         {
             var charSpriteDic = new Dictionary<string, Sprite>();
-            var charPath = Path.Combine(charDataPath, charFolder);
+            var charPath = Path.Combine(settingsManager.currentCharacterPath, charFolder);
 
             var charBaseClone = Instantiate(sprBaseGo);
             charBaseClone.name = nameId;
@@ -267,6 +363,12 @@ namespace ArisStudio.Spr
                 case "emo":
                 {
                     ssList[l[1]].GetComponent<OldSprEmotion>().PlayEmoticon(l[3]);
+                    break;
+                }
+
+                case "emoInit":
+                {
+                    ssList[l[1]].GetComponent<OldSprEmotion>().InitEmoticon();
                     break;
                 }
 

@@ -7,11 +7,14 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/ArisStudio/Scenes/ArisStudio-dev.unity
-    guid: 608a3e204911de340a5f6a850ac5cafc
-  - enabled: 1
+    guid: 47f0b0d24c7a4674c8a3652e075edfd4
+  - enabled: 0
     path: Assets/Scenes/ArisStudio.unity
     guid: 0fb3ac03249b21f40ac959c7c4f52090
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Preview.unity
     guid: 377cdc8da817682409fca939cc1aab63
+  - enabled: 1
+    path: Assets/ArisStudio/Scenes/CharacterPreview-dev.unity
+    guid: 7b5af58d78eef0b488e210854a9817bb
   m_configObjects: {}

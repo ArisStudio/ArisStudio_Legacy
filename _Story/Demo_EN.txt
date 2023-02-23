@@ -1,0 +1,136 @@
+load spr hihumi hihumi_spr
+load bg ClassRoom BG_ClassRoom2.jpg
+load bgm Theme_04 Theme_04.ogg
+
+load end
+
+bg set ClassRoom
+banner 'New Product'
+
+label 'Trinity College classroom'
+bgm set Theme_04
+
+spr show hihumi
+spr emo hihumi Action
+spr state hihumi 03
+txt 'Hifumi' 'Remedial Department' 'Ah, Sensei! You are here!'
+
+spr state hihumi 00
+txt 'Hifumi' 'Remedial Department' 'Ne, just like what I told Sensei on MomoTalk, I just got new peripheral products.'
+
+spr state hihumi 03
+spr shakeY hihumi 3 -1 1
+txt 'Hifumi' 'Remedial Department' 'Look! Ja ja~'
+
+spr state hihumi 00
+spr emo hihumi Twinkle
+spr shakeY hihumi 8 1 3
+txt 'Hifumi' 'Remedial Department' 'It"s a headrest in the shape of a "wave cat", so soft and fluffy!'
+
+spr state hihumi 03
+txt 'Hifumi' 'Remedial Department' 'As long as you have this, you can take a nap comfortably no matter where you are!'
+
+button '...wavy cat?' 't1'
+
+target t1
+
+spr state hihumi 02
+spr shakeX hihumi 20 1 6
+spr emo hihumi Q
+txt 'Hifumi' 'Remedial Department' 'Huh...? Sensei, don"t you know the wave cat?'
+
+spr state hihumi 03
+spr emo hihumi Twinkle
+spr shakeY hihumi 8 1 3
+txt 'Hifumi' 'Remedial Department' 'The wave cat is a character that appeared in Momo"s friends. It is a pair of long-bodied cats, and it is also Perololo"s unique good friend!'
+
+spr state hihumi 00
+txt 'Hifumi' 'Remedial Department' 'The charismatic dance is his characteristic, although it is not as good as the Pelolo dance, but it is still very popular among fans of Momo friends.'
+
+spr move hihumi -5 25
+spr emo hihumi Chat
+txt 'Hifumi' 'Remedial Department' 'And the little owl on the wave cat is called Big Brother!'
+
+spr state hihumi 03
+spr move hihumi 0 25
+txt 'Hifumi' 'Remedial Department' 'Because the elder brother can learn the truth by just looking into each other"s eyes, so it is a very popular amulet among candidates.'
+
+spr state hihumi 00
+spr move hihumi 5 25
+txt 'Hifumi' 'Remedial Department' 'And the quokka next to this is Mr. Nicolai...'
+
+spr state hihumi 04
+spr emo hihumi Sweat
+spr shakeX hihumi 20 1 6
+txt 'Hifumi' 'Remedial Department' 'Oh, I"m the only one talking non-stop. Sorry!'
+
+spr state hihumi 01
+spr move hihumi 0 25
+txt 'Hifumi' 'Remedial Department' 'As soon as I talked about Momo"s friends, I couldn"t help but get excited...'
+
+button 'It"s okay, it"s interesting.' 't2'
+target t2
+
+spr state hihumi 99
+spr emo hihumi Idea
+txt 'Hihumi' 'Remedial Department' 'Although as long as Sensei thinks it"s fun...'
+
+spr state hihumi 01
+txt 'Hifumi' 'Remedial Department' 'There are also many friends who don"t like to hear me talk about Momo friends.'
+
+spr state hihumi 04
+spr shakeX hihumi 20 1 6
+txt 'Hibumi' 'Remedial Department' 'Momo"s friends are all only characters who look distorted and weird...'
+
+spr state hihumi 02
+spr emo hihumi Q
+txt 'Hihumi' 'Remedial Department' 'But isn"t this very attractive? There"s nothing ordinary about it, and it"s really fascinating to have a personality that the other characters don"t have.'
+
+spr state hihumi 01
+txt 'Hifumi' 'Remedial Department' 'I have nothing special, I can"t be more ordinary...so I always look forward to seeing a character with this personality...'
+
+button 'I like ordinary things too' 't3'
+target t3
+
+spr state hihumi 04
+spr emo hihumi Sweat
+txt 'Hifumi' 'Remedial Department' 'Ha, haha...is that so? Hearing you say that, I always feel so shy...'
+
+spr state hihumi 02
+txt 'Hifumi' 'Remedial Department' 'By the way, Sensei. Do you want to use this wavy cat headrest?'
+
+spr state hihumi 03
+spr emo hihumi Twinkle
+txt 'Hifumi' 'Remedial Department' 'So soft and in a good mood~'
+
+spr state hihumi 01
+spr hide hihumi
+wait 1
+
+spr close hihumi
+spr show hihumi
+wait 1
+
+spr shakeY hihumi 3 -1 1
+wait 1
+
+spr state hihumi 03
+spr emo hihumi Chat
+txt 'Hifumi' 'Remedial Department' 'Haha, it suits you so well! It"s like a new character from Momo"s friend!'
+
+spr state hihumi 00
+txt 'Hifumi' 'Remedial Department' 'How about it? Just hanging around your neck makes you feel sleepy, right?'
+
+spr state hihumi 04
+txt 'Hifumi' 'Remedial Department' '...but this headrest cannot be given to you. Because it was hard for me to get this thing!'
+
+spr state hihumi 99
+spr emo hihumi Idea
+===
+
+spr state hihumi 01
+spr emo hihumi Shy
+txt 'Hifumi' 'Remedial Department' 'But if necessary... I can lend it to you occasionally.'
+
+spr back hihumi
+end clear

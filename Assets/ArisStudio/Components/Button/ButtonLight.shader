@@ -1,4 +1,4 @@
-﻿Shader "Hidden/ButtonLight"
+﻿Shader "Aris Studio/Sprites/Border Light Flow"
 {
     Properties
     {

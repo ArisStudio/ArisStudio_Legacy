@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ArisStudio.Image
+namespace ArisStudio.UI
 {
     public class ImageShake : MonoBehaviour
     {
