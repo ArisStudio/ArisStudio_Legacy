@@ -25,7 +25,8 @@ namespace ArisStudio.UI
         public void SetLabelText(string text)
         {
             t = 0;
-            labelText.text = text.Split('\'')[1];
+            // labelText.text = text.Split('\'')[1];
+            labelText.text = text;
             showing = true;
             gameObject.SetActive(true);
         }

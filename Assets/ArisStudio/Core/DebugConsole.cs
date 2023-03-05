@@ -1,5 +1,5 @@
 ﻿using System;
-using ArisStudio.Utility;
+using ArisStudio.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,23 +9,28 @@ namespace ArisStudio.Core
     /// <summary>
     /// Class responsible for in-game Debug Console.
     /// </summary>
-    [AddComponentMenu("Aris Studio/Core/Debug Console")]
-    public class DebugConsole : MonoBehaviour
+    [AddComponentMenu("Aris Studio/Core/Debug Console [Singleton]")]
+    public class DebugConsole : Singleton<DebugConsole>
     {
         [Header("Debug Window")]
-        [SerializeField] TMP_Text m_DebugText;
-        [SerializeField] TMP_InputField m_ConsoleInputField;
+        [SerializeField]
+        public TMP_Text m_DebugText;
+
+        [SerializeField]
+        TMP_InputField m_ConsoleInputField;
 
         [Header("FPS Counter")]
-        [SerializeField] TMP_Text m_FPSText;
-        [SerializeField, Range(1, 10)] int m_UpdateRate = 4;
+        [SerializeField]
+        TMP_Text m_FPSText;
+
+        [SerializeField, Range(1, 10)]
+        int m_UpdateRate = 4;
         int frameCount;
-        float deltaTime, fps;
+        float deltaTime,
+            fps;
 
         void Awake()
         {
-            // Clear existing debug text
-            m_DebugText.text = string.Empty;
         }
 
         void Update()
@@ -68,17 +73,18 @@ namespace ArisStudio.Core
         }
 
         /// <summary>
-        /// Execute Debug window command.
+        /// Execute console command.
         /// </summary>
         public void RunCommand()
         {
             m_ConsoleInputField.ActivateInputField();
-            string sTmp = m_ConsoleInputField.text.Trim();
-            if (sTmp == string.Empty) return;
+            string command = m_ConsoleInputField.text.Trim();
+            if (command == string.Empty)
+                return;
 
-            MainControl.Instance.PreLoad(sTmp);
-            MainControl.Instance.RunText(sTmp);
-            PrintLog($"> <#00ffff><b>{sTmp}</b></color>");
+            MainControl.Instance.PreLoad(command);
+            MainControl.Instance.RunText(command);
+            PrintLog($"> <#00ffff><b>{command}</b></color>");
             m_ConsoleInputField.text = string.Empty;
         }
     }

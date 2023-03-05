@@ -8,6 +8,7 @@
 [Tt]emp/
 [Oo]bj/
 [Bb]uild/
+[Bb]uilds/
 [Ll]ogs/
 [Mm]emoryCaptures/
 [Rr]ecordings/
@@ -45,6 +46,7 @@ ExportedObj/
 *.pdb
 *.mdb
 *.opendb
+*.VC.db
 
 # Unity3D generated meta files
 *.pidb.meta
@@ -63,47 +65,21 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-# Packing Files
-*.dat
-
-# Asset Meta Data
-*.meta
-
-# Static Code Analysis
-*.resharper
-*.ReSharper
-
-# File backup
-*~
-
-# Visual Studio cache files
-*.suo
-*.sln.docstates
-
-# Unity Cloud Build
-.unitycloudbuild
-
-# Crashlytics generated file
-crashlytics-build.properties
-
 # Visual Studio Code settings
 .vscode/
 
 # Rider
-/.idea/
+.idea/
 
 # Packed Addressables
 [Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 
 # Temporary auto-generated Android Assets
 [Aa]ssets/[Ss]treamingAssets/aa.meta
-[Aa]ssets/[Ss]treamingAssets/aa/*
+[Aa]ssets/[Ss]treamingAssets/aa/
 
 # Packing Files
 *.dat
-
-# Asset Meta Data
-*.meta
 
 # Static Code Analysis
 *.resharper
@@ -113,14 +89,10 @@ crashlytics-build.properties
 *~
 
 # Visual Studio cache files
-*.suo
 *.sln.docstates
 
 # Unity Cloud Build
 .unitycloudbuild
-
-# Unity files
-*.unity
 
 # Unity Asset Store tools package
 *.pidb
@@ -177,9 +149,6 @@ crashlytics-build.properties
 
 # Visual Studio 2017 Analyzer
 *.dump
-
-# Visual Studio 2017 Analyzer
-*.json
 
 # Visual Studio 2017 Analyzer
 *.metrics

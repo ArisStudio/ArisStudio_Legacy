@@ -9,25 +9,30 @@ namespace ArisStudio.UI
             autoButtonDefault,
             autoButtonSelect;
 
-        DebugConsole debugConsole;
+        // DebugConsole debugConsole;
 
         void Awake()
         {
-            debugConsole = MainControl.Instance.m_DebugConsole;
+            // debugConsole = FindObjectOfType<DebugConsole>();
+        }
+
+        void Start()
+        {
+            // debugConsole = DebugConsole.Instance;
         }
 
         void Update()
         {
-            if (debugConsole.gameObject.activeSelf)
+            if (DebugConsole.Instance.gameObject.activeSelf)
             {
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
-                    debugConsole.RunCommand();
+                    DebugConsole.Instance.RunCommand();
                 }
 
                 if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.D))
                 {
-                    debugConsole.gameObject.SetActive(false);
+                    DebugConsole.Instance.gameObject.SetActive(false);
                 }
 
                 return;
@@ -40,7 +45,7 @@ namespace ArisStudio.UI
 
             if (Input.GetKeyDown(KeyCode.D))
             {
-                debugConsole.gameObject.SetActive(true);
+                DebugConsole.Instance.gameObject.SetActive(true);
             }
 
             if (Input.GetKeyDown(KeyCode.A))

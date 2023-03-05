@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using ArisStudio.ScreenEffect;
 using ArisStudio.Sound;
 using ArisStudio.Spr;
 using ArisStudio.UI;
-using ArisStudio.Utility;
+using ArisStudio.Utils;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -15,58 +17,54 @@ namespace ArisStudio.Core
     /// The core class that behave like a bridge to connect with other class functionality.
     /// </summary>
     [AddComponentMenu("Aris Studio/Core/Main Control")]
-    public class MainControl : MonoBehaviourSingleton<MainControl>
+    public class MainControl : Singleton<MainControl>
     {
         [Header("User Interface")]
-        [SerializeField] public DebugConsole m_DebugConsole;
-        [SerializeField] public DialogueManager m_DialogueManager;
-        [SerializeField] public SettingsManager m_SettingsManager;
+        [SerializeField]
+        TextArea textArea;
+
         [Space]
-        [SerializeField] protected TextArea textArea;
+        [SerializeField]
+        SelectButton selectButton;
+
         [Space]
-        [SerializeField] protected SelectButton selectButton;
+        [SerializeField]
+        Label label;
+
         [Space]
-        [SerializeField] protected Label label;
-        [Space]
-        [SerializeField] protected Banner banner;
+        [SerializeField]
+        Banner banner;
 
+        SprFactory sprFactory;
+        ImageFactory imageFactory;
+        SoundFactory soundFactory;
+        ScreenEffectFactory screenEffectFactory;
+        End end;
 
-        // [SerializeField] protected InputField loadTxtInputField;
-        // [SerializeField] protected InputField setWebPathInputField;
-        // [Space]
+        bool isPlaying,
+            isTyping,
+            isSelecting,
+            isBanner;
 
-        private SprFactory sprFactory;
-        private ImageFactory imageFactory;
-        private SoundFactory soundFactory;
-        private ScreenEffectFactory screenEffectFactory;
-        private End end;
+        bool isAuto;
+        float autoTimer;
+        float autoSeconds = 2.3f;
 
-        private bool isPlaying, isTyping, isSelecting, isBanner;
+        bool isWaiting;
+        float waitTimer;
+        float waitSeconds;
 
-        private bool isAuto;
-        private float autoTimer;
-        private float autoSeconds = 2.3f;
-
-        private bool isWaiting;
-        private float waitTimer;
-        private float waitSeconds;
-
-        // private string textDataPath;
-        private string[] textsData;
-        private int textsLength;
-        private int runLineNumber;
+        // string textDataPath;
+        string[] textsData;
+        List<string> commands = new List<string>();
+        int textsLength;
+        int runLineNumber;
 
         // List
         Dictionary<string, int> targetList = new Dictionary<string, int>();
 
-        new void Awake()
+        void Awake()
         {
-            // this.Persistent = true;
-            base.Awake();
-
-            // m_DebugConsole = DebugConsole.Instance;
-            // m_SettingsManager = SettingsManager.Instance;
-
             sprFactory = FindObjectOfType<SprFactory>();
             imageFactory = FindObjectOfType<ImageFactory>();
             soundFactory = FindObjectOfType<SoundFactory>();
@@ -83,7 +81,8 @@ namespace ArisStudio.Core
                 isPlaying = false;
 
                 waitTimer += Time.deltaTime;
-                if (waitTimer < waitSeconds) return;
+                if (waitTimer < waitSeconds)
+                    return;
 
                 isWaiting = false;
                 waitTimer = 0;
@@ -114,7 +113,8 @@ namespace ArisStudio.Core
                 }
             }
 
-            if (!isPlaying) return;
+            if (!isPlaying)
+                return;
 
             if (isBanner)
             {
@@ -124,58 +124,15 @@ namespace ArisStudio.Core
             }
 
             if (runLineNumber < textsLength)
-            {
-                RunText(textsData[runLineNumber].Trim());
-            }
+                RunText(commands[runLineNumber]);
+                // RunText(textsData[runLineNumber].Trim());
         }
-
-        void NewInitialize()
-        {
-            m_DialogueManager.Initialize();
-        }
-
-        public void PlayStory()
-        {
-            NewInitialize();
-        }
-
-        #region SetPath
-        // public void SetLocalDataPath()
-        // {
-// #if UNITY_ANDROID
-//             string rootPath = $"file:///{Application.persistentDataPath}";
-// #elif UNITY_STANDALONE_OSX
-//             string rootPath = Directory.GetParent($"file://{Application.dataPath}").ToString();
-// #else
-//             string rootPath = Directory.GetParent(Application.dataPath).ToString();
-// #endif
-            // string localDataPath = Path.Combine(rootPath, "Data");
-            // sprFactory.SetSprDataPath(m_SettingsManager.currentLocalDataPath);
-            // imageFactory.SetImageDataPath(m_SettingsManager.currentLocalDataPath);
-            // soundFactory.SetSoundDataPath(m_SettingsManager.currentLocalDataPath);
-            // textDataPath = Path.Combine(rootPath, "0Txt");
-
-            // m_DebugConsole.PrintLog("Set Local Data Path");
-        // }
-
-        // public void SetWebPath()
-        // {
-        //     string url = setWebPathInputField.text;
-        //     sprFactory.SetSprDataPath(url);
-        //     imageFactory.SetImageDataPath(url);
-        //     soundFactory.SetSoundDataPath(url);
-
-        //     m_DebugConsole.PrintLog($"Set Web Path: <#00ff00>{url}</color>");
-        // }
-
-        #endregion
 
         # region Set PlayState
-
         public void SetAuto(bool b)
         {
             isAuto = b;
-            m_DebugConsole.PrintLog($"Auto {(isAuto ? "On" : "Off")}");
+            DebugConsole.Instance.PrintLog($"Auto {(isAuto ? "On" : "Off")}");
         }
 
         public void SetPlay()
@@ -187,7 +144,7 @@ namespace ArisStudio.Core
             }
 
             isPlaying = true;
-            m_DebugConsole.PrintLog("Play Once");
+            DebugConsole.Instance.PrintLog("Play Once");
         }
 
         public void SetTyping(bool b)
@@ -199,7 +156,8 @@ namespace ArisStudio.Core
         {
             runLineNumber = targetList[tName];
             isSelecting = false;
-            m_DebugConsole.PrintLog($"Select choice: <#00ff00>{tName}</color>");
+            SetPlay();
+            DebugConsole.Instance.PrintLog($"Select choice: <#00ff00>{tName}</color>");
         }
 
         # endregion
@@ -213,7 +171,7 @@ namespace ArisStudio.Core
             }
             catch (Exception e)
             {
-                m_DebugConsole.PrintLog(e.Message);
+                DebugConsole.Instance.PrintLog(e.Message);
                 Debug.LogException(e);
             }
             finally
@@ -222,31 +180,43 @@ namespace ArisStudio.Core
             }
         }
 
+        /// <summary>
+        /// Start a story.
+        /// </summary>
+        public void RunStory()
+        {
+            StartCoroutine(SetTextData(SettingsManager.Instance.currentStoryFilePath));
+        }
+
         public void LoadTextData()
         {
             // StartCoroutine(SetTextData(Path.Combine(textDataPath, $"{loadTxtInputField.text}.txt")));
-            StartCoroutine(SetTextData(m_SettingsManager.currentStoryFilePath));
+            StartCoroutine(SetTextData(SettingsManager.Instance.currentStoryFilePath));
         }
 
-        private void LoadTextData(string txtName)
+        void LoadTextData(string txtName)
         {
             // StartCoroutine(SetTextData(Path.Combine(textDataPath, $"{txtName}.txt")));
-            StartCoroutine(SetTextData(m_SettingsManager.currentStoryFilePath));
+            StartCoroutine(SetTextData(SettingsManager.Instance.currentStoryFilePath));
         }
 
-        private IEnumerator SetTextData(string textPath)
+        IEnumerator SetTextData(string textPath)
         {
             UnityWebRequest www = UnityWebRequest.Get(textPath);
             yield return www.SendWebRequest();
-            textsData = www.downloadHandler.text.Split('\n');
+            // textsData = www.downloadHandler.text.Split('\n');
+            commands = www.downloadHandler.text.Split('\n').ToList();
+            commands.RemoveAll(string.IsNullOrEmpty);
 
-            textsLength = textsData.Length;
-            PreLoad(textsData);
+            // textsLength = textsData.Length;
+            textsLength = commands.Count;
+            // PreLoad(textsData);
+            PreLoad(commands.ToArray());
 
-            m_DebugConsole.PrintLog($"Load Story Data: <#00ff00>{textPath}</color>");
+            DebugConsole.Instance.PrintLog($"Load Story Data: <#00ff00>{textPath}</color>");
         }
 
-        private void Initialize()
+        void Initialize()
         {
             textArea.gameObject.SetActive(false);
             sprFactory.Initialize();
@@ -264,197 +234,254 @@ namespace ArisStudio.Core
             autoTimer = 0;
             runLineNumber = 0;
 
-            m_DebugConsole.PrintLog("\n<#ffa500>Initialize</color>");
+            DebugConsole.Instance.PrintLog("\n<#ffa500>Initialize</color>");
         }
 
-        // ReSharper disable Unity.PerformanceAnalysis
+        string DebugArrayList(string[] message)
+        {
+            // string result = "";
+            // foreach (string text in message)
+            //     result += $"{text} ".Trim();
+
+            return string.Join(" ", new List<string>(message).ConvertAll(i => i.ToString()).ToArray());
+        }
+
+        string[] ParseCommand(string textCommand)
+        {
+            /*
+            * Split command with space delimiter then return as array.
+            *
+            * You can write a word without using single or double quote.
+            * Example: txt Arona Hello
+            *
+            * But, you must use either single or double quote if
+            * you write a sentence that have 'Space' character.
+            * Example: txt Arona 'Hello, Sensei.'
+            *
+            * You can write a single or double quote in a word or
+            * sentence by escaping the character: txt Arona 'It\'s yummy.'
+            * or use double quote as delimiter: txt Arona "It's yummy."
+            * and vice versa.
+            *
+            * Source: txt 'Arona' "Arona" "I'm, Arona." 'Say, "Hello"' 'You\'re'
+            * Result: ["txt", "'Arona'", "\"Arona\"", "\"I'm, Arona.\"", "'Say, "Hello"'", "'You\'re'"]
+            */
+            string pattern =
+                @"('[^'\\]*(?:\\.[^'\\]*)*')|(\""[^""\\]*(?:\\.[^""\\]*)*"")|(\S+)";
+            string[] textSplit = Regex
+                .Matches(textCommand, pattern)
+                .Cast<Match>()
+                .Select(m => m.Value)
+                .ToArray();
+
+            /*
+            * Normalize splitted text by removing either single or
+            * double quote at the start and end of the word.
+            * Also Unescape escaped character.
+            *
+            * Using string.Trim() resulting in unexpected result, so
+            * I reconstruct it using string.Substring().
+            *
+            * Result: ["txt", "Arona", "Arona", "I'm, Arona.", "Say, "Hello"", "You're"]
+            */
+            List<string> finalCommand = new List<string>();
+
+            foreach (string str in textSplit)
+            {
+                string cmd = str;
+
+                if ((str.StartsWith("'") && str.EndsWith("'")) || (str.StartsWith("\"") && str.EndsWith("\"")))
+                {
+                    cmd = str.Substring(1, str.Length - 2);
+                    cmd = Regex.Unescape(cmd);
+                }
+
+                finalCommand.Add(cmd);
+            }
+
+            return finalCommand.ToArray();
+        }
+
         public void PreLoad(string text)
         {
             try
             {
-                var textSplit = text.Split(' ');
-                switch (textSplit[1])
+                string[] command = ParseCommand(text);
+
+                switch (command[1])
                 {
                     case "spr":
-                    {
-                        sprFactory.CreateSprGameObjectWithDef(textSplit[2], textSplit[3]);
+                        sprFactory.CreateSprGameObjectWithDef(command[2], command[3]);
                         break;
-                    }
                     case "sprC":
-                    {
-                        sprFactory.CreateSprGameObjectWithComm(textSplit[2], textSplit[3]);
+                        sprFactory.CreateSprGameObjectWithComm(command[2], command[3]);
                         break;
-                    }
                     case "custom":
                     {
-                        var customImgList = text.Split('[')[1].Split(']')[0].Split(',');
-                        sprFactory.CreateCustomGameObjectWithDef(textSplit[2], float.Parse(textSplit[3]), textSplit[4], textSplit[5],
-                            customImgList);
+                        string[] customImgList = text.Split('[')[1].Split(']')[0].Split(',');
+                        sprFactory.CreateCustomGameObjectWithDef(
+                            command[2],
+                            float.Parse(command[3]),
+                            command[4],
+                            command[5],
+                            customImgList
+                        );
                         break;
                     }
                     case "customC":
                     {
-                        var customImgList = text.Split('[')[1].Split(']')[0].Split(',');
-                        sprFactory.CreateCustomGameObjectWithComm(textSplit[2], float.Parse(textSplit[3]), textSplit[4], textSplit[5],
-                            customImgList);
+                        string[] customImgList = text.Split('[')[1].Split(']')[0].Split(',');
+                        sprFactory.CreateCustomGameObjectWithComm(
+                            command[2],
+                            float.Parse(command[3]),
+                            command[4],
+                            command[5],
+                            customImgList
+                        );
                         break;
                     }
                     case "char":
                     {
-                        var charImgList = text.Split('[')[1].Split(']')[0].Split(',');
-                        sprFactory.CreateCharGameObjectWithDef(textSplit[2], float.Parse(textSplit[3]), textSplit[4], charImgList);
+                        string[] charImgList = text.Split('[')[1].Split(']')[0].Split(',');
+                        sprFactory.CreateCharGameObjectWithDef(
+                            command[2],
+                            float.Parse(command[3]),
+                            command[4],
+                            charImgList
+                        );
                         break;
                     }
                     case "charC":
                     {
-                        var charImgList = text.Split('[')[1].Split(']')[0].Split(',');
-                        sprFactory.CreateCharGameObjectWithComm(textSplit[2], float.Parse(textSplit[3]), textSplit[4], charImgList);
+                        string[] charImgList = text.Split('[')[1].Split(']')[0].Split(',');
+                        sprFactory.CreateCharGameObjectWithComm(
+                            command[2],
+                            float.Parse(command[3]),
+                            command[4],
+                            charImgList
+                        );
                         break;
                     }
                     case "bg":
-                    {
-                        imageFactory.LoadBackground(textSplit[2], textSplit[3]);
+                        imageFactory.LoadBackground(command[2], command[3]);
                         break;
-                    }
                     case "cover":
-                    {
-                        imageFactory.LoadCover(textSplit[2], textSplit[3]);
+                        imageFactory.LoadCover(command[2], command[3]);
                         break;
-                    }
                     case "bgm":
-                    {
-                        soundFactory.LoadBgm(textSplit[2], textSplit[3]);
+                        soundFactory.LoadBgm(command[2], command[3]);
                         break;
-                    }
                     case "se":
-                    {
-                        soundFactory.LoadSoundEffect(textSplit[2], textSplit[3]);
+                        soundFactory.LoadSoundEffect(command[2], command[3]);
                         break;
-                    }
                 }
             }
             catch (Exception e)
             {
-                m_DebugConsole.PrintLog(e.Message);
+                DebugConsole.Instance.PrintLog(e.Message);
                 Debug.LogException(e);
             }
         }
 
-        private void PreLoad(string[] texts)
+        void PreLoad(string[] texts)
         {
             Initialize();
 
-            for (var lineIndex = 0; lineIndex < texts.Length; lineIndex++)
+            for (int lineIndex = 0; lineIndex < texts.Length; lineIndex++)
             {
-                var text = texts[lineIndex].Trim();
+                string text = texts[lineIndex];
+
                 if (text.StartsWith("target"))
-                {
                     targetList.Add(text.Replace("target ", ""), lineIndex);
-                }
                 else if (text.StartsWith("load end"))
                 {
                     runLineNumber = lineIndex;
                     isPlaying = false;
-                    m_DebugConsole.PrintLog($"PreLoad End at {runLineNumber}");
+                    DebugConsole.Instance.PrintLog($"PreLoad End at {runLineNumber}");
                 }
                 else if (text.StartsWith("load"))
-                {
                     PreLoad(text);
-                }
             }
 
-            foreach (var t in targetList)
+            foreach (KeyValuePair<string, int> t in targetList)
             {
-                m_DebugConsole.PrintLog($"Target: <#00ff00>{t.Key}</color> Line: <#00ff00>{t.Value}</color>");
+                DebugConsole.Instance.PrintLog(
+                    $"Target: <#00ff00>{t.Key}</color> Line: <#00ff00>{t.Value}</color>"
+                );
             }
         }
 
-        private void ParseTextIntoCommand(string text)
+        void ParseTextIntoCommand(string text)
         {
             if (text.StartsWith("="))
-            {
                 isPlaying = false;
-            }
             else if (text != string.Empty || text.StartsWith("//"))
             {
-                var l = text.Split(' ');
-                string[] tt;
-                switch (l[0])
+                string[] command = ParseCommand(text);
+
+                switch (command[0])
                 {
                     // End
                     case "end":
                         end.EndCommand(text);
                         isPlaying = false;
                         break;
-
                     case "ChangeTxt":
                         isPlaying = false;
                         autoTimer = 0;
-                        LoadTextData(l[1]);
+                        LoadTextData(command[1]);
                         break;
-
                     case "wait":
-                        waitSeconds = float.Parse(l[1]);
+                        waitSeconds = float.Parse(command[1]);
                         isWaiting = true;
-                        m_DebugConsole.PrintLog($"Wait: <#00ff00>{waitSeconds} s</color>");
+                        DebugConsole.Instance.PrintLog($"Wait: <#00ff00>{waitSeconds} s</color>");
                         break;
-
                     case "auto":
-                        autoSeconds = float.Parse(l[1]);
-                        m_DebugConsole.PrintLog($"Auto Seconds: <#00ff00>{autoSeconds} s</color>");
+                        autoSeconds = float.Parse(command[1]);
+                        DebugConsole.Instance.PrintLog(
+                            $"Auto Seconds: <#00ff00>{autoSeconds} s</color>"
+                        );
                         break;
-
                     case "jump":
-                        runLineNumber = targetList[l[1]];
-                        m_DebugConsole.PrintLog($"Jump: <#00ff00>{l[1]}</color>");
+                        runLineNumber = targetList[command[1]];
+                        DebugConsole.Instance.PrintLog($"Jump: <#00ff00>{command[1]}</color>");
                         break;
-
 
                     // Text
                     case "txt":
-                        isPlaying = false;
-                        tt = text.Split('\'');
-                        textArea.SetText(tt[1], tt[3], tt[5]);
-                        break;
-
                     case "t":
                         isPlaying = false;
-                        tt = text.Split('\'');
-                        textArea.SetText(tt[1], tt[3], tt[5]);
+                        textArea.SetText(command[1], command[2], command[3]);
                         break;
-
                     case "tc":
-                        tt = text.Split('\'');
-                        textArea.SetText(tt[1], tt[3], tt[5]);
+                        textArea.SetText(command[1], command[2], command[3]);
                         break;
-
                     case "th":
-                        sprFactory.TextWithHl(l[1]);
+                        sprFactory.TextWithHl(command[1]);
                         isPlaying = false;
-                        tt = text.Split('\'');
-                        textArea.SetText(tt[1], tt[3], tt[5]);
+                        textArea.SetText(command[1], command[2], command[3]);
                         break;
-
                     case "text":
-                        textArea.TextCommand(text);
+                        textArea.TextCommand(command);
                         break;
 
                     // Button
                     case "button":
                         isPlaying = false;
                         isSelecting = true;
-                        selectButton.SelectCommand(text);
+                        selectButton.SelectCommand(command);
                         break;
                     case "buttonS":
                         isPlaying = false;
                         isSelecting = true;
-                        selectButton.SelectCommandWithSelect(int.Parse(l[1]), text);
+                        selectButton.SelectCommandWithSelect(int.Parse(command[1]), command);
                         break;
 
                     // Label
                     case "label":
-                        label.SetLabelText(l[1]);
+                        label.SetLabelText(command[1]);
                         break;
+
                     // Banner
                     case "banner":
                         banner.SetBanner1Text(text);
@@ -469,51 +496,32 @@ namespace ArisStudio.Core
 
                     // ScreenEffect
                     case "screen":
-                        screenEffectFactory.ScreenEffectCommand(text);
-                        break;
                     case "curtain":
-                        screenEffectFactory.ScreenEffectCommand(text);
-                        break;
                     case "speedline":
-                        screenEffectFactory.ScreenEffectCommand(text);
-                        break;
                     case "smoke":
-                        screenEffectFactory.ScreenEffectCommand(text);
-                        break;
                     case "dust":
-                        screenEffectFactory.ScreenEffectCommand(text);
-                        break;
                     case "snow":
-                        screenEffectFactory.ScreenEffectCommand(text);
-                        break;
                     case "rain":
                         screenEffectFactory.ScreenEffectCommand(text);
                         break;
 
                     // Spr
                     case "spr":
-                        sprFactory.SprCommand(text);
-                        break;
                     case "s":
                         sprFactory.SprCommand(text);
                         break;
 
                     // Image
                     case "bg":
-                        imageFactory.ImageCommand(text);
-                        break;
                     case "cover":
                         imageFactory.ImageCommand(text);
                         break;
 
                     // Sound
                     case "bgm":
-                        soundFactory.SoundCommand(text);
-                        break;
                     case "se":
                         soundFactory.SoundCommand(text);
                         break;
-
                     default:
                         sprFactory.SprCommand($"s {text}");
                         break;

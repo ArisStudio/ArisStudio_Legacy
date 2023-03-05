@@ -25,17 +25,15 @@ namespace ArisStudio.UI
         private bool typing;
         // private float currentTypingInterval = 0.02f;
 
-        DebugConsole debugConsole;
-        SettingsManager settingsManager;
+        // DebugConsole debugConsole;
 
-        void Awake()
-        {
-            debugConsole = MainControl.Instance.m_DebugConsole;
-            settingsManager = MainControl.Instance.m_SettingsManager;
-        }
+        // void Awake()
+        // {
+        // }
 
-        private void Start()
+        void Start()
         {
+            // debugConsole = DebugConsole.Instance;
             // var l = Font.GetOSInstalledFontNames();
             // dDropdown.AddOptions(l.ToList());
         }
@@ -45,7 +43,7 @@ namespace ArisStudio.UI
             if (!typing) return;
 
             timer += Time.deltaTime;
-            if (timer < settingsManager.currentTypingInterval) return;
+            if (timer < SettingsManager.Instance.currentTypingInterval) return;
 
             timer = 0;
             currentPos++;
@@ -134,20 +132,20 @@ namespace ArisStudio.UI
             MainControl.Instance.SetTyping(false);
         }
 
-        public void TextCommand(string textCommand)
+        public void TextCommand(string[] textCommand)
         {
-            var l = textCommand.Split(' ');
-            switch (l[1])
+            // var l = textCommand.Split(' ');
+            switch (textCommand[1])
             {
                 case "size":
-                    SetTextSize(l[2]);
+                    SetTextSize(textCommand[2]);
                     break;
 
                 case "interval":
-                    settingsManager.currentTypingInterval = float.Parse(l[2]);
-                    sSlider.value = settingsManager.currentTypingInterval * 100;
-                    tSlider.text = $"{settingsManager.currentTypingInterval:F2} s";
-                    debugConsole.PrintLog($"Set typing interval to {settingsManager.currentTypingInterval} s");
+                    SettingsManager.Instance.currentTypingInterval = float.Parse(textCommand[2]);
+                    sSlider.value = SettingsManager.Instance.currentTypingInterval * 100;
+                    tSlider.text = $"{SettingsManager.Instance.currentTypingInterval:F2} s";
+                    DebugConsole.Instance.PrintLog($"Set typing interval to {SettingsManager.Instance.currentTypingInterval} s");
                     break;
 
                 // case "font":

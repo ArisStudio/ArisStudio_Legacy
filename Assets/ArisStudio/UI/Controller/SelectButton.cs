@@ -24,29 +24,23 @@ namespace ArisStudio.UI
         public Button button33;
         public Text text33;
 
-        private string t1, t2, t3;
-        private bool isSelecting;
+        string t1, t2, t3;
+        bool isSelecting;
 
-        private const float WaitSelectTime = 3f;
-        private const float SelectWaitTime = 0.3f;
+        const float WaitSelectTime = 3f;
+        const float SelectWaitTime = 0.3f;
 
 
-        private void Update()
+        void Update()
         {
             if (!isSelecting) return;
 
             if (t1 != string.Empty && Input.GetKeyDown(KeyCode.Alpha1))
-            {
                 Select(1);
-            }
             else if (t2 != string.Empty && Input.GetKeyDown(KeyCode.Alpha2))
-            {
                 Select(2);
-            }
             else if (t3 != string.Empty && Input.GetKeyDown(KeyCode.Alpha3))
-            {
                 Select(3);
-            }
         }
 
         public void Select(int i)
@@ -57,13 +51,13 @@ namespace ArisStudio.UI
             StartCoroutine(SelectAndWait(i));
         }
 
-        private IEnumerator WaitAndSelect(int i)
+        IEnumerator WaitAndSelect(int i)
         {
             yield return new WaitForSeconds(WaitSelectTime);
             Select(i);
         }
 
-        private IEnumerator SelectAndWait(int i)
+        IEnumerator SelectAndWait(int i)
         {
             switch (i)
             {
@@ -102,14 +96,14 @@ namespace ArisStudio.UI
             button33.gameObject.SetActive(false);
         }
 
-        public void SelectCommandWithSelect(int i, string selectCommand)
+        public void SelectCommandWithSelect(int i, string[] selectCommand)
         {
             SelectCommand(selectCommand);
             StartCoroutine(WaitAndSelect(i));
         }
 
 
-        public void SelectCommand(string selectCommand)
+        public void SelectCommand(string[] selectCommand)
         {
             button1.transform.localScale = Vector3.one;
             button21.transform.localScale = Vector3.one;
@@ -119,34 +113,61 @@ namespace ArisStudio.UI
             button33.transform.localScale = Vector3.one;
 
 
-            var l = selectCommand.Split('\'');
-            switch (l.Length)
+            // var l = selectCommand.Split('\'');
+            switch (selectCommand.Length)
             {
-                case 5:
-                    text1.text = l[1];
-                    t1 = l[3];
+                case 3:
+                    text1.text = selectCommand[1];
+                    t1 = selectCommand[2];
                     button1.gameObject.SetActive(true);
                     break;
-                case 9:
-                    text21.text = l[1];
-                    t1 = l[3];
-                    text22.text = l[5];
-                    t2 = l[7];
+                case 5:
+                    text21.text = selectCommand[1];
+                    t1 = selectCommand[2];
+                    text22.text = selectCommand[3];
+                    t2 = selectCommand[4];
                     button21.gameObject.SetActive(true);
                     button22.gameObject.SetActive(true);
                     break;
-                case 13:
-                    text31.text = l[1];
-                    t1 = l[3];
-                    text32.text = l[5];
-                    t2 = l[7];
-                    text33.text = l[9];
-                    t3 = l[11];
+                case 7:
+                    text31.text = selectCommand[1];
+                    t1 = selectCommand[2];
+                    text32.text = selectCommand[3];
+                    t2 = selectCommand[4];
+                    text33.text = selectCommand[5];
+                    t3 = selectCommand[6];
                     button31.gameObject.SetActive(true);
                     button32.gameObject.SetActive(true);
                     button33.gameObject.SetActive(true);
                     break;
             }
+            // switch (selectCommand.Length)
+            // {
+            //     case 5:
+            //         text1.text = selectCommand[1];
+            //         t1 = selectCommand[3];
+            //         button1.gameObject.SetActive(true);
+            //         break;
+            //     case 9:
+            //         text21.text = selectCommand[1];
+            //         t1 = selectCommand[3];
+            //         text22.text = selectCommand[5];
+            //         t2 = selectCommand[7];
+            //         button21.gameObject.SetActive(true);
+            //         button22.gameObject.SetActive(true);
+            //         break;
+            //     case 13:
+            //         text31.text = selectCommand[1];
+            //         t1 = selectCommand[3];
+            //         text32.text = selectCommand[5];
+            //         t2 = selectCommand[7];
+            //         text33.text = selectCommand[9];
+            //         t3 = selectCommand[11];
+            //         button31.gameObject.SetActive(true);
+            //         button32.gameObject.SetActive(true);
+            //         button33.gameObject.SetActive(true);
+            //         break;
+            // }
 
             isSelecting = true;
         }

@@ -25,13 +25,15 @@ namespace ArisStudio.UI
         Dictionary<string, Texture2D> backgroundList = new Dictionary<string, Texture2D>();
         Dictionary<string, Texture2D> coverList = new Dictionary<string, Texture2D>();
 
-        DebugConsole debugConsole;
-        SettingsManager settingsManager;
+        // DebugConsole debugConsole;
 
         void Awake()
         {
-            debugConsole = MainControl.Instance.m_DebugConsole;
-            settingsManager = MainControl.Instance.m_SettingsManager;
+        }
+
+        void Start()
+        {
+            // debugConsole = DebugConsole.Instance;
         }
 
         private void Update()
@@ -67,13 +69,6 @@ namespace ArisStudio.UI
             }
         }
 
-        public void SetImageDataPath(string rootPath)
-        {
-            // var imageDataPath = Path.Combine(rootPath, "Image");
-            // backgroundDataPath = Path.Combine(imageDataPath, "Background");
-            // coverDataPath = Path.Combine(imageDataPath, "Cover");
-        }
-
         public void Initialize()
         {
             backgroundImage.color = Color.black;
@@ -105,7 +100,7 @@ namespace ArisStudio.UI
             {
                 case "Background":
                 {
-                    string imagePath = Path.Combine(settingsManager.currentBackgroundPath, imageName);
+                    string imagePath = Path.Combine(SettingsManager.Instance.currentBackgroundPath, imageName);
                     UnityWebRequest www = UnityWebRequest.Get(imagePath);
                     yield return www.SendWebRequest();
                     imageData = www.downloadHandler.data;
@@ -115,7 +110,7 @@ namespace ArisStudio.UI
                 }
                 case "Cover":
                 {
-                    var imagePath = Path.Combine(settingsManager.currentCoverPath, imageName);
+                    var imagePath = Path.Combine(SettingsManager.Instance.currentCoverPath, imageName);
                     var www = UnityWebRequest.Get(imagePath);
                     yield return www.SendWebRequest();
                     imageData = www.downloadHandler.data;
@@ -125,7 +120,7 @@ namespace ArisStudio.UI
                 }
             }
 
-            debugConsole.PrintLog($"Load {imageType}: <#00ff00>{imageName}</color>");
+            DebugConsole.Instance.PrintLog($"Load {imageType}: <#00ff00>{imageName}</color>");
         }
 
         #endregion

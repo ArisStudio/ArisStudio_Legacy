@@ -17,19 +17,15 @@ namespace ArisStudio.Sound
         Dictionary<string, AudioClip> bgmList = new Dictionary<string, AudioClip>();
         Dictionary<string, AudioClip> soundEffectList = new Dictionary<string, AudioClip>();
 
-        DebugConsole debugConsole;
-        SettingsManager settingsManager;
+        // DebugConsole debugConsole;
 
         void Awake()
         {
-            debugConsole = MainControl.Instance.m_DebugConsole;
-            settingsManager = MainControl.Instance.m_SettingsManager;
         }
 
-        public void SetSoundDataPath(string rootPath)
+        void Start()
         {
-            // bgmDataPath = Path.Combine(rootPath, "Bgm");
-            // soundEffectDataPath = Path.Combine(rootPath, "SoundEffect");
+            // debugConsole = DebugConsole.Instance;
         }
 
         public void Initialize()
@@ -77,7 +73,7 @@ namespace ArisStudio.Sound
                 case "Bgm":
                 {
                     var bgmPath = Path.Combine(
-                        settingsManager.currentBGMPath,
+                        SettingsManager.Instance.currentBGMPath,
                         soundName
                     );
                     var www = UnityWebRequestMultimedia.GetAudioClip(
@@ -91,7 +87,7 @@ namespace ArisStudio.Sound
                 case "SoundEffect":
                 {
                     var soundEffectPath = Path.Combine(
-                        settingsManager.currentSFXPath,
+                        SettingsManager.Instance.currentSFXPath,
                         soundName
                     );
                     var www = UnityWebRequestMultimedia.GetAudioClip(
@@ -104,7 +100,7 @@ namespace ArisStudio.Sound
                 }
             }
 
-            debugConsole.PrintLog(
+            DebugConsole.Instance.PrintLog(
                 $"Load {soundType}: <#00ff00>{soundName}</color>"
             );
         }
@@ -122,7 +118,7 @@ namespace ArisStudio.Sound
                     {
                         case "set":
                             bgm.SetBgm(bgmList[l[2]]);
-                            debugConsole.PrintLog(
+                            DebugConsole.Instance.PrintLog(
                                 $"Set BGM: <#00ff00>{l[2]}</color>"
                             );
                             break;
@@ -155,7 +151,7 @@ namespace ArisStudio.Sound
                     {
                         case "set":
                             se.SetSoundEffect(soundEffectList[l[2]]);
-                            debugConsole.PrintLog(
+                            DebugConsole.Instance.PrintLog(
                                 $"Set SFX: <#00ff00>{l[2]}</color>"
                             );
                             break;

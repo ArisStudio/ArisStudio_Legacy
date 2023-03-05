@@ -45,7 +45,7 @@ public class TestParser : MonoBehaviour
                     .ToArray();
                 /*
                 * Normalize result by removing either single or double quote at start and end of the word. Also Unescape escaped character.
-                * Result: ["txt", "Arona", "Arona", "I'm, Arona.", "Say, \"Hello\"", "You're"]
+                * Result: ["txt", "Arona", "Arona", "I'm, Arona.", "Say, "Hello"", "You're"]
                 * Using string.Trim() resulting in unexpected result, so reconstruct it using string.Substring().
                 */
                 foreach (string str in splittedCommand)
