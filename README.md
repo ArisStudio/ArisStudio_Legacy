@@ -1,11 +1,21 @@
 # Aris Studio
 
-## Introduction
+## News
+
+- [6 March 2023] Aris Studio [English (EN) Documentation](https://github.com/kiraio-moe/ArisStudio/wiki "English (EN) Documentation") is now available.
+- [5 March 2023] Aris Studio [Discussion panel](https://github.com/kiraio-moe/ArisStudio/discussions "Discussion") is now opened.  
+    Please post a feedback or talk about the development of Aris Studio with other fellow Sensei here.
+
+## Overview
 
 <div align="center">
     <img src="./IMG_Aris_Studio_Logo.jpg" alt="Aris Studio logo" title="Aris Studio logo">
     <sub>Logo made by <a href="https://b23.tv/RbW7CyF" title="無花果洋\_wzy">無花果洋\_wzy</a></sub>
-    <p>Make your own Blue Archive story.</p>
+    <p><b>Make your own Blue Archive story</b></p>
+    <p>
+    Aris Studio is a fan-made tool to create <a href="https://bluearchive.nexon.com/home" title="Blue Archive">Blue Archive</a> story.
+    <br/>
+    It's provide a story teller similar to Blue Archive game, but with more features.</p>
 </div>
 
 ## Downloads
@@ -22,7 +32,7 @@
 - [Read New Documentation](https://github.com/kiraio-moe/ArisStudio/wiki "Read New Documentation")
 - [Read Legacy Documentation (v1.3.4 Documentation)](https://github.com/Tualin14/ArisStudio/tree/1.3.4.BackUp/Doc "Read Legacy Documentation (v1.3.4 Documentation)")
 
-## Awesome works done with Aris Studio ヾ(≧▽≦\\*)o
+## Awesome works done with Aris Studio ヾ(≧▽≦\\\*)o
 
 - [Sensei, let's celebrate the New Year together!](https://b23.tv/9UdXBxk "Watch Sensei, let's celebrate the New Year together! on bilibili")
 - [The Game Development Department wants to do H-game?!](https://b23.tv/QaqP4Ew "Watch The Game Development Department wants to do H-game?! on bilibili")
@@ -34,7 +44,7 @@
 
 - Making a [Pull Request](https://github.com/Tualin14/ArisStudio/pulls).
 - Add new/missing materials data.
-- Submit Feedback or Comment on [Issues](https://github.com/Tualin14/ArisStudio/issues "Issues"). Please provide **relevant text** as much as possible for problems, such as inability to play.
+- Submit Ideas, Feedbacks or Comments on [Issues](https://github.com/Tualin14/ArisStudio/issues "Issues") or [Aris Studio Discussions](https://github.com/kiraio-moe/ArisStudio/discussions/categories/ideas-feedbacks-suggestions).
 
 ## Todo's
 
@@ -59,5 +69,11 @@
 ## License
 
 This project is licensed under [GNU General Public License v3.0](./LICENSE "See LICENSE file").
+
+## Disclaimer
+
+This project is not affiliated with Nexon, NEXON Games Co., Ltd. nor any their affiliator.
+
+This project is intended only as a tool for fun. Any game assets and resources related to Blue Archive used in this project is property and copyright of those respective authors.
 
 <p align="center">Made with ❤️ by <a href="https://github.com/Tualin14/" title="Visit Tualin14 GitHub profile">Tualin14</a> & <a href="https://github.com/Tualin14/ArisStudio/graphs/contributors" title="See Contributors list">Contributors</a></p>
