@@ -22,7 +22,10 @@
 - 素材收集于网络，如有缺少请自行添加
 - 可使用此项目[blue-archive-jp-assets-downloader](https://github.com/xiongnemo/blue-archive-jp-assets-downloader)
 
-# [如何使用 How to Use(New Doc)](https://github.com/Tualin14/ArisStudio/wiki)
+# 如何使用 How to Use(New Doc)
+
+- [中文](https://github.com/Tualin14/ArisStudio/wiki)
+- [en](https://github.com/kiraio-moe/ArisStudio/wiki)
 
 # [旧版文档 1.3.4 Old Doc](https://github.com/Tualin14/ArisStudio/tree/1.3.4.BackUp/Doc)
 
