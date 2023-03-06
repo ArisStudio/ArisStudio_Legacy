@@ -3,19 +3,20 @@
 ## News
 
 - [6 March 2023] Aris Studio [English (EN) Documentation](https://github.com/kiraio-moe/ArisStudio/wiki "English (EN) Documentation") is now available.
-- [5 March 2023] Aris Studio [Discussion panel](https://github.com/kiraio-moe/ArisStudio/discussions "Discussion") is now opened.  
-    Please post a feedback or talk about the development of Aris Studio with other fellow Sensei here.
+- [5 March 2023] Aris Studio [Discussion](https://github.com/kiraio-moe/ArisStudio/discussions "Discussion") panel is now opened.  
+  Please post a feedback or talk about the development of Aris Studio with other fellow Sensei here.
+- [5 March 2023] Pre-Release version for v2.2.2 is available at [Releases](https://github.com/kiraio-moe/ArisStudio/releases "Releases"). Check it out!
 
 ## Overview
 
 <div align="center">
-    <img src="./IMG_Aris_Studio_Logo.jpg" alt="Aris Studio logo" title="Aris Studio logo">
-    <sub>Logo made by <a href="https://b23.tv/RbW7CyF" title="無花果洋\_wzy">無花果洋\_wzy</a></sub>
-    <p><b>Make your own Blue Archive story</b></p>
-    <p>
-    Aris Studio is a fan-made tool to create <a href="https://bluearchive.nexon.com/home" title="Blue Archive">Blue Archive</a> story.
-    <br/>
-    It's provide a story teller similar to Blue Archive game, but with more features.</p>
+  <img src="./IMG_Aris_Studio_Logo.jpg" alt="Aris Studio logo" title="Aris Studio logo">
+  <sub>Logo made by <a href="https://b23.tv/RbW7CyF" title="無花果洋\_wzy">無花果洋\_wzy</a></sub>
+  <p><b>Make your own Blue Archive story</b></p>
+  <p>
+  Aris Studio is a fan-made tool to create <a href="https://bluearchive.nexon.com/home" title="Blue Archive">Blue Archive</a> story.
+  <br/>
+  It's provide a story teller similar to Blue Archive game, but with more added features.</p>
 </div>
 
 ## Downloads
