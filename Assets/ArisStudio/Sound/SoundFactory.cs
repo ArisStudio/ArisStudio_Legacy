@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using ArisStudio.Core;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -8,20 +9,23 @@ namespace ArisStudio.Sound
 {
     public class SoundFactory : MonoBehaviour
     {
-        public DebugConsole debugConsole;
-
         public Bgm bgm;
         public SoundEffect se;
 
-        private string bgmDataPath, soundEffectDataPath;
+        // private string bgmDataPath, soundEffectDataPath;
 
         Dictionary<string, AudioClip> bgmList = new Dictionary<string, AudioClip>();
         Dictionary<string, AudioClip> soundEffectList = new Dictionary<string, AudioClip>();
 
-        public void SetSoundDataPath(string rootPath)
+        // DebugConsole debugConsole;
+
+        void Awake()
         {
-            bgmDataPath = Path.Combine(rootPath, "Bgm");
-            soundEffectDataPath = Path.Combine(rootPath, "SoundEffect");
+        }
+
+        void Start()
+        {
+            // debugConsole = DebugConsole.Instance;
         }
 
         public void Initialize()
@@ -68,23 +72,37 @@ namespace ArisStudio.Sound
             {
                 case "Bgm":
                 {
-                    var bgmPath = Path.Combine(bgmDataPath, soundName);
-                    var www = UnityWebRequestMultimedia.GetAudioClip(bgmPath, SelectAudioType(soundName));
+                    var bgmPath = Path.Combine(
+                        SettingsManager.Instance.currentBGMPath,
+                        soundName
+                    );
+                    var www = UnityWebRequestMultimedia.GetAudioClip(
+                        bgmPath,
+                        SelectAudioType(soundName)
+                    );
                     yield return www.SendWebRequest();
                     bgmList.Add(nameId, DownloadHandlerAudioClip.GetContent(www));
                     break;
                 }
                 case "SoundEffect":
                 {
-                    var soundEffectPath = Path.Combine(soundEffectDataPath, soundName);
-                    var www = UnityWebRequestMultimedia.GetAudioClip(soundEffectPath, SelectAudioType(soundName));
+                    var soundEffectPath = Path.Combine(
+                        SettingsManager.Instance.currentSFXPath,
+                        soundName
+                    );
+                    var www = UnityWebRequestMultimedia.GetAudioClip(
+                        soundEffectPath,
+                        SelectAudioType(soundName)
+                    );
                     yield return www.SendWebRequest();
                     soundEffectList.Add(nameId, DownloadHandlerAudioClip.GetContent(www));
                     break;
                 }
             }
 
-            debugConsole.PrintLog($"Load {soundType}: <color=lime>{soundName}</color>");
+            DebugConsole.Instance.PrintLog(
+                $"Load {soundType}: <#00ff00>{soundName}</color>"
+            );
         }
 
         #endregion
@@ -100,7 +118,9 @@ namespace ArisStudio.Sound
                     {
                         case "set":
                             bgm.SetBgm(bgmList[l[2]]);
-                            debugConsole.PrintLog($"Set Bgm: <color=lime>{l[2]}</color>");
+                            DebugConsole.Instance.PrintLog(
+                                $"Set BGM: <#00ff00>{l[2]}</color>"
+                            );
                             break;
                         case "play":
                             bgm.Play();
@@ -131,7 +151,9 @@ namespace ArisStudio.Sound
                     {
                         case "set":
                             se.SetSoundEffect(soundEffectList[l[2]]);
-                            debugConsole.PrintLog($"Set SoundEffect: <color=lime>{l[2]}</color>");
+                            DebugConsole.Instance.PrintLog(
+                                $"Set SFX: <#00ff00>{l[2]}</color>"
+                            );
                             break;
                         case "play":
                             se.Play();

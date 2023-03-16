@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace ArisStudio.Sound
 {
     public class SoundEffect : MonoBehaviour
     {
         public Slider vSlider;
-        public Text vText;
+        public TMP_Text vText;
 
         private AudioSource se;
 

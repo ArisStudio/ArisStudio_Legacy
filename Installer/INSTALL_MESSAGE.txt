@@ -1,0 +1,8 @@
+Welcome to Aris Studio Installer
+
+First, thank you for using Aris Studio. I'm glad you give it a try.
+This installer will install Aris Studio at your desired folder and
+optionally, create a desktop shortcut to easily run Aris Studio.
+
+Read Aris Studio documentation to know more how to use Aris Studio:
+https://github.com/kiraio-moe/ArisStudio/wiki

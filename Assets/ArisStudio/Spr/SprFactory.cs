@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ArisStudio.Core;
 using Spine;
 using Spine.Unity;
 using UnityEngine;
@@ -11,13 +12,12 @@ namespace ArisStudio.Spr
 {
     public class SprFactory : MonoBehaviour
     {
-        public DebugConsole debugConsole;
         public Material defMaterial, commMaterial;
 
-        private GameObject sprBaseGo;
+        GameObject sprBaseGo;
 
-        private string sprDataPath, charDataPath;
-        private const float SprScale = 0.0136f;
+        // string sprDataPath, charDataPath;
+        const float SprScale = 0.0136f;
 
 
         Dictionary<string, GameObject> ssList = new Dictionary<string, GameObject>();
@@ -25,24 +25,25 @@ namespace ArisStudio.Spr
 
         List<string> showList = new List<string>();
 
-        private void Start()
+        // DebugConsole debugConsole;
+        SettingsManager settingsManager;
+
+        void Awake()
         {
-            sprBaseGo = GameObject.Find("SprBase").gameObject;
+            settingsManager = SettingsManager.Instance;
         }
 
-        public void SetSprDataPath(string rootPath)
+        void Start()
         {
-            sprDataPath = Path.Combine(rootPath, "Spr");
-            charDataPath = Path.Combine(rootPath, "Character");
+            // debugConsole = DebugConsole.Instance;
+            sprBaseGo = GameObject.Find("SprBase").gameObject;
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
         public void Initialize()
         {
-            foreach (var sprName in ssList)
-            {
+            foreach (KeyValuePair<string, GameObject> sprName in ssList)
                 Destroy(GameObject.Find(sprName.Key));
-            }
 
             ssList.Clear();
         }
@@ -58,60 +59,61 @@ namespace ArisStudio.Spr
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
-        private IEnumerator LoadAndCreateSprGameObject(string nameId, string sprName, Material stateMaterial)
+        IEnumerator LoadAndCreateSprGameObject(string nameId, string sprName, Material stateMaterial)
         {
-            var sprBaseClone = Instantiate(sprBaseGo);
+            GameObject sprBaseClone = Instantiate(sprBaseGo);
             sprBaseClone.name = nameId;
-            var sprGo = sprBaseClone.transform.Find("SprObject").gameObject;
+            GameObject sprGo = sprBaseClone.transform.Find("SprObject").gameObject;
 
             # region LoadSpr
 
-            var sprPath = Path.Combine(sprDataPath, sprName);
-            var atlasPath = $"{sprPath}.atlas";
-            var skelPath = $"{sprPath}.skel";
+            string sprPath = Path.Combine(settingsManager.currentSprPath, sprName);
+            string atlasPath = $"{sprPath}.atlas";
+            string skelPath = $"{sprPath}.skel";
 
             string atlasTxt;
-            using (var uwr = UnityWebRequest.Get(atlasPath))
+            using (UnityWebRequest uwr = UnityWebRequest.Get(atlasPath))
             {
                 yield return uwr.SendWebRequest();
                 atlasTxt = uwr.downloadHandler.text;
             }
 
-            var atlasTextAsset = new TextAsset(atlasTxt);
+            TextAsset atlasTextAsset = new TextAsset(atlasTxt);
 
             byte[] imageData;
-            using (var uwr = UnityWebRequest.Get($"{sprPath}.png"))
+            using (UnityWebRequest uwr = UnityWebRequest.Get($"{sprPath}.png"))
             {
                 yield return uwr.SendWebRequest();
                 imageData = uwr.downloadHandler.data;
             }
 
-            var texture = new Texture2D(1, 1);
+            Texture2D texture = new Texture2D(1, 1);
             texture.LoadImage(imageData);
             texture.name = Path.GetFileNameWithoutExtension($"{sprPath}.png");
-            var textures = new Texture2D[1];
+            Texture2D[] textures = new Texture2D[1];
             textures[0] = texture;
 
-            var sprAtlasAsset = SpineAtlasAsset.CreateRuntimeInstance(atlasTextAsset, textures, stateMaterial, true);
+            SpineAtlasAsset sprAtlasAsset = SpineAtlasAsset.CreateRuntimeInstance(atlasTextAsset, textures, stateMaterial, true);
 
-            var attachmentLoader = new AtlasAttachmentLoader(sprAtlasAsset.GetAtlas());
-            var binary = new SkeletonBinary(attachmentLoader);
+            AtlasAttachmentLoader attachmentLoader = new AtlasAttachmentLoader(sprAtlasAsset.GetAtlas());
+            SkeletonBinary binary = new SkeletonBinary(attachmentLoader);
             binary.Scale *= SprScale;
 
             byte[] skelData;
-            using (var uwr = UnityWebRequest.Get(skelPath))
+            using (UnityWebRequest uwr = UnityWebRequest.Get(skelPath))
             {
                 yield return uwr.SendWebRequest();
                 skelData = uwr.downloadHandler.data;
             }
 
-            var skeletonData = binary.ReadSkeletonData(sprName, skelData);
-            var stateData = new AnimationStateData(skeletonData);
-            var sprSkeletonDataAsset = SkeletonDataAsset.CreateSkeletonDataAsset(skeletonData, stateData);
+            // var skeletonData = binary.ReadSkeletonData(sprName, skelData);
+            SkeletonData skeletonData = binary.ReadSkeletonData(skelPath);
+            AnimationStateData stateData = new AnimationStateData(skeletonData);
+            SkeletonDataAsset sprSkeletonDataAsset = SkeletonDataAsset.CreateSkeletonDataAsset(skeletonData, stateData);
 
             # endregion
 
-            var skeletonAnimation = SkeletonAnimation.AddToGameObject(sprGo, sprSkeletonDataAsset);
+            SkeletonAnimation skeletonAnimation = SkeletonAnimation.AddToGameObject(sprGo, skeletonDataAsset: sprSkeletonDataAsset);
 
             skeletonAnimation.Initialize(false);
             skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -130,7 +132,94 @@ namespace ArisStudio.Spr
 
             ssList.Add(nameId, sprGo);
 
-            debugConsole.PrintLog($"Load Spr: <color=lime>{nameId}</color>");
+            DebugConsole.Instance.PrintLog($"Load Spr: <#00ff00>{nameId}</color>");
+
+            sprGo.SetActive(false);
+        }
+
+        public void CreateCustomGameObjectWithDef(string nameId, float scale, string idle, string customName, string[] imgList)
+        {
+            StartCoroutine(LoadAndCreateCustomGameObject(nameId, scale, idle, customName, imgList, defMaterial));
+        }
+
+        public void CreateCustomGameObjectWithComm(string nameId, float scale, string idle, string customName, string[] imgList)
+        {
+            StartCoroutine(LoadAndCreateCustomGameObject(nameId, scale, idle, customName, imgList, commMaterial));
+        }
+
+        // ReSharper disable Unity.PerformanceAnalysis
+        IEnumerator LoadAndCreateCustomGameObject(string nameId, float scale, string idle, string customName, string[] imgList,
+            Material stateMaterial)
+        {
+            GameObject sprBaseClone = Instantiate(sprBaseGo);
+            sprBaseClone.name = nameId;
+            GameObject sprGo = sprBaseClone.transform.Find("SprObject").gameObject;
+
+            # region LoadSpr
+
+            string sprPath = Path.Combine(settingsManager.currentSprPath, customName);
+            string atlasPath = $"{sprPath}.atlas";
+            string skelPath = $"{sprPath}.skel";
+
+            string atlasTxt;
+            using (UnityWebRequest uwr = UnityWebRequest.Get(atlasPath))
+            {
+                yield return uwr.SendWebRequest();
+                atlasTxt = uwr.downloadHandler.text;
+            }
+
+            TextAsset atlasTextAsset = new TextAsset(atlasTxt);
+
+            Texture2D[] textures = new Texture2D[imgList.Length];
+            for (int i = 0; i < imgList.Length; i++)
+            {
+                byte[] imageData;
+                string imgPath = Path.Combine(settingsManager.currentSprPath, imgList[i].Trim());
+                using (UnityWebRequest uwr = UnityWebRequest.Get(imgPath))
+                {
+                    yield return uwr.SendWebRequest();
+                    imageData = uwr.downloadHandler.data;
+                }
+
+                Texture2D texture = new Texture2D(1, 1);
+                texture.LoadImage(imageData);
+                texture.name = Path.GetFileNameWithoutExtension(imgPath);
+                textures[i] = texture;
+            }
+
+            SpineAtlasAsset sprAtlasAsset = SpineAtlasAsset.CreateRuntimeInstance(atlasTextAsset, textures, stateMaterial, true);
+
+            AtlasAttachmentLoader attachmentLoader = new AtlasAttachmentLoader(sprAtlasAsset.GetAtlas());
+            SkeletonBinary binary = new SkeletonBinary(attachmentLoader);
+            binary.Scale *= SprScale * scale;
+
+            byte[] skelData;
+            using (UnityWebRequest uwr = UnityWebRequest.Get(skelPath))
+            {
+                yield return uwr.SendWebRequest();
+                skelData = uwr.downloadHandler.data;
+            }
+
+            SkeletonData skeletonData = binary.ReadSkeletonData(customName);
+            AnimationStateData stateData = new AnimationStateData(skeletonData);
+            SkeletonDataAsset sprSkeletonDataAsset = SkeletonDataAsset.CreateSkeletonDataAsset(skeletonData, stateData);
+
+            # endregion
+
+            SkeletonAnimation skeletonAnimation = SkeletonAnimation.AddToGameObject(sprGo, sprSkeletonDataAsset);
+
+            skeletonAnimation.Initialize(false);
+            skeletonAnimation.Skeleton.SetSlotsToSetupPose();
+
+
+            skeletonAnimation.AnimationState.SetAnimation(0, idle, true);
+
+            sprGo.GetComponent<SprState>().SprInit();
+            sprGo.GetComponent<OldSprEmotion>().InitEmoticon();
+
+            ssList.Add(nameId, sprGo);
+
+            DebugConsole.Instance.PrintLog($"Load Spr: <color=lime>{nameId}</color>");
 
             sprGo.SetActive(false);
         }
@@ -233,32 +322,32 @@ namespace ArisStudio.Spr
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
-        private IEnumerator LoadAndCreateCharacterGameObject(string nameId, float scale, string charFolder, string[] charImgList,
+        IEnumerator LoadAndCreateCharacterGameObject(string nameId, float scale, string charFolder, string[] charImgList,
             Material stateMaterial)
         {
-            var charSpriteDic = new Dictionary<string, Sprite>();
-            var charPath = Path.Combine(charDataPath, charFolder);
+            Dictionary<string, Sprite> charSpriteDic = new Dictionary<string, Sprite>();
+            string charPath = Path.Combine(settingsManager.currentCharacterPath, charFolder);
 
-            var charBaseClone = Instantiate(sprBaseGo);
+            GameObject charBaseClone = Instantiate(sprBaseGo);
             charBaseClone.name = nameId;
-            var charGo = charBaseClone.transform.Find("SprObject").gameObject;
+            GameObject charGo = charBaseClone.transform.Find("SprObject").gameObject;
             charGo.transform.localScale = new Vector3(scale, scale, 1);
 
-            var charSprite = charGo.AddComponent(typeof(SpriteRenderer)) as SpriteRenderer;
+            SpriteRenderer charSprite = charGo.AddComponent(typeof(SpriteRenderer)) as SpriteRenderer;
 
-            foreach (var i in charImgList)
+            foreach (string i in charImgList)
             {
-                var sImg = i.Trim();
+                string sImg = i.Trim();
                 if (sImg == string.Empty) continue;
 
                 byte[] imageData;
-                using (var uwr = UnityWebRequest.Get($"{charPath}/{sImg}"))
+                using (UnityWebRequest uwr = UnityWebRequest.Get($"{charPath}/{sImg}"))
                 {
                     yield return uwr.SendWebRequest();
                     imageData = uwr.downloadHandler.data;
                 }
 
-                var texture = new Texture2D(1, 1);
+                Texture2D texture = new Texture2D(1, 1);
                 texture.LoadImage(imageData);
                 charSpriteDic.Add(
                     sImg.Trim().Split('.')[0],
@@ -280,36 +369,30 @@ namespace ArisStudio.Spr
 
         public void TextWithHl(string nameId)
         {
-            foreach (var s in showList)
+            foreach (string s in showList)
             {
-                var sprState = ssList[s].GetComponent<SprState>();
+                SprState sprState = ssList[s].GetComponent<SprState>();
+
                 if (sprState.IsComm) continue;
+
                 if (s == nameId)
-                {
                     sprState.HighLight(1);
-                }
                 else
-                {
                     sprState.HighLight(0.5f);
-                }
             }
         }
 
         public void SprCommand(string sprCommand)
         {
             if (sprCommand.StartsWith("spr"))
-            {
                 OldSprCommand(sprCommand);
-            }
             else if (sprCommand.StartsWith("s"))
-            {
                 SCommand(sprCommand);
-            }
         }
 
-        private void SCommand(string sCommand)
+        void SCommand(string sCommand)
         {
-            var l = sCommand.Split(' ');
+            string[] l = sCommand.Split(' ');
 
             switch (l[2])
             {
@@ -355,6 +438,12 @@ namespace ArisStudio.Spr
                     ssList[l[1]].GetComponent<OldSprEmotion>().PlayEmoticon(l[3]);
                     break;
                 }
+                case "emoInit":
+                {
+                    ssList[l[1]].GetComponent<OldSprEmotion>().InitEmoticon();
+                    break;
+                }
+
                 case "emoInit":
                 {
                     ssList[l[1]].GetComponent<OldSprEmotion>().InitEmoticon();
@@ -433,9 +522,9 @@ namespace ArisStudio.Spr
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
-        private void OldSprCommand(string sprCommand)
+        void OldSprCommand(string sprCommand)
         {
-            var l = sprCommand.Split(' ');
+            string[] l = sprCommand.Split(' ');
             switch (l[1])
             {
                 // SprState
