@@ -1,5 +1,5 @@
 use std::fs::File;
-use std::io::{Read, Write};
+use std::io::{Read, stdin, Write};
 
 fn main() {
     // let mut new_version = String::new();
@@ -16,7 +16,7 @@ fn main() {
     // change_skel_in_folder("./spr", "3.8.75", "3.8.96");
 
     println!("Press any key to exit");
-    std::io::stdin().read_line(&mut String::new()).unwrap();
+    stdin().read_line(&mut String::new()).unwrap();
 }
 
 fn find_version_pos(buffer: &Vec<u8>, old_version: &str) -> usize {
@@ -60,13 +60,20 @@ fn change_version(buffer: &mut Vec<u8>, new_version: &str, old_version: &str, fi
 
 
 fn change_skel_in_folder(folder: &str, new_version: &str, old_version: &str) {
+    if !std::path::Path::new(folder).exists() {
+        println!("Folder {} not found", folder);
+        return;
+    }
+
+    println!("Folder: {}", folder);
+
     for entry in std::fs::read_dir(folder).unwrap() {
         let entry = entry.unwrap();
         let path = entry.path();
         if path.is_dir() {
             change_skel_in_folder(path.to_str().unwrap(), new_version, old_version);
         } else {
-            let mut file = File::open(path.clone()).unwrap();
+            let mut file = File::open(&path).unwrap();
             let mut buffer = Vec::new();
             file.read_to_end(&mut buffer).unwrap();
 
@@ -74,8 +81,10 @@ fn change_skel_in_folder(folder: &str, new_version: &str, old_version: &str) {
                 Ok(buffer) => buffer,
                 Err(_) => continue,
             };
-            let mut file = File::create(path.clone()).unwrap();
+            let mut file = File::create(&path).unwrap();
             file.write_all(&buffer).unwrap();
         }
     }
+
+    println!("Done!");
 }
