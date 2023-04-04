@@ -1,9 +1,11 @@
 # 角色命令 | character commands
 
 - 角色命令用于控制角色行为。
-- 此命令可以 `spr`/`char` 开头，也可**省略**，及直接以 nameId 开头。
+- 此命令可以 `char`/`spr` 开头，也可**省略**，及直接以 nameId 开头。
 
-## 带有渐变效果的显示角色 | show character with fade effect
+## 带有线性渐变效果的显示角色 | show character with fade effect
+
+- 高亮从 0 线性渐变到 1。
 
 > `{nameId} show`
 
@@ -11,7 +13,9 @@
 日步美 show
 ```
 
-## 带有渐变效果的隐藏角色 | hide character with fade effect
+## 带有线性渐变效果的隐藏角色 | hide character with fade effect
+
+- 高亮从 1 线性渐变到 0。
 
 > `{nameId} hide`
 

@@ -1,5 +1,15 @@
 # 场景命令 | scene commands
 
+- 场景效果自带音效
+
+## 启用/禁用场景音效 | enable/disable scene sound
+
+> `sc/scene/screen sound enable/disable`
+
+```txt
+sc sound enable
+```
+
 ## 注视线效果 | focus line effect
 
 > `sc/scene/screen focus show/hide`
