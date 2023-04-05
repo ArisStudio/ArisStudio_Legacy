@@ -102,6 +102,8 @@ bg 教室 move 0 0
 bg 教室 scale 1.5
 ```
 
+---
+
 ## 场景图片命令 | scenario image commands
 
 - 场景图片在人物前面，可以用于显示道具、物品等。

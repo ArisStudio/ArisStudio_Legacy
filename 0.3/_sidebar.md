@@ -9,5 +9,6 @@
   - [文本命令 | text commands](text-commands.md)
   - [角色命令 | character commands](character-commands.md)
   - [场景命令 | scene commands](scene-commands.md)
+  - [选择命令 | select commands](select-commands.md)
 
 - [演示文本 | demo.txt](demo.txt.md)

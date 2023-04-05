@@ -2,6 +2,24 @@
 
 - 场景效果自带音效
 
+## 未完继续 | continue
+
+> `sc/scene/screen continue`
+
+```txt
+sc continue
+```
+
+## 结束 | end
+
+> `sc/scene/screen end {text}`
+
+```txt
+sc end 本次演示结束
+```
+
+---
+
 ## 启用/禁用场景音效 | enable/disable scene sound
 
 > `sc/scene/screen sound enable/disable`

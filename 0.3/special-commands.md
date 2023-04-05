@@ -74,12 +74,8 @@ auto 2.5
 
 - 切换脚本。
 
-> `change_txt {txt}`
+> `switch {txtFileName}`
 
 ```txt
-change_txt demo.txt
-```
-
-```
-
+switch demo.txt
 ```
