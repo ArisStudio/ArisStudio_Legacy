@@ -1,1 +1,58 @@
-# Empty Brach
+# Aris Studio 爱丽丝工坊
+
+<div align="center">
+
+<img src="./Logo.jpg" width="800">
+
+做你自己的碧蓝档案故事 | Make your own BlueArchive story
+
+图标由 [無花果洋\_wzy](https://b23.tv/RbW7CyF) 制作
+
+</div>
+
+<img align="right" src="./demo.png" width="360">
+
+# 下载 Download
+
+> [下载 ArisStudio](https://github.com/Tualin14/ArisStudio/releases)
+
+> 素材 Data
+
+- 可使用此项目[blue-archive-jp-assets-downloader](https://github.com/xiongnemo/blue-archive-jp-assets-downloader)自行获得
+- 解压到 Data 中[相应文件夹](https://github.com/Tualin14/ArisStudio/wiki#%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84)
+
+# 如何使用 How to Use(New Doc)
+
+- [中文](https://github.com/Tualin14/ArisStudio/wiki)
+- [en](https://github.com/kiraio-moe/ArisStudio/wiki)
+
+# [旧版文档 0.1.34 Old Doc](https://github.com/Tualin14/ArisStudio/tree/0.1.34.baplayer.backup/Doc)
+
+# 来看看一些使用播放器完成的作品吧ヾ(≧▽≦\*)o
+
+- [老师，一起来过年吧！](https://b23.tv/9UdXBxk)
+- [游戏开发部要做 H-game？！](https://b23.tv/QaqP4Ew)
+- [诺亚与优香与老师 1](https://b23.tv/rkZMNXg)
+- [“最伟大的游戏”](https://b23.tv/z18G8Fs)
+- [才羽绿的新年礼物 Part.1](https://b23.tv/V9oeqd5)
+
+# [Issues](https://github.com/Tualin14/ArisStudio/issues)
+
+- 在 [Issues](https://github.com/Tualin14/ArisStudio/issues) 提交反馈和意见
+- 加入新效果，表情等内容请 **提供游戏内出现位置**
+- 无法播放等问题请尽量提供 **相关文本**
+
+# 贡献
+
+- unity 版本 2019.3.15f1
+- 需要: 更好的 UI，更好的还原动画
+
+# Credits
+
+- [spine-unity](http://zh.esotericsoftware.com/spine-unity)
+- [UnitySkipSplash](https://github.com/psygames/UnitySkipSplash)
+- [Unity3dRichTextHelper](https://github.com/majecty/Unity3dRichTextHelper)
+
+# Licence
+
+GPL-3.0 © [Tualin14](https://github.com/Tualin14/ArisStudio)

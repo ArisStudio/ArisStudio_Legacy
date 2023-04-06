@@ -1,0 +1,17 @@
+.vs/
+obj/
+Packages/
+Logs/
+Data/
+Temp/
+0E/
+.idea/
+Library/
+Assets/ArisStudio/Reference/
+Assets/ArisStudio/Spr/Emoticon/EmoticonImage
+Assets/ArisStudio/Spr/Emoticon/EmoticonSound
+0Txt/xm.txt
+Recordings/
+ScreenRecorder/
+Spine/
+0Txt/t.txt

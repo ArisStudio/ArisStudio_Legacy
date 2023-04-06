@@ -1,0 +1,14 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/ArisStudio.unity
+    guid: 0fb3ac03249b21f40ac959c7c4f52090
+  - enabled: 1
+    path: Assets/Scenes/Preview.unity
+    guid: 377cdc8da817682409fca939cc1aab63
+  m_configObjects: {}
