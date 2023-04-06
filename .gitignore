@@ -1,0 +1,9 @@
+.vs/
+obj/
+Packages/
+Logs/
+Data/
+Temp/
+0E/
+.idea/
+Library/
