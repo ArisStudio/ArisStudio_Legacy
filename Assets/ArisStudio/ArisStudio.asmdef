@@ -1,0 +1,35 @@
+{
+    "name": "ArisStudio",
+    "rootNamespace": "",
+    "references": [
+        "GUID:85179bbe79433b845b29975bda38e6a6",
+        "GUID:d2ab764443645a041a1e8579d060439e",
+        "GUID:07aad6cdb97602940a388a3e56471f3a",
+        "GUID:c685d05731421f64287ad6d13be5af0e",
+        "GUID:4854fdd062cbe4544841e5a700ba214e",
+        "GUID:d8b63aba1907145bea998dd612889d6b",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:2bafac87e7f4b9b418d9448d219b01ab",
+        "GUID:c42a40a1374d2514a8b87d73ab83e528",
+        "GUID:68765d262e2128e4ab49c983f3411946"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [
+        "GameCoreScarlett",
+        "GameCoreXboxOne",
+        "Lumin",
+        "PS4",
+        "PS5",
+        "Stadia",
+        "Switch",
+        "tvOS",
+        "XboxOne"
+    ],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

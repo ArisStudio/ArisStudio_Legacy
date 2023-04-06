@@ -1,0 +1,9 @@
+load | spr | hihumi | hihumi_spr
+load | spr_c | hihumi | hihumi_spr
+load | spr | anyone | 1 | Idle_01 | anyone_spr | anyone_spr.png,anyone_spr2.png
+load | bg | anyBackground | BG_ClassRoom2.jpg
+load | si | anyScenarioImage | popup11.PNG
+load | bgm | anyBGM | Theme_64.ogg
+load | sfx | anySFX | SE_RetroSuccess_01.wav
+txt | Arona | Arona | I'm,   Arona. | Say  ,  "Hello" | You're
+txt | 中文 | 中文测试！ | 这里中间'有'单引号 | 下一步是： "编辑 src/main.rs" | 在 Rust 中，我们这样写： let a = "hello world"

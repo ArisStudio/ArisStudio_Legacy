@@ -1,0 +1,10 @@
+button 'Play demo.txt' 'tDemo' 'Play test.txt' 'tTest'
+
+target tDemo
+t 'ChangeTxt' 'Command Test' 'ChangeTxt demo'
+ChangeTxt demo
+
+
+target tTest
+t 'ChangeTxt' 'Command Test' 'ChangeTxt test'
+ChangeTxt test

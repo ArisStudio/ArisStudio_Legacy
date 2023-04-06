@@ -1,0 +1,18 @@
+{
+    "name": "ScreenshotCompanion.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:0cb2552887a471d4ab14dd9a12a0eabd"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
