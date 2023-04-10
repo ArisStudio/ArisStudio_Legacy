@@ -161,7 +161,7 @@ namespace ArisStudio.Core
         {
             try
             {
-                CommandFactory(text);
+                CommandFactory_BK(text);
             }
             catch (Exception e)
             {
@@ -205,7 +205,7 @@ namespace ArisStudio.Core
             // textsLength = textsData.Length;
             textsLength = commands.Count;
             // PreLoad(textsData);
-            PreLoad(commands.ToArray());
+            PreLoadCommand(commands.ToArray());
 
             DebugConsole.Instance.PrintLog($"Load Story Data: <#00ff00>{textPath}</color>");
         }
@@ -230,6 +230,7 @@ namespace ArisStudio.Core
 
             DebugConsole.Instance.PrintLog("\n<#ffa500>Initialize</color>");
         }
+
 
         string DebugArrayList(string[] message)
         {
@@ -261,7 +262,7 @@ namespace ArisStudio.Core
             * Result: ["txt", "'Arona'", "\"Arona\"", "\"I'm, Arona.\"", "'Say, "Hello"'", "'You\'re'"]
             */
             const string pattern = @"('[^'\\]*(?:\\.[^'\\]*)*')|(\""[^""\\]*(?:\\.[^""\\]*)*"")|(\S+)";
-            var textSplit = Regex
+            String[] textSplit = Regex
                 .Matches(textCommand, pattern)
                 .Cast<Match>()
                 .Select(m => m.Value)
@@ -279,9 +280,9 @@ namespace ArisStudio.Core
             */
             var finalCommand = new List<string>();
 
-            foreach (var str in textSplit)
+            foreach (String str in textSplit)
             {
-                var cmd = str;
+                String cmd = str;
 
                 if ((str.StartsWith("'") && str.EndsWith("'")) || (str.StartsWith("\"") && str.EndsWith("\"")))
                 {
@@ -295,37 +296,30 @@ namespace ArisStudio.Core
             return finalCommand.ToArray();
         }
 
-        public void PreLoad(string text)
+        public void PreLoadCommand(string text)
         {
-            try
+            var command = ParseCommand(text);
+
+            switch (command[1])
             {
-                var command = ParseCommand(text);
+                case "spr":
+                case "spr_c":
+                    sprFactory.Spr_LoadCommand(command);
+                    break;
 
-                switch (command[1])
-                {
-                    case "spr":
-                    case "spr_c":
-                        sprFactory.Spr_LoadCommand(command);
-                        break;
+                case "bg":
+                case "si":
+                    imageFactory.Image_LoadCommand(command);
+                    break;
 
-                    case "bg":
-                    case "si":
-                        imageFactory.Image_LoadCommand(command);
-                        break;
-
-                    case "bgm":
-                    case "sfx":
-                        soundFactory.Sound_LoadCommand(command);
-                        break;
-                }
-            }
-            catch (Exception e)
-            {
-                DebugConsole.Instance.PrintLog(e.Message);
+                case "bgm":
+                case "sfx":
+                    soundFactory.Sound_LoadCommand(command);
+                    break;
             }
         }
 
-        void PreLoad(string[] texts)
+        private void PreLoadCommand(string[] texts)
         {
             Initialize();
 
@@ -335,16 +329,95 @@ namespace ArisStudio.Core
 
                 if (text.StartsWith("target")) targetList.Add(text.Replace("target", "").Trim(), lineIndex);
 
-                else if (text.StartsWith("load")) PreLoad(text);
-            }
-
-            foreach (KeyValuePair<string, int> t in targetList)
-            {
-                DebugConsole.Instance.PrintLog($"Target: <#00ff00>{t.Key}</color> Line: <#00ff00>{t.Value}</color>");
+                else if (text.StartsWith("load")) PreLoadCommand(text);
             }
         }
 
-        void CommandFactory(string text)
+        private void ShowAllTargets()
+        {
+            foreach (KeyValuePair<string, int> target in targetList)
+            {
+                DebugConsole.Instance.PrintLog($"Target: <#00ff00>{target.Key}</color> at line <#00ff00>{target.Value}</color>");
+            }
+        }
+
+
+        void ComandFactory(string text)
+        {
+            if (text == string.Empty || text.StartsWith("//")) return;
+
+            if (text.StartsWith("="))
+            {
+                isPlaying = false;
+                return;
+            }
+
+            var command = ParseCommand(text);
+
+            switch (command[0])
+            {
+                // special commands
+                case "wait":
+                    break;
+                case "targets":
+                    ShowAllTargets();
+                    break;
+                case "jump":
+                    runLineNumber = targetList[command[1]];
+                    DebugConsole.Instance.PrintLog($"Jump to: <#00ff00>{command[1]}</color>");
+                    break;
+                case "auto":
+                    autoSeconds = float.Parse(command[1]);
+                    DebugConsole.Instance.PrintLog($"Auto: <#00ff00>{autoSeconds} s</color>");
+                    break;
+                case "switch":
+                    break;
+
+                // select commands
+                case "select":
+                    selectButton.SelectCommand(command);
+                    break;
+
+                // text commands
+                case "t":
+                case "text":
+                case "txt":
+                    break;
+
+                case "label":
+                    break;
+
+                case "banner":
+                    break;
+
+                // image commands
+                case "bg":
+                case "si":
+                    imageFactory.ImageCommand(command);
+                    break;
+
+                // sound commands
+                case "bgm":
+                case "sfx":
+                    soundFactory.SoundCommand(command);
+                    break;
+
+                // scene commands
+                case "scene":
+                    break;
+
+                // character commands
+                case "spr":
+                case "char":
+                    break;
+
+                default:
+                    command = ParseCommand($"char {text}");
+                    break;
+            }
+        }
+
+        void CommandFactory_BK(string text)
         {
             if (text.StartsWith("="))
                 isPlaying = false;

@@ -90,6 +90,10 @@ namespace ArisStudio.Sound
 
         #endregion
 
+        public void SoundCommand(string[] soundCommand)
+        {
+        }
+
 
         public void SoundCommand(string soundCommand)
         {

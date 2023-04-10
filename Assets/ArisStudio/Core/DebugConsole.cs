@@ -85,7 +85,7 @@ namespace ArisStudio.Core
             if (command == string.Empty)
                 return;
 
-            MainControl.Instance.PreLoad(command);
+            MainControl.Instance.PreLoadCommand(command);
             MainControl.Instance.RunText(command);
             PrintLog($"> <#00ffff><b>{command}</b></color>");
             m_ConsoleInputField.text = string.Empty;

@@ -127,7 +127,7 @@ namespace ArisStudio.UI
 
         #endregion
 
-        void ImageCommand(string[] imageCommand)
+        public void ImageCommand(string[] imageCommand)
         {
             switch (imageCommand[0])
             {
