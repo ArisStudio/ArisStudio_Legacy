@@ -45,29 +45,39 @@ namespace ArisStudio.Core
 
         #region Data
 
+        public string currentStoryDataPath { get; private set; }
+
         public string currentLocalDataPath { get; private set; }
         public string currentRemoteDataPath { get; private set; }
-        public string currentSprPath { get; private set; }
+
         public string currentCharacterPath { get; private set; }
+        public string currentSprPath { get; private set; }
+
         public string currentAudioPath { get; private set; }
         public string currentBGMPath { get; private set; }
         public string currentSFXPath { get; private set; }
         public string currentVoicePath { get; private set; }
+
         public string currentImagePath { get; private set; }
         public string currentBackgroundPath { get; private set; }
         public string currentScenarioImagePath { get; private set; }
 
-        const string DEFAULT_STORY_DIRECTORY_NAME = "_story";
+        const string DefaultStoryDirectoryName = "_story";
 
-        const string DEFAULT_DATA_DIRECTORY_NAME = "data";
-        const string DEFAULT_SPR_DIRECTORY_NAME = "spr";
-        const string DEFAULT_AUDIO_DIRECTORY_NAME = "audio";
-        const string DEFAULT_BGM_DIRECTORY_NAME = "bgm";
-        const string DEFAULT_SFX_DIRECTORY_NAME = "sfx";
-        const string DEFAULT_VOICE_DIRECTORY_NAME = "voice";
-        const string DEFAULT_IMAGE_DIRECTORY_NAME = "image";
-        const string DEFAULT_BACKGROUND_DIRECTORY_NAME = "background";
-        const string DEFAULT_SCENARIO_IMAGE_DIRECTORY_NAME = "scenario_image";
+        const string DefaultDataDirectoryName = "data";
+
+        const string DefaultCharacterDirectoryName = "character";
+        const string DefaultSprDirectoryName = "spr";
+
+
+        const string DefaultAudioDirectoryName = "audio";
+        const string DefaultBGMDirectoryName = "bgm";
+        const string DefaultSfxDirectoryName = "sfx";
+        const string DefaultVoiceDirectoryName = "voice";
+
+        const string DefaultImageDirectoryName = "image";
+        const string DefaultBackgroundDirectoryName = "background";
+        const string DefaultScenarioImageDirectoryName = "scenario_image";
 
         #endregion
 
@@ -109,7 +119,7 @@ namespace ArisStudio.Core
                 () => { },
                 FileBrowser.PickMode.Files,
                 false,
-                Path.Combine(GetRootPath(), DEFAULT_STORY_DIRECTORY_NAME),
+                Path.Combine(GetRootPath(), DefaultStoryDirectoryName),
                 null,
                 "Select Story File",
                 "Select"
@@ -256,7 +266,7 @@ namespace ArisStudio.Core
         private void InitializeDefaultLocalDataPath()
         {
             // Initialize current Data path from default Data path if exist
-            var defaultLocalDataPath = Path.Combine(GetRootPath(), DEFAULT_DATA_DIRECTORY_NAME);
+            var defaultLocalDataPath = Path.Combine(GetRootPath(), DefaultDataDirectoryName);
 
             if (Directory.Exists(defaultLocalDataPath))
             {
@@ -303,16 +313,17 @@ namespace ArisStudio.Core
         /// </summary>
         private void SetDataContentsPath()
         {
-            currentSprPath = Path.Combine(currentLocalDataPath, DEFAULT_SPR_DIRECTORY_NAME);
+            currentCharacterPath = Path.Combine(currentLocalDataPath, DefaultCharacterDirectoryName);
+            currentSprPath = Path.Combine(currentCharacterPath, DefaultSprDirectoryName);
 
-            currentAudioPath = Path.Combine(currentLocalDataPath, DEFAULT_AUDIO_DIRECTORY_NAME);
-            currentBGMPath = Path.Combine(currentAudioPath, DEFAULT_BGM_DIRECTORY_NAME);
-            currentSFXPath = Path.Combine(currentAudioPath, DEFAULT_SFX_DIRECTORY_NAME);
-            currentVoicePath = Path.Combine(currentAudioPath, DEFAULT_VOICE_DIRECTORY_NAME);
+            currentAudioPath = Path.Combine(currentLocalDataPath, DefaultAudioDirectoryName);
+            currentBGMPath = Path.Combine(currentAudioPath, DefaultBGMDirectoryName);
+            currentSFXPath = Path.Combine(currentAudioPath, DefaultSfxDirectoryName);
+            currentVoicePath = Path.Combine(currentAudioPath, DefaultVoiceDirectoryName);
 
-            currentImagePath = Path.Combine(currentLocalDataPath, DEFAULT_IMAGE_DIRECTORY_NAME);
-            currentBackgroundPath = Path.Combine(currentImagePath, DEFAULT_BACKGROUND_DIRECTORY_NAME);
-            currentScenarioImagePath = Path.Combine(currentImagePath, DEFAULT_SCENARIO_IMAGE_DIRECTORY_NAME);
+            currentImagePath = Path.Combine(currentLocalDataPath, DefaultImageDirectoryName);
+            currentBackgroundPath = Path.Combine(currentImagePath, DefaultBackgroundDirectoryName);
+            currentScenarioImagePath = Path.Combine(currentImagePath, DefaultScenarioImageDirectoryName);
         }
 
         /// <summary>
@@ -322,26 +333,33 @@ namespace ArisStudio.Core
         {
             SetDataContentsPath();
 
-            CreateFolderIfNotExist("Spr", currentSprPath);
+            CreateFolderIfNotExist(currentCharacterPath);
+            CreateFolderIfNotExist(currentSprPath);
 
-            CreateFolderIfNotExist("Audio", currentAudioPath);
-            CreateFolderIfNotExist("BGM", currentBGMPath);
-            CreateFolderIfNotExist("SFX", currentSFXPath);
+            CreateFolderIfNotExist(currentAudioPath);
+            CreateFolderIfNotExist(currentBGMPath);
+            CreateFolderIfNotExist(currentSFXPath);
 
-            CreateFolderIfNotExist("Image", currentImagePath);
-            CreateFolderIfNotExist("Background", currentBackgroundPath);
-            CreateFolderIfNotExist("ScenarioImage", currentScenarioImagePath);
+            CreateFolderIfNotExist(currentImagePath);
+            CreateFolderIfNotExist(currentBackgroundPath);
+            CreateFolderIfNotExist(currentScenarioImagePath);
         }
 
         /// <summary>
         /// Create default directory if not exist.
         /// </summary>
-        private static void CreateFolderIfNotExist(string folderName, string path)
+        private static void CreateFolderIfNotExist(string path)
         {
-            if (Directory.Exists(path)) return;
+            if (Directory.Exists(path))
+            {
+                DebugConsole.Instance.PrintLog(
+                    $"Default <#00ff00>{Path.GetFileNameWithoutExtension(path)}</color> directory already exist: <#00ff00>{path}</color>");
+                return;
+            }
 
             Directory.CreateDirectory(path);
-            DebugConsole.Instance.PrintLog($"Create default <#00ff00>{folderName}</color> directory: <#00ff00>{path}</color>");
+            DebugConsole.Instance.PrintLog(
+                $"Create default <#00ff00>{Path.GetFileNameWithoutExtension(path)}</color> directory: <#00ff00>{path}</color>");
         }
 
         #endregion
