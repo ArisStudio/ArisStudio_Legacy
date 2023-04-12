@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ArisStudio.Audio;
+using ArisStudio.Character;
 using ArisStudio.ScreenEffect;
 using ArisStudio.Sound;
 using ArisStudio.Spr;
@@ -27,6 +29,10 @@ namespace ArisStudio.Core
         [Space] [SerializeField] Label label;
 
         [Space] [SerializeField] Banner banner;
+
+        private AsCharacterManager asCharacterManager;
+        private AsAudioManager asAudioManager;
+
 
         SprFactory sprFactory;
         ImageFactory imageFactory;
@@ -161,7 +167,7 @@ namespace ArisStudio.Core
         {
             try
             {
-                CommandFactory_BK(text);
+                ComandManager(text);
             }
             catch (Exception e)
             {
@@ -303,8 +309,11 @@ namespace ArisStudio.Core
             switch (command[1])
             {
                 case "spr":
+                    asCharacterManager.AsCharacter_LoadCommand(command, false);
+                    break;
+                case "sprc":
                 case "spr_c":
-                    sprFactory.Spr_LoadCommand(command);
+                    asCharacterManager.AsCharacter_LoadCommand(command, true);
                     break;
 
                 case "bg":
@@ -313,8 +322,10 @@ namespace ArisStudio.Core
                     break;
 
                 case "bgm":
+                    asAudioManager.AsAudio_LoadCommand(command, "bgm");
+                    break;
                 case "sfx":
-                    soundFactory.Sound_LoadCommand(command);
+                    asAudioManager.AsAudio_LoadCommand(command, "sfx");
                     break;
             }
         }
@@ -342,7 +353,7 @@ namespace ArisStudio.Core
         }
 
 
-        void ComandFactory(string text)
+        public void ComandManager(string text)
         {
             if (text == string.Empty || text.StartsWith("//")) return;
 
@@ -396,10 +407,10 @@ namespace ArisStudio.Core
                     imageFactory.ImageCommand(command);
                     break;
 
-                // sound commands
+                // audio commands
                 case "bgm":
                 case "sfx":
-                    soundFactory.SoundCommand(command);
+                    asAudioManager.AsAudioCommand(command);
                     break;
 
                 // scene commands
@@ -409,10 +420,12 @@ namespace ArisStudio.Core
                 // character commands
                 case "spr":
                 case "char":
+                    asCharacterManager.AsCharacterCommand(command);
                     break;
 
                 default:
                     command = ParseCommand($"char {text}");
+                    asCharacterManager.AsCharacterCommand(command);
                     break;
             }
         }

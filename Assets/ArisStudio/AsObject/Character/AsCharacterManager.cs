@@ -12,9 +12,9 @@ namespace ArisStudio.Character
 {
     public class AsCharacterManager : MonoBehaviour
     {
-        [Header("Material")] [SerializeField] Material defaultMaterial, communicationMaterial;
+        [Header("Material")] [SerializeField] private Material defaultMaterial, communicationMaterial;
 
-        [Space] [SerializeField] GameObject sprCharacterBase;
+        [Space] [SerializeField] private GameObject asCharacterBase;
 
         private const float SprScale = 0.0136f;
 
@@ -29,46 +29,18 @@ namespace ArisStudio.Character
             settingsManager = SettingsManager.Instance;
         }
 
-        #region Load
+        #region Load Character
 
-        public void AsCharacter_LoadCommand(string[] asCharLoadCommand)
+        public void AsCharacter_LoadCommand(string[] asCharLoadCommand, bool isCommunication)
         {
-            switch (asCharLoadCommand[1])
-            {
-                case "spr":
-                    switch (asCharLoadCommand.Length)
-                    {
-                        // load spr hihumi hihumi_spr
-                        case 4:
-                            LoadSpineCharacter(asCharLoadCommand[2], asCharLoadCommand[3], false);
-                            break;
+            // load spr/sprc hihumi hihumi_spr
+            if (asCharLoadCommand.Length == 4) LoadSpineCharacter(asCharLoadCommand[2], asCharLoadCommand[3], isCommunication);
 
-                        // load spr h 1 Idle_01 someone_spr someone_spr.png, someone_spr2.png
-                        case 7:
-                            LoadSpineCharacter(asCharLoadCommand[2], float.Parse(asCharLoadCommand[3]), asCharLoadCommand[4],
-                                asCharLoadCommand[5],
-                                asCharLoadCommand[6].Split(','), false);
-                            break;
-                    }
-
-                    break;
-
-                case "sprc":
-                case "spr_c":
-                    switch (asCharLoadCommand.Length)
-                    {
-                        case 4:
-                            LoadSpineCharacter(asCharLoadCommand[2], asCharLoadCommand[3], true);
-                            break;
-                        case 7:
-                            LoadSpineCharacter(asCharLoadCommand[2], float.Parse(asCharLoadCommand[3]), asCharLoadCommand[4],
-                                asCharLoadCommand[5],
-                                asCharLoadCommand[6].Split(','), true);
-                            break;
-                    }
-
-                    break;
-            }
+            // load spr/sprc h 1 Idle_01 someone_spr someone_spr.png, someone_spr2.png
+            else
+                LoadSpineCharacter(asCharLoadCommand[2], float.Parse(asCharLoadCommand[3]),
+                    asCharLoadCommand[4], asCharLoadCommand[5],
+                    asCharLoadCommand[6].Split(','), isCommunication);
         }
 
         private void LoadSpineCharacter(string nameId, string sprName, bool isCommunication)
@@ -85,7 +57,7 @@ namespace ArisStudio.Character
         private IEnumerator CreateSpineGameObject(string nameId, float scale, string idle, string sprName, string[] imgList,
             bool isCommunication)
         {
-            var sprCharBaseClone = Instantiate(sprCharacterBase);
+            var sprCharBaseClone = Instantiate(asCharacterBase);
             sprCharBaseClone.name = nameId;
             var sprCharGo = sprCharBaseClone.transform.Find("SprCharacter").gameObject;
 
@@ -169,7 +141,7 @@ namespace ArisStudio.Character
         #endregion
 
 
-        public void AsCharCommand(string[] asCharCommand)
+        public void AsCharacterCommand(string[] asCharCommand)
         {
             switch (asCharCommand[2])
             {
@@ -254,10 +226,18 @@ namespace ArisStudio.Character
 
                 case "xs":
                 case "shake_x":
+                    if (asCharCommand.Length == 4)
+                        characterList[asCharCommand[1]].ShakeX(float.Parse(asCharCommand[3]));
+                    else
+                        characterList[asCharCommand[1]].ShakeX(float.Parse(asCharCommand[3]), float.Parse(asCharCommand[4]));
                     break;
 
                 case "ys":
                 case "shake_y":
+                    if (asCharCommand.Length == 4)
+                        characterList[asCharCommand[1]].ShakeY(float.Parse(asCharCommand[3]));
+                    else
+                        characterList[asCharCommand[1]].ShakeY(float.Parse(asCharCommand[3]), float.Parse(asCharCommand[4]));
                     break;
 
                 case "scale":

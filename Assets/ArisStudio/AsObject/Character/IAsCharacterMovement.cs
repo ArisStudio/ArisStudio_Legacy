@@ -10,21 +10,17 @@
 
         void Position(float x, float y);
 
-        void MoveX(float x);
-
         void MoveX(float x, float time);
-
-        void MoveY(float y);
 
         void MoveY(float y, float time);
 
-        void MovePosition(float x, float y);
-
         void MovePosition(float x, float y, float time);
 
-        void ShakeX();
+        void Shake(float strength, float time);
 
-        void ShakeY();
+        void ShakeX(float strength, float time);
+
+        void ShakeY(float strength, float time);
 
         void Scale(float scale);
 

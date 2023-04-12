@@ -12,7 +12,9 @@ namespace ArisStudio.Audio
 
         void Stop();
 
-        void SetVolume(float v);
+        void SetVolume(float volume);
+
+        void Fade(float volume, float time);
 
         void Loop();
 

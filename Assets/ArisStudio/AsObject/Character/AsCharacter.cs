@@ -1,4 +1,5 @@
-﻿using Spine.Unity;
+﻿using DG.Tweening;
+using Spine.Unity;
 using UnityEngine;
 
 namespace ArisStudio.Character
@@ -15,14 +16,9 @@ namespace ArisStudio.Character
 
         public bool IsCommunication { get; set; }
 
-        private const float MoveTime = 1f;
+        private const float BehaviourDuration = 1f;
 
         private static readonly int FillPhase = Shader.PropertyToID("_FillPhase");
-
-        private void Awake()
-        {
-            asCharacterBaseTf = transform.parent.gameObject.transform;
-        }
 
 
         private static AsCharacter AddToGameObject(GameObject go)
@@ -46,6 +42,7 @@ namespace ArisStudio.Character
         {
             StateInit();
             MovementInit();
+            asCharacterBaseTf = transform.parent.gameObject.transform;
             IsCommunication = isCommunication;
         }
 
@@ -140,44 +137,34 @@ namespace ArisStudio.Character
             asCharacterBaseTf.localPosition = new Vector3(x, y, asCharacterBaseTf.localPosition.z);
         }
 
-        public void MoveX(float x)
+        public void MoveX(float x, float time = BehaviourDuration)
         {
-            MoveX(x, MoveTime);
+            asCharacterBaseTf.DOMoveX(x, time);
         }
 
-        public void MoveX(float x, float time)
+        public void MoveY(float y, float time = BehaviourDuration)
         {
-            throw new System.NotImplementedException();
+            asCharacterBaseTf.DOMoveY(y, time);
         }
 
-        public void MoveY(float y)
+        public void MovePosition(float x, float y, float time = BehaviourDuration)
         {
-            MoveY(y, MoveTime);
+            asCharacterBaseTf.DOMove(new Vector3(x, y, asCharacterBaseTf.localPosition.z), time);
         }
 
-        public void MoveY(float y, float time)
+        public void Shake(float strength, float time = BehaviourDuration)
         {
-            throw new System.NotImplementedException();
+            asCharacterBaseTf.DOShakePosition(time, strength);
         }
 
-        public void MovePosition(float x, float y)
+        public void ShakeX(float strength, float time = BehaviourDuration)
         {
-            MovePosition(x, y, MoveTime);
+            asCharacterBaseTf.DOShakePosition(time, Vector3.right * strength);
         }
 
-        public void MovePosition(float x, float y, float time)
+        public void ShakeY(float strength, float time = BehaviourDuration)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public void ShakeX()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void ShakeY()
-        {
-            throw new System.NotImplementedException();
+            asCharacterBaseTf.DOShakePosition(time, Vector3.down * strength);
         }
 
         public void Scale(float scale)
