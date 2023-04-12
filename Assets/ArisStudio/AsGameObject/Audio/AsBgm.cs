@@ -1,59 +1,59 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 
-namespace ArisStudio.Audio
+namespace ArisStudio.AsGameObject.Audio
 {
-    public class AsSfx : MonoBehaviour, IAsAudio
+    public class AsBgm : MonoBehaviour, IAsAudio
     {
-        private AudioSource sfx;
+        private AudioSource bgm;
 
         private const float FadeDuration = 1f;
 
         private void Start()
         {
-            sfx = GetComponent<AudioSource>();
+            bgm = GetComponent<AudioSource>();
         }
 
         public void SetAudio(AudioClip ac)
         {
-            sfx.clip = ac;
-            sfx.loop = false;
-            sfx.Play();
+            bgm.clip = ac;
+            bgm.loop = true;
+            bgm.Play();
         }
 
         public void Play()
         {
-            sfx.Play();
+            bgm.Play();
         }
 
         public void Pause()
         {
-            sfx.Pause();
+            bgm.Pause();
         }
 
         public void Stop()
         {
-            sfx.Stop();
+            bgm.Stop();
         }
 
         public void SetVolume(float volume)
         {
-            sfx.volume = volume;
+            bgm.volume = volume;
         }
 
         public void Fade(float volume = 0f, float time = FadeDuration)
         {
-            sfx.DOFade(volume, time);
+            bgm.DOFade(volume, time);
         }
 
         public void Loop()
         {
-            sfx.loop = true;
+            bgm.loop = true;
         }
 
         public void Once()
         {
-            sfx.loop = false;
+            bgm.loop = false;
         }
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -62,22 +61,22 @@ namespace ArisStudio.Core
         public string currentBackgroundPath { get; private set; }
         public string currentScenarioImagePath { get; private set; }
 
-        const string DefaultStoryDirectoryName = "_story";
+        private const string DefaultStoryDirectoryName = "_story";
 
-        const string DefaultDataDirectoryName = "data";
+        private const string DefaultDataDirectoryName = "data";
 
-        const string DefaultCharacterDirectoryName = "character";
-        const string DefaultSprDirectoryName = "spr";
+        private const string DefaultCharacterDirectoryName = "character";
+        private const string DefaultSprDirectoryName = "spr";
 
 
-        const string DefaultAudioDirectoryName = "audio";
-        const string DefaultBGMDirectoryName = "bgm";
-        const string DefaultSfxDirectoryName = "sfx";
-        const string DefaultVoiceDirectoryName = "voice";
+        private const string DefaultAudioDirectoryName = "audio";
+        private const string DefaultBGMDirectoryName = "bgm";
+        private const string DefaultSfxDirectoryName = "sfx";
+        private const string DefaultVoiceDirectoryName = "voice";
 
-        const string DefaultImageDirectoryName = "image";
-        const string DefaultBackgroundDirectoryName = "background";
-        const string DefaultScenarioImageDirectoryName = "scenario_image";
+        private const string DefaultImageDirectoryName = "image";
+        private const string DefaultBackgroundDirectoryName = "background";
+        private const string DefaultScenarioImageDirectoryName = "scenario_image";
 
         #endregion
 
@@ -161,12 +160,12 @@ namespace ArisStudio.Core
         /// <summary>
         /// Return OS installed font names as a List.
         /// </summary>
-        List<string> GetInstalledFontsNames()
+        private List<string> GetInstalledFontsNames()
         {
             return Font.GetOSInstalledFontNames().ToList();
         }
 
-        void InitializeFontsList()
+        private void InitializeFontsList()
         {
             currentInstalledFonts = GetInstalledFontsNames();
         }

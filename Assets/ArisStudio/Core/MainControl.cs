@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using ArisStudio.Audio;
-using ArisStudio.Character;
+using ArisStudio.AsGameObject.Audio;
+using ArisStudio.AsGameObject.Character;
 using ArisStudio.ScreenEffect;
 using ArisStudio.Sound;
 using ArisStudio.Spr;
@@ -393,6 +393,9 @@ namespace ArisStudio.Core
                 case "t":
                 case "text":
                 case "txt":
+                    break;
+
+                case "th":
                     break;
 
                 case "label":

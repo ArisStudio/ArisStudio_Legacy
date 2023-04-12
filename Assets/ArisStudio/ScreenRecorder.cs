@@ -17,7 +17,7 @@ class BitmapEncoder
 			bw.Write ((UInt16)0);									// bfReserved1;
 			bw.Write ((UInt16)0);									// bfReserved2;
 			bw.Write ((UInt32)14 + 40);								// bfOffBits;
-	 
+
 			// define the bitmap information header
 			bw.Write ((UInt32)40);  								// biSize;
 			bw.Write ((Int32)width); 								// biWidth;
@@ -38,7 +38,7 @@ class BitmapEncoder
 				bw.Write(imageData[imageIdx + 0]);
 				bw.Write((byte)255);
 			}
-			
+
 		}
 	}
 
@@ -48,16 +48,16 @@ class BitmapEncoder
 /// Captures frames from a Unity camera in real time
 /// and writes them to disk using a background thread.
 /// </summary>
-/// 
+///
 /// <description>
 /// Maximises speed and quality by reading-back raw
-/// texture data with no conversion and writing 
+/// texture data with no conversion and writing
 /// frames in uncompressed BMP format.
 /// Created by Richard Copperwaite.
 /// </description>
-/// 
+///
 [RequireComponent(typeof(Camera))]
-public class ScreenRecorder : MonoBehaviour 
+public class ScreenRecorder : MonoBehaviour
 {
 	// Public Properties
 	public int maxFrames; // maximum number of frames you want to record in one video
@@ -83,8 +83,8 @@ public class ScreenRecorder : MonoBehaviour
 	private int screenHeight;
 	private bool threadIsProcessing;
 	private bool terminateThreadWhenDone;
-	
-	void Start () 
+
+	void Start ()
 	{
 		// Set target frame rate (optional)
 		Application.targetFrameRate = frameRate;
@@ -102,7 +102,7 @@ public class ScreenRecorder : MonoBehaviour
 		// Prepare textures and initial values
 		screenWidth = GetComponent<Camera>().pixelWidth;
 		screenHeight = GetComponent<Camera>().pixelHeight;
-		
+
 		tempRenderTexture = new RenderTexture(screenWidth, screenHeight, 0);
 		tempTexture2D = new Texture2D(screenWidth, screenHeight, TextureFormat.RGB24, false);
 		frameQueue = new Queue<byte[]> ();
@@ -124,8 +124,8 @@ public class ScreenRecorder : MonoBehaviour
 		encoderThread = new Thread (EncodeAndSave);
 		encoderThread.Start ();
 	}
-	
-	void OnDisable() 
+
+	void OnDisable()
 	{
 		// Reset target frame rate
 		Application.targetFrameRate = -1;
@@ -155,7 +155,7 @@ public class ScreenRecorder : MonoBehaviour
 			if(framesToCapture > 0)
 			{
 				Graphics.Blit (source, tempRenderTexture);
-				
+
 				RenderTexture.active = tempRenderTexture;
 				tempTexture2D.ReadPixels(new Rect(0, 0, Screen.width, Screen.height),0,0);
 				RenderTexture.active = null;
@@ -173,7 +173,7 @@ public class ScreenRecorder : MonoBehaviour
 					print ("Frame " + frameNumber);
 				}
 			}
-			
+
 			lastFrameTime = thisFrameTime;
 
 		}
@@ -189,12 +189,12 @@ public class ScreenRecorder : MonoBehaviour
 		// Passthrough
 		Graphics.Blit (source, destination);
 	}
-	
+
 	private void EncodeAndSave()
 	{
 		print ("SCREENRECORDER IO THREAD STARTED");
 
-		while (threadIsProcessing) 
+		while (threadIsProcessing)
 		{
 			if(frameQueue.Count > 0)
 			{

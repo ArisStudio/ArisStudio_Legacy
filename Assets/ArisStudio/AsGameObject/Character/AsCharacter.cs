@@ -2,7 +2,7 @@
 using Spine.Unity;
 using UnityEngine;
 
-namespace ArisStudio.Character
+namespace ArisStudio.AsGameObject.Character
 {
     public class AsCharacter : MonoBehaviour, IAsCharacterState, IAsCharacterMovement
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ArisStudio.Audio
+namespace ArisStudio.AsGameObject.Audio
 {
     public interface IAsAudio
     {

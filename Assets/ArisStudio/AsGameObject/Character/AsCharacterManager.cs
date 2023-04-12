@@ -8,7 +8,7 @@ using Spine.Unity;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace ArisStudio.Character
+namespace ArisStudio.AsGameObject.Character
 {
     public class AsCharacterManager : MonoBehaviour
     {
@@ -18,8 +18,8 @@ namespace ArisStudio.Character
 
         private const float SprScale = 0.0136f;
 
-        Dictionary<string, AsCharacter> characterList = new Dictionary<string, AsCharacter>();
-        List<string> showCharList = new List<string>();
+        private readonly Dictionary<string, AsCharacter> characterList = new Dictionary<string, AsCharacter>();
+        private readonly List<string> showCharList = new List<string>();
 
         // DebugConsole debugConsole;
         private SettingsManager settingsManager;
@@ -29,7 +29,18 @@ namespace ArisStudio.Character
             settingsManager = SettingsManager.Instance;
         }
 
+        public void AsCharacterInit()
+        {
+            foreach (var i in characterList) Destroy(i.Value.gameObject);
+
+            characterList.Clear();
+
+            showCharList.Clear();
+        }
+
         #region Load Character
+
+        // Todo: load with pure image
 
         public void AsCharacter_LoadCommand(string[] asCharLoadCommand, bool isCommunication)
         {
@@ -140,6 +151,18 @@ namespace ArisStudio.Character
 
         #endregion
 
+        public void TextWithHighlight(string nameId)
+        {
+            foreach (var i in showCharList)
+            {
+                AsCharacter asChar = characterList[i];
+
+                if (asChar.IsCommunication) continue;
+
+                if (i == nameId) asChar.Highlight(0.5f);
+                else asChar.Highlight(0);
+            }
+        }
 
         public void AsCharacterCommand(string[] asCharCommand)
         {
@@ -154,10 +177,12 @@ namespace ArisStudio.Character
                     characterList[asCharCommand[1]].Hide();
                     showCharList.Remove(asCharCommand[1]);
                     break;
+                case "showD": // legacy
                 case "appear":
                     characterList[asCharCommand[1]].Appear();
                     showCharList.Add(asCharCommand[1]);
                     break;
+                case "hideD": // legacy
                 case "disappear":
                     characterList[asCharCommand[1]].Disappear();
                     showCharList.Remove(asCharCommand[1]);
@@ -199,6 +224,7 @@ namespace ArisStudio.Character
                     characterList[asCharCommand[1]].Position(float.Parse(asCharCommand[3]), float.Parse(asCharCommand[4]));
                     break;
 
+                case "moveX": // legacy
                 case "xm":
                 case "move":
                 case "move_x":
@@ -207,6 +233,7 @@ namespace ArisStudio.Character
                     else
                         characterList[asCharCommand[1]].MoveX(float.Parse(asCharCommand[3]), float.Parse(asCharCommand[4]));
                     break;
+                case "moveY": // legacy
                 case "ym":
                 case "move_y":
                     if (asCharCommand.Length == 4)
@@ -224,6 +251,7 @@ namespace ArisStudio.Character
                             .MovePosition(float.Parse(asCharCommand[3]), float.Parse(asCharCommand[4]), float.Parse(asCharCommand[5]));
                     break;
 
+                case "shakeX": // legacy
                 case "xs":
                 case "shake_x":
                     if (asCharCommand.Length == 4)
@@ -232,6 +260,7 @@ namespace ArisStudio.Character
                         characterList[asCharCommand[1]].ShakeX(float.Parse(asCharCommand[3]), float.Parse(asCharCommand[4]));
                     break;
 
+                case "shakeY": // legacy
                 case "ys":
                 case "shake_y":
                     if (asCharCommand.Length == 4)

@@ -1,4 +1,4 @@
-﻿namespace ArisStudio.Character
+﻿namespace ArisStudio.AsGameObject.Character
 {
     public interface IAsCharacterMovement
     {

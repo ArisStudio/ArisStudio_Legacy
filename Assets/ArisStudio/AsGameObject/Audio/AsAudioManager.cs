@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using ArisStudio.Core;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.Serialization;
 
-namespace ArisStudio.Audio
+namespace ArisStudio.AsGameObject.Audio
 {
     public class AsAudioManager : MonoBehaviour
     {
@@ -21,6 +20,16 @@ namespace ArisStudio.Audio
         {
             settingsManager = SettingsManager.Instance;
         }
+
+        public void AsAudioInit()
+        {
+            bgmList.Clear();
+            sfxList.Clear();
+
+            // Todo: Init volume with setting menu
+        }
+
+        # region Load Audio
 
         public void AsAudio_LoadCommand(string[] asAudioLoadCommand, string audioType)
         {
@@ -67,6 +76,8 @@ namespace ArisStudio.Audio
 
             DebugConsole.Instance.PrintLoadLog(audioType, audioName, nameId);
         }
+
+        # endregion
 
         public void AsAudioCommand(string[] asAudioCommand)
         {
