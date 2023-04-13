@@ -1,6 +1,6 @@
-﻿namespace ArisStudio.AsGameObject.Character
+﻿namespace ArisStudio.AsGameObject.Image
 {
-    public interface IAsCharacterMovement
+    public interface IAsImageMovement
     {
         void X(float x);
 
@@ -25,9 +25,5 @@
         void Scale(float scale);
 
         void Scale(float scale, float time);
-
-        void Close();
-
-        void Back();
     }
 }

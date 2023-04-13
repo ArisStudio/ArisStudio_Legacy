@@ -254,23 +254,20 @@ namespace ArisStudio.AsGameObject.Character
                 case "shakeX": // legacy
                 case "xs":
                 case "shake_x":
-                    if (asCharCommand.Length == 4)
-                        characterList[asCharCommand[1]].ShakeX(float.Parse(asCharCommand[3]));
-                    else
-                        characterList[asCharCommand[1]].ShakeX(float.Parse(asCharCommand[3]), float.Parse(asCharCommand[4]));
+                    if (asCharCommand.Length == 4) characterList[asCharCommand[1]].ShakeX(float.Parse(asCharCommand[3]));
+                    else characterList[asCharCommand[1]].ShakeX(float.Parse(asCharCommand[3]), float.Parse(asCharCommand[4]));
                     break;
 
                 case "shakeY": // legacy
                 case "ys":
                 case "shake_y":
-                    if (asCharCommand.Length == 4)
-                        characterList[asCharCommand[1]].ShakeY(float.Parse(asCharCommand[3]));
-                    else
-                        characterList[asCharCommand[1]].ShakeY(float.Parse(asCharCommand[3]), float.Parse(asCharCommand[4]));
+                    if (asCharCommand.Length == 4) characterList[asCharCommand[1]].ShakeY(float.Parse(asCharCommand[3]));
+                    else characterList[asCharCommand[1]].ShakeY(float.Parse(asCharCommand[3]), float.Parse(asCharCommand[4]));
                     break;
 
                 case "scale":
-                    characterList[asCharCommand[1]].Scale(float.Parse(asCharCommand[3]));
+                    if (asCharCommand.Length == 3) characterList[asCharCommand[1]].Scale(float.Parse(asCharCommand[3]));
+                    else characterList[asCharCommand[1]].Scale(float.Parse(asCharCommand[3]), float.Parse(asCharCommand[3]));
                     break;
 
                 case "close":

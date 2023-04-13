@@ -60,7 +60,8 @@ namespace ArisStudio.Core
         int runLineNumber;
 
         // List
-        Dictionary<string, int> targetList = new Dictionary<string, int>();
+        private readonly Dictionary<string, int> targetList = new Dictionary<string, int>();
+        Dictionary<string, string> nameIdList = new Dictionary<string, string>();
 
         void Awake()
         {
@@ -310,10 +311,12 @@ namespace ArisStudio.Core
             {
                 case "spr":
                     asCharacterManager.AsCharacter_LoadCommand(command, false);
+                    nameIdList.Add("char", command[3]);
                     break;
                 case "sprc":
                 case "spr_c":
                     asCharacterManager.AsCharacter_LoadCommand(command, true);
+                    nameIdList.Add("char", command[3]);
                     break;
 
                 case "bg":
@@ -323,9 +326,11 @@ namespace ArisStudio.Core
 
                 case "bgm":
                     asAudioManager.AsAudio_LoadCommand(command, "bgm");
+                    nameIdList.Add("bgm", command[3]);
                     break;
                 case "sfx":
                     asAudioManager.AsAudio_LoadCommand(command, "sfx");
+                    nameIdList.Add("sfx", command[3]);
                     break;
             }
         }
@@ -355,81 +360,85 @@ namespace ArisStudio.Core
 
         public void ComandManager(string text)
         {
-            if (text == string.Empty || text.StartsWith("//")) return;
-
-            if (text.StartsWith("="))
+            while (true)
             {
-                isPlaying = false;
-                return;
-            }
+                if (text == string.Empty || text.StartsWith("//")) return;
 
-            var command = ParseCommand(text);
+                if (text.StartsWith("="))
+                {
+                    isPlaying = false;
+                    return;
+                }
 
-            switch (command[0])
-            {
-                // special commands
-                case "wait":
-                    break;
-                case "targets":
-                    ShowAllTargets();
-                    break;
-                case "jump":
-                    runLineNumber = targetList[command[1]];
-                    DebugConsole.Instance.PrintLog($"Jump to: <#00ff00>{command[1]}</color>");
-                    break;
-                case "auto":
-                    autoSeconds = float.Parse(command[1]);
-                    DebugConsole.Instance.PrintLog($"Auto: <#00ff00>{autoSeconds} s</color>");
-                    break;
-                case "switch":
-                    break;
+                var command = ParseCommand(text);
 
-                // select commands
-                case "select":
-                    selectButton.SelectCommand(command);
-                    break;
+                switch (command[0])
+                {
+                    // special commands
+                    case "wait":
+                        break;
+                    case "targets":
+                        ShowAllTargets();
+                        break;
+                    case "jump":
+                        runLineNumber = targetList[command[1]];
+                        DebugConsole.Instance.PrintLog($"Jump to: <#00ff00>{command[1]}</color>");
+                        break;
+                    case "auto":
+                        autoSeconds = float.Parse(command[1]);
+                        DebugConsole.Instance.PrintLog($"Auto: <#00ff00>{autoSeconds} s</color>");
+                        break;
+                    case "switch":
+                        break;
 
-                // text commands
-                case "t":
-                case "text":
-                case "txt":
-                    break;
+                    // select commands
+                    case "select":
+                        selectButton.SelectCommand(command);
+                        break;
 
-                case "th":
-                    break;
+                    // text commands
+                    case "t":
+                    case "text":
+                    case "txt":
+                        break;
 
-                case "label":
-                    break;
+                    case "th":
+                        break;
 
-                case "banner":
-                    break;
+                    case "label":
+                        break;
 
-                // image commands
-                case "bg":
-                case "si":
-                    imageFactory.ImageCommand(command);
-                    break;
+                    case "banner":
+                        break;
 
-                // audio commands
-                case "bgm":
-                case "sfx":
-                    asAudioManager.AsAudioCommand(command);
-                    break;
+                    // image commands
+                    case "bg":
+                    case "si":
+                        imageFactory.ImageCommand(command);
+                        break;
 
-                // scene commands
-                case "scene":
-                    break;
+                    // audio commands
+                    case "bgm":
+                    case "sfx":
+                        asAudioManager.AsAudioCommand(command);
+                        break;
 
-                // character commands
-                case "spr":
-                case "char":
-                    asCharacterManager.AsCharacterCommand(command);
-                    break;
+                    // scene commands
+                    case "scene":
+                        break;
 
-                default:
-                    command = ParseCommand($"char {text}");
-                    asCharacterManager.AsCharacterCommand(command);
-                    break;
+                    // character commands
+                    case "spr":
+                    case "char":
+                        asCharacterManager.AsCharacterCommand(command);
+                        break;
+
+                    default:
+                        text = $"char {text}";
+                        continue;
+                }
+
+                break;
             }
         }
 

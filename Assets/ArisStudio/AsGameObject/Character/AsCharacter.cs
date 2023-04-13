@@ -172,6 +172,11 @@ namespace ArisStudio.AsGameObject.Character
             asCharacterBaseTf.localScale = new Vector3(scale, scale, 1);
         }
 
+        public void Scale(float scale, float time)
+        {
+            asCharacterBaseTf.DOScale(new Vector3(scale, scale, 1), time);
+        }
+
         public void Close()
         {
             asCharacterBaseTf.localScale = new Vector3(1.5f, 1.5f, 1);
