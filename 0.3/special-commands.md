@@ -50,6 +50,17 @@ wait
 target 第一个分支
 ```
 
+## 显示所有标记 | show all targets
+
+- 显示所有标记。
+- 此命令为 debug 命令。
+
+> `targets`
+
+```txt
+targets
+```
+
 ## 跳转 | jump
 
 - 跳转到指定标记处。

@@ -1,4 +1,4 @@
-# 声音命令 | sound commands
+# 声音命令 | audio commands
 
 - 目前只有简单命令控制，若有复杂需求请使用 pr 等软件进行后期处理。
 - 各平台 Unity 支持音频格式
