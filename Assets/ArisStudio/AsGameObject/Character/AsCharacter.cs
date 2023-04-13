@@ -14,25 +14,17 @@ namespace ArisStudio.AsGameObject.Character
 
         private string materialType;
 
-        public bool IsCommunication { get; set; }
-
-        private const float BehaviourDuration = 1f;
+        public bool IsCommunication { get; private set; }
 
         private static readonly int FillPhase = Shader.PropertyToID("_FillPhase");
 
 
-        private static AsCharacter AddToGameObject(GameObject go)
-        {
-            var asChar = go.AddComponent<AsCharacter>();
-            return asChar;
-        }
-
-        public static AsCharacter GetAsCharacterBehavior(GameObject go)
+        public static AsCharacter GetAsCharacter(GameObject go)
         {
             var asChar = go.GetComponent<AsCharacter>();
             if (asChar == null)
             {
-                asChar = AddToGameObject(go);
+                asChar = go.AddComponent<AsCharacter>();
             }
 
             return asChar;
@@ -88,9 +80,9 @@ namespace ArisStudio.AsGameObject.Character
             throw new System.NotImplementedException();
         }
 
-        public void State(string stateName)
+        public void State(string stateName,int trackIndex)
         {
-            sa.AnimationState.SetAnimation(1, stateName, true);
+            sa.AnimationState.SetAnimation(trackIndex, stateName, true);
         }
 
         public void Skin(string skinName)
@@ -137,32 +129,32 @@ namespace ArisStudio.AsGameObject.Character
             asCharacterBaseTf.localPosition = new Vector3(x, y, asCharacterBaseTf.localPosition.z);
         }
 
-        public void MoveX(float x, float time = BehaviourDuration)
+        public void MoveX(float x, float time)
         {
             asCharacterBaseTf.DOMoveX(x, time);
         }
 
-        public void MoveY(float y, float time = BehaviourDuration)
+        public void MoveY(float y, float time)
         {
             asCharacterBaseTf.DOMoveY(y, time);
         }
 
-        public void MovePosition(float x, float y, float time = BehaviourDuration)
+        public void MovePosition(float x, float y, float time)
         {
             asCharacterBaseTf.DOMove(new Vector3(x, y, asCharacterBaseTf.localPosition.z), time);
         }
 
-        public void Shake(float strength, float time = BehaviourDuration)
+        public void Shake(float strength, float time)
         {
             asCharacterBaseTf.DOShakePosition(time, strength);
         }
 
-        public void ShakeX(float strength, float time = BehaviourDuration)
+        public void ShakeX(float strength, float time)
         {
             asCharacterBaseTf.DOShakePosition(time, Vector3.right * strength);
         }
 
-        public void ShakeY(float strength, float time = BehaviourDuration)
+        public void ShakeY(float strength, float time)
         {
             asCharacterBaseTf.DOShakePosition(time, Vector3.down * strength);
         }

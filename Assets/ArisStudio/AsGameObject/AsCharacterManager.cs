@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using ArisStudio.AsGameObject.Character;
 using ArisStudio.Core;
 using ArisStudio.Utils;
 using Spine;
@@ -8,25 +9,32 @@ using Spine.Unity;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace ArisStudio.AsGameObject.Character
+namespace ArisStudio.AsGameObject
 {
     public class AsCharacterManager : MonoBehaviour
     {
-        [Header("Material")] [SerializeField] private Material defaultMaterial, communicationMaterial;
+        [Header("AsCharacterBase")] [SerializeField]
+        private GameObject asCharacterBase;
 
-        [Space] [SerializeField] private GameObject asCharacterBase;
+        [Space] [Header("Material")] [SerializeField]
+        private Material defaultMaterial, communicationMaterial;
 
         private const float SprScale = 0.0136f;
 
         private readonly Dictionary<string, AsCharacter> characterList = new Dictionary<string, AsCharacter>();
         private readonly List<string> showCharList = new List<string>();
 
-        // DebugConsole debugConsole;
         private SettingsManager settingsManager;
+        private DebugConsole debugConsole;
+
+        private const float BehaviourDuration = 1f;
+
+        private const int DefaultTrackIndex = 1;
 
         private void Awake()
         {
             settingsManager = SettingsManager.Instance;
+            debugConsole = DebugConsole.Instance;
         }
 
         public void AsCharacterInit()
@@ -34,15 +42,16 @@ namespace ArisStudio.AsGameObject.Character
             foreach (var i in characterList) Destroy(i.Value.gameObject);
 
             characterList.Clear();
-
             showCharList.Clear();
+
+            debugConsole.PrintLog("AsCharacterInit");
         }
 
         #region Load Character
 
         // Todo: load with pure image
 
-        public void AsCharacter_LoadCommand(string[] asCharLoadCommand, bool isCommunication)
+        public void LoadAsCharacter(string[] asCharLoadCommand, bool isCommunication)
         {
             // load spr/sprc hihumi hihumi_spr
             if (asCharLoadCommand.Length == 4) LoadSpineCharacter(asCharLoadCommand[2], asCharLoadCommand[3], isCommunication);
@@ -61,11 +70,11 @@ namespace ArisStudio.AsGameObject.Character
 
         private void LoadSpineCharacter(string nameId, float scale, string idle, string sprName, string[] imgList, bool isCommunication)
         {
-            StartCoroutine(CreateSpineGameObject(nameId, scale, idle, sprName, imgList, isCommunication));
+            StartCoroutine(CreateSpineAsCharacter(nameId, scale, idle, sprName, imgList, isCommunication));
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
-        private IEnumerator CreateSpineGameObject(string nameId, float scale, string idle, string sprName, string[] imgList,
+        private IEnumerator CreateSpineAsCharacter(string nameId, float scale, string idle, string sprName, string[] imgList,
             bool isCommunication)
         {
             var sprCharBaseClone = Instantiate(asCharacterBase);
@@ -141,12 +150,12 @@ namespace ArisStudio.AsGameObject.Character
             skeletonAnimation.Skeleton.SetSlotsToSetupPose();
             skeletonAnimation.AnimationState.SetAnimation(0, idle, true);
 
-            AsCharacter asChar = AsCharacter.GetAsCharacterBehavior(sprCharGo);
+            AsCharacter asChar = AsCharacter.GetAsCharacter(sprCharGo);
             asChar.AsCharacterInit(isCommunication);
 
             characterList.Add(nameId, asChar);
 
-            DebugConsole.Instance.PrintLoadLog($"{(isCommunication ? "spr" : "spr_c")}", sprName, nameId);
+            debugConsole.PrintLoadLog($"{(isCommunication ? "spr" : "spr_c")}", sprName, nameId);
         }
 
         #endregion
@@ -194,7 +203,10 @@ namespace ArisStudio.AsGameObject.Character
                     break;
 
                 case "state":
-                    characterList[asCharCommand[1]].State(asCharCommand[3]);
+                    characterList[asCharCommand[1]].State(
+                        asCharCommand[3],
+                        ArrayHelper.IsIndexInRange(asCharCommand, 4) ? int.Parse(asCharCommand[4]) : DefaultTrackIndex
+                    );
                     break;
                 case "skin":
                     characterList[asCharCommand[1]].Skin(asCharCommand[3]);
@@ -228,46 +240,58 @@ namespace ArisStudio.AsGameObject.Character
                 case "xm":
                 case "move":
                 case "move_x":
-                    if (asCharCommand.Length == 4)
-                        characterList[asCharCommand[1]].MoveX(float.Parse(asCharCommand[3]));
-                    else
-                        characterList[asCharCommand[1]].MoveX(float.Parse(asCharCommand[3]), float.Parse(asCharCommand[4]));
+                    characterList[asCharCommand[1]].MoveX(
+                        float.Parse(asCharCommand[3]),
+                        ArrayHelper.IsIndexInRange(asCharCommand, 4) ? float.Parse(asCharCommand[4]) : BehaviourDuration
+                    );
+
                     break;
                 case "moveY": // legacy
                 case "ym":
                 case "move_y":
-                    if (asCharCommand.Length == 4)
-                        characterList[asCharCommand[1]].MoveY(float.Parse(asCharCommand[3]));
-                    else
-                        characterList[asCharCommand[1]].MoveY(float.Parse(asCharCommand[3]), float.Parse(asCharCommand[4]));
+                    characterList[asCharCommand[1]].MoveY(
+                        float.Parse(asCharCommand[3]),
+                        ArrayHelper.IsIndexInRange(asCharCommand, 4) ? float.Parse(asCharCommand[4]) : BehaviourDuration
+                    );
+
                     break;
                 case "pm":
                 case "move_pos":
                 case "move_position":
-                    if (asCharCommand.Length == 5)
-                        characterList[asCharCommand[1]].MovePosition(float.Parse(asCharCommand[3]), float.Parse(asCharCommand[4]));
-                    else
-                        characterList[asCharCommand[1]]
-                            .MovePosition(float.Parse(asCharCommand[3]), float.Parse(asCharCommand[4]), float.Parse(asCharCommand[5]));
+                    characterList[asCharCommand[1]].MovePosition(
+                        float.Parse(asCharCommand[3]),
+                        float.Parse(asCharCommand[4]),
+                        ArrayHelper.IsIndexInRange(asCharCommand, 5) ? float.Parse(asCharCommand[5]) : BehaviourDuration
+                    );
+
                     break;
 
                 case "shakeX": // legacy
                 case "xs":
                 case "shake_x":
-                    if (asCharCommand.Length == 4) characterList[asCharCommand[1]].ShakeX(float.Parse(asCharCommand[3]));
-                    else characterList[asCharCommand[1]].ShakeX(float.Parse(asCharCommand[3]), float.Parse(asCharCommand[4]));
+                    characterList[asCharCommand[1]].ShakeX(
+                        float.Parse(asCharCommand[3]),
+                        ArrayHelper.IsIndexInRange(asCharCommand, 4) ? float.Parse(asCharCommand[4]) : BehaviourDuration
+                    );
+
                     break;
 
                 case "shakeY": // legacy
                 case "ys":
                 case "shake_y":
-                    if (asCharCommand.Length == 4) characterList[asCharCommand[1]].ShakeY(float.Parse(asCharCommand[3]));
-                    else characterList[asCharCommand[1]].ShakeY(float.Parse(asCharCommand[3]), float.Parse(asCharCommand[4]));
+                    characterList[asCharCommand[1]].ShakeY(
+                        float.Parse(asCharCommand[3]),
+                        ArrayHelper.IsIndexInRange(asCharCommand, 4) ? float.Parse(asCharCommand[4]) : BehaviourDuration
+                    );
                     break;
 
+
                 case "scale":
-                    if (asCharCommand.Length == 3) characterList[asCharCommand[1]].Scale(float.Parse(asCharCommand[3]));
-                    else characterList[asCharCommand[1]].Scale(float.Parse(asCharCommand[3]), float.Parse(asCharCommand[3]));
+                    characterList[asCharCommand[1]].Scale(
+                        float.Parse(asCharCommand[3]),
+                        ArrayHelper.IsIndexInRange(asCharCommand, 4) ? float.Parse(asCharCommand[4]) : BehaviourDuration
+                    );
+
                     break;
 
                 case "close":

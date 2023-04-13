@@ -10,11 +10,9 @@
 
         void Disappear();
 
-        void Highlight(float hl);
-
         void Highlight(float hl, float time);
 
-        void State(string stateName);
+        void State(string stateName, int trackIndex);
 
         void Skin(string skinName);
 

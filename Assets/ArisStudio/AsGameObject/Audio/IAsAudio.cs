@@ -1,11 +1,7 @@
-﻿using UnityEngine;
-
-namespace ArisStudio.AsGameObject.Audio
+﻿namespace ArisStudio.AsGameObject.Audio
 {
     public interface IAsAudio
     {
-        void SetAudio(AudioClip ac);
-
         void Play();
 
         void Pause();

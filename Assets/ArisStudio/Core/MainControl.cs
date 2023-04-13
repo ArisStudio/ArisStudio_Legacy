@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ArisStudio.AsGameObject;
 using ArisStudio.AsGameObject.Audio;
 using ArisStudio.AsGameObject.Character;
 using ArisStudio.ScreenEffect;
@@ -310,12 +311,12 @@ namespace ArisStudio.Core
             switch (command[1])
             {
                 case "spr":
-                    asCharacterManager.AsCharacter_LoadCommand(command, false);
+                    asCharacterManager.LoadAsCharacter(command, false);
                     nameIdList.Add("char", command[3]);
                     break;
                 case "sprc":
                 case "spr_c":
-                    asCharacterManager.AsCharacter_LoadCommand(command, true);
+                    asCharacterManager.LoadAsCharacter(command, true);
                     nameIdList.Add("char", command[3]);
                     break;
 
@@ -325,11 +326,11 @@ namespace ArisStudio.Core
                     break;
 
                 case "bgm":
-                    asAudioManager.AsAudio_LoadCommand(command, "bgm");
+                    asAudioManager.LoadAsAudio(command, "bgm");
                     nameIdList.Add("bgm", command[3]);
                     break;
                 case "sfx":
-                    asAudioManager.AsAudio_LoadCommand(command, "sfx");
+                    asAudioManager.LoadAsAudio(command, "sfx");
                     nameIdList.Add("sfx", command[3]);
                     break;
             }
