@@ -1,7 +1,5 @@
 # Aris Studio
 
-## Overview
-
 <div align="center">
   <img src="./IMG_Aris_Studio_Logo.jpg" alt="Aris Studio logo" title="Aris Studio logo">
   <sub>Logo made by <a href="https://b23.tv/RbW7CyF" title="無花果洋\_wzy">無花果洋\_wzy</a></sub>
@@ -19,7 +17,6 @@
 <br>
 
 - [Aris Studio](https://github.com/Tualin14/ArisStudio/releases "Download Aris Studio")
-- [blue-archive-jp-assets-downloader](https://github.com/xiongnemo/blue-archive-jp-assets-downloader "blue-archive-jp-assets-downloader") (Optional, if you want to extract the game data by yourself)
 
 ## How to Use
 
@@ -36,9 +33,12 @@
 
 ## Contribute
 
-- Making a [Pull Request](https://github.com/Tualin14/ArisStudio/pulls).
-- Add new/missing materials data.
-- Submit Ideas, Feedbacks or Comments on [Issues](https://github.com/Tualin14/ArisStudio/issues "Issues") or [Aris Studio Discussions](https://github.com/kiraio-moe/ArisStudio/discussions/categories/ideas-feedbacks-suggestions).
+- (contribution-guide)[https://as.dza.vin/#/contribution-guide]
+
+## Contributors
+
+<!-- readme: collaborators,contributors -start -->
+<!-- readme: collaborators,contributors -end -->
 
 ## Credits
 
