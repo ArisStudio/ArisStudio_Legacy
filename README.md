@@ -45,14 +45,14 @@
         <a href="https://github.com/kiraio-moe">
             <img src="https://avatars.githubusercontent.com/u/58289710?v=4" width="100;" alt="kiraio-moe"/>
             <br />
-            <sub><b>Bayu Satiyo</b></sub>
+            <sub><b>kiraio-moe</b></sub>
         </a>
     </td>
     <td align="center">
         <a href="https://github.com/Tualin14">
             <img src="https://avatars.githubusercontent.com/u/71857734?v=4" width="100;" alt="Tualin14"/>
             <br />
-            <sub><b>Dzaaaaaa</b></sub>
+            <sub><b>Tualin14</b></sub>
         </a>
     </td></tr>
 </table>
