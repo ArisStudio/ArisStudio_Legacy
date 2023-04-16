@@ -27,7 +27,7 @@ namespace ArisStudio.AsGameObject
         private SettingsManager settingsManager;
         private DebugConsole debugConsole;
 
-        private const float BehaviourDuration = 1f;
+        private const float BehaviourDuration = 0.5f;
 
         private const int DefaultTrackIndex = 1;
 
@@ -77,9 +77,9 @@ namespace ArisStudio.AsGameObject
         private IEnumerator CreateSpineAsCharacter(string nameId, float scale, string idle, string sprName, string[] imgList,
             bool isCommunication)
         {
-            var sprCharBaseClone = Instantiate(asCharacterBase);
+            var sprCharBaseClone = Instantiate(asCharacterBase, asCharacterBase.transform.parent, true);
             sprCharBaseClone.name = nameId;
-            var sprCharGo = sprCharBaseClone.transform.Find("SprCharacter").gameObject;
+            var sprCharGo = sprCharBaseClone.transform.Find("AsCharacter").gameObject;
 
             var sprPath = Path.Combine(settingsManager.currentSprPath, sprName);
             var atlasPath = $"{sprPath}.atlas";
@@ -155,7 +155,7 @@ namespace ArisStudio.AsGameObject
 
             characterList.Add(nameId, asChar);
 
-            debugConsole.PrintLoadLog($"{(isCommunication ? "spr" : "spr_c")}", sprName, nameId);
+            debugConsole.PrintLoadLog($"{(isCommunication ? "spr_c" : "spr")}", sprName, nameId);
         }
 
         #endregion
@@ -199,13 +199,21 @@ namespace ArisStudio.AsGameObject
 
                 case "hl":
                 case "highlight":
-                    characterList[asCharCommand[1]].Highlight(float.Parse(asCharCommand[3]));
+                    characterList[asCharCommand[1]].Highlight(
+                        float.Parse(asCharCommand[3]),
+                        ArrayHelper.IsIndexInRange(asCharCommand, 4) ? float.Parse(asCharCommand[4]) : 0
+                    );
+                    break;
+
+                case "fade":
+                    // TODO: character fade
                     break;
 
                 case "state":
                     characterList[asCharCommand[1]].State(
                         asCharCommand[3],
-                        ArrayHelper.IsIndexInRange(asCharCommand, 4) ? int.Parse(asCharCommand[4]) : DefaultTrackIndex
+                        ArrayHelper.IsIndexInRange(asCharCommand, 4) ? int.Parse(asCharCommand[4]) : DefaultTrackIndex,
+                        !ArrayHelper.IsIndexInRange(asCharCommand, 5) || bool.Parse(asCharCommand[5])
                     );
                     break;
                 case "skin":
@@ -231,6 +239,7 @@ namespace ArisStudio.AsGameObject
                 case "z":
                     characterList[asCharCommand[1]].Z(float.Parse(asCharCommand[3]));
                     break;
+                case "p":
                 case "pos":
                 case "position":
                     characterList[asCharCommand[1]].Position(float.Parse(asCharCommand[3]), float.Parse(asCharCommand[4]));
@@ -289,7 +298,7 @@ namespace ArisStudio.AsGameObject
                 case "scale":
                     characterList[asCharCommand[1]].Scale(
                         float.Parse(asCharCommand[3]),
-                        ArrayHelper.IsIndexInRange(asCharCommand, 4) ? float.Parse(asCharCommand[4]) : BehaviourDuration
+                        ArrayHelper.IsIndexInRange(asCharCommand, 4) ? float.Parse(asCharCommand[4]) : 0
                     );
 
                     break;

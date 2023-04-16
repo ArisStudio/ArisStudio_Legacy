@@ -18,10 +18,12 @@ namespace ArisStudio.AsGameObject.Audio
             return asAudio;
         }
 
-        public void AsAudioInit(AudioClip ac, bool loop)
+        public void AsAudioInit(AudioClip ac, string acName, bool loop)
         {
             audioSource = GetComponent<AudioSource>();
+            audioSource.playOnAwake = false;
             audioSource.clip = ac;
+            audioSource.clip.name = acName;
             audioSource.loop = loop;
             audioSource.Stop();
         }

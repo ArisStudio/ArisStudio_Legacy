@@ -1,0 +1,24 @@
+load bgm bgm4 Theme_04.ogg
+load bgm bgm64 Theme_64.ogg
+
+load sfx v UI_Victory_ST_01.wav
+load sfx w UI_WeaponGet.wav
+
+
+bgm4 play
+===
+
+bgm64 play
+===
+
+bgm4 stop
+===
+
+bgm64 fade
+===
+
+v play
+===
+
+w play
+===

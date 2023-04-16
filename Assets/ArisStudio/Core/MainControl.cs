@@ -62,7 +62,7 @@ namespace ArisStudio.Core
 
         // List
         private readonly Dictionary<string, int> targetList = new Dictionary<string, int>();
-        Dictionary<string, string> nameIdList = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> nameIdList = new Dictionary<string, string>();
 
         void Awake()
         {
@@ -72,6 +72,9 @@ namespace ArisStudio.Core
             screenEffectFactory = FindObjectOfType<ScreenEffectFactory>();
 
             end = FindObjectOfType<End>();
+
+            asCharacterManager = FindObjectOfType<AsCharacterManager>();
+            asAudioManager = FindObjectOfType<AsAudioManager>();
         }
 
         void Update()
@@ -236,6 +239,10 @@ namespace ArisStudio.Core
             autoTimer = 0;
             runLineNumber = 0;
 
+
+            asCharacterManager.AsCharacterInit();
+            asAudioManager.AsAudioInit();
+
             DebugConsole.Instance.PrintLog("\n<#ffa500>Initialize</color>");
         }
 
@@ -312,12 +319,12 @@ namespace ArisStudio.Core
             {
                 case "spr":
                     asCharacterManager.LoadAsCharacter(command, false);
-                    nameIdList.Add("char", command[3]);
+                    nameIdList.Add(command[2], "char");
                     break;
                 case "sprc":
                 case "spr_c":
                     asCharacterManager.LoadAsCharacter(command, true);
-                    nameIdList.Add("char", command[3]);
+                    nameIdList.Add(command[2], "char");
                     break;
 
                 case "bg":
@@ -327,11 +334,11 @@ namespace ArisStudio.Core
 
                 case "bgm":
                     asAudioManager.LoadAsAudio(command, "bgm");
-                    nameIdList.Add("bgm", command[3]);
+                    nameIdList.Add(command[2], "bgm");
                     break;
                 case "sfx":
                     asAudioManager.LoadAsAudio(command, "sfx");
-                    nameIdList.Add("sfx", command[3]);
+                    nameIdList.Add(command[2], "sfx");
                     break;
             }
         }
@@ -361,16 +368,19 @@ namespace ArisStudio.Core
 
         public void ComandManager(string text)
         {
+            if (text.Trim() == string.Empty || text.StartsWith("//") || text.StartsWith("load")) return;
+
+            if (text.StartsWith("="))
+            {
+                isPlaying = false;
+                return;
+            }
+
             while (true)
             {
-                if (text == string.Empty || text.StartsWith("//")) return;
-
-                if (text.StartsWith("="))
-                {
-                    isPlaying = false;
-                    return;
-                }
-
+#if UNITY_EDITOR
+                Debug.Log($"Command: {text}");
+#endif
                 var command = ParseCommand(text);
 
                 switch (command[0])
@@ -421,6 +431,7 @@ namespace ArisStudio.Core
                     // audio commands
                     case "bgm":
                     case "sfx":
+                    case "audio":
                         asAudioManager.AsAudioCommand(command);
                         break;
 
@@ -435,7 +446,7 @@ namespace ArisStudio.Core
                         break;
 
                     default:
-                        text = $"char {text}";
+                        text = $"{nameIdList[command[0]]} {text}";
                         continue;
                 }
 

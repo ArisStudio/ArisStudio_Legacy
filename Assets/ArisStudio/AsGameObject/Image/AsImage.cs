@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 
 namespace ArisStudio.AsGameObject.Image
 {
@@ -24,17 +25,8 @@ namespace ArisStudio.AsGameObject.Image
             gameObject.SetActive(false);
         }
 
-        public void Highlight(float hl)
-        {
-            throw new System.NotImplementedException();
-        }
 
         public void Highlight(float hl, float time)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Fade(float alpha)
         {
             throw new System.NotImplementedException();
         }
@@ -46,62 +38,57 @@ namespace ArisStudio.AsGameObject.Image
 
         public void X(float x)
         {
-            throw new System.NotImplementedException();
+            transform.localPosition += Vector3.right * x;
         }
 
         public void Y(float y)
         {
-            throw new System.NotImplementedException();
+            transform.localPosition += Vector3.up * y;
         }
 
         public void Z(float z)
         {
-            throw new System.NotImplementedException();
+            transform.localPosition += Vector3.forward * z;
         }
 
         public void Position(float x, float y)
         {
-            throw new System.NotImplementedException();
+            transform.localPosition = new Vector3(x, y, transform.localPosition.z);
         }
 
         public void MoveX(float x, float time)
         {
-            throw new System.NotImplementedException();
+            transform.DOMoveX(x, time);
         }
 
         public void MoveY(float y, float time)
         {
-            throw new System.NotImplementedException();
+            transform.DOMoveY(y, time);
         }
 
         public void MovePosition(float x, float y, float time)
         {
-            throw new System.NotImplementedException();
+            transform.DOMove(new Vector3(x, y, transform.localPosition.z), time);
         }
 
         public void Shake(float strength, float time)
         {
-            throw new System.NotImplementedException();
+            transform.DOShakePosition(time, strength);
         }
 
         public void ShakeX(float strength, float time)
         {
-            throw new System.NotImplementedException();
+            transform.DOShakePosition(time, Vector3.right * strength);
         }
 
         public void ShakeY(float strength, float time)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public void Scale(float scale)
-        {
-            throw new System.NotImplementedException();
+            transform.DOShakePosition(time, Vector3.down * strength);
         }
 
         public void Scale(float scale, float time)
         {
-            throw new System.NotImplementedException();
+            transform.DOScale(new Vector3(scale, scale, 1), time);
         }
     }
 }

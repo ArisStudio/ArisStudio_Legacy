@@ -265,7 +265,11 @@ namespace ArisStudio.Core
         private void InitializeDefaultLocalDataPath()
         {
             // Initialize current Data path from default Data path if exist
+#if UNITY_EDITOR
+            var defaultLocalDataPath = Path.Combine(Directory.GetParent(GetRootPath())!.ToString(), DefaultDataDirectoryName);
+#else
             var defaultLocalDataPath = Path.Combine(GetRootPath(), DefaultDataDirectoryName);
+#endif
 
             if (Directory.Exists(defaultLocalDataPath))
             {

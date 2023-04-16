@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace ArisStudio.AsGameObject.Image
+﻿namespace ArisStudio.AsGameObject.Image
 {
     public interface IAsImageState
     {
@@ -12,11 +10,7 @@ namespace ArisStudio.AsGameObject.Image
 
         void Disappear();
 
-        void Highlight(float hl);
-
         void Highlight(float hl, float time);
-
-        void Fade(float alpha);
 
         void Fade(float alpha, float time);
     }

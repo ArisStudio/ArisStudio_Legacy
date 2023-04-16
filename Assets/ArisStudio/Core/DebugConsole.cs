@@ -60,7 +60,7 @@ namespace ArisStudio.Core
 
         public void PrintLoadLog(string type, string fileName, string nameId)
         {
-            PrintLog($"Load <#ff0080>{type}/color>: <#8000ff>{fileName}</color> as <#00ff00>{nameId}</color>");
+            PrintLog($"Load <#ff0080>{type}</color>: <#8000ff>{fileName}</color> as <#00ff00>{nameId}</color>");
         }
 
         /// <summary>

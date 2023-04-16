@@ -12,7 +12,9 @@
 
         void Highlight(float hl, float time);
 
-        void State(string stateName, int trackIndex);
+        void Fade(float alpha, float time);
+
+        void State(string stateName, int trackIndex, bool loop);
 
         void Skin(string skinName);
 

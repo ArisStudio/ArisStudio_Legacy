@@ -13,10 +13,11 @@ namespace ArisStudio.AsGameObject.Character
         private MeshRenderer md;
 
         private string materialType;
+        private float highlightValue;
 
         public bool IsCommunication { get; private set; }
 
-        private static readonly int FillPhase = Shader.PropertyToID("_FillPhase");
+        private static readonly int HighlightMat = Shader.PropertyToID("_Highlight");
 
 
         public static AsCharacter GetAsCharacter(GameObject go)
@@ -32,10 +33,10 @@ namespace ArisStudio.AsGameObject.Character
 
         public void AsCharacterInit(bool isCommunication)
         {
-            StateInit();
-            MovementInit();
             asCharacterBaseTf = transform.parent.gameObject.transform;
             IsCommunication = isCommunication;
+            StateInit();
+            MovementInit();
         }
 
         // Character State
@@ -44,18 +45,26 @@ namespace ArisStudio.AsGameObject.Character
         {
             sa = GetComponent<SkeletonAnimation>();
             md = GetComponent<MeshRenderer>();
+            mpb = new MaterialPropertyBlock();
             Highlight(0);
             Disappear();
         }
 
         public void Show()
         {
-            throw new System.NotImplementedException();
+            highlightValue = 0;
+            Appear();
+            Highlight(1, 0.5f);
         }
 
         public void Hide()
         {
-            throw new System.NotImplementedException();
+            DOVirtual.Float(highlightValue, 0, 0.5f, value =>
+            {
+                mpb.SetFloat(HighlightMat, value);
+                md.SetPropertyBlock(mpb);
+            }).onComplete += Disappear;
+            highlightValue = 0;
         }
 
         public void Appear()
@@ -70,19 +79,27 @@ namespace ArisStudio.AsGameObject.Character
 
         public void Highlight(float hl)
         {
-            mpb = new MaterialPropertyBlock();
-            mpb.SetFloat(FillPhase, 1 - hl);
-            md.SetPropertyBlock(mpb);
+            Highlight(hl, 0);
         }
 
         public void Highlight(float hl, float time)
         {
+            DOVirtual.Float(highlightValue, hl, time, value =>
+            {
+                mpb.SetFloat(HighlightMat, value);
+                md.SetPropertyBlock(mpb);
+            });
+            highlightValue = hl;
+        }
+
+        public void Fade(float alpha, float time)
+        {
             throw new System.NotImplementedException();
         }
 
-        public void State(string stateName,int trackIndex)
+        public void State(string stateName, int trackIndex, bool loop)
         {
-            sa.AnimationState.SetAnimation(trackIndex, stateName, true);
+            sa.AnimationState.SetAnimation(trackIndex, stateName, loop);
         }
 
         public void Skin(string skinName)
@@ -157,11 +174,6 @@ namespace ArisStudio.AsGameObject.Character
         public void ShakeY(float strength, float time)
         {
             asCharacterBaseTf.DOShakePosition(time, Vector3.down * strength);
-        }
-
-        public void Scale(float scale)
-        {
-            asCharacterBaseTf.localScale = new Vector3(scale, scale, 1);
         }
 
         public void Scale(float scale, float time)

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using ArisStudio.AsGameObject.Audio;
 using ArisStudio.Core;
 using ArisStudio.Utils;
@@ -51,7 +52,7 @@ namespace ArisStudio.AsGameObject
 
         private static AudioType SelectAudioType(string audioName)
         {
-            return audioName.Split('.')[-1] switch
+            return audioName.Split('.').Last() switch
             {
                 "wav" => AudioType.WAV,
                 // "mp3" => AudioType.MPEG,
@@ -87,8 +88,8 @@ namespace ArisStudio.AsGameObject
             UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(Path.Combine(audioPath, audioName), SelectAudioType(audioName));
             yield return www.SendWebRequest();
 
-            var asAudio = AsAudio.GetAsAudio(audioBase);
-            asAudio.AsAudioInit(DownloadHandlerAudioClip.GetContent(www), isLoop);
+            var asAudio = AsAudio.GetAsAudio(audioGo.gameObject);
+            asAudio.AsAudioInit(DownloadHandlerAudioClip.GetContent(www), nameId, isLoop);
 
             audioList.Add(nameId, asAudio);
 
@@ -118,8 +119,8 @@ namespace ArisStudio.AsGameObject
 
                 case "fade":
                     audioList[asAudioCommand[1]].Fade(
-                        ArrayHelper.IsIndexInRange(asAudioCommand, 2) ? float.Parse(asAudioCommand[2]) : FadeEndVolume,
-                        ArrayHelper.IsIndexInRange(asAudioCommand, 3) ? float.Parse(asAudioCommand[3]) : FadeDuration
+                        ArrayHelper.IsIndexInRange(asAudioCommand, 3) ? float.Parse(asAudioCommand[3]) : FadeEndVolume,
+                        ArrayHelper.IsIndexInRange(asAudioCommand, 4) ? float.Parse(asAudioCommand[4]) : FadeDuration
                     );
 
                     break;

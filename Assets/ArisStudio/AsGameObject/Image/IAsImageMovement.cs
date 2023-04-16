@@ -22,8 +22,6 @@
 
         void ShakeY(float strength, float time);
 
-        void Scale(float scale);
-
         void Scale(float scale, float time);
     }
 }

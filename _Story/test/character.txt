@@ -1,0 +1,100 @@
+load spr mm momoi_spr
+load sprc mmc momoi_spr
+load spr r rin_spr
+
+mmc appear
+===
+
+mmc disappear
+===
+
+r show
+===
+
+r skin S_01
+===
+
+r hide
+===
+
+mm show
+// 显示
+==
+
+mm hide
+// 消失
+===
+
+mm hl 1
+mm appear 
+// 直接出现
+===
+
+mm disappear 
+// 直接消失
+===
+
+mm show
+// 显示
+==
+
+mm hl 0.1 
+// 高亮 0.1
+===
+
+mm fade 1 
+// 渐变到高亮 1
+===
+
+
+// state
+// skin
+// emo
+// anim
+
+mm x 5 
+// x 坐标
+===
+
+mm y 3 
+// y 坐标
+===
+
+mm xm -5 
+// x 坐标移动
+===
+
+mm ym -3 
+// y 坐标移动
+===
+
+mm pos 5 3 
+// x y 坐标
+===
+
+mm pm 0 0 
+// x y 坐标移动
+===
+
+mm scale 1.5 
+// 缩放
+===
+
+mm scale 1 1.5 
+// 带时间缩放
+===
+
+mm close 
+// 靠近
+===
+
+mm back 
+// 远离
+===
+
+mm xs 0.2 
+// x 抖动
+===
+
+mm ys 0.2 
+// y 抖动
