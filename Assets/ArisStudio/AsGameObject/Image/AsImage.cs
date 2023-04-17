@@ -1,18 +1,51 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ArisStudio.AsGameObject.Image
 {
     public class AsImage : MonoBehaviour, IAsImageState, IAsImageMovement
     {
+        private RawImage rawImage;
+
+        private const float SHDuration = 0.5f;
+
+        public static AsImage GetAsImage(GameObject go)
+        {
+            var asImage = go.GetComponent<AsImage>();
+            if (asImage == null)
+            {
+                asImage = go.AddComponent<AsImage>();
+            }
+
+            return asImage;
+        }
+
+        public void AsImageInit(Texture2D tex)
+        {
+            rawImage = GetComponent<RawImage>();
+            rawImage.texture = tex;
+            StateInit();
+            MovementInit();
+        }
+
+        // Image State
+
+        private void StateInit()
+        {
+            Disappear();
+        }
+
         public void Show()
         {
-            throw new System.NotImplementedException();
+            rawImage.color = new Color(1, 1, 1, 0);
+            Appear();
+            Fade(1, SHDuration);
         }
 
         public void Hide()
         {
-            throw new System.NotImplementedException();
+            rawImage.DOFade(0, SHDuration).onComplete += Disappear;
         }
 
         public void Appear()
@@ -33,7 +66,15 @@ namespace ArisStudio.AsGameObject.Image
 
         public void Fade(float alpha, float time)
         {
-            throw new System.NotImplementedException();
+            rawImage.DOFade(alpha, time);
+        }
+
+        // Image Movement
+
+        private void MovementInit()
+        {
+            transform.localPosition = Vector3.zero;
+            transform.localScale = Vector3.one;
         }
 
         public void X(float x)

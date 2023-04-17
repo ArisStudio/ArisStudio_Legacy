@@ -33,6 +33,7 @@ namespace ArisStudio.Core
 
         private AsCharacterManager asCharacterManager;
         private AsAudioManager asAudioManager;
+        private AsImageManager asImageManager;
 
 
         SprFactory sprFactory;
@@ -73,8 +74,10 @@ namespace ArisStudio.Core
 
             end = FindObjectOfType<End>();
 
+
             asCharacterManager = FindObjectOfType<AsCharacterManager>();
             asAudioManager = FindObjectOfType<AsAudioManager>();
+            asImageManager = FindObjectOfType<AsImageManager>();
         }
 
         void Update()
@@ -242,6 +245,7 @@ namespace ArisStudio.Core
 
             asCharacterManager.AsCharacterInit();
             asAudioManager.AsAudioInit();
+            asImageManager.AsImageInit();
 
             DebugConsole.Instance.PrintLog("\n<#ffa500>Initialize</color>");
         }
@@ -328,17 +332,16 @@ namespace ArisStudio.Core
                     break;
 
                 case "bg":
-                case "si":
-                    imageFactory.Image_LoadCommand(command);
+                case "mg":
+                case "fg":
+                    asImageManager.LoadAsImage(command, command[1]);
+                    nameIdList.Add(command[2], "image");
                     break;
 
                 case "bgm":
-                    asAudioManager.LoadAsAudio(command, "bgm");
-                    nameIdList.Add(command[2], "bgm");
-                    break;
                 case "sfx":
-                    asAudioManager.LoadAsAudio(command, "sfx");
-                    nameIdList.Add(command[2], "sfx");
+                    asAudioManager.LoadAsAudio(command, command[1]);
+                    nameIdList.Add(command[2], "audio");
                     break;
             }
         }
@@ -424,7 +427,9 @@ namespace ArisStudio.Core
 
                     // image commands
                     case "bg":
-                    case "si":
+                    case "mg":
+                    case "fg":
+                    case "image":
                         imageFactory.ImageCommand(command);
                         break;
 

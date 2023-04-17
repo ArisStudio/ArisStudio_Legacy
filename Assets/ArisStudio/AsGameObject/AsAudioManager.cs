@@ -12,8 +12,8 @@ namespace ArisStudio.AsGameObject
 {
     public class AsAudioManager : MonoBehaviour
     {
-        [SerializeField] private GameObject asBgmBase;
-        [SerializeField] private GameObject asSfxBase;
+        [SerializeField] private GameObject asBgmListBase;
+        [SerializeField] private GameObject asSfxListBase;
 
         private SettingsManager settingsManager;
         private DebugConsole debugConsole;
@@ -42,12 +42,7 @@ namespace ArisStudio.AsGameObject
 
         public void LoadAsAudio(string[] asAudioLoadCommand, string audioType)
         {
-            LoadAudio(asAudioLoadCommand[2], asAudioLoadCommand[3], audioType);
-        }
-
-        private void LoadAudio(string nameId, string audioName, string audioType)
-        {
-            StartCoroutine(CreateAsAudio(nameId, audioName, audioType));
+            StartCoroutine(CreateAsAudio(asAudioLoadCommand[2], asAudioLoadCommand[3], audioType));
         }
 
         private static AudioType SelectAudioType(string audioName)
@@ -64,26 +59,25 @@ namespace ArisStudio.AsGameObject
         // ReSharper disable Unity.PerformanceAnalysis
         private IEnumerator CreateAsAudio(string nameId, string audioName, string audioType)
         {
-            GameObject audioBase;
+            GameObject audioListBase;
             string audioPath;
             bool isLoop;
 
             if (audioType == "sfx")
             {
-                audioBase = asSfxBase;
+                audioListBase = asSfxListBase;
                 audioPath = settingsManager.currentSFXPath;
                 isLoop = false;
             }
             else
             {
-                audioBase = asBgmBase;
+                audioListBase = asBgmListBase;
                 audioPath = settingsManager.currentBGMPath;
                 isLoop = true;
             }
 
-            var audioGo = new GameObject().AddComponent<AudioSource>();
-            audioGo.name = nameId;
-            audioGo.transform.SetParent(audioBase.transform);
+            var audioGo = new GameObject(nameId).AddComponent<AudioSource>();
+            audioGo.transform.SetParent(audioListBase.transform);
 
             UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(Path.Combine(audioPath, audioName), SelectAudioType(audioName));
             yield return www.SendWebRequest();

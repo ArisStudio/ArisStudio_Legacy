@@ -168,8 +168,8 @@ namespace ArisStudio.AsGameObject
 
                 if (asChar.IsCommunication) continue;
 
-                if (i == nameId) asChar.Highlight(0.5f);
-                else asChar.Highlight(0);
+                if (i == nameId) asChar.Highlight(0.5f, 0);
+                else asChar.Highlight(0, 0);
             }
         }
 
@@ -253,7 +253,6 @@ namespace ArisStudio.AsGameObject
                         float.Parse(asCharCommand[3]),
                         ArrayHelper.IsIndexInRange(asCharCommand, 4) ? float.Parse(asCharCommand[4]) : BehaviourDuration
                     );
-
                     break;
                 case "moveY": // legacy
                 case "ym":
@@ -262,7 +261,6 @@ namespace ArisStudio.AsGameObject
                         float.Parse(asCharCommand[3]),
                         ArrayHelper.IsIndexInRange(asCharCommand, 4) ? float.Parse(asCharCommand[4]) : BehaviourDuration
                     );
-
                     break;
                 case "pm":
                 case "move_pos":
@@ -272,7 +270,6 @@ namespace ArisStudio.AsGameObject
                         float.Parse(asCharCommand[4]),
                         ArrayHelper.IsIndexInRange(asCharCommand, 5) ? float.Parse(asCharCommand[5]) : BehaviourDuration
                     );
-
                     break;
 
                 case "shakeX": // legacy
@@ -282,9 +279,7 @@ namespace ArisStudio.AsGameObject
                         float.Parse(asCharCommand[3]),
                         ArrayHelper.IsIndexInRange(asCharCommand, 4) ? float.Parse(asCharCommand[4]) : BehaviourDuration
                     );
-
                     break;
-
                 case "shakeY": // legacy
                 case "ys":
                 case "shake_y":
@@ -300,7 +295,6 @@ namespace ArisStudio.AsGameObject
                         float.Parse(asCharCommand[3]),
                         ArrayHelper.IsIndexInRange(asCharCommand, 4) ? float.Parse(asCharCommand[4]) : 0
                     );
-
                     break;
 
                 case "close":
