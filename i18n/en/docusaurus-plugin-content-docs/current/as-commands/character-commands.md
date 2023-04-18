@@ -1,7 +1,11 @@
+---
+sidebar_position: 3
+---
+
 # character commands
 
-- Character commands are used to control character behavior.
-- This command can start with `char`,`spr`, and can be **omitted**, and directly start with nameId.
+- Character commands are used to control character behavior
+- This command can start with `char`, `spr`, and can be **omitted**, and directly start with nameId
 
 ## show/hide with gradient highlight
 
@@ -16,7 +20,7 @@ hihumi hide
 
 > `{nameId} appear/disappear`
 
-- The old command `showD`/`hideD` is still available, but not recommended.
+- The old command `showD`/`hideD` is still available, but not recommended
 
 ```txt
 hihumi appear
@@ -31,7 +35,7 @@ hihumi hideD
 
 > `{nameId} hl(highlight) {highlight} {time}`
 
-- time is the time of the highlight, in seconds. The default is `0` seconds.
+- time is the time of the highlight, in seconds. The default is `0` seconds
 
 ```txt
 hihumi hl 1
@@ -40,7 +44,7 @@ hihumi hl 0.5 1
 
 ## fade
 
-- keep the keyword, currently no effect.
+- keep the keyword, currently no effect
 
 ## state
 
@@ -104,8 +108,8 @@ hihumi pos -5 5
 
 > `{nameId} xm(move,move_x)/ym(move_y) {value} {time}`
 
-- time is the time of the move, in seconds. The default is `0.5` seconds.
-- The old command `moveX`/`moveY` is still available, but not recommended.
+- time is the time of the move, in seconds. The default is `0.5` seconds
+- The old command `moveX`/`moveY` is still available, but not recommended
 
 ```txt
 hihumi xm/ym 5
@@ -119,7 +123,7 @@ hihumi moveX/moveY 5
 
 > `{nameId} pm(move_pos,move_position) {x} {y} {time}`
 
-- time is the time of the move, in seconds. The default is `0.5` seconds.
+- time is the time of the move, in seconds. The default is `0.5` seconds
 
 ```txt
 hihumi pm 5 5
@@ -132,9 +136,9 @@ hihumi pm 5 5 1
 
 > `{nameId} xs(shake_x)/ys(shake_y) {strength} {time}`
 
-- strength is the strength of the shake.
-- time is the time of the shake, in seconds. The default is `0.5` seconds.
-- The old command `shakeX`/`shakeY` is still available, but not recommended.
+- strength is the strength of the shake
+- time is the time of the shake, in seconds. The default is `0.5` seconds
+- The old command `shakeX`/`shakeY` is still available, but not recommended
 
 ```txt
 hihumi xs/ys 0.2
@@ -148,8 +152,8 @@ hihumi shakeX/shakeY 0.2
 
 > `{nameId} shake {strength} {time}`
 
-- strength is the strength of the shake.
-- time is the time of the shake, in seconds. The default is `0.5` seconds.
+- strength is the strength of the shake
+- time is the time of the shake, in seconds. The default is `0.5` seconds
 
 ```txt
 hihumi shake 0.2
@@ -162,8 +166,8 @@ hihumi shake 0.2 1
 
 > `{nameId} scale {value} {time}`
 
-- value is the scale value.
-- time is the scale time, in seconds. The default is `0` seconds.
+- value is the scale value
+- time is the scale time, in seconds. The default is `0` seconds
 
 ```txt
 hihumi scale 0.5

@@ -1,10 +1,14 @@
+---
+sidebar_position: 2
+---
+
 # 图片命令 | image commands
 
-- 图片命令用于控制图片行为。
+- 图片命令用于控制图片行为
 
 ## 背景图片命令 | background image commands
 
-- 建议背景图片大小：`1280 x 900`，与游戏背景图片大小一致。
+- 建议背景图片大小：`1280 x 900`，与游戏背景图片大小一致
 
 ### 带有渐变效果的显示图片 | show image with gradient effect
 

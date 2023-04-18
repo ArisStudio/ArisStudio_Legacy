@@ -9,11 +9,11 @@ load bgm 背景音乐 Theme_04.ogg
 
 load end
 
-bg set 教室
+教室 show
 banner '新产品'
 
 label '三一学院教室'
-bgm set 背景音乐
+背景音乐 play
 
 日步美 show
 日步美 emo Action
