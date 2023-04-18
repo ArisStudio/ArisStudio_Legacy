@@ -147,7 +147,7 @@ const config = {
       "@easyops-cn/docusaurus-search-local",
       /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
       ({
-        indexDocs: false,
+        indexBlog: false,
         hashed: true,
         language: ["zh", "en"],
         highlightSearchTermsOnTargetPage: true,
