@@ -30,6 +30,16 @@ const config = {
   i18n: {
     defaultLocale: "zh-cn",
     locales: ["zh-cn", "en"],
+    localeConfigs: {
+      "zh-cn": {
+        label: "简体中文",
+        htmlLang: "zh-CN",
+      },
+      en: {
+        label: "English",
+        htmlLang: "en-US",
+      },
+    },
   },
 
   presets: [
@@ -41,7 +51,8 @@ const config = {
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl: "https://github.com/Tualin14/ArisStudio/tree/documentation/0.3",
+          editUrl:
+            "https://github.com/Tualin14/ArisStudio/tree/documentation/0.3",
         },
         blog: false,
         theme: {
@@ -68,6 +79,10 @@ const config = {
             sidebarId: "tutorialSidebar",
             position: "left",
             label: "Docs",
+          },
+          {
+            type: "localeDropdown",
+            position: "right",
           },
           {
             href: "https://github.com/Tualin14/ArisStudio/",
@@ -126,6 +141,20 @@ const config = {
         darkTheme: darkCodeTheme,
       },
     }),
+
+  themes: [
+    [
+      "@easyops-cn/docusaurus-search-local",
+      /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
+      ({
+        indexDocs: false,
+        hashed: true,
+        language: ["zh", "en"],
+        highlightSearchTermsOnTargetPage: true,
+        explicitSearchResultPath: true,
+      }),
+    ],
+  ],
 };
 
 module.exports = config;
