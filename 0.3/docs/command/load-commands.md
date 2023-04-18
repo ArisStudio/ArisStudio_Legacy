@@ -41,7 +41,7 @@ load spr anyone 1 Idle_01 anyone_spr anyone_spr.png,anyone_spr2.png
 load spr_c anyone 1 Idle_01 anyone_spr anyone_spr.png,anyone_spr2.png
 ```
 
-## 加载 前景/中景/背景图片 | load foreground/midground/background image
+## 加载 前景/中景/背景 图片 | load foreground/midground/background image
 
 > `load fg/mg/bg {nameId} {bgName}`
 

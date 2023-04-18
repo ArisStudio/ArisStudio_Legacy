@@ -1,131 +1,50 @@
 # 角色命令 | character commands
 
 - 角色命令用于控制角色行为。
-- 此命令可以 `char`/`spr` 开头，也可**省略**，及直接以 nameId 开头。
+- 此命令可以 `char`,`spr` 开头，也可**省略**，及直接以 nameId 开头。
 
-## 带有线性渐变效果的显示角色 | show character with fade effect
+## 带有渐变高亮的 显示/隐藏 | show/hide with gradient highlight
 
-- 高亮从 0 线性渐变到 1。
-
-> `{nameId} show`
+> `{nameId} show/hide`
 
 ```txt
 日步美 show
-```
-
-## 带有线性渐变效果的隐藏角色 | hide character with fade effect
-
-- 高亮从 1 线性渐变到 0。
-
-> `{nameId} hide`
-
-```txt
 日步美 hide
 ```
 
-## 角色直接出现 | show character appear directly
+## 直接 出现/消失 | appear/disappear directly
 
-> `{nameId} appear`
+> `{nameId} appear/disappear`
+
+- 旧命令 `showD`/`hideD` 仍然可用，但不推荐使用。
 
 ```txt
 日步美 appear
-```
-
-## 角色直接消失 | hide character disappear directly
-
-> `{nameId} disappear`
-
-```txt
 日步美 disappear
+
+// legacy
+日步美 showD
+日步美 hideD
 ```
 
-## 设置角色高亮 | set character highlight
+## 高亮 | highlight
 
-> `{nameId} hl/highlight {highlight}`
+> `{nameId} hl(highlight) {highlight} {time}`
+
+- time 为渐变时间，单位为秒。默认为 0 秒。
 
 ```txt
 日步美 hl 1
+日步美 hl 0.5 1
 ```
 
-## 设置角色线性渐变到指定高亮 | set character linearly to specified highlight
+## 透明度变化 | fade
 
-- time 为渐变时间，单位为秒。
+- 保留关键字，目前无效果。
 
-> `{nameId} hl/highlight {highlight} linear {time}`
+## 状态 | state
 
-```txt
-日步美 hl 1 linear 1
-```
-
-- time 可以省略，默认为 0.5 秒。
-
-```txt
-日步美 hl 1 linear
-```
-
-## 设置角色位置 | set character position
-
-> `{nameId} pos/position {x} {y}`
-
-```txt
-日步美 pos 0 0
-```
-
-## 设置角色移动到指定位置 | set character move to specified position
-
-- time 为移动时间，单位为秒。
-
-> `{nameId} move {x} {y} {time}`
-
-```txt
-日步美 move 0 0 1
-```
-
-- time 可以省略，默认为 0.5 秒。
-
-```txt
-日步美 move 0 0
-```
-
-## 设置角色 z 轴 | set character z-axis
-
-> `{nameId} z {z}`
-
-```txt
-日步美 z 1
-```
-
-## 设置角色抖动 | set character shake
-
-- 待定
-
-## 设置角色缩放 | set character scale
-
-> `{nameId} scale {scale}`
-
-```txt
-日步美 scale 1.5
-```
-
-## 设置角色靠近 | set character close
-
-> `{nameId} close`
-
-```txt
-日步美 close
-```
-
-## 设置角色远离 | set character back
-
-> `{nameId} back`
-
-```txt
-日步美 back
-```
-
-## 设置角色状态 | set character state
-
-- 状态预览：[如何预览角色状态](/how-to-preview-character-state.md)
+- 状态预览：如何预览角色状态
 
 > `{nameId} state {state}`
 
@@ -133,9 +52,19 @@
 日步美 state 03
 ```
 
-## 设置角色表情 | set character emotion
+## 皮肤 | skin
 
-- 表情预览：[表情列表](/emotion-list.md)
+- 皮肤预览：如何预览角色皮肤
+
+> `{nameId} skin {skin}`
+
+```txt
+日步美 skin idle
+```
+
+## 表情 | emotion
+
+- 表情预览：[表情列表](/docs/preview/emotion-list)
 
 > `{nameId} emo/emotion {emotion}`
 
@@ -149,4 +78,103 @@
 
 ```txt
 日步美 anim down
+```
+
+## 位置 | position
+
+### 单独设置 x/y/z 坐标 | set x/y/z coordinate separately
+
+> `{nameId} x/y/z {value}`
+
+```txt
+日步美 x/y/z 5
+```
+
+### 设置 x/y 坐标 | set x/y coordinate
+
+> `{nameId} p(pos,position) {x} {y}`
+
+```txt
+日步美 pos -5 5
+```
+
+## 移动 | character move
+
+### x/y 轴移动 | move on x/y axis
+
+> `{nameId} xm(move,move_x)/ym(move_y) {value} {time}`
+
+- time 为移动时间，单位为秒。默认为 0.5 秒。
+- 旧命令 `moveX`/`moveY` 仍然可用，但不推荐使用。
+
+```txt
+日步美 xm/ym 5
+日步美 xm/ym 5 1
+
+// legacy
+日步美 moveX/moveY 5
+```
+
+### 在 x 和 y 轴移动 | move on x and y axis
+
+> `{nameId} pm(move_pos,move_position) {x} {y} {time}`
+
+- time 为移动时间，单位为秒。默认为 0.5 秒。
+
+```txt
+日步美 pm 5 5
+日步美 pm 5 5 1
+```
+
+## 抖动 | shake
+
+### x/y 轴抖动 | shake on x/y axis
+
+> `{nameId} xs(shake_x)/ys(shake_y) {strength} {time}`
+
+- strength 为抖动强度。
+- time 为抖动时间，单位为秒。默认为 0.5 秒。
+- 旧命令 `shakeX`/`shakeY` 仍然可用，但不推荐使用。
+
+```txt
+日步美 xs/ys 0.2
+日步美 xs/ys 0.2 1
+
+// legacy
+日步美 shakeX/shakeY 0.2
+```
+
+### 随机方向抖动 | shake randomly
+
+> `{nameId} shake {strength} {time}`
+
+- strength 为抖动强度。
+- time 为抖动时间，单位为秒。默认为 0.5 秒。
+
+```txt
+日步美 shake 0.2
+日步美 shake 0.2 1
+```
+
+## 缩放 | scale
+
+### 在 x 和 y 轴同时缩放 | scale on x and y axis
+
+> `{nameId} scale {value} {time}`
+
+- value 为缩放值。
+- time 为缩放时间，单位为秒。默认为 0 秒。
+
+```txt
+日步美 scale 0.5
+日步美 scale 0.5 1
+```
+
+### 常用缩放 靠近/返回 | common scale close/back
+
+> `{nameId} close/back`
+
+```txt
+日步美 close
+日步美 back
 ```

@@ -41,7 +41,7 @@ const config = {
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl: "https://github.com/Tualin14/ArisStudio/tree/documentation",
+          editUrl: "https://github.com/Tualin14/ArisStudio/tree/documentation/0.3",
         },
         blog: false,
         theme: {
