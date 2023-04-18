@@ -68,7 +68,7 @@ hihumi skin idle
 
 ## emotion
 
-- emotion preview: [emotion list](/docs/preview/emotion-list)
+- emotion preview: [emotion list](/docs/reference/emotion-list)
 
 > `{nameId} emo/emotion {emotion}`
 

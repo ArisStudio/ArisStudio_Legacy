@@ -68,7 +68,7 @@ sidebar_position: 3
 
 ## 表情
 
-- 表情预览：[表情列表](/docs/preview/emotion-list)
+- 表情预览：[表情列表](/docs/reference/emotion-list)
 
 > `{nameId} emo/emotion {emotion}`
 

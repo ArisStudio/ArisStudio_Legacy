@@ -1,4 +1,8 @@
-# Emotion List
+---
+sidebar_position: 2
+---
+
+# emotion list
 
 1. Action <img src="/img/emo/Action.png" width="40"/>
 

@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # 目前已有 emo 表情
 
 1. Action <img src="/img/emo/Action.png" width="40"/>
