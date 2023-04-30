@@ -48,7 +48,7 @@ namespace ArisStudio.UI
         private void Start()
         {
             InitializeDisplaySettings();
-            InitializeAudioSettings();
+            // InitializeAudioSettings();
             InitializeDataSettings();
         }
 
@@ -128,30 +128,30 @@ namespace ArisStudio.UI
 
         #region Audio Settings
 
-        void InitializeAudioSettings()
-        {
-            ChangeBGMVolume();
-            ChangeSFXVolume();
-            ChangeVoiceVolume();
-        }
-
-        public void ChangeBGMVolume()
-        {
-            settingsManager.currentBGMVolume = m_BGMVolumeSlider.normalizedValue;
-            settingsManager.SetAudioVolume(m_BGMAudioSource, m_BGMVolumeText, settingsManager.currentBGMVolume);
-        }
-
-        public void ChangeSFXVolume()
-        {
-            settingsManager.currentSFXVolume = m_SFXVolumeSlider.normalizedValue;
-            settingsManager.SetAudioVolume(m_SFXAudioSource, m_SFXVolumeText, settingsManager.currentSFXVolume);
-        }
-
-        public void ChangeVoiceVolume()
-        {
-            settingsManager.currentVoiceVolume = m_VoiceVolumeSlider.normalizedValue;
-            settingsManager.SetAudioVolume(m_VoiceAudioSource, m_VoiceVolumeText, settingsManager.currentVoiceVolume);
-        }
+        // void InitializeAudioSettings()
+        // {
+        //     ChangeBGMVolume();
+        //     ChangeSFXVolume();
+        //     ChangeVoiceVolume();
+        // }
+        //
+        // public void ChangeBGMVolume()
+        // {
+        //     settingsManager.currentBGMVolume = m_BGMVolumeSlider.normalizedValue;
+        //     settingsManager.SetAudioVolume(m_BGMAudioSource, m_BGMVolumeText, settingsManager.currentBGMVolume);
+        // }
+        //
+        // public void ChangeSFXVolume()
+        // {
+        //     settingsManager.currentSFXVolume = m_SFXVolumeSlider.normalizedValue;
+        //     settingsManager.SetAudioVolume(m_SFXAudioSource, m_SFXVolumeText, settingsManager.currentSFXVolume);
+        // }
+        //
+        // public void ChangeVoiceVolume()
+        // {
+        //     settingsManager.currentVoiceVolume = m_VoiceVolumeSlider.normalizedValue;
+        //     settingsManager.SetAudioVolume(m_VoiceAudioSource, m_VoiceVolumeText, settingsManager.currentVoiceVolume);
+        // }
 
         #endregion
 

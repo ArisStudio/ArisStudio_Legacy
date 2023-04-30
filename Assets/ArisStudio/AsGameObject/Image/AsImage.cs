@@ -8,15 +8,12 @@ namespace ArisStudio.AsGameObject.Image
     {
         private RawImage rawImage;
 
-        private const float SHDuration = 0.5f;
+        private const float ShowHideDuration = 0.5f;
 
         public static AsImage GetAsImage(GameObject go)
         {
             var asImage = go.GetComponent<AsImage>();
-            if (asImage == null)
-            {
-                asImage = go.AddComponent<AsImage>();
-            }
+            if (asImage == null) asImage = go.AddComponent<AsImage>();
 
             return asImage;
         }
@@ -40,12 +37,12 @@ namespace ArisStudio.AsGameObject.Image
         {
             rawImage.color = new Color(1, 1, 1, 0);
             Appear();
-            Fade(1, SHDuration);
+            Fade(1, ShowHideDuration);
         }
 
         public void Hide()
         {
-            rawImage.DOFade(0, SHDuration).onComplete += Disappear;
+            rawImage.DOFade(0, ShowHideDuration).onComplete += Disappear;
         }
 
         public void Appear()
@@ -112,19 +109,19 @@ namespace ArisStudio.AsGameObject.Image
             transform.DOMove(new Vector3(x, y, transform.localPosition.z), time);
         }
 
-        public void Shake(float strength, float time)
+        public void Shake(float strength, float time, int vibrato)
         {
-            transform.DOShakePosition(time, strength);
+            transform.DOShakePosition(time, strength, vibrato);
         }
 
-        public void ShakeX(float strength, float time)
+        public void ShakeX(float strength, float time, int vibrato)
         {
-            transform.DOShakePosition(time, Vector3.right * strength);
+            transform.DOShakePosition(time, Vector3.right * strength, vibrato);
         }
 
-        public void ShakeY(float strength, float time)
+        public void ShakeY(float strength, float time, int vibrato)
         {
-            transform.DOShakePosition(time, Vector3.down * strength);
+            transform.DOShakePosition(time, Vector3.down * strength, vibrato);
         }
 
         public void Scale(float scale, float time)

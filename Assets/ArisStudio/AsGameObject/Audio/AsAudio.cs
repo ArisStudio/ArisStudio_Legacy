@@ -10,10 +10,7 @@ namespace ArisStudio.AsGameObject.Audio
         public static AsAudio GetAsAudio(GameObject go)
         {
             var asAudio = go.GetComponent<AsAudio>();
-            if (asAudio == null)
-            {
-                asAudio = go.AddComponent<AsAudio>();
-            }
+            if (asAudio == null) asAudio = go.AddComponent<AsAudio>();
 
             return asAudio;
         }

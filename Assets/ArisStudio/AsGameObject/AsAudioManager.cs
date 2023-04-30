@@ -10,31 +10,20 @@ using UnityEngine.Networking;
 
 namespace ArisStudio.AsGameObject
 {
-    public class AsAudioManager : MonoBehaviour
+    public class AsAudioManager : Singleton<AsAudioManager>
     {
-        [SerializeField] private GameObject asBgmListBase;
-        [SerializeField] private GameObject asSfxListBase;
-
-        private SettingsManager settingsManager;
-        private DebugConsole debugConsole;
-
+        [SerializeField] private GameObject asBgmListBase, asSfxListBase;
         private readonly Dictionary<string, AsAudio> audioList = new Dictionary<string, AsAudio>();
 
         private const float FadeEndVolume = 0f;
         private const float FadeDuration = 1f;
-
-        private void Awake()
-        {
-            settingsManager = SettingsManager.Instance;
-            debugConsole = DebugConsole.Instance;
-        }
 
         public void AsAudioInit()
         {
             foreach (var i in audioList) Destroy(i.Value.gameObject);
             audioList.Clear();
 
-            debugConsole.PrintLog("AsAudioInit");
+            DebugConsole.Instance.PrintLog("AsAudioInit");
             // Todo: Init volume with setting menu
         }
 
@@ -66,13 +55,13 @@ namespace ArisStudio.AsGameObject
             if (audioType == "sfx")
             {
                 audioListBase = asSfxListBase;
-                audioPath = settingsManager.currentSFXPath;
+                audioPath = SettingsManager.Instance.currentSFXPath;
                 isLoop = false;
             }
             else
             {
                 audioListBase = asBgmListBase;
-                audioPath = settingsManager.currentBGMPath;
+                audioPath = SettingsManager.Instance.currentBGMPath;
                 isLoop = true;
             }
 
@@ -87,7 +76,7 @@ namespace ArisStudio.AsGameObject
 
             audioList.Add(nameId, asAudio);
 
-            debugConsole.PrintLoadLog(audioType, audioName, nameId);
+            DebugConsole.Instance.PrintLoadLog(audioType, audioName, nameId);
         }
 
         # endregion

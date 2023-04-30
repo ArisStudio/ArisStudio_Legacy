@@ -90,8 +90,6 @@ namespace ArisStudio.UI
 
         public void SetText(string sName, string sGroup, string sContent)
         {
-            MainControl.Instance.SetTyping(true);
-
             if (!gameObject.activeSelf)
             {
                 gameObject.SetActive(true);
@@ -129,7 +127,6 @@ namespace ArisStudio.UI
             br.SetActive(true);
             currentPos = 0;
             tContent.text = tmpContent;
-            MainControl.Instance.SetTyping(false);
         }
 
         public void TextCommand(string[] textCommand)

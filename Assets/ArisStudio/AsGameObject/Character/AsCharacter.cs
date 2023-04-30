@@ -26,10 +26,7 @@ namespace ArisStudio.AsGameObject.Character
         public static AsCharacter GetAsCharacter(GameObject go)
         {
             var asChar = go.GetComponent<AsCharacter>();
-            if (asChar == null)
-            {
-                asChar = go.AddComponent<AsCharacter>();
-            }
+            if (asChar == null) asChar = go.AddComponent<AsCharacter>();
 
             return asChar;
         }
@@ -51,8 +48,8 @@ namespace ArisStudio.AsGameObject.Character
             materialPropertyBlock = new MaterialPropertyBlock();
             Highlight(0, 0);
 
-            charAnimator = GetComponent<Animator>();
-            emoAnimator = transform.GetChild(0).GetComponent<Animator>();
+            // charAnimator = GetComponent<Animator>();
+            // emoAnimator = transform.GetChild(0).GetComponent<Animator>();
             Disappear();
         }
 
@@ -110,7 +107,7 @@ namespace ArisStudio.AsGameObject.Character
 
         public void Emotion(string emotionName)
         {
-            throw new System.NotImplementedException();
+            emoAnimator.Play(emotionName);
         }
 
         public void Animation(string animationName)
@@ -162,19 +159,19 @@ namespace ArisStudio.AsGameObject.Character
             asCharacterBaseTf.DOMove(new Vector3(x, y, asCharacterBaseTf.localPosition.z), time);
         }
 
-        public void Shake(float strength, float time)
+        public void Shake(float strength, float time, int vibrato)
         {
-            asCharacterBaseTf.DOShakePosition(time, strength);
+            asCharacterBaseTf.DOShakePosition(time, strength, vibrato);
         }
 
-        public void ShakeX(float strength, float time)
+        public void ShakeX(float strength, float time, int vibrato)
         {
-            asCharacterBaseTf.DOShakePosition(time, Vector3.right * strength);
+            asCharacterBaseTf.DOShakePosition(time, Vector3.right * strength, vibrato);
         }
 
-        public void ShakeY(float strength, float time)
+        public void ShakeY(float strength, float time, int vibrato)
         {
-            asCharacterBaseTf.DOShakePosition(time, Vector3.down * strength);
+            asCharacterBaseTf.DOShakePosition(time, Vector3.down * strength, vibrato);
         }
 
         public void Scale(float scale, float time)

@@ -9,6 +9,6 @@ load  bgm   anyBGM   Theme_64.ogg
 load   sfx   anySFX   SE_RetroSuccess_01.wav
 
 
-txt  'Arona'  "Arona" "I'm,   Arona." 'Say  ,  "Hello"' 'You\'re'
+txt  'Arona'  "Arona" "I'm,   Arona." 'Say  ,  "Hello"' 'You\'re' // this is comment
 
-txt  '中文'  "中文测试！" "这里中间'有'单引号" '下一步是： "编辑 src/main.rs"' '在  中，我们这样写： let a = "hello world"'
+txt  '中文'  "中文测试！" "这里中间'有'单引号" '下一步是： "编辑 src/main.rs"' '在  中，我们这样写： let a = "hello world"' // 这是注释

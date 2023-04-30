@@ -11,12 +11,9 @@ using UnityEngine.Networking;
 
 namespace ArisStudio.AsGameObject
 {
-    public class AsCharacterManager : MonoBehaviour
+    public class AsCharacterManager : Singleton<AsCharacterManager>
     {
-        [Header("AsCharacterBase")] [SerializeField]
-        private GameObject asCharacterBase;
-
-        [Space] [Header("Material")] [SerializeField]
+        [SerializeField] private GameObject asCharacterBase;
         private Material defaultMaterial, communicationMaterial;
 
         private const float SprScale = 0.0136f;
@@ -28,11 +25,15 @@ namespace ArisStudio.AsGameObject
         private DebugConsole debugConsole;
 
         private const float BehaviourDuration = 0.5f;
+        private const int DefaultVibrato = 6;
 
         private const int DefaultTrackIndex = 1;
 
-        private void Awake()
+        private void Start()
         {
+            defaultMaterial = Resources.Load<Material>("Materials/AsCharacter_Default");
+            communicationMaterial = Resources.Load<Material>("Materials/AsCharacter_Communication");
+
             settingsManager = SettingsManager.Instance;
             debugConsole = DebugConsole.Instance;
         }
@@ -277,7 +278,8 @@ namespace ArisStudio.AsGameObject
                 case "shake_x":
                     characterList[asCharCommand[1]].ShakeX(
                         float.Parse(asCharCommand[3]),
-                        ArrayHelper.IsIndexInRange(asCharCommand, 4) ? float.Parse(asCharCommand[4]) : BehaviourDuration
+                        ArrayHelper.IsIndexInRange(asCharCommand, 4) ? float.Parse(asCharCommand[4]) : BehaviourDuration,
+                        ArrayHelper.IsIndexInRange(asCharCommand, 5) ? int.Parse(asCharCommand[5]) : DefaultVibrato
                     );
                     break;
                 case "shakeY": // legacy
@@ -285,10 +287,17 @@ namespace ArisStudio.AsGameObject
                 case "shake_y":
                     characterList[asCharCommand[1]].ShakeY(
                         float.Parse(asCharCommand[3]),
-                        ArrayHelper.IsIndexInRange(asCharCommand, 4) ? float.Parse(asCharCommand[4]) : BehaviourDuration
+                        ArrayHelper.IsIndexInRange(asCharCommand, 4) ? float.Parse(asCharCommand[4]) : BehaviourDuration,
+                        ArrayHelper.IsIndexInRange(asCharCommand, 5) ? int.Parse(asCharCommand[5]) : DefaultVibrato
                     );
                     break;
-
+                case "shake":
+                    characterList[asCharCommand[1]].Shake(
+                        float.Parse(asCharCommand[3]),
+                        ArrayHelper.IsIndexInRange(asCharCommand, 4) ? float.Parse(asCharCommand[4]) : BehaviourDuration,
+                        ArrayHelper.IsIndexInRange(asCharCommand, 5) ? int.Parse(asCharCommand[5]) : DefaultVibrato
+                    );
+                    break;
 
                 case "scale":
                     characterList[asCharCommand[1]].Scale(

@@ -63,7 +63,6 @@ namespace ArisStudio.Core
         public string currentMidgroundPath { get; private set; }
 
         public string currentForegroundPath { get; private set; }
-        public string currentScenarioImagePath { get; private set; }
 
         private const string DefaultStoryDirectoryName = "_story";
 
@@ -82,8 +81,6 @@ namespace ArisStudio.Core
         private const string DefaultBackgroundDirectoryName = "background";
         private const string DefaultMidgroundDirectoryName = "midground";
         private const string DefaultForegroundDirectoryName = "foreground";
-
-        private const string DefaultScenarioImageDirectoryName = "scenario_image";
 
         #endregion
 
@@ -335,8 +332,6 @@ namespace ArisStudio.Core
             currentBackgroundPath = Path.Combine(currentImagePath, DefaultBackgroundDirectoryName);
             currentMidgroundPath = Path.Combine(currentImagePath, DefaultMidgroundDirectoryName);
             currentForegroundPath = Path.Combine(currentImagePath, DefaultForegroundDirectoryName);
-
-            currentScenarioImagePath = Path.Combine(currentImagePath, DefaultScenarioImageDirectoryName);
         }
 
         /// <summary>
@@ -357,8 +352,6 @@ namespace ArisStudio.Core
             CreateFolderIfNotExist(currentBackgroundPath);
             CreateFolderIfNotExist(currentMidgroundPath);
             CreateFolderIfNotExist(currentForegroundPath);
-
-            CreateFolderIfNotExist(currentScenarioImagePath);
         }
 
         /// <summary>

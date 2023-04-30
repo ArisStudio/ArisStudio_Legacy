@@ -10,31 +10,22 @@ using UnityEngine.UI;
 
 namespace ArisStudio.AsGameObject
 {
-    public class AsImageManager : MonoBehaviour
+    public class AsImageManager : Singleton<AsImageManager>
     {
-        [SerializeField] private GameObject foregroundListBase;
-        [SerializeField] private GameObject midgroundListBase;
-        [SerializeField] private GameObject backgroundListBase;
-
-        private SettingsManager settingsManager;
-        private DebugConsole debugConsole;
+        [SerializeField] private GameObject foregroundListBase, midgroundListBase, backgroundListBase, startBackgroundBase;
 
         private readonly Dictionary<string, AsImage> imageList = new Dictionary<string, AsImage>();
 
         private const float BehaviourDuration = 0.5f;
-
-        private void Awake()
-        {
-            settingsManager = SettingsManager.Instance;
-            debugConsole = DebugConsole.Instance;
-        }
+        private const int DefaultVibrato = 6;
 
         public void AsImageInit()
         {
+            startBackgroundBase.SetActive(false);
             foreach (var i in imageList) Destroy(i.Value.gameObject);
             imageList.Clear();
 
-            debugConsole.PrintLog("AsImageInit");
+            DebugConsole.Instance.PrintLog("AsImageInit");
         }
 
         # region Load Image
@@ -55,16 +46,16 @@ namespace ArisStudio.AsGameObject
                 case "fg":
                 case "foreground":
                     imageListBase = foregroundListBase;
-                    imagePath = settingsManager.currentForegroundPath;
+                    imagePath = SettingsManager.Instance.currentForegroundPath;
                     break;
                 case "md":
                 case "midground":
                     imageListBase = midgroundListBase;
-                    imagePath = settingsManager.currentMidgroundPath;
+                    imagePath = SettingsManager.Instance.currentMidgroundPath;
                     break;
                 default:
                     imageListBase = backgroundListBase;
-                    imagePath = settingsManager.currentBackgroundPath;
+                    imagePath = SettingsManager.Instance.currentBackgroundPath;
                     break;
             }
 
@@ -78,7 +69,7 @@ namespace ArisStudio.AsGameObject
             asImage.AsImageInit(DownloadHandlerTexture.GetContent(www));
             imageList.Add(nameId, asImage);
 
-            debugConsole.PrintLoadLog(imageType, nameId, imageName);
+            DebugConsole.Instance.PrintLoadLog(imageType, nameId, imageName);
         }
 
         # endregion
@@ -163,7 +154,8 @@ namespace ArisStudio.AsGameObject
                 case "shake_x":
                     imageList[asImageCommand[1]].ShakeX(
                         float.Parse(asImageCommand[3]),
-                        ArrayHelper.IsIndexInRange(asImageCommand, 4) ? float.Parse(asImageCommand[4]) : BehaviourDuration
+                        ArrayHelper.IsIndexInRange(asImageCommand, 4) ? float.Parse(asImageCommand[4]) : BehaviourDuration,
+                        ArrayHelper.IsIndexInRange(asImageCommand, 5) ? int.Parse(asImageCommand[5]) : DefaultVibrato
                     );
                     break;
                 case "shakeY": // legacy
@@ -171,7 +163,15 @@ namespace ArisStudio.AsGameObject
                 case "shake_y":
                     imageList[asImageCommand[1]].ShakeY(
                         float.Parse(asImageCommand[3]),
-                        ArrayHelper.IsIndexInRange(asImageCommand, 4) ? float.Parse(asImageCommand[4]) : BehaviourDuration
+                        ArrayHelper.IsIndexInRange(asImageCommand, 4) ? float.Parse(asImageCommand[4]) : BehaviourDuration,
+                        ArrayHelper.IsIndexInRange(asImageCommand, 5) ? int.Parse(asImageCommand[5]) : DefaultVibrato
+                    );
+                    break;
+                case "shake":
+                    imageList[asImageCommand[1]].Shake(
+                        float.Parse(asImageCommand[3]),
+                        ArrayHelper.IsIndexInRange(asImageCommand, 5) ? float.Parse(asImageCommand[4]) : BehaviourDuration,
+                        ArrayHelper.IsIndexInRange(asImageCommand, 6) ? int.Parse(asImageCommand[5]) : DefaultVibrato
                     );
                     break;
 

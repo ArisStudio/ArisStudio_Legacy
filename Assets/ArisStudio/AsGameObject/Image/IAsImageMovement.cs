@@ -16,11 +16,11 @@
 
         void MovePosition(float x, float y, float time);
 
-        void Shake(float strength, float time);
+        void Shake(float strength, float time, int vibrato);
 
-        void ShakeX(float strength, float time);
+        void ShakeX(float strength, float time, int vibrato);
 
-        void ShakeY(float strength, float time);
+        void ShakeY(float strength, float time, int vibrato);
 
         void Scale(float scale, float time);
     }

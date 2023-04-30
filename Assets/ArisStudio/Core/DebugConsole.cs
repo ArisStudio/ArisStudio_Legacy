@@ -63,6 +63,7 @@ namespace ArisStudio.Core
             PrintLog($"Load <#ff0080>{type}</color>: <#8000ff>{fileName}</color> as <#00ff00>{nameId}</color>");
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         /// <summary>
         /// Print message to Debug window.
         /// </summary>
@@ -73,6 +74,10 @@ namespace ArisStudio.Core
             string timePattern = @"HH:mm:ss";
 
             m_DebugText.text += $"[{timeNow.ToString(timePattern)}] {debugMessage}\n";
+
+// #if UNITY_EDITOR
+//             Debug.Log($"Command: {m_DebugText.text}");
+// #endif
         }
 
         /// <summary>
@@ -82,11 +87,10 @@ namespace ArisStudio.Core
         {
             m_ConsoleInputField.ActivateInputField();
             string command = m_ConsoleInputField.text.Trim();
-            if (command == string.Empty)
-                return;
+            if (command == string.Empty) return;
 
-            MainControl.Instance.PreLoadCommand(command);
-            MainControl.Instance.RunText(command);
+            // MainControl.Instance.PreLoadCommand(command);
+            // MainControl.Instance.RunText(command);
             PrintLog($"> <#00ffff><b>{command}</b></color>");
             m_ConsoleInputField.text = string.Empty;
         }
