@@ -2,136 +2,133 @@
 sidebar_position: 2
 ---
 
-# 图片命令 | image commands
+# 图片命令
 
 - 图片命令用于控制图片行为
+- 此命令可以 `bg`，`mg`, `fg`, `image` 开头，也可**省略**，及直接以 nameId 开头
 
-## 背景图片命令 | background image commands
+## 带有渐变高亮的 显示/隐藏
 
-- 建议背景图片大小：`1280 x 900`，与游戏背景图片大小一致
-
-### 带有渐变效果的显示图片 | show image with gradient effect
-
-- 透明度从 0 到 1。
-
-> `bg {nameId} show`
+> `{nameId} show/hide`
 
 ```txt
-bg 教室 show
+图片 show
+图片 hide
 ```
 
-### 带有渐变效果的隐藏图片 | hide image with gradient effect
+## 直接 出现/消失
 
-- 透明度从 1 到 0。
+> `{nameId} appear/disappear`
 
-> `bg {nameId} hide`
+- 旧命令 `showD`/`hideD` 仍然可用，但不推荐使用
 
 ```txt
-bg 教室 hide
+图片 appear
+图片 disappear
 ```
 
-### 背景图片直接出现 | background image appear directly
+## 透明度变化
 
-> `bg {nameId} appear`
+> `{nameId} fade {a} {time}`
+
+- a 为透明度，范围为 `0` ~ `1`
+- time 为渐变时间，单位为秒。默认为 `0` 秒
 
 ```txt
-bg 教室 appear
+图片 fade 0.5
+图片 fade 0.5 1
 ```
 
-### 背景图片直接消失 | background image disappear directly
+## 位置
 
-> `bg {nameId} disappear`
+### 单独设置 x/y/z 坐标
+
+> `{nameId} x/y/z {value}`
 
 ```txt
-bg 教室 disappear
+图片 x/y/z 5
 ```
 
-### 设置背景图片透明度 | set background image transparency
+### 设置 x/y 坐标
 
-> `bg {nameId} a/alpha {alpha}`
+> `{nameId} p(pos,position) {x} {y}`
 
 ```txt
-bg 教室 alpha 0.5
+图片 pos -5 5
 ```
 
-### 设置背景图片线性渐变到指定透明度 | set background image linearly to specified transparency
+## 移动
 
-- time 为渐变时间，单位为秒。
+### x/y 轴移动
 
-> `bg {nameId} a/alpha {alpha} linear {time}`
+> `{nameId} xm(move,move_x)/ym(move_y) {value} {time}`
+
+- time 为移动时间，单位为秒。默认为 `0.5` 秒
+- 旧命令 `moveX`/`moveY` 仍然可用，但不推荐使用
 
 ```txt
-bg 教室 alpha 0.5 linear 1
+图片 xm/ym 5
+图片 xm/ym 5 1
+
+// legacy
+图片 moveX/moveY 5
 ```
 
-- time 可以省略，默认为 0.5 秒。
+### 在 x 和 y 轴移动
+
+> `{nameId} pm(move_pos,move_position) {x} {y} {time}`
+
+- time 为移动时间，单位为秒。默认为 `0.5` 秒
 
 ```txt
-bg 教室 alpha 0.5 linear
+图片 pm 5 5
+图片 pm 5 5 1
 ```
 
-### 设置背景图片位置 | set background image position
+## 抖动
 
-> `bg {nameId} pos/position {x} {y}`
+### x/y 轴抖动
+
+> `{nameId} xs(shake_x)/ys(shake_y) {strength} {time} {vibrato}`
+
+- strength 为抖动强度。
+- time 为抖动时间，单位为秒。默认为 `0.5` 秒
+- vibrato 为抖动频率。默认为 `6`
+- 旧命令 `shakeX`/`shakeY` 仍然可用，但不推荐使用
 
 ```txt
-bg 教室 pos 0 0
+图片 xs/ys 0.2
+图片 xs/ys 0.2 1
+图片 xs/ys 0.2 1 10
+
+// legacy
+图片 shakeX/shakeY 0.2
 ```
 
-### 设置背景图片移动到指定位置 | set background image move to specified position
+### 随机方向抖动
 
-- time 为移动时间，单位为秒。
+> `{nameId} shake {strength} {time} {vibrato}`
 
-> `bg {nameId} move {x} {y} {time}`
+- strength 为抖动强度
+- time 为抖动时间，单位为秒。默认为 `0.5` 秒
+- vibrato 为抖动频率。默认为 `6`
 
 ```txt
-bg 教室 move 0 0 1
+图片 shake 0.2
+图片 shake 0.2 1
+图片 shake 0.2 1 10
 ```
 
-- time 可以省略，默认为 0.5 秒。
+## 缩放
+
+### 在 x 和 y 轴同时缩放
+
+> `{nameId} scale {value} {time}`
+
+- value 为缩放值
+- time 为缩放时间，单位为秒。默认为 `0` 秒
 
 ```txt
-bg 教室 move 0 0
-```
-
-### 设置背景图片抖动 | set background image shake
-
-- 待定
-
-### 设置背景图片缩放 | set background image scale
-
-> `bg {nameId} scale {scale}`
-
-```txt
-bg 教室 scale 1.5
-```
-
----
-
-## 场景图片命令 | scenario image commands
-
-- 场景图片在人物前面，可以用于显示道具、物品等。
-
-### 显示场景图片 | show scenario image
-
-> `si {nameId} show`
-
-```txt
-si 光之剑 show
-```
-
-### 隐藏场景图片 | hide scenario image
-
-> `si {nameId} hide`
-
-```txt
-si 光之剑 hide
-```
-
-### 设置场景图片位置 | set scenario image position
-
-> `si {nameId} pos/position {x} {y}`
-
-```txt
-si 光之剑 pos 0 0
+图片 scale 0.5
+图片 scale 0.5 1
 ```

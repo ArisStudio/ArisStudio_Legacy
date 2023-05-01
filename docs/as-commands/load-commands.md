@@ -2,17 +2,17 @@
 sidebar_position: 1
 ---
 
-# 加载命令 | load commands
+# 加载命令
 
 - 素材资源需要 **先加载到 ArisStudio 中才能使用**。
 - 加载命令用于加载素材资源。建议写到 **脚本的最前面**。
 
-## 加载角色 | load character
+## 加载角色
 
 - spine 角色素材需要放在 `/data/character/spr` 文件夹中
 - png 角色素材需要放在 `/data/character/png` 文件夹中
 
-### 加载 spr 角色(默认/通信状态) | load spr character(default/communication state)
+### 加载 spr 角色(默认/通信状态)
 
 > `load spr/sprc(spr_c) {nameId} {sprName}`
 
@@ -21,7 +21,7 @@ load spr 日步美 hihumi_spr
 load sprc 日步美 hihumi_spr
 ```
 
-#### 加载自定义 spr 角色(默认/通信状态) | load custom spr character(default/communication state)
+#### 加载自定义 spr 角色(默认/通信状态)
 
 > `load spr/sprc(spr_c) {nameId} {scale} {idle} {sprName} {imageList}`
 
@@ -29,11 +29,11 @@ load sprc 日步美 hihumi_spr
 load spr anyone 1 Idle_01 anyone_spr anyone_spr.png,anyone_spr2.png
 ```
 
-### 加载 png 角色 | load png
+### 加载 png 角色
 
 - 待完善
 
-## 加载 前景/中景/背景 图片 | load foreground/midground/background image
+## 加载 前景/中景/背景 图片
 
 > `load fg/mg/bg {nameId} {bgName}`
 
@@ -47,7 +47,7 @@ load md 光之剑 popup11.PNG
 load bg 教室 BG_ClassRoom2.jpg
 ```
 
-## 加载 音效/背景音乐 | load sound effect/background music
+## 加载 音效/背景音乐
 
 > `load sfx/bgm {nameId} {bgmName}`
 

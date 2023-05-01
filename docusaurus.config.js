@@ -42,6 +42,10 @@ const config = {
     },
   },
 
+  markdown: {
+    mermaid: true,
+  },
+
   presets: [
     [
       "classic",
@@ -66,7 +70,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       // Replace with your project's social card
-      image: "img/docusaurus-social-card.jpg",
+      image: "img/IMG_Aris_Studio_Logo.jpg",
       navbar: {
         title: "Aris Studio",
         logo: {
@@ -93,47 +97,39 @@ const config = {
       },
       footer: {
         style: "dark",
-        // links: [
-        //   {
-        //     title: "Docs",
-        //     items: [
-        //       {
-        //         label: "Tutorial",
-        //         to: "/docs/intro",
-        //       },
-        //     ],
-        //   },
-        //   {
-        //     title: "Community",
-        //     items: [
-        //       {
-        //         label: "Stack Overflow",
-        //         href: "https://stackoverflow.com/questions/tagged/docusaurus",
-        //       },
-        //       {
-        //         label: "Discord",
-        //         href: "https://discordapp.com/invite/docusaurus",
-        //       },
-        //       {
-        //         label: "Twitter",
-        //         href: "https://twitter.com/docusaurus",
-        //       },
-        //     ],
-        //   },
-        //   {
-        //     title: "More",
-        //     items: [
-        //       {
-        //         label: "Blog",
-        //         to: "/blog",
-        //       },
-        //       {
-        //         label: "GitHub",
-        //         href: "https://github.com/facebook/docusaurus",
-        //       },
-        //     ],
-        //   },
-        // ],
+        links: [
+          {
+            title: "Docs",
+            items: [
+              {
+                label: "Aris Studio",
+                to: "/docs/intro",
+              },
+            ],
+          },
+          {
+            title: "Community",
+            items: [
+              {
+                label: "GitHub",
+                href: "https://github.com/Tualin14/ArisStudio/",
+              },
+              {
+                label: "Discussions",
+                href: "https://github.com/Tualin14/ArisStudio/discussions",
+              },
+            ],
+          },
+          {
+            title: "Links",
+            items: [
+              {
+                label: "bilibili",
+                href: "https://space.bilibili.com/403504801",
+              },
+            ],
+          },
+        ],
         copyright: `Copyright © ${new Date().getFullYear()} Aris Studio, Made with ❤️ by Tualin14 & Contributors`,
       },
       prism: {
@@ -143,6 +139,7 @@ const config = {
     }),
 
   themes: [
+    "@docusaurus/theme-mermaid",
     [
       "@easyops-cn/docusaurus-search-local",
       /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */

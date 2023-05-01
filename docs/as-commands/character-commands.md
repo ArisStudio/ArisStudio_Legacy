@@ -73,10 +73,10 @@ sidebar_position: 3
 > `{nameId} emo/emotion {emotion}`
 
 ```txt
-日步美 emo action
+日步美 emo Action
 ```
 
-## 设置角色动画
+## 设置角色动画 （暂不可用）
 
 > `{nameId} anim/animation {animation}`
 
@@ -134,15 +134,17 @@ sidebar_position: 3
 
 ### x/y 轴抖动
 
-> `{nameId} xs(shake_x)/ys(shake_y) {strength} {time}`
+> `{nameId} xs(shake_x)/ys(shake_y) {strength} {time} {vibrato}`
 
 - strength 为抖动强度。
 - time 为抖动时间，单位为秒。默认为 `0.5` 秒
+- vibrato 为抖动频率。默认为 `6`
 - 旧命令 `shakeX`/`shakeY` 仍然可用，但不推荐使用
 
 ```txt
 日步美 xs/ys 0.2
 日步美 xs/ys 0.2 1
+日步美 xs/ys 0.2 1 10
 
 // legacy
 日步美 shakeX/shakeY 0.2
@@ -150,14 +152,16 @@ sidebar_position: 3
 
 ### 随机方向抖动
 
-> `{nameId} shake {strength} {time}`
+> `{nameId} shake {strength} {time} {vibrato}`
 
 - strength 为抖动强度
 - time 为抖动时间，单位为秒。默认为 `0.5` 秒
+- vibrato 为抖动频率。默认为 `6`
 
 ```txt
 日步美 shake 0.2
 日步美 shake 0.2 1
+日步美 shake 0.2 1 10
 ```
 
 ## 缩放
