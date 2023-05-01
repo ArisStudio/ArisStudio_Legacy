@@ -48,12 +48,12 @@ namespace ArisStudio.Core
             if (isWait)
             {
                 waitTimer += Time.deltaTime;
-                if (waitTimer >= waitTime)
-                {
-                    waitTimer = 0;
-                    isWait = false;
-                    IsPlaying = true;
-                }
+                if (waitTimer < waitTime) return;
+
+                waitTimer = 0;
+                autoTimer = 0;
+                isWait = false;
+                IsPlaying = true;
             }
 
             if (IsAuto)
@@ -106,9 +106,9 @@ namespace ArisStudio.Core
             StartCoroutine(LoadStory(SettingsManager.Instance.currentStoryFilePath));
         }
 
-        public void SwitchStory(string storyFileName)
+        private void SwitchStory(string storyFileName)
         {
-            StartCoroutine(LoadStory(Path.Combine(SettingsManager.Instance.currentStoryFilePath, $"{storyFileName}.txt")));
+            StartCoroutine(LoadStory(Path.Combine(SettingsManager.Instance.currentStoryFilePath, storyFileName)));
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
@@ -231,6 +231,7 @@ namespace ArisStudio.Core
             {
                 // special commands
                 case "wait":
+                    isWait = true;
                     waitTime = float.Parse(command[1]);
                     IsPlaying = false;
                     break;
@@ -248,17 +249,14 @@ namespace ArisStudio.Core
                     break;
 
                 // select commands
-                case "btn":
-                case "button":
                 case "select":
                     asSelectButtonManager.SetButton(command);
                     IsPlaying = false;
                     break;
 
                 // dialogue commands
-                case "text":
+                case "txt": // Legacy
                 case "t":
-                case "txt":
                 case "mt":
                 case "middle_text":
                 case "bt":
@@ -267,7 +265,10 @@ namespace ArisStudio.Core
                     IsPlaying = false;
                     break;
 
+                case "text":
                 case "tc":
+                case "mtc":
+                case "btc":
                     asDialogueManager.AsDialogueCommand(command);
                     break;
 
@@ -293,6 +294,7 @@ namespace ArisStudio.Core
                     break;
 
                 // scene commands
+                case "screen": // Legacy
                 case "scene":
                     asSceneManager.AsSceneCommand(command);
                     break;

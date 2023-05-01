@@ -1,0 +1,36 @@
+load spr 爱丽丝大厅 0.86 Idle_01 aris\Aris_home aris\Aris_home.png,aris\Aris_home2.png
+
+爱丽丝大厅 state Start_Idle_01 1 false
+爱丽丝大厅 show
+wait 12.8
+
+爱丽丝大厅 state Talk_01_A 1 false
+爱丽丝大厅 state Talk_01_M 2 false
+mtc "- 爱丽丝不觉得奇普托斯......不存在魔法。"
+wait 7.5
+
+爱丽丝大厅 state Talk_02_A 1 false
+爱丽丝大厅 state Talk_02_M 2 false
+mtc "- 魔法是存在的。因为老师现在，就让爱丽丝感觉到了幸福。"
+wait 9.4
+
+爱丽丝大厅 state Talk_03_A 1 false
+爱丽丝大厅 state Talk_03_M 2 false
+mtc "- 游戏之所以有趣是因为里面充满了世界中美好事物。<n>- 这是我从老师身上学到的。"
+wait 14
+
+爱丽丝大厅 state Talk_04_A 1 false
+爱丽丝大厅 state Talk_04_M 2 false
+mtc "- 不管是游戏、猫还是朋友......就连现在这个瞬间也是。<n>- 这个世界上有着许多美好的事物。"
+wait 16
+
+爱丽丝大厅 state Talk_05_A 1 false
+爱丽丝大厅 state Talk_05_M 2 false
+mtc "- 爱丽丝还想要知道更多。和老师一起......"
+wait 9
+mt "- 学习更多这个世界的事情！"
+wait 4
+
+
+text hide
+爱丽丝大厅 hide

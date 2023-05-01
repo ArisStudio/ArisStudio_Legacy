@@ -81,12 +81,14 @@ namespace ArisStudio.AsGameObject
             {
                 case "mt":
                 case "middle_text":
+                case "mtc":
                     middleText.gameObject.SetActive(true);
                     TypingText(asDialogueCommand[1], middleText);
                     break;
 
                 case "bt":
                 case "bottom_text":
+                case "btc":
                     bottomText.gameObject.SetActive(true);
                     TypingText(asDialogueCommand[1], bottomText);
                     break;

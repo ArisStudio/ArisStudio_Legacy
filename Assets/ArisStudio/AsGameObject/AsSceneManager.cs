@@ -24,7 +24,7 @@ namespace ArisStudio.AsGameObject
         {
             switch (asSceneCommand[1])
             {
-                case "focusLine":
+                case "focus":
                     focusLine.enabled = asSceneCommand[2] == "show";
                     break;
 

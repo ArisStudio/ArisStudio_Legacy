@@ -57,7 +57,7 @@ namespace ArisStudio.AsGameObject
             // load spr/sprc hihumi hihumi_spr
             if (asCharLoadCommand.Length == 4) LoadSpineCharacter(asCharLoadCommand[2], asCharLoadCommand[3], isCommunication);
 
-            // load spr/sprc h 1 Idle_01 someone_spr someone_spr.png, someone_spr2.png
+            // load spr/sprc h 1 Idle_01 someone_spr someone_spr.png,someone_spr2.png
             else
                 LoadSpineCharacter(asCharLoadCommand[2], float.Parse(asCharLoadCommand[3]),
                     asCharLoadCommand[4], asCharLoadCommand[5],
