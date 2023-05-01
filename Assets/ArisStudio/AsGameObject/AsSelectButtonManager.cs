@@ -33,7 +33,6 @@ namespace ArisStudio.AsGameObject
         [SerializeField] private Text selectBtnText32;
         [SerializeField] private Text selectBtnText33;
 
-        private MainManager mainManager;
         private string selectButtonTarget1, selectButtonTarget2, selectButtonTarget3;
 
         public void AsSelectButtonInit()
@@ -70,7 +69,7 @@ namespace ArisStudio.AsGameObject
                 _ => selectButtonTarget1
             };
 
-            mainManager.JumpTarget(selectTarget);
+            MainManager.Instance.JumpTarget(selectTarget);
         }
 
         public void SetButton(string[] command)

@@ -40,6 +40,8 @@ namespace ArisStudio.AsGameObject
         {
             GameObject imageListBase;
             string imagePath;
+            // 0:bg, 1:mg, 2:fg
+            int imageTypeIndex;
 
             switch (imageType)
             {
@@ -47,15 +49,18 @@ namespace ArisStudio.AsGameObject
                 case "foreground":
                     imageListBase = foregroundListBase;
                     imagePath = SettingsManager.Instance.currentForegroundPath;
+                    imageTypeIndex = 2;
                     break;
-                case "md":
+                case "mg":
                 case "midground":
                     imageListBase = midgroundListBase;
                     imagePath = SettingsManager.Instance.currentMidgroundPath;
+                    imageTypeIndex = 1;
                     break;
                 default:
                     imageListBase = backgroundListBase;
                     imagePath = SettingsManager.Instance.currentBackgroundPath;
+                    imageTypeIndex = 0;
                     break;
             }
 
@@ -66,7 +71,8 @@ namespace ArisStudio.AsGameObject
             yield return www.SendWebRequest();
 
             var asImage = AsImage.GetAsImage(imageGo.gameObject);
-            asImage.AsImageInit(DownloadHandlerTexture.GetContent(www));
+            asImage.AsImageInit(DownloadHandlerTexture.GetContent(www), imageTypeIndex);
+
             imageList.Add(nameId, asImage);
 
             DebugConsole.Instance.PrintLoadLog(imageType, nameId, imageName);

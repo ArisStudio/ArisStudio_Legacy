@@ -40,7 +40,7 @@ namespace ArisStudio.AsGameObject
 
         public void AsCharacterInit()
         {
-            foreach (var i in characterList) Destroy(i.Value.gameObject);
+            foreach (var i in characterList.Values) Destroy(i.gameObject);
 
             characterList.Clear();
             showCharList.Clear();

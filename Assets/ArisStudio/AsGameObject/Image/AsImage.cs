@@ -18,10 +18,20 @@ namespace ArisStudio.AsGameObject.Image
             return asImage;
         }
 
-        public void AsImageInit(Texture2D tex)
+        public void AsImageInit(Texture2D tex, int imageTypeIndex)
         {
             rawImage = GetComponent<RawImage>();
             rawImage.texture = tex;
+
+            // 0:bg, 1:mg, 2:fg
+            rawImage.rectTransform.sizeDelta = imageTypeIndex switch
+            {
+                2 => new Vector2(tex.width, tex.height),
+                1 => new Vector2(tex.width / 1.55f, tex.height / 1.55f),
+                _ => new Vector2(tex.width * 1.6f, tex.height * 1.6f)
+            };
+            if (imageTypeIndex == 1) Y(112);
+
             StateInit();
             MovementInit();
         }

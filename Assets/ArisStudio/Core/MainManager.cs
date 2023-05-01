@@ -234,6 +234,7 @@ namespace ArisStudio.Core
                 case "button":
                 case "select":
                     asSelectButtonManager.SetButton(command);
+                    IsPlaying = false;
                     break;
 
                 // dialogue commands

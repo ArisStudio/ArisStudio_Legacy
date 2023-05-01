@@ -1,100 +1,88 @@
-load spr mm momoi_spr
-load sprc mmc momoi_spr
-load spr r rin_spr
+load spr 佑香 yuuka_spr
+load sprc 通信状态小桃 momoi_spr
+load spr 铃 rin_spr
 
-mmc appear
-===
+通信状态小桃 appear
+t '通信状态小桃 appear'
 
-mmc disappear
-===
+通信状态小桃 disappear
+t '通信状态小桃 disappear'
 
-r show
-===
+铃 show
+t '铃 show'
 
-r skin S_01
-===
+铃 skin S_01
+t '切换皮肤：铃 skin S_01'
 
-r hide
-===
+铃 hide
+t '铃 hide'
 
-mm show
-// 显示
-==
+佑香 show
+t '佑香 show'
 
-mm hide
-// 消失
-===
+佑香 hide
+t '佑香 hide'
 
-mm hl 1
-mm appear 
-// 直接出现
-===
+佑香 hl 1
+佑香 appear 
+t '佑香 hl 1 && 佑香 appear' 
 
-mm disappear 
 // 直接消失
-===
+佑香 disappear
+t '直接消失：佑香 disappear'
 
-mm show
-// 显示
-==
+佑香 show
+t '佑香 show'
 
-mm hl 0.1 
-// 高亮 0.1
-===
+佑香 hl 0.1 
+t '佑香 hl 0.1'
 
-mm fade 1 
-// 渐变到高亮 1
-===
+佑香 hl 1 1
+t '佑香 hl 1 1' 
 
+佑香 state 03
+t '佑香 state 03'
 
-// state
-// skin
 // emo
+佑香 emo Action
+t '佑香 emo Action'
+
 // anim
+// 佑香 anim down
+// t '佑香 anim down'
 
-mm x 5 
-// x 坐标
-===
+佑香 x 5
+t '佑香 x 5'
 
-mm y 3 
-// y 坐标
-===
+佑香 y 3 
+t '佑香 y 3'
 
-mm xm -5 
-// x 坐标移动
-===
+佑香 xm -5 
+t '佑香 xm -5'
 
-mm ym -3 
-// y 坐标移动
-===
+佑香 ym -3 
+t '佑香 ym -3'
 
-mm pos 5 3 
-// x y 坐标
-===
+佑香 pos 5 3 
+t '佑香 pos 5 3'
 
-mm pm 0 0 
-// x y 坐标移动
-===
+佑香 pm 0 0 
+t '佑香 pm 0 0'
 
-mm scale 1.5 
-// 缩放
-===
+佑香 scale 1.5 
+t '佑香 scale 1.5'
 
-mm scale 1 1.5 
-// 带时间缩放
-===
+佑香 scale 1 1.5 
+t '佑香 scale 1 1.5'
 
-mm close 
-// 靠近
-===
+佑香 close 
+t '佑香 close'
 
-mm back 
-// 远离
-===
+佑香 back 
+t '佑香 back' 
 
-mm xs 0.2 
-// x 抖动
-===
+佑香 xs 0.2 
+t '佑香 xs 0.2' 
 
-mm ys 0.2 
-// y 抖动
+佑香 ys 0.2 
+t '佑香 ys 0.2'

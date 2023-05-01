@@ -1,0 +1,10 @@
+label 大厅
+
+target t1
+btn 返回 t1 下一个 t2
+
+target t2
+select 上一个 t1 还是这个 t2 下一个 t3
+
+target t3
+btn 第一个 t1

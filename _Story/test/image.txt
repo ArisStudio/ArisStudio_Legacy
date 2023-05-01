@@ -1,0 +1,26 @@
+load bg 办公室 BG_MainOffice.jpg
+load bg 晚上办公室1 BG_MainOffice_Night.jpg
+load bg 晚上办公室2 BG_MainOffice_Night2.jpg
+
+load mg 光之剑 popup11.PNG
+
+光之剑 appear
+t '光之剑 appear'
+
+光之剑 disappear
+t '光之剑 disappear'
+
+办公室 show
+t '办公室 show'
+
+晚上办公室1 show
+t '晚上办公室1 show'
+
+晚上办公室2 show
+t '晚上办公室2 show'
+
+晚上办公室2 hide
+t '晚上办公室2 hide'
+
+晚上办公室1 scale 1.2
+t '晚上办公室1 scale 1.2'

@@ -12,14 +12,6 @@ namespace ArisStudio.AsGameObject
         [SerializeField] private Text middleText, bottomText, nameText, groupText, contentText;
         [SerializeField] private GameObject defaultText;
 
-        private SettingsManager settingsManager;
-
-        private void Start()
-        {
-            settingsManager = SettingsManager.Instance;
-            settingsManager.currentTypingInterval = 0.02f;
-        }
-
         public void AsDialogueInit()
         {
             middleText.text = "";
@@ -39,7 +31,7 @@ namespace ArisStudio.AsGameObject
             textObject.gameObject.SetActive(true);
             textObject.DOText(
                 text.Replace("<n>", "\n"),
-                text.RichTextLength() * settingsManager.currentTypingInterval
+                text.RichTextLength() * SettingsManager.Instance.currentTypingInterval
             );
         }
 
@@ -88,21 +80,25 @@ namespace ArisStudio.AsGameObject
             {
                 case "mt":
                 case "middle_text":
+                    middleText.gameObject.SetActive(true);
                     TypingText(asDialogueCommand[1], middleText);
                     break;
 
                 case "bt":
                 case "bottom_text":
+                    bottomText.gameObject.SetActive(true);
                     TypingText(asDialogueCommand[1], bottomText);
                     break;
 
                 case "t":
                 case "txt":
                 case "tc":
+                    defaultText.SetActive(true);
                     SetDefaultDialogueText(asDialogueCommand);
                     break;
 
                 case "th":
+                    defaultText.SetActive(true);
                     SetDefaultDialogueText(asDialogueCommand, 1);
                     break;
 
@@ -116,7 +112,7 @@ namespace ArisStudio.AsGameObject
                             break;
 
                         case "interval":
-                            settingsManager.currentTypingInterval = float.Parse(asDialogueCommand[2]);
+                            SettingsManager.Instance.currentTypingInterval = float.Parse(asDialogueCommand[2]);
                             break;
 
                         case "size":

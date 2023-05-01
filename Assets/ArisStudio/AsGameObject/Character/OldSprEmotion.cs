@@ -1,10 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace ArisStudio.Spr
 {
     public class OldSprEmotion : MonoBehaviour
     {
         private GameObject emo;
+
+        private void Awake()
+        {
+            emo = transform.Find("Emotion").gameObject;
+        }
 
         public void InitEmoticon()
         {

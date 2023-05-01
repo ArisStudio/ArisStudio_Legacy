@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using ArisStudio.Spr;
+using DG.Tweening;
 using Spine.Unity;
 using UnityEngine;
 
@@ -12,6 +13,8 @@ namespace ArisStudio.AsGameObject.Character
         private MaterialPropertyBlock materialPropertyBlock;
         private MeshRenderer meshRenderer;
         private Animator charAnimator, emoAnimator;
+
+        private OldSprEmotion oldSprEmotion;
 
         private string materialType;
         private float highlightValue;
@@ -47,6 +50,8 @@ namespace ArisStudio.AsGameObject.Character
             meshRenderer = GetComponent<MeshRenderer>();
             materialPropertyBlock = new MaterialPropertyBlock();
             Highlight(0, 0);
+
+            oldSprEmotion = GetComponent<OldSprEmotion>();
 
             // charAnimator = GetComponent<Animator>();
             // emoAnimator = transform.GetChild(0).GetComponent<Animator>();
@@ -107,7 +112,7 @@ namespace ArisStudio.AsGameObject.Character
 
         public void Emotion(string emotionName)
         {
-            emoAnimator.Play(emotionName);
+            oldSprEmotion.PlayEmoticon(emotionName);
         }
 
         public void Animation(string animationName)

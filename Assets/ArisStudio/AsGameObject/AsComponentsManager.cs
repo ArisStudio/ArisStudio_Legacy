@@ -1,5 +1,6 @@
 ﻿using ArisStudio.Utils;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,7 @@ namespace ArisStudio.AsGameObject
     public class AsComponentsManager : Singleton<AsComponentsManager>
     {
         [Header("Label")] [SerializeField] private GameObject labelGo;
-        [SerializeField] private Text labelText;
+        [SerializeField] private TextMeshProUGUI labelText;
         private float labelTime;
 
         [Header("Banner")] [SerializeField] private GameObject bannerGo;
