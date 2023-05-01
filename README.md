@@ -20,8 +20,14 @@
 
 ## How to Use
 
-- [Read New Documentation (中文)](https://github.com/Tualin14/ArisStudio/wiki "Read New Documentation in Chinese")
-- [Read New Documentation (EN)](https://github.com/kiraio-moe/ArisStudio/wiki "Read New Documentation in English")
+- 0.2
+
+  - [Read New Documentation (中文)](https://github.com/Tualin14/ArisStudio/wiki "Read New Documentation in Chinese")
+  - [Read New Documentation (EN)](https://github.com/kiraio-moe/ArisStudio/wiki "Read New Documentation in English")
+
+- 0.3
+  - [中文文档](https://as.t14.me/docs/category/as-commands "Read Documentation in Chinese")
+  - [Documentation](https://as.t14.me/en/docs/category/as-commands/ "Read Documentation in English")
 
 ## Awesome works done with Aris Studio ヾ(≧▽≦\\\*)o
 
@@ -31,9 +37,9 @@
 - [“Greatest Game Ever”](https://b23.tv/z18G8Fs "Watch “Greatest Game Ever” on bilibili")
 - [Saiba Green's New Year's Gift Part. 1](https://b23.tv/V9oeqd5 "Watch Saiba Green's New Year's Gift Part. 1 on bilibili")
 
-## Contribute
+## Contribute (under construction)
 
-- (contribution-guide)[https://as.dza.vin/#/contribution-guide]
+- (contribution-guide)[https://as.t14.me/en/docs/category/contribute]
 - ...
 
 ## Contributors
