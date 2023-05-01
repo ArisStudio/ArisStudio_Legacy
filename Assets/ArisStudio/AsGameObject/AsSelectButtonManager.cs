@@ -69,6 +69,7 @@ namespace ArisStudio.AsGameObject
                 _ => selectButtonTarget1
             };
 
+            AsSelectButtonInit();
             MainManager.Instance.JumpTarget(selectTarget);
         }
 

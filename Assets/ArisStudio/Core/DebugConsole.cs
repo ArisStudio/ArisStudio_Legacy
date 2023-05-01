@@ -89,8 +89,8 @@ namespace ArisStudio.Core
             string command = m_ConsoleInputField.text.Trim();
             if (command == string.Empty) return;
 
-            // MainControl.Instance.PreLoadCommand(command);
-            // MainControl.Instance.RunText(command);
+            MainManager.Instance.PreLoad(command);
+            MainManager.Instance.SolveCommand(command);
             PrintLog($"> <#00ffff><b>{command}</b></color>");
             m_ConsoleInputField.text = string.Empty;
         }

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using ArisStudio.AsGameObject;
 using ArisStudio.Utils;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -30,10 +31,12 @@ namespace ArisStudio.Core
         public bool IsPlaying { private get; set; }
 
         // Auto Play
-        private bool isAuto;
+        public bool IsAuto { private get; set; }
         private float autoTimer;
-        private float autoTime;
+        private float autoTime = 2.3f;
 
+        private bool isWait;
+        private float waitTimer;
         private float waitTime;
 
         private int runLineIndex;
@@ -42,7 +45,18 @@ namespace ArisStudio.Core
         {
             if (Input.GetKeyDown(KeyCode.Space) && !IsPlaying) IsPlaying = true;
 
-            if (isAuto)
+            if (isWait)
+            {
+                waitTimer += Time.deltaTime;
+                if (waitTimer >= waitTime)
+                {
+                    waitTimer = 0;
+                    isWait = false;
+                    IsPlaying = true;
+                }
+            }
+
+            if (IsAuto)
             {
                 autoTimer += Time.deltaTime;
                 if (autoTimer >= autoTime)
@@ -68,6 +82,7 @@ namespace ArisStudio.Core
 
         private void Initialize()
         {
+            nameIdList.Clear();
             targetList.Clear();
 
             asCharacterManager.AsCharacterInit();
@@ -183,6 +198,7 @@ namespace ArisStudio.Core
         {
             runLineIndex = targetList[targetName];
             DebugConsole.Instance.PrintLog($"Jump to target: <#00ff00>{targetName}</color>");
+            autoTimer = 0;
             IsPlaying = true;
         }
 
@@ -215,6 +231,8 @@ namespace ArisStudio.Core
             {
                 // special commands
                 case "wait":
+                    waitTime = float.Parse(command[1]);
+                    IsPlaying = false;
                     break;
                 case "targets":
                     ShowAllTargets();
@@ -270,8 +288,8 @@ namespace ArisStudio.Core
                     break;
 
                 case "banner":
-                    asComponentsManager.SetBanner(command);
-                    IsPlaying = false;
+                    asComponentsManager.BannerCommand(command);
+                    IsPlaying = command[1] == "hide";
                     break;
 
                 // scene commands

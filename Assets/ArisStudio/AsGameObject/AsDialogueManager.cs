@@ -10,7 +10,7 @@ namespace ArisStudio.AsGameObject
     public class AsDialogueManager : Singleton<AsDialogueManager>
     {
         [SerializeField] private Text middleText, bottomText, nameText, groupText, contentText;
-        [SerializeField] private GameObject defaultText;
+        [SerializeField] private GameObject defaultText, indicator;
 
         public void AsDialogueInit()
         {
@@ -32,11 +32,12 @@ namespace ArisStudio.AsGameObject
             textObject.DOText(
                 text.Replace("<n>", "\n"),
                 text.RichTextLength() * SettingsManager.Instance.currentTypingInterval
-            );
+            ).OnComplete(() => indicator.SetActive(true));
         }
 
         private void SetDefaultDialogueText(string[] asDialogueCommand, int offset = 0)
         {
+            indicator.SetActive(false);
             switch (asDialogueCommand.Length)
             {
                 case 1:

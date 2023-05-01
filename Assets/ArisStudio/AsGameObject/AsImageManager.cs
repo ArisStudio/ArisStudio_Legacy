@@ -22,7 +22,7 @@ namespace ArisStudio.AsGameObject
         public void AsImageInit()
         {
             startBackgroundBase.SetActive(false);
-            foreach (var i in imageList) Destroy(i.Value.gameObject);
+            foreach (var i in imageList.Values) Destroy(i.gameObject);
             imageList.Clear();
 
             DebugConsole.Instance.PrintLog("AsImageInit");

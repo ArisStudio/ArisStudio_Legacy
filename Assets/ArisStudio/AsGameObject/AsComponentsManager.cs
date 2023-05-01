@@ -8,11 +8,13 @@ namespace ArisStudio.AsGameObject
 {
     public class AsComponentsManager : Singleton<AsComponentsManager>
     {
+        [Header("MenuBtn")] [SerializeField] private GameObject menuBtnGo;
+
         [Header("Label")] [SerializeField] private GameObject labelGo;
         [SerializeField] private TextMeshProUGUI labelText;
         private float labelTime;
 
-        [Header("Banner")] [SerializeField] private GameObject bannerGo;
+        [Header("Banner")] [SerializeField] private GameObject bannerGo, banner2Line;
         [SerializeField] private Text banner1Text, banner21Text, banner22Text;
         private float bannerTime;
 
@@ -30,14 +32,23 @@ namespace ArisStudio.AsGameObject
         {
             labelText.text = text;
             labelGo.SetActive(true);
-            DOTween.To(() => labelTime, x => labelTime = x, 2, 1)
+            DOTween.To(() => labelTime, x => labelTime = x, 1, 2)
                 .OnComplete(() => labelGo.SetActive(false));
         }
 
-        public void SetBanner(string[] command)
+        public void BannerCommand(string[] command)
         {
+            if (command[1] == "hide")
+            {
+                HideBanner();
+                return;
+            }
+
+            menuBtnGo.SetActive(false);
+
             if (command.Length == 3)
             {
+                banner2Line.SetActive(true);
                 banner21Text.text = command[1];
                 banner22Text.text = command[2];
                 banner1Text.gameObject.SetActive(false);
@@ -46,6 +57,7 @@ namespace ArisStudio.AsGameObject
             }
             else
             {
+                banner2Line.SetActive(false);
                 banner1Text.text = command[1];
                 banner21Text.gameObject.SetActive(false);
                 banner22Text.gameObject.SetActive(false);
@@ -58,6 +70,7 @@ namespace ArisStudio.AsGameObject
         public void HideBanner()
         {
             bannerGo.SetActive(false);
+            menuBtnGo.SetActive(true);
         }
     }
 }
