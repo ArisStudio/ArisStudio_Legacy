@@ -1,8 +1,11 @@
 Welcome to Aris Studio Installer
 
-First, thank you for using Aris Studio. I'm glad you give it a try.
+First, thank you for using Aris Studio, Sensei! We glad you give it a try.
 This installer will install Aris Studio at your desired folder and
 optionally, create a desktop shortcut to easily run Aris Studio.
 
-Read Aris Studio documentation to know more how to use Aris Studio:
-https://github.com/kiraio-moe/ArisStudio/wiki
+To know more how to use Aris Studio, read the documentation at:
+https://as.t14.me/en/docs/category/as-commands/
+
+If you interested in Aris Studio development and want to contribute, checkout our repo at:
+https://github.com/Tualin14/ArisStudio

@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/ArisStudio/Scenes/ArisStudio-dev.unity
     guid: 47f0b0d24c7a4674c8a3652e075edfd4
   - enabled: 0
-    path: Assets/Scenes/Preview.unity
+    path: Assets/ArisStudio/Scenes/Preview.unity
     guid: 377cdc8da817682409fca939cc1aab63
   - enabled: 0
     path: Assets/ArisStudio/Scenes/CharacterPreview-dev.unity
