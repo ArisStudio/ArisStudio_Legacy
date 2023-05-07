@@ -38,7 +38,7 @@
 
 ## Contribute
 
-- [Contribution Guide (Under Construction)](https://as.t14.me/en/docs/category/contribute "Contribution Guide (Under Construction)")
+Before Sensei's making any contribution to Aris Studio, please read this [Contribution Guide](/CONTRIBUTING "Contribution Guide") first :)
 
 ## Contributors
 
