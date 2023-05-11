@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using ArisStudio.AsGameObject;
 using ArisStudio.Utils;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -27,6 +26,7 @@ namespace ArisStudio.Core
         // List
         private readonly Dictionary<string, int> targetList = new Dictionary<string, int>();
         private readonly Dictionary<string, string> nameIdList = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> aliasList = new Dictionary<string, string>();
 
         public bool IsPlaying { private get; set; }
 
@@ -188,9 +188,25 @@ namespace ArisStudio.Core
             {
                 string text = texts[lineIndex];
 
-                if (text.StartsWith("target")) targetList.Add(text.Replace("target", "").Trim(), lineIndex);
+                foreach (var kv in aliasList.Where(kv => text.Contains(kv.Key)))
+                {
+                    text = text.Replace(kv.Key, kv.Value);
+                }
 
-                else if (text.StartsWith("load")) PreLoad(text);
+                var command = AsCommand.Parse(text);
+
+                switch (command[0])
+                {
+                    case "load":
+                        PreLoad(text);
+                        break;
+                    case "target":
+                        targetList.Add(command[1], lineIndex);
+                        break;
+                    case "alias":
+                        aliasList.Add(command[1], command[2]);
+                        break;
+                }
             }
         }
 

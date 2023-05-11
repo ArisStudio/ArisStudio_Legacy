@@ -20,21 +20,24 @@
 
 ## How to Use
 
+- It is recommended to use [arisstudio-blockly](https://github.com/sanmusen214/arisstudio-blockly "Use arisstudio-blockly")
+
 - Version 0.2
+
   - [中文文档](https://github.com/Tualin14/ArisStudio/wiki "Read Documentation in Chinese")
   - [Documentation](https://github.com/kiraio-moe/ArisStudio/wiki "Read Documentation in English")
 
-- Version 0.3
+- Version 0.3(Under Construction)
   - [中文文档](https://as.t14.me/docs/category/as-commands "Read Documentation in Chinese")
   - [Documentation](https://as.t14.me/en/docs/category/as-commands/ "Read Documentation in English")
 
-## Awesome works done with Aris Studio ヾ(≧▽≦\\\*)o
+<!-- ## Awesome works done with Aris Studio ヾ(≧▽≦\\\*)o
 
 - [Sensei, let's celebrate the New Year together!](https://b23.tv/9UdXBxk "Watch Sensei, let's celebrate the New Year together! on bilibili")
 - [The Game Development Department wants to do H-game?!](https://b23.tv/QaqP4Ew "Watch The Game Development Department wants to do H-game?! on bilibili")
 - [Noah and Yuka and Sensei 1](https://b23.tv/rkZMNXg "Watch Noah and Yuka and Sensei 1 on bilibili")
 - [“Greatest Game Ever”](https://b23.tv/z18G8Fs "Watch “Greatest Game Ever” on bilibili")
-- [Saiba Green's New Year's Gift Part. 1](https://b23.tv/V9oeqd5 "Watch Saiba Green's New Year's Gift Part. 1 on bilibili")
+- [Saiba Green's New Year's Gift Part. 1](https://b23.tv/V9oeqd5 "Watch Saiba Green's New Year's Gift Part. 1 on bilibili") -->
 
 ## Contribute
 
