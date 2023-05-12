@@ -23,10 +23,10 @@ namespace ArisStudio.Core
 
         #region Display
 
-        public List<string> currentInstalledFonts { get; private set; }
+        // public List<string> currentInstalledFonts { get; private set; }
         public string currentScreenResolution { get; private set; }
         public string currentFPSLimit { get; private set; }
-        public int currentDefaultFont { get; private set; }
+        // public int currentDefaultFont { get; private set; }
         public bool currentFullScreenState { get; private set; }
         public bool currentVSyncState { get; private set; }
         public float currentTypingInterval { get; set; } // used in interval command
@@ -44,8 +44,6 @@ namespace ArisStudio.Core
 
         #region Data
 
-        public string currentStoryDataPath { get; private set; }
-
         public string currentLocalDataPath { get; private set; }
         public string currentRemoteDataPath { get; private set; }
 
@@ -59,18 +57,14 @@ namespace ArisStudio.Core
 
         public string currentImagePath { get; private set; }
         public string currentBackgroundPath { get; private set; }
-
         public string currentMidgroundPath { get; private set; }
-
         public string currentForegroundPath { get; private set; }
 
         private const string DefaultStoryDirectoryName = "_story";
-
         private const string DefaultDataDirectoryName = "data";
 
         private const string DefaultCharacterDirectoryName = "character";
         private const string DefaultSprDirectoryName = "spr";
-
 
         private const string DefaultAudioDirectoryName = "audio";
         private const string DefaultBGMDirectoryName = "bgm";
@@ -82,32 +76,32 @@ namespace ArisStudio.Core
         private const string DefaultMidgroundDirectoryName = "midground";
         private const string DefaultForegroundDirectoryName = "foreground";
 
-        #endregion
+        #endregion // Data
 
         private void Awake()
         {
             /*
-            * Setting default local data path debug message is get
-            * printed before clearing any existing message, so we
-            * need we clear it before setting the path from here.
+            * If we clear debug window in DebugConsole class,
+            * InitializeDefaultLocalDataPath() debug message will
+            * not get printed. So, we clear it from here.
             * It's order of execution matter.
             */
             DebugConsole.Instance.m_DebugText.text = string.Empty;
             InitializeDefaultLocalDataPath();
-            // InitializeFontsList();
         }
 
         #region Story Settings
 
         /// <summary>
-        /// Pop-up File Explorer to select Story .txt file to be run.
-        /// NOTE: Does we need our own story file extension?
+        /// Pop-up File Explorer to select story .txt file.
         /// </summary>
         public void GetStoryFile()
         {
             // Set story file filter
             FileBrowser.SetFilters(false, new FileBrowser.Filter("Story File", ".txt"));
-            // FileBrowser.SetDefaultFilter(".txt");
+
+            string initialPath = Path.Combine(GetRootPath(), DefaultStoryDirectoryName);
+            CreateFolderIfNotExist(initialPath);
 
             // Show story file browser
             FileBrowser.ShowLoadDialog(
@@ -116,13 +110,13 @@ namespace ArisStudio.Core
                     currentStoryFilePath = paths[0];
 
                     DebugConsole.Instance.PrintLog(
-                        $"Select Story: <#00ff00>{currentStoryFilePath}</color>"
+                        $"Selected Story: <#00ff00>{currentStoryFilePath}</color>"
                     );
                 },
                 () => { },
                 FileBrowser.PickMode.Files,
                 false,
-                Path.Combine(GetRootPath(), DefaultStoryDirectoryName),
+                initialPath,
                 null,
                 "Select Story File",
                 "Select"
@@ -140,7 +134,7 @@ namespace ArisStudio.Core
         public void SetScreenResolution(string value)
         {
             currentScreenResolution = value.Trim();
-            var size = currentScreenResolution.Split('x');
+            string[] size = currentScreenResolution.Split('x');
 
             Screen.SetResolution(int.Parse(size[0]), int.Parse(size[1]), Screen.fullScreen);
             DebugConsole.Instance.PrintLog($"Resolution = {currentScreenResolution}");
@@ -164,31 +158,31 @@ namespace ArisStudio.Core
         /// <summary>
         /// Return OS installed font names as a List.
         /// </summary>
-        private List<string> GetInstalledFontsNames()
-        {
-            return Font.GetOSInstalledFontNames().ToList();
-        }
+        // private List<string> GetInstalledFontsNames()
+        // {
+        //     return Font.GetOSInstalledFontNames().ToList();
+        // }
 
-        private void InitializeFontsList()
-        {
-            currentInstalledFonts = GetInstalledFontsNames();
-        }
+        // private void InitializeFontsList()
+        // {
+        //     currentInstalledFonts = GetInstalledFontsNames();
+        // }
 
         /// <summary>
         /// Set default font from selected Font Dropdown list.
         /// </summary>
-        public void SetDefaultFont(List<TMP_Text> targetTexts, int fontPathIndex)
-        {
-            // See: https://forum.unity.com/threads/creating-tmp-font-during-build-runtime.1066712/#post-6888209
+        // public void SetDefaultFont(List<TMP_Text> targetTexts, int fontPathIndex)
+        // {
+        //     // See: https://forum.unity.com/threads/creating-tmp-font-during-build-runtime.1066712/#post-6888209
 
-            currentDefaultFont = fontPathIndex;
-            string[] fontPaths = Font.GetPathsToOSFonts();
-            Font selectedFont = new Font(fontPaths[currentDefaultFont]);
-            TMP_FontAsset fontAsset = TMP_FontAsset.CreateFontAsset(selectedFont);
+        //     currentDefaultFont = fontPathIndex;
+        //     string[] fontPaths = Font.GetPathsToOSFonts();
+        //     Font selectedFont = new Font(fontPaths[currentDefaultFont]);
+        //     TMP_FontAsset fontAsset = TMP_FontAsset.CreateFontAsset(selectedFont);
 
-            foreach (TMP_Text text in targetTexts)
-                text.font = fontAsset;
-        }
+        //     foreach (TMP_Text text in targetTexts)
+        //         text.font = fontAsset;
+        // }
 
         /// <summary>
         /// Set dialogue typing interval in seconds.
@@ -248,17 +242,17 @@ namespace ArisStudio.Core
         #region Data Settings
 
         /// <summary>
-        /// Return current project directory/installed directory.
+        /// Return current application/project root directory.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Application/project root path</returns>
         private static string GetRootPath()
         {
 #if UNITY_ANDROID
-            var path = $"file:///{Directory.GetParent(Application.persistentDataPath)!.ToString()}";
+            string path = $"file:///{Directory.GetParent(Application.persistentDataPath)!.ToString()}";
 #elif UNITY_STANDALONE_OSX
-            var path = $"file://{Directory.GetParent(Application.dataPath)!.ToString()}";
+            string path = $"file://{Directory.GetParent(Application.dataPath)!.ToString()}";
 #else
-            var path = Directory.GetParent(Application.dataPath)!.ToString();
+            string path = Directory.GetParent(Application.dataPath)!.ToString();
 #endif
             return path;
         }
@@ -268,23 +262,22 @@ namespace ArisStudio.Core
         /// </summary>
         private void InitializeDefaultLocalDataPath()
         {
-            // Initialize current Data path from default Data path if exist
-#if UNITY_EDITOR
-            var defaultLocalDataPath = Path.Combine(Directory.GetParent(GetRootPath())!.ToString(), DefaultDataDirectoryName);
-#else
-            var defaultLocalDataPath = Path.Combine(GetRootPath(), DefaultDataDirectoryName);
-#endif
+            // Initialize currentLocalDataPath from defaultLocalDataPath
+// #if UNITY_EDITOR
+//             var defaultLocalDataPath = Path.Combine(Directory.GetParent(GetRootPath())!.ToString(), DefaultDataDirectoryName);
+// #else
+            string defaultLocalDataPath = Path.Combine(GetRootPath(), DefaultDataDirectoryName);
+// #endif
+            currentLocalDataPath = defaultLocalDataPath;
 
             if (Directory.Exists(defaultLocalDataPath))
             {
-                currentLocalDataPath = defaultLocalDataPath;
-                DebugConsole.Instance.PrintLog($"Set <#00ff00>Data</color> path: <#00ff00>{currentLocalDataPath}</color>");
+                DebugConsole.Instance.PrintLog($"Default <#00ff00>Data</color> path found! Set <#00ff00>Data</color> path: <#00ff00>{currentLocalDataPath}</color>");
             }
             else
             {
                 Directory.CreateDirectory(defaultLocalDataPath);
-                currentLocalDataPath = defaultLocalDataPath;
-                DebugConsole.Instance.PrintLog($"Create default <#00ff00>Data</color> directory: <#00ff00>{currentLocalDataPath}</color>");
+                DebugConsole.Instance.PrintLog($"Default <#ff0000>Data</color> path doesn't exist! Create default <#00ff00>Data</color> directory: <#00ff00>{currentLocalDataPath}</color>");
             }
 
             CreateAndSetDefaultDataDirectory();
@@ -298,12 +291,13 @@ namespace ArisStudio.Core
             FileBrowser.ShowLoadDialog(
                 (paths) =>
                 {
-                    currentLocalDataPath = paths[0];
-                    SetDataContentsPath();
-
                     DebugConsole.Instance.PrintLog(
-                        $"Select Data path: <#00ff00>{currentLocalDataPath}</color>"
+                        $"Selected Data path: <#00ff00>{currentLocalDataPath}</color>"
                     );
+
+                    currentLocalDataPath = paths[0];
+                    // SetDataContentsPath();
+                    CreateAndSetDefaultDataDirectory();
                 },
                 () => { },
                 FileBrowser.PickMode.Folders,

@@ -12,21 +12,30 @@ namespace ArisStudio.AsGameObject
 {
     public class AsImageManager : Singleton<AsImageManager>
     {
-        [SerializeField] private GameObject foregroundListBase, midgroundListBase, backgroundListBase, startBackgroundBase;
+        [SerializeField]
+        private GameObject foregroundListBase,
+            midgroundListBase,
+            backgroundListBase,
+            startBackgroundBase;
 
         private readonly Dictionary<string, AsImage> imageList = new Dictionary<string, AsImage>();
 
         private const float BehaviourDuration = 0.5f;
         private const int DefaultVibrato = 6;
 
+        #region Initialization
+
         public void AsImageInit()
         {
             startBackgroundBase.SetActive(false);
-            foreach (var i in imageList.Values) Destroy(i.gameObject);
+            foreach (var i in imageList.Values)
+                Destroy(i.gameObject);
             imageList.Clear();
 
             DebugConsole.Instance.PrintLog("AsImageInit");
         }
+
+        #endregion // Initialization
 
         # region Load Image
 
@@ -35,7 +44,6 @@ namespace ArisStudio.AsGameObject
             StartCoroutine(CreateAsImage(asImageLoadCommand[2], asImageLoadCommand[3], imageType));
         }
 
-        // ReSharper disable Unity.PerformanceAnalysis
         private IEnumerator CreateAsImage(string nameId, string imageName, string imageType)
         {
             GameObject imageListBase;
@@ -67,7 +75,9 @@ namespace ArisStudio.AsGameObject
             var imageGo = new GameObject(nameId).AddComponent<RawImage>();
             imageGo.transform.SetParent(imageListBase.transform);
 
-            UnityWebRequest www = UnityWebRequestTexture.GetTexture(Path.Combine(imagePath, imageName));
+            UnityWebRequest www = UnityWebRequestTexture.GetTexture(
+                Path.Combine(imagePath, imageName)
+            );
             yield return www.SendWebRequest();
 
             var asImage = AsImage.GetAsImage(imageGo.gameObject);
@@ -78,7 +88,7 @@ namespace ArisStudio.AsGameObject
             DebugConsole.Instance.PrintLoadLog(imageType, nameId, imageName);
         }
 
-        # endregion
+        # endregion // Load Image
 
         public void AsImageCommand(string[] asImageCommand)
         {
@@ -108,7 +118,9 @@ namespace ArisStudio.AsGameObject
                 case "fade":
                     imageList[asImageCommand[1]].Fade(
                         float.Parse(asImageCommand[3]),
-                        ArrayHelper.IsIndexInRange(asImageCommand, 4) ? float.Parse(asImageCommand[4]) : 0
+                        ArrayHelper.IsIndexInRange(asImageCommand, 4)
+                            ? float.Parse(asImageCommand[4])
+                            : 0
                     );
                     break;
 
@@ -125,7 +137,10 @@ namespace ArisStudio.AsGameObject
                 case "p":
                 case "pos":
                 case "position":
-                    imageList[asImageCommand[1]].Position(float.Parse(asImageCommand[3]), float.Parse(asImageCommand[4]));
+                    imageList[asImageCommand[1]].Position(
+                        float.Parse(asImageCommand[3]),
+                        float.Parse(asImageCommand[4])
+                    );
                     break;
 
                 case "moveX": // legacy
@@ -134,7 +149,9 @@ namespace ArisStudio.AsGameObject
                 case "move_x":
                     imageList[asImageCommand[1]].MoveX(
                         float.Parse(asImageCommand[3]),
-                        ArrayHelper.IsIndexInRange(asImageCommand, 4) ? float.Parse(asImageCommand[4]) : BehaviourDuration
+                        ArrayHelper.IsIndexInRange(asImageCommand, 4)
+                            ? float.Parse(asImageCommand[4])
+                            : BehaviourDuration
                     );
                     break;
                 case "moveY": // legacy
@@ -142,7 +159,9 @@ namespace ArisStudio.AsGameObject
                 case "move_y":
                     imageList[asImageCommand[1]].MoveY(
                         float.Parse(asImageCommand[3]),
-                        ArrayHelper.IsIndexInRange(asImageCommand, 4) ? float.Parse(asImageCommand[4]) : BehaviourDuration
+                        ArrayHelper.IsIndexInRange(asImageCommand, 4)
+                            ? float.Parse(asImageCommand[4])
+                            : BehaviourDuration
                     );
                     break;
                 case "pm":
@@ -151,7 +170,9 @@ namespace ArisStudio.AsGameObject
                     imageList[asImageCommand[1]].MovePosition(
                         float.Parse(asImageCommand[3]),
                         float.Parse(asImageCommand[4]),
-                        ArrayHelper.IsIndexInRange(asImageCommand, 5) ? float.Parse(asImageCommand[5]) : BehaviourDuration
+                        ArrayHelper.IsIndexInRange(asImageCommand, 5)
+                            ? float.Parse(asImageCommand[5])
+                            : BehaviourDuration
                     );
                     break;
 
@@ -160,8 +181,12 @@ namespace ArisStudio.AsGameObject
                 case "shake_x":
                     imageList[asImageCommand[1]].ShakeX(
                         float.Parse(asImageCommand[3]),
-                        ArrayHelper.IsIndexInRange(asImageCommand, 4) ? float.Parse(asImageCommand[4]) : BehaviourDuration,
-                        ArrayHelper.IsIndexInRange(asImageCommand, 5) ? int.Parse(asImageCommand[5]) : DefaultVibrato
+                        ArrayHelper.IsIndexInRange(asImageCommand, 4)
+                            ? float.Parse(asImageCommand[4])
+                            : BehaviourDuration,
+                        ArrayHelper.IsIndexInRange(asImageCommand, 5)
+                            ? int.Parse(asImageCommand[5])
+                            : DefaultVibrato
                     );
                     break;
                 case "shakeY": // legacy
@@ -169,22 +194,32 @@ namespace ArisStudio.AsGameObject
                 case "shake_y":
                     imageList[asImageCommand[1]].ShakeY(
                         float.Parse(asImageCommand[3]),
-                        ArrayHelper.IsIndexInRange(asImageCommand, 4) ? float.Parse(asImageCommand[4]) : BehaviourDuration,
-                        ArrayHelper.IsIndexInRange(asImageCommand, 5) ? int.Parse(asImageCommand[5]) : DefaultVibrato
+                        ArrayHelper.IsIndexInRange(asImageCommand, 4)
+                            ? float.Parse(asImageCommand[4])
+                            : BehaviourDuration,
+                        ArrayHelper.IsIndexInRange(asImageCommand, 5)
+                            ? int.Parse(asImageCommand[5])
+                            : DefaultVibrato
                     );
                     break;
                 case "shake":
                     imageList[asImageCommand[1]].Shake(
                         float.Parse(asImageCommand[3]),
-                        ArrayHelper.IsIndexInRange(asImageCommand, 5) ? float.Parse(asImageCommand[4]) : BehaviourDuration,
-                        ArrayHelper.IsIndexInRange(asImageCommand, 6) ? int.Parse(asImageCommand[5]) : DefaultVibrato
+                        ArrayHelper.IsIndexInRange(asImageCommand, 5)
+                            ? float.Parse(asImageCommand[4])
+                            : BehaviourDuration,
+                        ArrayHelper.IsIndexInRange(asImageCommand, 6)
+                            ? int.Parse(asImageCommand[5])
+                            : DefaultVibrato
                     );
                     break;
 
                 case "scale":
                     imageList[asImageCommand[1]].Scale(
                         float.Parse(asImageCommand[3]),
-                        ArrayHelper.IsIndexInRange(asImageCommand, 4) ? float.Parse(asImageCommand[4]) : BehaviourDuration
+                        ArrayHelper.IsIndexInRange(asImageCommand, 4)
+                            ? float.Parse(asImageCommand[4])
+                            : BehaviourDuration
                     );
                     break;
             }

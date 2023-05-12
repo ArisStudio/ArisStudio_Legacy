@@ -12,7 +12,9 @@ namespace ArisStudio.AsGameObject
 {
     public class AsAudioManager : Singleton<AsAudioManager>
     {
-        [SerializeField] private GameObject asBgmListBase, asSfxListBase;
+        [SerializeField]
+        private GameObject asBgmListBase,
+            asSfxListBase;
         private readonly Dictionary<string, AsAudio> audioList = new Dictionary<string, AsAudio>();
 
         private const float FadeEndVolume = 0f;
@@ -20,7 +22,8 @@ namespace ArisStudio.AsGameObject
 
         public void AsAudioInit()
         {
-            foreach (var i in audioList) Destroy(i.Value.gameObject);
+            foreach (var i in audioList)
+                Destroy(i.Value.gameObject);
             audioList.Clear();
 
             DebugConsole.Instance.PrintLog("AsAudioInit");
@@ -45,7 +48,6 @@ namespace ArisStudio.AsGameObject
             };
         }
 
-        // ReSharper disable Unity.PerformanceAnalysis
         private IEnumerator CreateAsAudio(string nameId, string audioName, string audioType)
         {
             GameObject audioListBase;
@@ -68,7 +70,10 @@ namespace ArisStudio.AsGameObject
             var audioGo = new GameObject(nameId).AddComponent<AudioSource>();
             audioGo.transform.SetParent(audioListBase.transform);
 
-            UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(Path.Combine(audioPath, audioName), SelectAudioType(audioName));
+            UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(
+                Path.Combine(audioPath, audioName),
+                SelectAudioType(audioName)
+            );
             yield return www.SendWebRequest();
 
             var asAudio = AsAudio.GetAsAudio(audioGo.gameObject);
@@ -102,8 +107,12 @@ namespace ArisStudio.AsGameObject
 
                 case "fade":
                     audioList[asAudioCommand[1]].Fade(
-                        ArrayHelper.IsIndexInRange(asAudioCommand, 3) ? float.Parse(asAudioCommand[3]) : FadeEndVolume,
-                        ArrayHelper.IsIndexInRange(asAudioCommand, 4) ? float.Parse(asAudioCommand[4]) : FadeDuration
+                        ArrayHelper.IsIndexInRange(asAudioCommand, 3)
+                            ? float.Parse(asAudioCommand[3])
+                            : FadeEndVolume,
+                        ArrayHelper.IsIndexInRange(asAudioCommand, 4)
+                            ? float.Parse(asAudioCommand[4])
+                            : FadeDuration
                     );
 
                     break;

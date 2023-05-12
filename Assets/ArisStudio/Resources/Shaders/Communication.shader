@@ -2,38 +2,35 @@
 {
     Properties
     {
-        [PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
+        [HideInInspector] [PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
         _Color("Tint", Color) = (1,1,1,1)
-
         _StencilComp("Stencil Comparison", Float) = 8
         _Stencil("Stencil ID", Float) = 0
         _StencilOp("Stencil Operation", Float) = 0
         _StencilWriteMask("Stencil Write Mask", Float) = 255
         _StencilReadMask("Stencil Read Mask", Float) = 255
-
         _ColorMask("Color Mask", Float) = 15
-
         [Toggle(UNITY_UI_ALPHACLIP)] _UseUIAlphaClip("Use Alpha Clip", Float) = 0
 
+        [Space(20)]
+        [Toggle(_ENABLE_SIGNAL)] _ENABLE_SIGNAL("Enable Signal", Int) = 0
 
-        [Space(100)]
-        [Toggle(_ENABLE_SIGNAL)] _ENABLE_SIGNAL("EnableSignal", Int) = 0
         [Space(20)]
-        [NoScaleOffset]
-        _DragTex("DragTex", 2D) = "white" {}
-        _DragInterval("DragInterval", Range(1, 5)) = 2
-        _DragStrength("DragStrength", Range(-0.08, 0.08)) = 0.004
-        [Space(20)]
-        _MainColor("MainColor", Color) = (0.5725, 0.7764, 1, 1)
-        [Space(20)]
-        _StripeColor("StripeColor", Color) = (0.8, 0.8, 0.8, 1)
-        _StripeWidth("StripeWidth", Range(1, 10)) = 3
-        [Space(20)]
-        [NoScaleOffset]
-        _FlowLightTex("FlowLightTex", 2D) = "white" {}
-        _FlowLightSpeed("FlowLightSpeed", Range(0.001, 5)) = 1
-        _SignalNoise("SignalNoise", Range(0, 1)) = 0.1
+        [NoScaleOffset] _DragTex("Drag Texture", 2D) = "white" {}
+        _DragInterval("Drag Interval", Range(1, 5)) = 2
+        _DragStrength("Drag Strength", Range(-0.08, 0.08)) = 0.004
 
+        [Space(20)]
+        _MainColor("Main Color", Color) = (0.5725, 0.7764, 1, 1)
+
+        [Space(20)]
+        _StripeColor("Strip Color", Color) = (0.8, 0.8, 0.8, 1)
+        _StripeWidth("Strip Width", Range(1, 10)) = 3
+
+        [Space(20)]
+        [NoScaleOffset]_FlowLightTex("Flow Light Texture", 2D) = "white" {}
+        _FlowLightSpeed("Flow Light Speed", Range(0.001, 5)) = 1
+        _SignalNoise("Signal Noise", Range(0, 1)) = 0.1
     }
 
     SubShader

@@ -26,10 +26,6 @@ namespace ArisStudio.Core
         float deltaTime,
             fps;
 
-        void Awake()
-        {
-        }
-
         void Update()
         {
             DisplayFPS();
@@ -57,13 +53,11 @@ namespace ArisStudio.Core
             }
         }
 
-
         public void PrintLoadLog(string type, string fileName, string nameId)
         {
             PrintLog($"Load <#ff0080>{type}</color>: <#8000ff>{fileName}</color> as <#00ff00>{nameId}</color>");
         }
 
-        // ReSharper disable Unity.PerformanceAnalysis
         /// <summary>
         /// Print message to Debug window.
         /// </summary>

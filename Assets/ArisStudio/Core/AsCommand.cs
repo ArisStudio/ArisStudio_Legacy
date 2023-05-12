@@ -5,30 +5,41 @@ using System.Text.RegularExpressions;
 
 namespace ArisStudio.Core
 {
+    /// <summary>
+    /// Aris Studio command parser.
+    /// </summary>
     public static class AsCommand
     {
+        /// <summary>
+        /// Parse a string of command.
+        /// </summary>
+        /// <param name="textCommand"></param>
+        /// <returns>An array of string of those command.</returns>
         public static string[] Parse(string textCommand)
         {
             /*
-            * Split command with space delimiter then return as array.
+            * Split command with space delimiter then return it as array.
             *
             * You can write a word without using single or double quote.
             * Example: txt Arona Hello
             *
             * But, you must use either single or double quote if
-            * you write a sentence that have 'Space' character.
+            * you write a sentence that have a 'Space' character.
             * Example: txt Arona 'Hello, Sensei.'
             *
-            * You can write a single or double quote in a word or
-            * sentence by escaping the character: txt Arona 'It\'s yummy.'
-            * or use double quote as delimiter: txt Arona "It's yummy."
+            * You can write a single ( ' ) or double ( " ) quote character
+            * in a word or a sentence by escaping the character...
+            * Example: txt Arona 'It\'s yummy.'
+            * or use the double quote as delimiter...
+            * Example: txt Arona "It's yummy."
             * and vice versa.
             *
             * Source: txt 'Arona' "Arona" "I'm, Arona." 'Say, "Hello"' 'You\'re'
-            * Result: ["txt", "'Arona'", "\"Arona\"", "\"I'm, Arona.\"", "'Say, "Hello"'", "'You\'re'"]
+            * Result: txt | 'Arona' | "Arona" | "I'm, Arona." | 'Say, "Hello"' | 'You\'re'
             */
+
             const string pattern = @"('[^'\\]*(?:\\.[^'\\]*)*')|(\""[^""\\]*(?:\\.[^""\\]*)*"")|(\S+)";
-            String[] textSplit = Regex
+            String[] splittedCommand = Regex
                 .Matches(textCommand, pattern)
                 .Cast<Match>()
                 .Select(m => m.Value)
@@ -36,30 +47,30 @@ namespace ArisStudio.Core
 
             /*
             * Normalize splitted text by removing either single or
-            * double quote at the start and end of the word.
+            * double quote at the start and the end of the word.
             * Also Unescape escaped character.
             *
-            * Using string.Trim() resulting in unexpected result, so
-            * I reconstruct it using string.Substring().
+            * Using string.Trim() resulting in some unexpected result,
+            * so we reconstruct it using string.Substring().
             *
-            * Source: txt 'Arona' "Arona" "I'm, Arona." 'Say, "Hello"' 'You\'re' // this is comment
-            * Result: ["txt", "Arona", "Arona", "I'm, Arona.", "Say, "Hello"", "You're"]
+            * Source: txt 'Arona' "Arona" "I'm, Arona." 'Say, "Hello"' 'You\'re'
+            * Result: txt | Arona | Arona | I'm, Arona. | Say, "Hello" | You're
             */
-            var finalCommand = new List<string>();
 
-            foreach (String str in textSplit)
+            List<string> finalCommand = new List<string>();
+
+            foreach (String item in splittedCommand)
             {
-                String cmd = str;
+                String cmd = item; // Clone the text first, so we can do other operations
 
+                // If the current text is "// (comment)", exit iteration.
                 if (cmd.Trim() == "//")
-                {
                     break;
-                }
 
-                if ((str.StartsWith("'") && str.EndsWith("'")) || (str.StartsWith("\"") && str.EndsWith("\"")))
+                if ((item.StartsWith("'") && item.EndsWith("'")) || (item.StartsWith("\"") && item.EndsWith("\"")))
                 {
-                    cmd = str.Substring(1, str.Length - 2);
-                    cmd = Regex.Unescape(cmd);
+                    cmd = item.Substring(1, item.Length - 2); // Reconstruct the text
+                    cmd = Regex.Unescape(cmd); // Unescape escaped character in text
                 }
 
                 finalCommand.Add(cmd);

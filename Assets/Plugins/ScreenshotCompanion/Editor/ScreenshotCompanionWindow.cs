@@ -1,12 +1,10 @@
 ﻿#if UNITY_EDITOR
-
-using UnityEngine;
-using UnityEditor;
 using System;
-using System.IO;
-using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using ScreenshotCompanionFramework;
+using UnityEditor;
+using UnityEngine;
 
 public class ScreenshotCompanionWindow : EditorWindow
 {
@@ -20,6 +18,7 @@ public class ScreenshotCompanionWindow : EditorWindow
     int captureSizeMultiplier = 1;
     Vector2 cutoutPosition;
     Vector2 cutoutSize;
+
     // GUIStyle cutoutBoxStyle = null;
     string customName = "";
     string customDirectory = "";
@@ -36,10 +35,21 @@ public class ScreenshotCompanionWindow : EditorWindow
     bool applicationPath = false;
 
     // type settings
-    enum FileType { PNG, JPG };
+    enum FileType
+    {
+        PNG,
+        JPG
+    };
+
     FileType fileType;
 
-    enum CaptureMethod { CaptureScreenshot, RenderTexture, Cutout };
+    enum CaptureMethod
+    {
+        CaptureScreenshot,
+        RenderTexture,
+        Cutout
+    };
+
     CaptureMethod captureMethod;
 
     // window menu entry
@@ -70,7 +80,14 @@ public class ScreenshotCompanionWindow : EditorWindow
     void OnGUI()
     {
         GUI.color = signatureColor;
-        if (GUILayout.Button("TOGGLE SETTINGS", "toolbarButton", GUILayout.MaxWidth(120), GUILayout.MinWidth(120)))
+        if (
+            GUILayout.Button(
+                "TOGGLE SETTINGS",
+                "toolbarButton",
+                GUILayout.MaxWidth(120),
+                GUILayout.MinWidth(120)
+            )
+        )
         {
             refreshRequests();
             foldoutSettings = !foldoutSettings;
@@ -85,37 +102,65 @@ public class ScreenshotCompanionWindow : EditorWindow
             EditorGUILayout.LabelField("CAPTURE SETTINGS", EditorStyles.boldLabel);
 
             GUI.color = signatureColor;
-            captureMethod = (ScreenshotCompanionWindow.CaptureMethod)EditorGUILayout.EnumPopup("capture method", captureMethod);
+            captureMethod = (ScreenshotCompanionWindow.CaptureMethod)
+                EditorGUILayout.EnumPopup("capture method", captureMethod);
 
             GUI.color = Color.white;
             if (captureMethod == ScreenshotCompanionWindow.CaptureMethod.Cutout)
             {
-                EditorGUILayout.HelpBox("This capture method is not supported in the Screenshot Companion Window. Please create an instance on a GameObject in your Scene.", MessageType.Info);
+                EditorGUILayout.HelpBox(
+                    "This capture method is not supported in the Screenshot Companion Window. Please create an instance on a GameObject in your Scene.",
+                    MessageType.Info
+                );
             }
             else if (captureMethod == ScreenshotCompanionWindow.CaptureMethod.RenderTexture)
             {
-                EditorGUILayout.HelpBox("This capture method creates a RenderTexture that captures any Camera's " +
-                "output in a custom resolution. This method also creates the sharpest upscaled images, but it can only use a single Camera.", MessageType.Info);
+                EditorGUILayout.HelpBox(
+                    "This capture method creates a RenderTexture that captures any Camera's "
+                        + "output in a custom resolution. This method also creates the sharpest upscaled images, but it can only use a single Camera.",
+                    MessageType.Info
+                );
 
                 EditorGUILayout.BeginHorizontal();
 
                 GUI.color = Color.white;
-                renderSizeMultiplier = EditorGUILayout.Slider("Size Multiplyer (float)", renderSizeMultiplier, 0.1f, 10f);
-                EditorGUILayout.LabelField(getResolution(), EditorStyles.boldLabel, GUILayout.MaxWidth(100));
+                renderSizeMultiplier = EditorGUILayout.Slider(
+                    "Size Multiplyer (float)",
+                    renderSizeMultiplier,
+                    0.1f,
+                    10f
+                );
+                EditorGUILayout.LabelField(
+                    getResolution(),
+                    EditorStyles.boldLabel,
+                    GUILayout.MaxWidth(100)
+                );
 
                 EditorGUILayout.EndHorizontal();
             }
             else
             {
-                EditorGUILayout.HelpBox("This capture method creates a screenshot that is upscaled by a rounded number multiplier. ", MessageType.Info);
+                EditorGUILayout.HelpBox(
+                    "This capture method creates a screenshot that is upscaled by a rounded number multiplier. ",
+                    MessageType.Info
+                );
 
                 singleCameraToggle();
 
                 EditorGUILayout.BeginHorizontal();
 
                 GUI.color = Color.white;
-                captureSizeMultiplier = EditorGUILayout.IntSlider("Size Multiplyer (int)", captureSizeMultiplier, 1, 10);
-                EditorGUILayout.LabelField(getResolution(), EditorStyles.boldLabel, GUILayout.MaxWidth(100));
+                captureSizeMultiplier = EditorGUILayout.IntSlider(
+                    "Size Multiplyer (int)",
+                    captureSizeMultiplier,
+                    1,
+                    10
+                );
+                EditorGUILayout.LabelField(
+                    getResolution(),
+                    EditorStyles.boldLabel,
+                    GUILayout.MaxWidth(100)
+                );
 
                 EditorGUILayout.EndHorizontal();
             }
@@ -135,19 +180,18 @@ public class ScreenshotCompanionWindow : EditorWindow
                 applicationPathToggle();
 
                 GUI.color = Color.white;
-                EditorGUILayout.SelectableLabel("Directory = " + getSaveDirectory(), GUILayout.MaxHeight(16));
-
+                EditorGUILayout.SelectableLabel(
+                    "Directory = " + getSaveDirectory(),
+                    GUILayout.MaxHeight(16)
+                );
 
                 EditorGUILayout.EndVertical();
 
                 EditorGUILayout.Space();
 
-
                 EditorGUILayout.BeginVertical(EditorStyles.helpBox);
 
                 EditorGUILayout.LabelField("FILE SETTINGS", EditorStyles.boldLabel);
-
-
 
                 customName = EditorGUILayout.TextField("Custom Name", customName);
 
@@ -157,26 +201,19 @@ public class ScreenshotCompanionWindow : EditorWindow
 
                 EditorGUILayout.Space();
 
-
-
                 fileTypeGUI();
 
                 EditorGUILayout.Space();
 
                 EditorGUILayout.EndVertical();
             }
-
         }
 
         if (captureMethod != ScreenshotCompanionWindow.CaptureMethod.Cutout)
         {
-
             EditorGUILayout.Space();
 
             GUI.color = signatureColor;
-
-
-
 
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
 
@@ -191,12 +228,21 @@ public class ScreenshotCompanionWindow : EditorWindow
                 GUI.color = Color.white;
                 EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
 
-                list[i].cam = (GameObject)EditorGUILayout.ObjectField(list[i].cam, typeof(GameObject), true);
+                list[i].cam = (GameObject)
+                    EditorGUILayout.ObjectField(list[i].cam, typeof(GameObject), true);
 
-                EditorGUI.BeginDisabledGroup(captureMethod == ScreenshotCompanionWindow.CaptureMethod.Cutout && !EditorApplication.isPlaying);
+                EditorGUI.BeginDisabledGroup(
+                    captureMethod == ScreenshotCompanionWindow.CaptureMethod.Cutout
+                        && !EditorApplication.isPlaying
+                );
                 if (list[i].cam != null)
                 {
-                    if (GUILayout.Button("USE " + list[i].cam.name, new GUIStyle(EditorStyles.miniButtonLeft)))
+                    if (
+                        GUILayout.Button(
+                            "USE " + list[i].cam.name,
+                            new GUIStyle(EditorStyles.miniButtonLeft)
+                        )
+                    )
                     {
                         refreshRequests();
                         if (captureMethod == CaptureMethod.RenderTexture)
@@ -225,7 +271,14 @@ public class ScreenshotCompanionWindow : EditorWindow
                 if (c.deleteQuestion)
                 {
                     GUI.color = Color.red;
-                    if (GUILayout.Button("YES?", new GUIStyle(EditorStyles.miniButtonRight), GUILayout.MaxWidth(45), GUILayout.MaxHeight(14)))
+                    if (
+                        GUILayout.Button(
+                            "YES?",
+                            new GUIStyle(EditorStyles.miniButtonRight),
+                            GUILayout.MaxWidth(45),
+                            GUILayout.MaxHeight(14)
+                        )
+                    )
                     {
                         refreshRequests();
                         Delete(i);
@@ -234,7 +287,14 @@ public class ScreenshotCompanionWindow : EditorWindow
                 else
                 {
                     GUI.color = (Color.red + Color.white * 2f) / 3f;
-                    if (GUILayout.Button("X", new GUIStyle(EditorStyles.miniButtonRight), GUILayout.MaxWidth(45), GUILayout.MaxHeight(14)))
+                    if (
+                        GUILayout.Button(
+                            "X",
+                            new GUIStyle(EditorStyles.miniButtonRight),
+                            GUILayout.MaxWidth(45),
+                            GUILayout.MaxHeight(14)
+                        )
+                    )
                     {
                         refreshRequests();
                         RequestDelete(i);
@@ -246,13 +306,17 @@ public class ScreenshotCompanionWindow : EditorWindow
 
             EditorGUILayout.EndVertical();
 
-
-
-
             EditorGUILayout.Space();
 
             GUI.color = signatureColor;
-            if (GUILayout.Button("ADD CAMERA", "toolbarButton", GUILayout.MaxWidth(120), GUILayout.MinWidth(120)))
+            if (
+                GUILayout.Button(
+                    "ADD CAMERA",
+                    "toolbarButton",
+                    GUILayout.MaxWidth(120),
+                    GUILayout.MinWidth(120)
+                )
+            )
             {
                 refreshRequests();
                 Create();
@@ -285,7 +349,10 @@ public class ScreenshotCompanionWindow : EditorWindow
 
         if (fallback)
         {
-            Debug.Log("Fallback to Application.CaptureScreenshot because a GameObject without Camera (or Camera group) was used. Screenshot saved to: " + fileName);
+            Debug.Log(
+                "Fallback to Application.CaptureScreenshot because a GameObject without Camera (or Camera group) was used. Screenshot saved to: "
+                    + fileName
+            );
         }
         else
         {
@@ -454,10 +521,14 @@ public class ScreenshotCompanionWindow : EditorWindow
 
         if (captureMethod == CaptureMethod.RenderTexture)
         {
-            return (int)(lastCam.pixelWidth * renderSizeMultiplier) + "x" + (int)(lastCam.pixelHeight * renderSizeMultiplier);
+            return (int)(lastCam.pixelWidth * renderSizeMultiplier)
+                + "x"
+                + (int)(lastCam.pixelHeight * renderSizeMultiplier);
         }
 
-        return lastCam.pixelWidth * captureSizeMultiplier + "x" + lastCam.pixelHeight * captureSizeMultiplier;
+        return lastCam.pixelWidth * captureSizeMultiplier
+            + "x"
+            + lastCam.pixelHeight * captureSizeMultiplier;
     }
 
     void singleCameraToggle()
@@ -531,14 +602,20 @@ public class ScreenshotCompanionWindow : EditorWindow
     {
         EditorGUILayout.BeginHorizontal();
 
-        GUI.color = fileType == ScreenshotCompanionWindow.FileType.JPG ? Color.white : (Color.grey + Color.white) / 2f;
+        GUI.color =
+            fileType == ScreenshotCompanionWindow.FileType.JPG
+                ? Color.white
+                : (Color.grey + Color.white) / 2f;
         if (GUILayout.Button("PNG", "toolbarButton"))
         {
             refreshRequests();
             fileType = ScreenshotCompanionWindow.FileType.PNG;
         }
 
-        GUI.color = fileType == ScreenshotCompanionWindow.FileType.JPG ? (Color.grey + Color.white) / 2f : Color.white;
+        GUI.color =
+            fileType == ScreenshotCompanionWindow.FileType.JPG
+                ? (Color.grey + Color.white) / 2f
+                : Color.white;
         if (GUILayout.Button("JPG", "toolbarButton"))
         {
             refreshRequests();
@@ -562,5 +639,4 @@ public class ScreenshotCompanionWindow : EditorWindow
         }
     }
 }
-
-#endif
+#endif // UNITY_EDITOR

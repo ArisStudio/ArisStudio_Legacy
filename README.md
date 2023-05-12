@@ -1,13 +1,12 @@
 # Aris Studio
 
 <div align="center">
-  <img src="./IMG_Aris_Studio_Logo.jpg" alt="Aris Studio logo" title="Aris Studio logo">
-  <sub>Logo made by <a href="https://b23.tv/RbW7CyF" title="無花果洋\_wzy">無花果洋\_wzy</a></sub>
-  <p><b>Make your own Blue Archive story</b></p>
-  <p>
-  Aris Studio is a fan-made tool to create <a href="https://bluearchive.nexon.com/home" title="Blue Archive">Blue Archive</a> story.
-  <br/>
-  It's provide a story teller similar to Blue Archive game, but with more added features.</p>
+    <img src="./IMG_Aris_Studio_Logo.jpg" alt="Aris Studio logo" title="Aris Studio logo">
+    <sub>Logo made by <a href="https://b23.tv/RbW7CyF" title="無花果洋\_wzy">無花果洋\_wzy</a></sub>
+    <p><b>Make your own Blue Archive story</b></p>
+    <p>Aris Studio is a fan-made tool to create <a href="https://bluearchive.nexon.com/home" title="Blue Archive">Blue Archive</a> story.</p>
+    <br/>
+    <p>It's provide a story teller similar to Blue Archive game, but with more rich features.</p>
 </div>
 
 ## Downloads
@@ -20,14 +19,13 @@
 
 ## How to Use
 
-- It is recommended to use [arisstudio-blockly](https://github.com/sanmusen214/arisstudio-blockly "Use arisstudio-blockly")
+> Recommended to use [arisstudio-blockly](https://github.com/sanmusen214/arisstudio-blockly "Visit arisstudio-blockly") to make story more easily.
 
-- Version 0.2
-
+- Version 0.2 (Legacy)
   - [中文文档](https://github.com/Tualin14/ArisStudio/wiki "Read Documentation in Chinese")
   - [Documentation](https://github.com/kiraio-moe/ArisStudio/wiki "Read Documentation in English")
 
-- Version 0.3(Under Construction)
+- Version 0.3 (Under Construction)
   - [中文文档](https://as.t14.me/docs/category/as-commands "Read Documentation in Chinese")
   - [Documentation](https://as.t14.me/en/docs/category/as-commands/ "Read Documentation in English")
 
@@ -41,7 +39,7 @@
 
 ## Contribute
 
-Before Sensei's making any contribution to Aris Studio, please read this [Contribution Guide](/CONTRIBUTING "Contribution Guide") first :)
+Before Sensei's making any contribution to Aris Studio, please read this [Contribution Guide](/CONTRIBUTING.md "Contribution Guide") first 😃
 
 ## Contributors
 

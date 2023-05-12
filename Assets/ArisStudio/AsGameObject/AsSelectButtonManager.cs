@@ -1,4 +1,5 @@
-﻿using ArisStudio.Core;
+﻿using System.Collections;
+using ArisStudio.Core;
 using ArisStudio.Utils;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,24 +8,24 @@ namespace ArisStudio.AsGameObject
 {
     public class AsSelectButtonManager : Singleton<AsSelectButtonManager>
     {
-        [Header("Select Button Audio")] [SerializeField]
-        private AudioSource selectButtonAudioSource;
+        [Header("Select Button Audio")]
+        [SerializeField] private AudioSource selectButtonAudioSource;
 
         [Header("Select Button 1")] [SerializeField]
         private GameObject selectButtonGo1;
 
         [SerializeField] private Text selectButtonText1;
 
-        [Header("Select Button 2")] [SerializeField]
-        private GameObject selectButtonGo21;
+        [Header("Select Button 2")]
+        [SerializeField] private GameObject selectButtonGo21;
 
         [SerializeField] private GameObject selectButtonGo22;
 
         [SerializeField] private Text selectBtnText21;
         [SerializeField] private Text selectBtnText22;
 
-        [Header("Select Button 3")] [SerializeField]
-        private GameObject selectButtonGo31;
+        [Header("Select Button 3")]
+        [SerializeField] private GameObject selectButtonGo31;
 
         [SerializeField] private GameObject selectButtonGo32;
         [SerializeField] private GameObject selectButtonGo33;
@@ -34,7 +35,11 @@ namespace ArisStudio.AsGameObject
         [SerializeField] private Text selectBtnText33;
 
         private string selectButtonTarget1, selectButtonTarget2, selectButtonTarget3;
+        int commandLength;
 
+        /// <summary>
+        /// Initialize select buttons.
+        /// </summary>
         public void AsSelectButtonInit()
         {
             selectButtonGo1.SetActive(false);
@@ -58,21 +63,10 @@ namespace ArisStudio.AsGameObject
             selectButtonTarget1 = selectButtonTarget2 = selectButtonTarget3 = "";
         }
 
-        public void ClickButton(int btnNum)
-        {
-            selectButtonAudioSource.Play();
-
-            string selectTarget = btnNum switch
-            {
-                2 => selectButtonTarget2,
-                3 => selectButtonTarget3,
-                _ => selectButtonTarget1
-            };
-
-            AsSelectButtonInit();
-            MainManager.Instance.JumpTarget(selectTarget);
-        }
-
+        /// <summary>
+        /// Setting up select buttons.
+        /// </summary>
+        /// <param name="command"></param>
         public void SetButton(string[] command)
         {
             AsSelectButtonInit();
@@ -106,6 +100,84 @@ namespace ArisStudio.AsGameObject
                     selectButtonTarget1 = command[2];
                     break;
             }
+
+            commandLength = command.Length;
+            AutoSelect(commandLength); // determined if auto select button will be executed or not
+        }
+
+        /// <summary>
+        /// Do something after clicking the select button.
+        /// </summary>
+        /// <param name="buttonNumber"></param>
+        public void ClickButton(int buttonNumber)
+        {
+            selectButtonAudioSource.Play();
+
+            string selectTarget = buttonNumber switch
+            {
+                2 => selectButtonTarget2,
+                3 => selectButtonTarget3,
+                _ => selectButtonTarget1
+            };
+
+            MainManager.Instance.IsSelectChoice = false;
+
+            AsSelectButtonInit();
+            MainManager.Instance.JumpTarget(selectTarget);
+        }
+
+        /// <summary>
+        /// Auto choose select button.
+        /// </summary>
+        /// <param name="commandLength"></param>
+        private void AutoSelect(int commandLength)
+        {
+            StartCoroutine(AutoSelectRoutine(commandLength));
+        }
+
+        /// <summary>
+        /// When the select button has shown up, but Auto button isn't already activated.
+        /// (Automatically, the AutoSelect() that we put in SetButton() will not get executed).
+        /// NOTE: Add this to Auto -> Activate button OnClick.
+        /// </summary>
+        public void AutoSelectLate()
+        {
+            if (MainManager.Instance.IsAuto && MainManager.Instance.IsSelectChoice)
+                AutoSelect(commandLength);
+        }
+
+        /// <summary>
+        /// Stop auto select button routine from being executed.
+        /// NOTE: Add this to Auto -> Deactivate button OnClick.
+        /// </summary>S
+        public void AutoSelectLateStop()
+        {
+            MainManager.Instance.IsAuto = false;
+
+            if (MainManager.Instance.IsSelectChoice)
+                StopAllCoroutines();
+                // StopCoroutine(AutoSelectRoutine(commandLength));
+        }
+
+        /// <summary>
+        /// Auto choose select button main logic.
+        /// </summary>
+        /// <param name="commandLength"></param>
+        /// <returns></returns>
+        private IEnumerator AutoSelectRoutine(int commandLength)
+        {
+            /*
+            * If this Auto and the the select button is only one.
+            * NOTE: Don't add MainManager.Instance.IsSelectChoice as the condition,
+            * even though the condition is met, however the below function will not
+            * get executed. Don't know why :(
+            */
+            if (MainManager.Instance.IsAuto && commandLength == 3)
+            {
+                yield return new WaitForSeconds(MainManager.Instance.autoTime);
+                ClickButton(1);
+            }
+            else yield return null;
         }
     }
 }

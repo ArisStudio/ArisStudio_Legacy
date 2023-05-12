@@ -83,7 +83,6 @@ namespace RichText
             return consumedLength < originalText.Length;
         }
 
-        // ReSharper disable Unity.PerformanceAnalysis
         // Return if real character is consumed
         // If line's last part is closing tag, this function return false when consumed last closing tag.
         public bool Consume()
@@ -167,10 +166,7 @@ namespace RichText
                         Debug.LogWarning("Empty tag name");
                     }
 
-                    tagStack.Push(new RichTextTag
-                    {
-                        tagName = tagName
-                    });
+                    tagStack.Push(new RichTextTag { tagName = tagName });
                     return;
                 }
 
@@ -221,7 +217,9 @@ namespace RichText
 
                     if (tagStack.Peek().tagName != tagName)
                     {
-                        Debug.LogError("Could not pop tag " + tagName + " expeted " + tagStack.Peek().tagName);
+                        Debug.LogError(
+                            "Could not pop tag " + tagName + " expeted " + tagStack.Peek().tagName
+                        );
                     }
 
                     tagStack.Pop();

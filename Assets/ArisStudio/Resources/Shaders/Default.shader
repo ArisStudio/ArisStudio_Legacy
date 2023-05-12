@@ -2,10 +2,10 @@
 {
     Properties
     {
-        _FillColor ("FillColor", Color) = (1,1,1,1)
+        _FillColor ("Fill Color", Color) = (0, 0, 0, 1)
         _Highlight ("Highlight", Range(0, 1)) = 0
-        [NoScaleOffset] _MainTex ("MainTex", 2D) = "white" {}
-        _Cutoff ("Shadow alpha cutoff", Range(0,1)) = 0.1
+        [NoScaleOffset] _MainTex ("Main Texture", 2D) = "white" {}
+        _Cutoff ("Shadow Alpha Cutoff", Range(0,1)) = 0.1
     }
     SubShader
     {

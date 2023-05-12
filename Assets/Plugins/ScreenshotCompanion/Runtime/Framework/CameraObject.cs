@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
+using UnityEngine;
 
 namespace ScreenshotCompanionFramework
 {
@@ -7,7 +7,9 @@ namespace ScreenshotCompanionFramework
     public class CameraObject
     {
         public GameObject cam;
-        [HideInInspector] public bool deleteQuestion = false;
+
+        [HideInInspector]
+        public bool deleteQuestion = false;
         public KeyCode hotkey = KeyCode.None;
     }
 }

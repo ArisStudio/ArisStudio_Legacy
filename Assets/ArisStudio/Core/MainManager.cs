@@ -4,12 +4,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ArisStudio.AsGameObject;
+using ArisStudio.UI;
 using ArisStudio.Utils;
 using UnityEngine;
+#if ENABLE_NEW_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 using UnityEngine.Networking;
 
 namespace ArisStudio.Core
 {
+    /// <summary>
+    /// Main logic that control the story flow.
+    /// </summary>
+    [AddComponentMenu("Aris Studio/Core/Main Manager [Singleton]")]
     public class MainManager : Singleton<MainManager>
     {
         private AsCharacterManager asCharacterManager;
@@ -19,57 +27,50 @@ namespace ArisStudio.Core
         private AsDialogueManager asDialogueManager;
         private AsComponentsManager asComponentsManager;
         private AsSelectButtonManager asSelectButtonManager;
+        SettingsMenuUI settingsMenu;
 
-        private int asCommandListStrength;
+        private int asCommandListLength;
         private List<string> asCommandList = new List<string>();
 
         // List
-        private readonly Dictionary<string, int> targetList = new Dictionary<string, int>();
-        private readonly Dictionary<string, string> nameIdList = new Dictionary<string, string>();
+        private readonly Dictionary<string, int> targetList = new Dictionary<string, int>(); // targetName, lineIndex (i.e, t1, 7)
+        private readonly Dictionary<string, string> nameIdList = new Dictionary<string, string>(); // aliasName, assetType (i.e, hifumi, char)
         private readonly Dictionary<string, string> aliasList = new Dictionary<string, string>();
 
-        public bool IsPlaying { private get; set; }
+        // This UDictionary only for debugging purposes
+        [UDictionary.Split(85, 15)]
+        [Header("DEBUG")]
+        [SerializeField] private TargetList m_TargetList;
+        [Serializable] public class TargetList : UDictionary<string, int> { }
 
-        // Auto Play
-        public bool IsAuto { private get; set; }
-        private float autoTimer;
-        private float autoTime = 2.3f;
+        [UDictionary.Split(80, 20)]
+        [SerializeField] private NameIdList m_NameIdList;
+        [Serializable] public class NameIdList : UDictionary<string, string> { }
 
+        [UDictionary.Split(30, 70)]
+        [SerializeField] private AliasList m_AliasList;
+        [Serializable] public class AliasList : UDictionary<string, string> { }
+
+        // Play state
+        [SerializeField] KeyCode[] m_ProgressStoryKeys = { KeyCode.Space, KeyCode.Return, KeyCode.RightArrow };
+        public bool IsPlaying { get; private set; }
+        public bool IsSelectChoice { get; set; } // Does selecting a choice button?
+
+        // Autoplay
+        public bool IsAuto { get; set; }
+        public float autoTime { get; private set; } = 2.3f;
+        public float autoTimer { get; set; }
+
+        // Wait state
         private bool isWait;
-        private float waitTimer;
         private float waitTime;
+        private float waitTimer;
 
         private int runLineIndex;
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space) && !IsPlaying) IsPlaying = true;
+        #region Unity built-in methods
 
-            if (isWait)
-            {
-                waitTimer += Time.deltaTime;
-                if (waitTimer < waitTime) return;
-
-                waitTimer = 0;
-                autoTimer = 0;
-                isWait = false;
-                IsPlaying = true;
-            }
-
-            if (IsAuto)
-            {
-                autoTimer += Time.deltaTime;
-                if (autoTimer >= autoTime)
-                {
-                    autoTimer = 0;
-                    IsPlaying = true;
-                }
-            }
-
-            if (IsPlaying && runLineIndex < asCommandListStrength) RunAsCommand(asCommandList[runLineIndex]);
-        }
-
-        private void Start()
+        private void Awake()
         {
             asCharacterManager = AsCharacterManager.Instance;
             asAudioManager = AsAudioManager.Instance;
@@ -78,12 +79,66 @@ namespace ArisStudio.Core
             asDialogueManager = AsDialogueManager.Instance;
             asComponentsManager = AsComponentsManager.Instance;
             asSelectButtonManager = AsSelectButtonManager.Instance;
+            settingsMenu = FindObjectOfType<SettingsMenuUI>();
         }
 
+        private void Update()
+        {
+            ProgressStoryInputs();
+
+            if (IsAuto)
+            {
+                autoTimer += Time.deltaTime;
+
+                if (autoTimer >= autoTime || runLineIndex == 0)
+                {
+                    autoTimer = 0;
+                    IsPlaying = true;
+                }
+            }
+
+            if (IsSelectChoice)
+            {
+                IsPlaying = false;
+                return;
+            }
+
+            if (isWait)
+            {
+                waitTimer += Time.deltaTime;
+                if (waitTimer < waitTime || waitTime <= -1) return; // -1 means unlimited
+
+                waitTimer = 0;
+                autoTimer = 0;
+                isWait = false;
+                IsPlaying = true;
+            }
+
+            if (IsPlaying && runLineIndex < asCommandListLength)
+                RunAsCommand(asCommandList[runLineIndex]);
+
+            if (runLineIndex == asCommandListLength)
+            {
+                IsPlaying = false;
+                autoTimer = 0;
+                waitTime = 0;
+            }
+        }
+
+        #endregion // Unity built-in methods
+
+        /// <summary>
+        /// Initialize before starting the story.
+        /// </summary>
         private void Initialize()
         {
             nameIdList.Clear();
             targetList.Clear();
+            aliasList.Clear();
+
+            m_TargetList.Clear();
+            m_NameIdList.Clear();
+            m_AliasList.Clear();
 
             asCharacterManager.AsCharacterInit();
             asAudioManager.AsAudioInit();
@@ -95,40 +150,94 @@ namespace ArisStudio.Core
 
             // Play State
             IsPlaying = false;
+            IsSelectChoice = false;
+            autoTimer = 0;
+            isWait = false;
+            waitTime = 0;
+            waitTimer = 0;
             runLineIndex = 0;
 
             DebugConsole.Instance.PrintLog("\n<#ffa500>Initialize</color>");
         }
 
+        /// <summary>
+        /// Load a story.
+        /// </summary>
         public void LoadStory()
         {
-            // StartCoroutine(SetTextData(Path.Combine(textDataPath, $"{loadTxtInputField.text}.txt")));
             StartCoroutine(LoadStory(SettingsManager.Instance.currentStoryFilePath));
         }
 
+        /// <summary>
+        /// Switch to another story from the same directory or a subdirectory of the currently running story.
+        /// </summary>
+        /// <param name="storyFileName"></param>
         private void SwitchStory(string storyFileName)
         {
-            StartCoroutine(LoadStory(Path.Combine(SettingsManager.Instance.currentStoryFilePath, storyFileName)));
+            StartCoroutine(LoadStory(Path.Combine(Path.GetDirectoryName(SettingsManager.Instance.currentStoryFilePath), storyFileName)));
         }
 
-        // ReSharper disable Unity.PerformanceAnalysis
+        /// <summary>
+        /// Load a story file.
+        /// </summary>
+        /// <param name="storyPath"></param>
+        /// <returns></returns>
         private IEnumerator LoadStory(string storyPath)
         {
             UnityWebRequest www = UnityWebRequest.Get(storyPath);
             yield return www.SendWebRequest();
-            // textsData = www.downloadHandler.text.Split('\n');
-            asCommandList = www.downloadHandler.text.Split('\n').ToList();
-            asCommandList.RemoveAll(string.IsNullOrEmpty);
 
-            // textsLength = textsData.Length;
-            asCommandListStrength = asCommandList.Count;
-            // PreLoad(textsData);
+            asCommandList = www.downloadHandler.text.Split('\n').ToList();
+            asCommandList.RemoveAll(string.IsNullOrEmpty); // remove item that's empty
+            asCommandList = asCommandList.Where(item => !item.StartsWith("//")).ToList(); /// remove item that start with '//'
+
+            asCommandListLength = asCommandList.Count;
             PreLoad(asCommandList.ToArray());
 
-            DebugConsole.Instance.PrintLog($"Load Story Data: <#00ff00>{storyPath}</color>");
+            DebugConsole.Instance.PrintLog($"Load Story: <#00ff00>{storyPath}</color>");
         }
 
-        // ReSharper disable Unity.PerformanceAnalysis
+        public void ProgressStory()
+        {
+            if (!IsPlaying) IsPlaying = true;
+        }
+
+        /// <summary>
+        /// Progress the story using the defined inputs.
+        /// </summary>
+        private void ProgressStoryInputs()
+        {
+            if (!IsPlaying)
+            {
+#if ENABLE_NEW_INPUT_SYSTEM
+                foreach (KeyCode key in m_ProgressStoryKeys)
+                    if (Keyboard.current.GetKeyDown(key)) IsPlaying = true;
+#else
+                foreach (KeyCode key in m_ProgressStoryKeys)
+                    if (Input.GetKeyDown(key)) IsPlaying = true;
+#endif
+            }
+        }
+
+        /// <summary>
+        /// Switch Auto state, activate/deactivate.
+        /// </summary>
+        /// <param name="state"></param>
+        public void AutoState(bool state)
+        {
+            autoTimer = 0; // reset the timer that maybe used by another operation.
+            IsAuto = state;
+
+            // Change the visual according to the AutoState
+            if (settingsMenu == null || settingsMenu.m_AutoActivate == null || settingsMenu.m_AutoDeactivate == null) return;
+            settingsMenu.m_AutoActivate.gameObject.SetActive(!state);
+            settingsMenu.m_AutoDeactivate.gameObject.SetActive(state);
+        }
+
+        /// <summary>
+        /// Run a command from asCommandList.
+        /// </summary>
+        /// <param name="asCommand"></param>
         public void RunAsCommand(string asCommand)
         {
             try
@@ -148,68 +257,91 @@ namespace ArisStudio.Core
             }
         }
 
-        public void PreLoad(string text)
+        /// <summary>
+        /// Run corresponding functions for each command that start with "load".
+        /// </summary>
+        /// <param name="loadCommand"></param>
+        public void PreLoad(string loadCommand)
         {
-            var asCommand = AsCommand.Parse(text);
+            /*
+            * Examples:
+            * load spr hifumi hifumi_spr
+            * load bg Classroom Classroom.jpg
+            * load bgm MainTheme theme.ogg
+            */
 
+            string[] asCommand = AsCommand.Parse(loadCommand);
+
+            // spr, bg, bgm...
             switch (asCommand[1])
             {
-                case "spr":
+                // Character
+                case "spr": // default spr
                     asCharacterManager.LoadAsCharacter(asCommand, false);
                     nameIdList.Add(asCommand[2], "char");
+                    m_NameIdList.Add(asCommand[2], "char");
                     break;
                 case "sprC": // Legacy
-                case "sprc":
+                case "sprc": // communicate spr
                 case "spr_c":
                     asCharacterManager.LoadAsCharacter(asCommand, true);
                     nameIdList.Add(asCommand[2], "char");
+                    m_NameIdList.Add(asCommand[2], "char");
                     break;
 
+                // Image
                 case "bg":
                 case "mg":
                 case "fg":
                     asImageManager.LoadAsImage(asCommand, asCommand[1]);
                     nameIdList.Add(asCommand[2], "image");
+                    m_NameIdList.Add(asCommand[2], "image");
                     break;
 
+                // Audio
                 case "bgm":
                 case "sfx":
                     asAudioManager.LoadAsAudio(asCommand, asCommand[1]);
                     nameIdList.Add(asCommand[2], "audio");
+                    m_NameIdList.Add(asCommand[2], "audio");
                     break;
             }
         }
 
-        private void PreLoad(string[] texts)
+        /// <summary>
+        /// Fire up initialization and preload.
+        /// </summary>
+        /// <param name="asCommands"></param>
+        private void PreLoad(string[] asCommands)
         {
             Initialize();
 
-            for (int lineIndex = 0; lineIndex < texts.Length; lineIndex++)
+            // For every command...
+            for (int lineIndex = 0; lineIndex < asCommands.Length; lineIndex++)
             {
-                string text = texts[lineIndex];
-
-                foreach (var kv in aliasList.Where(kv => text.Contains(kv.Key)))
-                {
-                    text = text.Replace(kv.Key, kv.Value);
-                }
-
-                var command = AsCommand.Parse(text);
+                string asCommand = asCommands[lineIndex];
+                string[] command = AsCommand.Parse(asCommand);
 
                 switch (command[0])
                 {
                     case "load":
-                        PreLoad(text);
+                        PreLoad(asCommand);
                         break;
                     case "target":
-                        targetList.Add(command[1], lineIndex);
+                        targetList.Add(command[1], lineIndex); // key: target name, value: line index
+                        m_TargetList.Add(command[1], lineIndex); // debug list
                         break;
                     case "alias":
-                        aliasList.Add(command[1], command[2]);
+                        aliasList.Add(command[1], command[2]); // slisd name, alias content
+                        m_AliasList.Add(command[1], command[2]); // Debug list
                         break;
                 }
             }
         }
-
+        /// <summary>
+        /// Jump to specific a target.
+        /// </summary>
+        /// <param name="targetName"></param>
         public void JumpTarget(string targetName)
         {
             runLineIndex = targetList[targetName];
@@ -218,30 +350,45 @@ namespace ArisStudio.Core
             IsPlaying = true;
         }
 
+        /// <summary>
+        /// Show all defined targets. Debugging only.
+        /// </summary>
         private void ShowAllTargets()
         {
             foreach (KeyValuePair<string, int> target in targetList)
                 DebugConsole.Instance.PrintLog($"Target: <#00ff00>{target.Key}</color> at line <#00ff00>{target.Value}</color>");
         }
 
-        public void SolveCommand(string text)
+        /// <summary>
+        /// Resolve a command and do their corresponding function.
+        /// </summary>
+        /// <param name="textCommand"></param>
+        public void SolveCommand(string textCommand)
         {
-            if (text.Trim() == string.Empty || text.StartsWith("//") || text.StartsWith("load")) return;
+            if (textCommand.Trim() == string.Empty || textCommand.StartsWith("//") || textCommand.StartsWith("load")) return;
 
-            if (text.StartsWith("="))
+            if (textCommand.StartsWith("="))
             {
                 IsPlaying = false;
                 return;
             }
 
 #if UNITY_EDITOR
-            Debug.Log($"Command: {text}");
+            Debug.Log($"Command: {textCommand}");
 #endif
-            var command = AsCommand.Parse(text);
 
-            if (nameIdList.ContainsKey(command[0])) text = $"{nameIdList[command[0]]} {text}";
+            string[] command = AsCommand.Parse(textCommand);
 
-            command = AsCommand.Parse(text);
+            if (nameIdList.ContainsKey(command[0]))
+                textCommand = $"{nameIdList[command[0]]} {textCommand}";
+
+            foreach (KeyValuePair<string, string> alias in aliasList.Where(alias => textCommand.Contains(alias.Key)))
+            {
+                // if current command contain alias name, replace the command with the alias value.
+                textCommand = textCommand.Replace(alias.Key, alias.Value);
+            }
+
+            command = AsCommand.Parse(textCommand);
 
             switch (command[0])
             {
@@ -267,7 +414,7 @@ namespace ArisStudio.Core
                 // select commands
                 case "select":
                     asSelectButtonManager.SetButton(command);
-                    IsPlaying = false;
+                    IsSelectChoice = true;
                     break;
 
                 // dialogue commands

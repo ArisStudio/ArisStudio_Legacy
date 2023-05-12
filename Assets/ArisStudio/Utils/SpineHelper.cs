@@ -24,8 +24,8 @@ namespace ArisStudio.Utils
             skeletonDataField.SetValue(skeletonDataAsset, skeletonData);
             stateDataField.SetValue(skeletonDataAsset, stateData);
 
-            // Set the value of skeletonJSON to let SkeletonDataAsset.cs 114:if (skeletonJSON == null) is false
-            skeletonDataAsset.skeletonJSON = new TextAsset("ArisStudio");
+            // Set a dummy value to skeletonJSON to avoid unexpected errors.
+            skeletonDataAsset.skeletonJSON = new TextAsset("Aris Studio");
 
             // Return the SkeletonDataAsset
             return skeletonDataAsset;

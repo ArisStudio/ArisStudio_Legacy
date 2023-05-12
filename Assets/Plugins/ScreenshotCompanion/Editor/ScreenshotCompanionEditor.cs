@@ -1,16 +1,16 @@
 ﻿#if UNITY_EDITOR
-
-using UnityEngine;
-using System.Collections;
-using UnityEditor;
+using ScreenshotCompanionCore;
 using ScreenshotCompanionFramework;
+using UnityEditor;
+using UnityEngine;
 
 // ScreenshotCompanion by The Topicbird - talk@thetopicbird.com
 
 [CustomEditor(typeof(ScreenshotCompanion))]
 public class ScreenshotCompanionEditor : Editor
 {
-    [SerializeField] ScreenshotCompanion script;
+    [SerializeField]
+    ScreenshotCompanion script;
 
     void OnEnable()
     {
@@ -38,7 +38,14 @@ public class ScreenshotCompanionEditor : Editor
         EditorGUILayout.Space();
 
         GUI.color = script.settings.signatureColor;
-        if (GUILayout.Button("TOGGLE SETTINGS", "toolbarButton", GUILayout.MaxWidth(120), GUILayout.MinWidth(120)))
+        if (
+            GUILayout.Button(
+                "TOGGLE SETTINGS",
+                "toolbarButton",
+                GUILayout.MaxWidth(120),
+                GUILayout.MinWidth(120)
+            )
+        )
         {
             refreshRequests();
             script.foldoutSettings = !script.foldoutSettings;
@@ -53,49 +60,84 @@ public class ScreenshotCompanionEditor : Editor
             EditorGUILayout.LabelField("CAPTURE SETTINGS", EditorStyles.boldLabel);
 
             GUI.color = script.settings.signatureColor;
-            script.settings.captureMethod = (ScreenshotCompanion.CaptureMethod)EditorGUILayout.EnumPopup("capture method", script.settings.captureMethod);
+            script.settings.captureMethod = (ScreenshotCompanion.CaptureMethod)
+                EditorGUILayout.EnumPopup("capture method", script.settings.captureMethod);
 
             GUI.color = Color.white;
             if (script.settings.captureMethod == ScreenshotCompanion.CaptureMethod.Cutout)
             {
-                EditorGUILayout.HelpBox("This capture method will take any part of the current Game View and save it pixel by pixel. Not supported in Edit Mode.", MessageType.Info);
+                EditorGUILayout.HelpBox(
+                    "This capture method will take any part of the current Game View and save it pixel by pixel. Not supported in Edit Mode.",
+                    MessageType.Info
+                );
 
                 singleCameraToggle();
 
                 GUI.color = Color.white;
-                script.settings.cutoutPosition = EditorGUILayout.Vector2Field("Cutout Position", script.settings.cutoutPosition);
-                script.settings.cutoutSize = EditorGUILayout.Vector2Field("Cutout Size", script.settings.cutoutSize);
+                script.settings.cutoutPosition = EditorGUILayout.Vector2Field(
+                    "Cutout Position",
+                    script.settings.cutoutPosition
+                );
+                script.settings.cutoutSize = EditorGUILayout.Vector2Field(
+                    "Cutout Size",
+                    script.settings.cutoutSize
+                );
             }
-            else if (script.settings.captureMethod == ScreenshotCompanion.CaptureMethod.RenderTexture)
+            else if (
+                script.settings.captureMethod == ScreenshotCompanion.CaptureMethod.RenderTexture
+            )
             {
-                EditorGUILayout.HelpBox("This capture method creates a RenderTexture that captures any Camera's " +
-                "output in a custom resolution. This method also creates the sharpest upscaled images, but it can only use a single Camera.", MessageType.Info);
+                EditorGUILayout.HelpBox(
+                    "This capture method creates a RenderTexture that captures any Camera's "
+                        + "output in a custom resolution. This method also creates the sharpest upscaled images, but it can only use a single Camera.",
+                    MessageType.Info
+                );
 
                 EditorGUILayout.BeginHorizontal();
 
                 GUI.color = Color.white;
-                script.settings.renderSizeMultiplier = EditorGUILayout.Slider("Size Multiplyer (float)", script.settings.renderSizeMultiplier, 0.1f, 10f);
-                EditorGUILayout.LabelField(script.getResolution(), EditorStyles.boldLabel, GUILayout.MaxWidth(100));
+                script.settings.renderSizeMultiplier = EditorGUILayout.Slider(
+                    "Size Multiplyer (float)",
+                    script.settings.renderSizeMultiplier,
+                    0.1f,
+                    10f
+                );
+                EditorGUILayout.LabelField(
+                    script.getResolution(),
+                    EditorStyles.boldLabel,
+                    GUILayout.MaxWidth(100)
+                );
 
                 EditorGUILayout.EndHorizontal();
             }
             else
             {
-                EditorGUILayout.HelpBox("This capture method creates a screenshot that is upscaled by a rounded number multiplier. ", MessageType.Info);
+                EditorGUILayout.HelpBox(
+                    "This capture method creates a screenshot that is upscaled by a rounded number multiplier. ",
+                    MessageType.Info
+                );
 
                 singleCameraToggle();
 
                 EditorGUILayout.BeginHorizontal();
 
                 GUI.color = Color.white;
-                script.settings.captureSizeMultiplier = EditorGUILayout.IntSlider("Size Multiplyer (int)", script.settings.captureSizeMultiplier, 1, 10);
-                EditorGUILayout.LabelField(script.getResolution(), EditorStyles.boldLabel, GUILayout.MaxWidth(100));
+                script.settings.captureSizeMultiplier = EditorGUILayout.IntSlider(
+                    "Size Multiplyer (int)",
+                    script.settings.captureSizeMultiplier,
+                    1,
+                    10
+                );
+                EditorGUILayout.LabelField(
+                    script.getResolution(),
+                    EditorStyles.boldLabel,
+                    GUILayout.MaxWidth(100)
+                );
 
                 EditorGUILayout.EndHorizontal();
             }
 
             EditorGUILayout.EndVertical();
-
 
             EditorGUILayout.Space();
 
@@ -103,34 +145,37 @@ public class ScreenshotCompanionEditor : Editor
 
             EditorGUILayout.LabelField("DIRECTORY SETTINGS", EditorStyles.boldLabel);
 
-            script.settings.customDirectoryName = EditorGUILayout.TextField("Custom Name", script.settings.customDirectoryName);
+            script.settings.customDirectoryName = EditorGUILayout.TextField(
+                "Custom Name",
+                script.settings.customDirectoryName
+            );
 
             applicationPathToggle();
 
             GUI.color = Color.white;
-            EditorGUILayout.SelectableLabel("Directory = " + script.getSaveDirectory(), GUILayout.MaxHeight(16));
-
+            EditorGUILayout.SelectableLabel(
+                "Directory = " + script.getSaveDirectory(),
+                GUILayout.MaxHeight(16)
+            );
 
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.Space();
 
-
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
 
             EditorGUILayout.LabelField("FILE SETTINGS", EditorStyles.boldLabel);
 
-
-
-            script.settings.customFileName = EditorGUILayout.TextField("Custom Name", script.settings.customFileName);
+            script.settings.customFileName = EditorGUILayout.TextField(
+                "Custom Name",
+                script.settings.customFileName
+            );
 
             fileName();
 
             EditorGUILayout.LabelField("File Name = " + script.getFileName(script.lastCamID));
 
             EditorGUILayout.Space();
-
-
 
             fileType();
 
@@ -142,7 +187,6 @@ public class ScreenshotCompanionEditor : Editor
         EditorGUILayout.Space();
 
         GUI.color = script.settings.signatureColor;
-
 
         EditorGUILayout.BeginVertical(EditorStyles.helpBox);
 
@@ -157,19 +201,32 @@ public class ScreenshotCompanionEditor : Editor
             GUI.color = Color.white;
             EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
 
-            script.list[i].cam = (GameObject)EditorGUILayout.ObjectField(script.list[i].cam, typeof(GameObject), true);
+            script.list[i].cam = (GameObject)
+                EditorGUILayout.ObjectField(script.list[i].cam, typeof(GameObject), true);
 
             EditorGUI.BeginDisabledGroup(script.list[i].cam == null);
-            script.list[i].hotkey = (KeyCode)EditorGUILayout.EnumPopup(script.list[i].hotkey, GUILayout.MaxWidth(60));
+            script.list[i].hotkey = (KeyCode)
+                EditorGUILayout.EnumPopup(script.list[i].hotkey, GUILayout.MaxWidth(60));
             EditorGUI.EndDisabledGroup();
 
-            EditorGUI.BeginDisabledGroup(script.settings.captureMethod == ScreenshotCompanion.CaptureMethod.Cutout && !EditorApplication.isPlaying);
+            EditorGUI.BeginDisabledGroup(
+                script.settings.captureMethod == ScreenshotCompanion.CaptureMethod.Cutout
+                    && !EditorApplication.isPlaying
+            );
             if (script.list[i].cam != null)
             {
-                if (GUILayout.Button("USE " + script.list[i].cam.name, new GUIStyle(EditorStyles.miniButtonLeft)))
+                if (
+                    GUILayout.Button(
+                        "USE " + script.list[i].cam.name,
+                        new GUIStyle(EditorStyles.miniButtonLeft)
+                    )
+                )
                 {
                     refreshRequests();
-                    if (script.settings.captureMethod == ScreenshotCompanion.CaptureMethod.RenderTexture)
+                    if (
+                        script.settings.captureMethod
+                        == ScreenshotCompanion.CaptureMethod.RenderTexture
+                    )
                     {
                         Camera attachedCam = script.list[i].cam.GetComponent<Camera>();
                         if (attachedCam == null)
@@ -181,7 +238,10 @@ public class ScreenshotCompanionEditor : Editor
                             script.CaptureRenderTexture(attachedCam, i);
                         }
                     }
-                    else if (script.settings.captureMethod == ScreenshotCompanion.CaptureMethod.CaptureScreenshot)
+                    else if (
+                        script.settings.captureMethod
+                        == ScreenshotCompanion.CaptureMethod.CaptureScreenshot
+                    )
                     {
                         script.CaptureScreenshots(i, false);
                     }
@@ -200,7 +260,14 @@ public class ScreenshotCompanionEditor : Editor
             if (c.deleteQuestion)
             {
                 GUI.color = script.settings.signatureColor;
-                if (GUILayout.Button("YES?", new GUIStyle(EditorStyles.miniButtonRight), GUILayout.MaxWidth(45), GUILayout.MaxHeight(14)))
+                if (
+                    GUILayout.Button(
+                        "YES?",
+                        new GUIStyle(EditorStyles.miniButtonRight),
+                        GUILayout.MaxWidth(45),
+                        GUILayout.MaxHeight(14)
+                    )
+                )
                 {
                     refreshRequests();
                     script.Delete(i);
@@ -209,7 +276,14 @@ public class ScreenshotCompanionEditor : Editor
             else
             {
                 GUI.color = (script.settings.signatureColor + Color.white * 2f) / 3f;
-                if (GUILayout.Button("X", new GUIStyle(EditorStyles.miniButtonRight), GUILayout.MaxWidth(45), GUILayout.MaxHeight(14)))
+                if (
+                    GUILayout.Button(
+                        "X",
+                        new GUIStyle(EditorStyles.miniButtonRight),
+                        GUILayout.MaxWidth(45),
+                        GUILayout.MaxHeight(14)
+                    )
+                )
                 {
                     refreshRequests();
                     script.RequestDelete(i);
@@ -224,7 +298,14 @@ public class ScreenshotCompanionEditor : Editor
         EditorGUILayout.Space();
 
         GUI.color = script.settings.signatureColor;
-        if (GUILayout.Button("ADD CAMERA", "toolbarButton", GUILayout.MaxWidth(120), GUILayout.MinWidth(120)))
+        if (
+            GUILayout.Button(
+                "ADD CAMERA",
+                "toolbarButton",
+                GUILayout.MaxWidth(120),
+                GUILayout.MinWidth(120)
+            )
+        )
         {
             refreshRequests();
             script.Create();
@@ -297,7 +378,9 @@ public class ScreenshotCompanionEditor : Editor
             script.settings.includeDate = !script.settings.includeDate;
         }
 
-        GUI.color = script.settings.includeResolution ? (Color.grey + Color.white) / 2f : Color.white;
+        GUI.color = script.settings.includeResolution
+            ? (Color.grey + Color.white) / 2f
+            : Color.white;
         if (GUILayout.Button("Resolution", "toolbarButton"))
         {
             script.settings.includeResolution = !script.settings.includeResolution;
@@ -325,14 +408,20 @@ public class ScreenshotCompanionEditor : Editor
     {
         EditorGUILayout.BeginHorizontal();
 
-        GUI.color = script.settings.fileType == ScreenshotCompanion.FileType.JPG ? Color.white : (Color.grey + Color.white) / 2f;
+        GUI.color =
+            script.settings.fileType == ScreenshotCompanion.FileType.JPG
+                ? Color.white
+                : (Color.grey + Color.white) / 2f;
         if (GUILayout.Button("PNG", "toolbarButton"))
         {
             refreshRequests();
             script.settings.fileType = ScreenshotCompanion.FileType.PNG;
         }
 
-        GUI.color = script.settings.fileType == ScreenshotCompanion.FileType.JPG ? (Color.grey + Color.white) / 2f : Color.white;
+        GUI.color =
+            script.settings.fileType == ScreenshotCompanion.FileType.JPG
+                ? (Color.grey + Color.white) / 2f
+                : Color.white;
         if (GUILayout.Button("JPG", "toolbarButton"))
         {
             refreshRequests();
@@ -342,5 +431,4 @@ public class ScreenshotCompanionEditor : Editor
         EditorGUILayout.EndHorizontal();
     }
 }
-
-#endif
+#endif // UNITY_EDITOR

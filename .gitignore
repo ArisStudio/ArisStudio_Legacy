@@ -169,6 +169,11 @@ crashlytics-build.properties
 [Aa]ssets/ArisStudio/Reference/
 [Aa]ssets/ArisStudio/Spr/Emoticon/EmoticonImage
 [Aa]ssets/ArisStudio/Spr/Emoticon/EmoticonSound
+0E/
+
 [Aa]ssets/Spine/
 [Dd]ata/
-0E/
+[Ss]creenshots
+
+# documentation branch
+node_modules

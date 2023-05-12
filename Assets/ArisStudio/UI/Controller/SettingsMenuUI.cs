@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using ArisStudio.Core;
 using SimpleFileBrowser;
 using UnityEngine;
@@ -13,30 +11,72 @@ namespace ArisStudio.UI
     [AddComponentMenu("Aris Studio/UI/Controller/Settings Menu")]
     public class SettingsMenuUI : MonoBehaviour
     {
-        [Header("Story")] [SerializeField] TMP_InputField m_StoryPathInput;
+        [Header("Auto")]
+        [SerializeField] public Button m_AutoActivate;
+        [SerializeField] public Button m_AutoDeactivate;
 
-        [Header("Display")] [SerializeField] TMP_Dropdown m_ScreenResolutionDropdown;
-        [SerializeField] TMP_Dropdown m_FPSLimitDropdown, m_FontListDropdown;
-        [SerializeField] Toggle m_ToggleFullScreen, m_ToggleVSync;
-        [SerializeField] Slider m_TypingIntervalSlider;
-        [SerializeField] TMP_Text m_TypingIntervalValue;
-        [SerializeField] Slider m_DialoguePanelOpacitySlider;
-        [SerializeField] TMP_Text m_DialoguePanelOpacityValue;
+        [Header("Story")]
+        [SerializeField]
+        TMP_InputField m_StoryPathInput;
 
-        [Header("Audio")] [SerializeField] AudioSource m_BGMAudioSource;
-        [SerializeField] Slider m_BGMVolumeSlider;
-        [SerializeField] TMP_Text m_BGMVolumeText;
+        [Header("Display")]
+        [SerializeField]
+        TMP_Dropdown m_ScreenResolutionDropdown;
 
-        [SerializeField] AudioSource m_SFXAudioSource;
-        [SerializeField] Slider m_SFXVolumeSlider;
-        [SerializeField] TMP_Text m_SFXVolumeText;
+        [SerializeField]
+        TMP_Dropdown m_FPSLimitDropdown,
+            m_FontListDropdown;
 
-        [SerializeField] AudioSource m_VoiceAudioSource;
-        [SerializeField] Slider m_VoiceVolumeSlider;
-        [SerializeField] TMP_Text m_VoiceVolumeText;
+        [SerializeField]
+        Toggle m_ToggleFullScreen,
+            m_ToggleVSync;
 
-        [Header("Data")] [SerializeField] TMP_InputField m_LocalDataPathInput;
-        [SerializeField] TMP_InputField m_RemoteDataPathInput;
+        [SerializeField]
+        Slider m_TypingIntervalSlider;
+
+        [SerializeField]
+        TMP_Text m_TypingIntervalValue;
+
+        [SerializeField]
+        Slider m_DialoguePanelOpacitySlider;
+
+        [SerializeField]
+        TMP_Text m_DialoguePanelOpacityValue;
+
+        [Header("Audio")]
+        [SerializeField]
+        AudioSource m_BGMAudioSource;
+
+        [SerializeField]
+        Slider m_BGMVolumeSlider;
+
+        [SerializeField]
+        TMP_Text m_BGMVolumeText;
+
+        [SerializeField]
+        AudioSource m_SFXAudioSource;
+
+        [SerializeField]
+        Slider m_SFXVolumeSlider;
+
+        [SerializeField]
+        TMP_Text m_SFXVolumeText;
+
+        [SerializeField]
+        AudioSource m_VoiceAudioSource;
+
+        [SerializeField]
+        Slider m_VoiceVolumeSlider;
+
+        [SerializeField]
+        TMP_Text m_VoiceVolumeText;
+
+        [Header("Data")]
+        [SerializeField]
+        TMP_InputField m_LocalDataPathInput;
+
+        [SerializeField]
+        TMP_InputField m_RemoteDataPathInput;
 
         SettingsManager settingsManager;
 
@@ -56,11 +96,10 @@ namespace ArisStudio.UI
 
         public void SelectStoryFile()
         {
-            StartCoroutine(ChooseStoryFile());
+            StartCoroutine(SelectStoryFileRoutine());
         }
 
-        // ReSharper disable Unity.PerformanceAnalysis
-        private IEnumerator ChooseStoryFile()
+        private IEnumerator SelectStoryFileRoutine()
         {
             settingsManager.GetStoryFile();
             yield return new WaitUntil(() => FileBrowser.Success);
@@ -79,14 +118,13 @@ namespace ArisStudio.UI
             ChangeDialogueBackgroundPanelOpacity();
             ToggleFullScreen();
             ToggleVSync();
-
-            // // Adding installed fonts to dropdown
-            // m_FontListDropdown.AddOptions(settingsManager.currentInstalledFonts);
         }
 
         public void ChangeScreenResolution()
         {
-            settingsManager.SetScreenResolution(m_ScreenResolutionDropdown.options[m_ScreenResolutionDropdown.value].text);
+            settingsManager.SetScreenResolution(
+                m_ScreenResolutionDropdown.options[m_ScreenResolutionDropdown.value].text
+            );
         }
 
         public void ChangeFPSLimit()
@@ -94,24 +132,29 @@ namespace ArisStudio.UI
             settingsManager.SetFPSLimit(m_FPSLimitDropdown.options[m_FPSLimitDropdown.value].text);
         }
 
-        public void ChangeDefaultFont()
-        {
-            // For now, just change all TMP_Text font
-            List<TMP_Text> texts = FindObjectsOfType<TMP_Text>().ToList();
-            settingsManager.SetDefaultFont(texts, m_FontListDropdown.value);
-        }
+        // public void ChangeDefaultFont()
+        // {
+        //     // For now, just change all TMP_Text font
+        //     List<TMP_Text> texts = FindObjectsOfType<TMP_Text>().ToList();
+        //     settingsManager.SetDefaultFont(texts, m_FontListDropdown.value);
+        // }
 
         public void ChangeTypingInterval()
         {
             settingsManager.SetTypingInterval(m_TypingIntervalSlider.value);
-            m_TypingIntervalValue.text = $"{Math.Round(settingsManager.currentTypingInterval, 2).ToString("0.##")} s";
+            m_TypingIntervalValue.text =
+                $"{Math.Round(settingsManager.currentTypingInterval, 2).ToString("0.##")} s";
         }
 
         public void ChangeDialogueBackgroundPanelOpacity()
         {
             settingsManager.SetDialogueBackgroundPanelOpacity(m_DialoguePanelOpacitySlider.value);
             // TODO: Actually change background panel opacity
-            m_DialoguePanelOpacityValue.text = Math.Round(settingsManager.currentDialogueBackgroundPanelOpacity, 2).ToString("0.##");
+            m_DialoguePanelOpacityValue.text = Math.Round(
+                    settingsManager.currentDialogueBackgroundPanelOpacity,
+                    2
+                )
+                .ToString("0.##");
         }
 
         public void ToggleFullScreen()

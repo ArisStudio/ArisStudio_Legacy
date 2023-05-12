@@ -54,7 +54,6 @@ namespace StatePreview
             StartCoroutine(GenPng());
         }
 
-        // ReSharper disable Unity.PerformanceAnalysis
         private IEnumerator GenPng()
         {
             var anim = skeletonAnimation.Skeleton.Data.Animations;
@@ -71,13 +70,24 @@ namespace StatePreview
             }
 
             // 拼接图片 6列
-            var cutTexture = new Texture2D(256 * 6, 256 * (cutTextures.Count / 6 + 1), TextureFormat.RGBA32, false);
+            var cutTexture = new Texture2D(
+                256 * 6,
+                256 * (cutTextures.Count / 6 + 1),
+                TextureFormat.RGBA32,
+                false
+            );
             for (var i = 0; i < cutTextures.Count; i++)
             {
                 var x = i % 6;
                 var y = i / 6;
                 var rect = new Rect(x * 256, y * 256, 256, 256);
-                cutTexture.SetPixels((int)rect.x, (int)rect.y, (int)rect.width, (int)rect.height, cutTextures[i].GetPixels());
+                cutTexture.SetPixels(
+                    (int)rect.x,
+                    (int)rect.y,
+                    (int)rect.width,
+                    (int)rect.height,
+                    cutTextures[i].GetPixels()
+                );
             }
 
             cutTexture.Apply();
@@ -97,7 +107,6 @@ namespace StatePreview
             StartCoroutine(LoadAndCreateSprGameObject(sprNameInputField.text, defMaterial));
         }
 
-        // ReSharper disable Unity.PerformanceAnalysis
         private IEnumerator LoadAndCreateSprGameObject(string sprName, Material stateMaterial)
         {
             sprGoName = sprName;
@@ -133,7 +142,12 @@ namespace StatePreview
             var textures = new Texture2D[1];
             textures[0] = texture;
 
-            var sprAtlasAsset = SpineAtlasAsset.CreateRuntimeInstance(atlasTextAsset, textures, stateMaterial, true);
+            var sprAtlasAsset = SpineAtlasAsset.CreateRuntimeInstance(
+                atlasTextAsset,
+                textures,
+                stateMaterial,
+                true
+            );
 
             var attachmentLoader = new AtlasAttachmentLoader(sprAtlasAsset.GetAtlas());
             var binary = new SkeletonBinary(attachmentLoader);
