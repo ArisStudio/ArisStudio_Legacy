@@ -1,77 +1,116 @@
-﻿using ArisStudio.Core;
+﻿using System.Collections.Generic;
+using ArisStudio.Core;
+using ArisStudio.UI;
 using ArisStudio.Utils;
-using DG.Tweening;
-using RichText;
+using KoganeUnityLib;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace ArisStudio.AsGameObject
 {
     public class AsDialogueManager : Singleton<AsDialogueManager>
     {
-        [SerializeField] private Text middleText, bottomText, nameText, groupText, contentText;
-        [SerializeField] private GameObject defaultText, indicator;
+        [SerializeField] CanvasGroup m_DialogueContainer, m_DefaultText;
+        [SerializeField] TMP_Typewriter m_MiddleText, m_BottomText, m_NameText, m_GroupText, m_ContentText;
+        [SerializeField] DialogueIndicatorAnimation m_Indicator;
 
-        public void AsDialogueInit()
+        List<TMP_Typewriter> currentlyTyping = new List<TMP_Typewriter>(); // store TMP that currently typing.
+
+        void Start()
         {
-            middleText.text = "";
-            middleText.gameObject.SetActive(false);
-            bottomText.text = "";
-            bottomText.gameObject.SetActive(false);
-
-            nameText.text = "";
-            groupText.text = "";
-            contentText.text = "";
-            defaultText.SetActive(false);
+            m_DialogueContainer.gameObject.SetActive(false); // hide dialogue panel
         }
 
-        private void TypingText(string text, Text textObject)
+        /// <summary>
+        /// Initialize the dialogue components.
+        /// </summary>
+        public void AsDialogueInit()
         {
-            textObject.text = "";
-            textObject.gameObject.SetActive(true);
-            textObject.DOText(
-                text.Replace("<n>", "\n"),
-                text.RichTextLength() * SettingsManager.Instance.currentTypingInterval
-            ).OnComplete(() => indicator.SetActive(true));
+            m_DialogueContainer.gameObject.SetActive(true);
+
+            m_MiddleText.m_TMP_Text.text = "";
+            m_MiddleText.gameObject.SetActive(false);
+            m_BottomText.m_TMP_Text.text = "";
+            m_BottomText.gameObject.SetActive(false);
+
+            m_NameText.m_TMP_Text.text = "";
+            m_GroupText.m_TMP_Text.text = "";
+            m_ContentText.m_TMP_Text.text = "";
+            m_DefaultText.gameObject.SetActive(false);
+        }
+
+        /// <summary>
+        /// Make a typing effect on a TMP.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="tmp_typewriter"></param>
+        private void TypingText(string text, TMP_Typewriter tmp_typewriter)
+        {
+            MainManager.Instance.IsTyping = true;
+            currentlyTyping.Add(tmp_typewriter);
+            m_Indicator.StopAnimate();
+
+            tmp_typewriter.Play
+            (
+                text        : text,
+                speed       : SettingsManager.Instance.currentTypingSpeed,
+                onComplete  : () => {
+                    MainManager.Instance.IsTyping = false;
+                    m_Indicator.StartAnimate();
+                },
+                // ルビがある行とない行で高さが変動しないようにするにはtrue
+                fixedLineHeight: false,
+                // 1行目にルビがある時、TextMeshProのMargin機能を使って位置調整
+                autoMarginTop: true
+            );
+        }
+
+        /// <summary>
+        /// Skip all registered typing text.
+        /// </summary>
+        public void SkipTypingText()
+        {
+            foreach (TMP_Typewriter typewriter in currentlyTyping)
+                typewriter.Skip();
+
+            currentlyTyping.Clear();
         }
 
         private void SetDefaultDialogueText(string[] asDialogueCommand, int offset = 0)
         {
-            indicator.SetActive(false);
             switch (asDialogueCommand.Length)
             {
                 case 1:
-                    nameText.text = "";
-                    groupText.text = "";
-                    contentText.text = "";
+                    m_NameText.m_TMP_Text.text = "";
+                    m_GroupText.m_TMP_Text.text = "";
+                    m_ContentText.m_TMP_Text.text = "";
                     break;
                 case 2:
-                    nameText.text = "";
-                    groupText.text = "";
-                    TypingText(asDialogueCommand[1 + offset], contentText);
+                    m_NameText.m_TMP_Text.text = "";
+                    m_GroupText.m_TMP_Text.text = "";
+                    TypingText(asDialogueCommand[1 + offset], m_ContentText);
                     break;
                 case 3:
-                    nameText.text = asDialogueCommand[1 + offset];
-                    groupText.text = "";
-                    TypingText(asDialogueCommand[2 + offset], contentText);
+                    m_NameText.m_TMP_Text.text = asDialogueCommand[1 + offset];
+                    m_GroupText.m_TMP_Text.text = "";
+                    TypingText(asDialogueCommand[2 + offset], m_ContentText);
                     break;
                 default:
-                    nameText.text = asDialogueCommand[1 + offset];
-                    groupText.text = asDialogueCommand[2 + offset];
-                    TypingText(asDialogueCommand[3 + offset], contentText);
+                    m_NameText.m_TMP_Text.text = asDialogueCommand[1 + offset];
+                    m_GroupText.m_TMP_Text.text = asDialogueCommand[2 + offset];
+                    TypingText(asDialogueCommand[3 + offset], m_ContentText);
                     break;
             }
         }
 
         private void SetDefaultDialogueTextSize(string size)
         {
-            contentText.text = "";
-            contentText.fontSize = size switch
+            m_ContentText.m_TMP_Text.text = "";
+            m_ContentText.m_TMP_Text.fontSize = size switch
             {
                 "big" => 60,
                 "small" => 32,
                 "medium" => 42,
-                _ => contentText.fontSize
+                _ => m_ContentText.m_TMP_Text.fontSize
             };
         }
 
@@ -82,26 +121,26 @@ namespace ArisStudio.AsGameObject
                 case "mt":
                 case "middle_text":
                 case "mtc":
-                    middleText.gameObject.SetActive(true);
-                    TypingText(asDialogueCommand[1], middleText);
+                    m_MiddleText.gameObject.SetActive(true);
+                    TypingText(asDialogueCommand[1], m_MiddleText);
                     break;
 
                 case "bt":
                 case "bottom_text":
                 case "btc":
-                    bottomText.gameObject.SetActive(true);
-                    TypingText(asDialogueCommand[1], bottomText);
+                    m_BottomText.gameObject.SetActive(true);
+                    TypingText(asDialogueCommand[1], m_BottomText);
                     break;
 
                 case "t":
                 case "txt":
                 case "tc":
-                    defaultText.SetActive(true);
+                    m_DefaultText.gameObject.SetActive(true);
                     SetDefaultDialogueText(asDialogueCommand);
                     break;
 
                 case "th":
-                    defaultText.SetActive(true);
+                    m_DefaultText.gameObject.SetActive(true);
                     SetDefaultDialogueText(asDialogueCommand, 1);
                     break;
 
@@ -109,20 +148,17 @@ namespace ArisStudio.AsGameObject
                     switch (asDialogueCommand[1])
                     {
                         case "hide":
-                            middleText.gameObject.SetActive(false);
-                            bottomText.gameObject.SetActive(false);
-                            contentText.gameObject.SetActive(false);
+                            m_DialogueContainer.gameObject.SetActive(false);
                             break;
 
-                        case "interval":
-                            SettingsManager.Instance.currentTypingInterval = float.Parse(asDialogueCommand[2]);
+                        case "speed": // formerly interval
+                            SettingsManager.Instance.currentTypingSpeed = float.Parse(asDialogueCommand[2]);
                             break;
 
                         case "size":
                             SetDefaultDialogueTextSize(asDialogueCommand[2]);
                             break;
                     }
-
                     break;
             }
         }

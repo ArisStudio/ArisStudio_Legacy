@@ -32,10 +32,10 @@ namespace ArisStudio.UI
             m_ToggleVSync;
 
         [SerializeField]
-        Slider m_TypingIntervalSlider;
+        Slider m_TypingSpeedSlider;
 
         [SerializeField]
-        TMP_Text m_TypingIntervalValue;
+        TMP_Text m_TypingSpeedValue;
 
         [SerializeField]
         Slider m_DialoguePanelOpacitySlider;
@@ -114,7 +114,7 @@ namespace ArisStudio.UI
         {
             ChangeScreenResolution();
             ChangeFPSLimit();
-            ChangeTypingInterval();
+            ChangeTypingSpeed();
             ChangeDialogueBackgroundPanelOpacity();
             ToggleFullScreen();
             ToggleVSync();
@@ -139,11 +139,11 @@ namespace ArisStudio.UI
         //     settingsManager.SetDefaultFont(texts, m_FontListDropdown.value);
         // }
 
-        public void ChangeTypingInterval()
+        public void ChangeTypingSpeed()
         {
-            settingsManager.SetTypingInterval(m_TypingIntervalSlider.value);
-            m_TypingIntervalValue.text =
-                $"{Math.Round(settingsManager.currentTypingInterval, 2).ToString("0.##")} s";
+            settingsManager.SetTypingSpeed(m_TypingSpeedSlider.value);
+            m_TypingSpeedValue.text = 
+                $"{Math.Round(settingsManager.currentTypingSpeed, 2).ToString("0.##")}";
         }
 
         public void ChangeDialogueBackgroundPanelOpacity()

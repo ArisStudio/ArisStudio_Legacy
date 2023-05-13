@@ -12,25 +12,27 @@ namespace ArisStudio.UI
         [SerializeField] Ease m_MoveEase = Ease.InSine;
 
         Image image;
+        RectTransform rectTransform;
+        Vector3 originalPosition;
 
         void Awake()
         {
-            TryGetComponent<Image>(out Image image);
+            image = GetComponent<Image>();
+            rectTransform = GetComponent<RectTransform>();
+            originalPosition = rectTransform.localPosition;
         }
 
-        void StartAnimate()
+        public void StartAnimate()
         {
-            image.DOFade(1, 0.1f);
-
+            image.enabled = true;
             transform.DOMoveY(transform.position.y - m_YEndPosition, m_MoveDuration, false).SetEase(m_MoveEase).SetLoops(-1, LoopType.Yoyo);
         }
 
-        void StopAnimate()
+        public void StopAnimate()
         {
-            image.DOFade(0, 0.1f);
-
-            DOTween.Complete(image);
-            DOTween.Complete(transform);
+            image.enabled = false;
+            DOTween.Kill(transform);
+            rectTransform.localPosition = originalPosition;
         }
     }
 }

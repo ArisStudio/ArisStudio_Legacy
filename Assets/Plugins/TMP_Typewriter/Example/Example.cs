@@ -11,12 +11,16 @@ namespace KoganeUnityLib.Example
 		{
 			if ( Input.GetKeyDown( KeyCode.Z ) )
 			{
-				// 1 文字ずつ表示する演出を再生
+				// 1 文字ずつ表示する演出を再生（ルビ対応）
 				m_typewriter.Play
 				(
-					text        : "ABCDEFG HIJKLMN OPQRSTU",
+					text        : "このテキストは\n<r=かんじ>漢字</r>テキストに\nルビが<r=ふ>振</r>られます",
 					speed       : m_speed,
-					onComplete  : () => Debug.Log( "完了" )
+					onComplete  : () => Debug.Log( "完了" ),
+					// ルビがある行とない行で高さが変動しないようにするにはtrue
+					fixedLineHeight: false,
+					// 1行目にルビがある時、TextMeshProのMargin機能を使って位置調整
+					autoMarginTop: true
 				);
 			}
 			if ( Input.GetKeyDown( KeyCode.X ) )

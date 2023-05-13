@@ -156,7 +156,6 @@ namespace ArisStudio.AsGameObject
 
             if (MainManager.Instance.IsSelectChoice)
                 StopAllCoroutines();
-                // StopCoroutine(AutoSelectRoutine(commandLength));
         }
 
         /// <summary>
@@ -167,17 +166,18 @@ namespace ArisStudio.AsGameObject
         private IEnumerator AutoSelectRoutine(int commandLength)
         {
             /*
-            * If this Auto and the the select button is only one.
             * NOTE: Don't add MainManager.Instance.IsSelectChoice as the condition,
             * even though the condition is met, however the below function will not
             * get executed. Don't know why :(
             */
+
+            // If this Auto and the the select button is only one.
             if (MainManager.Instance.IsAuto && commandLength == 3)
             {
-                yield return new WaitForSeconds(MainManager.Instance.autoTime);
+                yield return new WaitForSeconds(MainManager.Instance.AutoTime);
                 ClickButton(1);
             }
-            else yield return null;
+            else yield break;
         }
     }
 }

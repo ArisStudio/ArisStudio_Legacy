@@ -1,3 +1,4 @@
+using ArisStudio.Core;
 using ScreenshotCompanionCore;
 using TMPro;
 using UnityEngine;
@@ -60,6 +61,7 @@ namespace ArisStudio.Utils
         public void TakeScreenshot()
         {
             screenshot.CaptureRenderTexture(Camera.main, 0);
+            DebugConsole.Instance.PrintLog($"Screenshot saved at: {screenshot.getSaveDirectory()}{screenshot.getFileName(0)}");
         }
     }
 }

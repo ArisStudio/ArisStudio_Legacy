@@ -28,7 +28,7 @@ Material:
     - _Length: 0.3
     - _Size: 0.2
     - _Speed: 10
-    - _StartAngle: 239.17209
+    - _StartAngle: 300.4638
     m_Colors:
     - _BorderColor: {r: 32, g: 32, b: 32, a: 1}
   m_BuildTextureStacks: []

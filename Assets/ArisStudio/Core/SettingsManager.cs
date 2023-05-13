@@ -29,7 +29,7 @@ namespace ArisStudio.Core
         // public int currentDefaultFont { get; private set; }
         public bool currentFullScreenState { get; private set; }
         public bool currentVSyncState { get; private set; }
-        public float currentTypingInterval { get; set; } // used in interval command
+        public float currentTypingSpeed { get; set; }
         public float currentDialogueBackgroundPanelOpacity { get; private set; }
 
         #endregion
@@ -131,6 +131,7 @@ namespace ArisStudio.Core
         /// Set screen resolution.
         /// The value must be a string that look like this: 1280x720
         /// </summary>
+        /// <param name="value"></param>
         public void SetScreenResolution(string value)
         {
             currentScreenResolution = value.Trim();
@@ -143,6 +144,7 @@ namespace ArisStudio.Core
         /// <summary>
         /// Set FPS limit.
         /// </summary>
+        /// <param name="value"></param>
         public void SetFPSLimit(string value)
         {
             currentFPSLimit = value.Trim();
@@ -185,16 +187,18 @@ namespace ArisStudio.Core
         // }
 
         /// <summary>
-        /// Set dialogue typing interval in seconds.
+        /// Set typing speed.
         /// </summary>
-        public void SetTypingInterval(float value)
+        /// <param name="value"></param>
+        public void SetTypingSpeed(float value)
         {
-            currentTypingInterval = value;
+            currentTypingSpeed = value;
         }
 
         /// <summary>
         /// Set dialogue panel background opacity.
         /// </summary>
+        /// <param name="value"></param>
         public void SetDialogueBackgroundPanelOpacity(float value)
         {
             currentDialogueBackgroundPanelOpacity = value;
@@ -203,6 +207,7 @@ namespace ArisStudio.Core
         /// <summary>
         /// Set Full Screen on/off.
         /// </summary>
+        /// <param name="value"></param>
         public void SetFullScreen(bool value)
         {
             currentFullScreenState = value;
@@ -215,6 +220,7 @@ namespace ArisStudio.Core
         /// <summary>
         /// Set VSync on/off.
         /// </summary>
+        /// <param name="value"></param>
         public void SetVSync(bool value)
         {
             currentVSyncState = value;
@@ -231,6 +237,9 @@ namespace ArisStudio.Core
         /// <summary>
         /// Set an audio volume.
         /// </summary>
+        /// <param name="audioSource"></param>
+        /// <param name="valueText"></param>
+        /// <param name="valueSource"></param>
         public void SetAudioVolume(AudioSource audioSource, TMP_Text valueText, float valueSource)
         {
             audioSource.volume = valueSource;
@@ -351,6 +360,7 @@ namespace ArisStudio.Core
         /// <summary>
         /// Create default directory if not exist.
         /// </summary>
+        /// <param name="path"></param>
         private static void CreateFolderIfNotExist(string path)
         {
             if (Directory.Exists(path))

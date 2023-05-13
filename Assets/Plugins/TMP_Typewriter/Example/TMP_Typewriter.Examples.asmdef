@@ -1,0 +1,26 @@
+{
+    "name": "TMP_Typewriter.Examples",
+    "rootNamespace": "",
+    "references": [
+        "GUID:4d297f54611d29045966af8ad73f58c1"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [
+        "GameCoreScarlett",
+        "GameCoreXboxOne",
+        "Lumin",
+        "macOSStandalone",
+        "PS4",
+        "PS5",
+        "Stadia",
+        "Switch",
+        "XboxOne"
+    ],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

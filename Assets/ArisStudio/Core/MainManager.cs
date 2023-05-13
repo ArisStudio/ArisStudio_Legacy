@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ArisStudio.AsGameObject;
+using ArisStudio.AsGameObject.Components;
 using ArisStudio.UI;
 using ArisStudio.Utils;
 using UnityEngine;
@@ -27,9 +28,10 @@ namespace ArisStudio.Core
         private AsDialogueManager asDialogueManager;
         private AsComponentsManager asComponentsManager;
         private AsSelectButtonManager asSelectButtonManager;
-        SettingsMenuUI settingsMenu;
+        private SettingsMenuUI settingsMenu;
+        private ProgressStoryButton[] progressStoryButtons;
 
-        private int asCommandListLength;
+        public int asCommandListLength { get; private set; }
         private List<string> asCommandList = new List<string>();
 
         // List
@@ -38,8 +40,9 @@ namespace ArisStudio.Core
         private readonly Dictionary<string, string> aliasList = new Dictionary<string, string>();
 
         // This UDictionary only for debugging purposes
+#if UNITY_EDITOR
         [UDictionary.Split(85, 15)]
-        [Header("DEBUG")]
+        [Header("DEBUG DICTIONARY")]
         [SerializeField] private TargetList m_TargetList;
         [Serializable] public class TargetList : UDictionary<string, int> { }
 
@@ -50,16 +53,18 @@ namespace ArisStudio.Core
         [UDictionary.Split(30, 70)]
         [SerializeField] private AliasList m_AliasList;
         [Serializable] public class AliasList : UDictionary<string, string> { }
+#endif // UNITY_EDITOR
 
         // Play state
         [SerializeField] KeyCode[] m_ProgressStoryKeys = { KeyCode.Space, KeyCode.Return, KeyCode.RightArrow };
         public bool IsPlaying { get; private set; }
         public bool IsSelectChoice { get; set; } // Does selecting a choice button?
+        public bool IsTyping { get; set; }
 
         // Autoplay
         public bool IsAuto { get; set; }
-        public float autoTime { get; private set; } = 2.3f;
-        public float autoTimer { get; set; }
+        [field: SerializeField, Range(1f, 3f)] public float AutoTime { get; private set; } = 2.3f;
+        public float AutoTimer { get; set; }
 
         // Wait state
         private bool isWait;
@@ -80,6 +85,7 @@ namespace ArisStudio.Core
             asComponentsManager = AsComponentsManager.Instance;
             asSelectButtonManager = AsSelectButtonManager.Instance;
             settingsMenu = FindObjectOfType<SettingsMenuUI>();
+            progressStoryButtons = FindObjectsOfType<ProgressStoryButton>();
         }
 
         private void Update()
@@ -88,13 +94,29 @@ namespace ArisStudio.Core
 
             if (IsAuto)
             {
-                autoTimer += Time.deltaTime;
+                if (IsTyping)
+                    AutoTimer = 0;
+                else
+                    AutoTimer += Time.deltaTime;
 
-                if (autoTimer >= autoTime || runLineIndex == 0)
+                if (AutoTimer >= AutoTime || runLineIndex == 0)
                 {
-                    autoTimer = 0;
+                    AutoTimer = 0;
                     IsPlaying = true;
                 }
+            }
+
+            if (isWait)
+            {
+                waitTimer += Time.deltaTime;
+
+                if (waitTimer < waitTime || waitTime <= -1)  // -1 means unlimited
+                    return;
+
+                waitTimer = 0;
+                AutoTimer = 0;
+                isWait = false;
+                IsPlaying = true;
             }
 
             if (IsSelectChoice)
@@ -103,15 +125,11 @@ namespace ArisStudio.Core
                 return;
             }
 
-            if (isWait)
+            if (IsTyping && IsPlaying)
             {
-                waitTimer += Time.deltaTime;
-                if (waitTimer < waitTime || waitTime <= -1) return; // -1 means unlimited
-
-                waitTimer = 0;
-                autoTimer = 0;
-                isWait = false;
-                IsPlaying = true;
+                asDialogueManager.SkipTypingText();
+                IsPlaying = false;
+                return;
             }
 
             if (IsPlaying && runLineIndex < asCommandListLength)
@@ -120,7 +138,7 @@ namespace ArisStudio.Core
             if (runLineIndex == asCommandListLength)
             {
                 IsPlaying = false;
-                autoTimer = 0;
+                AutoTimer = 0;
                 waitTime = 0;
             }
         }
@@ -136,9 +154,11 @@ namespace ArisStudio.Core
             targetList.Clear();
             aliasList.Clear();
 
+#if UNITY_EDITOR
             m_TargetList.Clear();
             m_NameIdList.Clear();
             m_AliasList.Clear();
+#endif // UNITY_EDITOR
 
             asCharacterManager.AsCharacterInit();
             asAudioManager.AsAudioInit();
@@ -151,7 +171,7 @@ namespace ArisStudio.Core
             // Play State
             IsPlaying = false;
             IsSelectChoice = false;
-            autoTimer = 0;
+            AutoTimer = 0;
             isWait = false;
             waitTime = 0;
             waitTimer = 0;
@@ -184,6 +204,12 @@ namespace ArisStudio.Core
         /// <returns></returns>
         private IEnumerator LoadStory(string storyPath)
         {
+            if (string.IsNullOrEmpty(storyPath))
+            {
+                DebugConsole.Instance.PrintLog("<#ff0000>Empty story path!</color> No story loaded.");
+                yield break;
+            }
+
             UnityWebRequest www = UnityWebRequest.Get(storyPath);
             yield return www.SendWebRequest();
 
@@ -209,13 +235,19 @@ namespace ArisStudio.Core
         {
             if (!IsPlaying)
             {
+                foreach (ProgressStoryButton button in progressStoryButtons)
+                {
+                    if (button.pointerEntered)
+                    {
 #if ENABLE_NEW_INPUT_SYSTEM
-                foreach (KeyCode key in m_ProgressStoryKeys)
-                    if (Keyboard.current.GetKeyDown(key)) IsPlaying = true;
+                        foreach (KeyCode key in m_ProgressStoryKeys)
+                            if (Keyboard.current.GetKeyDown(key)) IsPlaying = true;
 #else
-                foreach (KeyCode key in m_ProgressStoryKeys)
-                    if (Input.GetKeyDown(key)) IsPlaying = true;
+                        foreach (KeyCode key in m_ProgressStoryKeys)
+                            if (Input.GetKeyDown(key)) IsPlaying = true;
 #endif
+                    }
+                }
             }
         }
 
@@ -225,7 +257,7 @@ namespace ArisStudio.Core
         /// <param name="state"></param>
         public void AutoState(bool state)
         {
-            autoTimer = 0; // reset the timer that maybe used by another operation.
+            AutoTimer = 0; // reset the timer that maybe used by another operation.
             IsAuto = state;
 
             // Change the visual according to the AutoState
@@ -279,14 +311,18 @@ namespace ArisStudio.Core
                 case "spr": // default spr
                     asCharacterManager.LoadAsCharacter(asCommand, false);
                     nameIdList.Add(asCommand[2], "char");
+#if UNITY_EDITOR
                     m_NameIdList.Add(asCommand[2], "char");
+#endif // UNITY_EDITOR
                     break;
                 case "sprC": // Legacy
                 case "sprc": // communicate spr
                 case "spr_c":
                     asCharacterManager.LoadAsCharacter(asCommand, true);
                     nameIdList.Add(asCommand[2], "char");
+#if UNITY_EDITOR
                     m_NameIdList.Add(asCommand[2], "char");
+#endif // UNITY_EDITOR
                     break;
 
                 // Image
@@ -295,7 +331,9 @@ namespace ArisStudio.Core
                 case "fg":
                     asImageManager.LoadAsImage(asCommand, asCommand[1]);
                     nameIdList.Add(asCommand[2], "image");
+#if UNITY_EDITOR
                     m_NameIdList.Add(asCommand[2], "image");
+#endif // UNITY_EDITOR
                     break;
 
                 // Audio
@@ -303,7 +341,9 @@ namespace ArisStudio.Core
                 case "sfx":
                     asAudioManager.LoadAsAudio(asCommand, asCommand[1]);
                     nameIdList.Add(asCommand[2], "audio");
+#if UNITY_EDITOR
                     m_NameIdList.Add(asCommand[2], "audio");
+#endif // UNITY_EDITOR
                     break;
             }
         }
@@ -329,11 +369,15 @@ namespace ArisStudio.Core
                         break;
                     case "target":
                         targetList.Add(command[1], lineIndex); // key: target name, value: line index
+#if UNITY_EDITOR
                         m_TargetList.Add(command[1], lineIndex); // debug list
+#endif // UNITY_EDITOR
                         break;
                     case "alias":
-                        aliasList.Add(command[1], command[2]); // slisd name, alias content
+                        aliasList.Add(command[1], command[2]); // alias name, alias content
+#if UNITY_EDITOR
                         m_AliasList.Add(command[1], command[2]); // Debug list
+#endif // UNITY_EDITOR
                         break;
                 }
             }
@@ -346,7 +390,7 @@ namespace ArisStudio.Core
         {
             runLineIndex = targetList[targetName];
             DebugConsole.Instance.PrintLog($"Jump to target: <#00ff00>{targetName}</color>");
-            autoTimer = 0;
+            AutoTimer = 0;
             IsPlaying = true;
         }
 
@@ -405,7 +449,7 @@ namespace ArisStudio.Core
                     JumpTarget(command[1]);
                     break;
                 case "auto":
-                    autoTime = float.Parse(command[1]);
+                    AutoTime = float.Parse(command[1]);
                     break;
                 case "switch":
                     SwitchStory(command[1]);

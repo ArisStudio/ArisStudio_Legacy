@@ -1,12 +1,11 @@
 # Aris Studio
 
 <div align="center">
-    <img src="./IMG_Aris_Studio_Logo.jpg" alt="Aris Studio logo" title="Aris Studio logo">
-    <sub>Logo made by <a href="https://b23.tv/RbW7CyF" title="無花果洋\_wzy">無花果洋\_wzy</a></sub>
-    <p><b>Make your own Blue Archive story</b></p>
-    <p>Aris Studio is a fan-made tool to create <a href="https://bluearchive.nexon.com/home" title="Blue Archive">Blue Archive</a> story.</p>
-    <br/>
-    <p>It's provide a story teller similar to Blue Archive game, but with more rich features.</p>
+  <img src="./IMG_Aris_Studio_Logo.jpg" alt="Aris Studio logo" title="Aris Studio logo">
+  <sub>Logo made by <a href="https://b23.tv/RbW7CyF" title="無花果洋\_wzy">無花果洋\_wzy</a></sub>
+  <p><b>Make your own Blue Archive story</b></p>
+  <p>Aris Studio is a fan-made tool to create your own <a href="https://bluearchive.nexon.com/home" title="Blue Archive">Blue Archive</a> story.<br/>
+  It provides a similar storytelling to the Blue Archive game, but with richer features.</p>
 </div>
 
 ## Downloads
@@ -16,6 +15,7 @@
 <br>
 
 - [Aris Studio](https://github.com/Tualin14/ArisStudio/releases "Download Aris Studio")
+<!-- - [Game Data]() -->
 
 ## How to Use
 
@@ -69,12 +69,14 @@ Before Sensei's making any contribution to Aris Studio, please read this [Contri
 - [UnitySkipSplash](https://github.com/psygames/UnitySkipSplash "Visit UnitySkipSplash GitHub repo")
 - [Unity3dRichTextHelper](https://github.com/majecty/Unity3dRichTextHelper "Visit Unity3dRichTextHelper GitHub repo")
 - [UnitySimpleFileBrowser](https://github.com/yasirkula/UnitySimpleFileBrowser "Visit UnitySimpleFileBrowser GitHub repo")
-- [Save-System-For-Unity](https://github.com/IntoTheDev/Save-System-for-Unity "Visit Save-System-for-Unity GitHub repo")
 - [DoTween](https://github.com/Demigiant/dotween "Visit DoTween GitHub repo")
-- [scene-loader](https://github.com/Home-Alone-Studios/scene-loader "Visit scene-loader GitHub repo")
-- [TMP_Typewriter](https://github.com/baba-s/TMP_Typewriter "Visit TMP_Typewriter GitHub repo")
 - [SoftMaskForUGUI](https://github.com/mob-sakai/SoftMaskForUGUI "Visit SoftMaskForUGUI GitHub repo")
 - [Unity_TabsUI](https://github.com/herbou/Unity_TabsUI "Visit Unity_TabsUI GitHub repo")
+- [TMP_Typewriter](https://github.com/baba-s/TMP_Typewriter "Visit TMP_Typewriter GitHub repo")
+- [TextMeshProRuby](https://github.com/ina-amagami/TextMeshProRuby "Visit TextMeshProRuby GitHub repo")
+- [TMP_Typewriter_With_Ruby](https://github.com/ina-amagami/TMP_Typewriter_With_Ruby "Visit TMP_Typewriter_With_Ruby GitHub repo")
+<!-- - [scene-loader](https://github.com/Home-Alone-Studios/scene-loader "Visit scene-loader GitHub repo")
+- [Save-System-For-Unity](https://github.com/IntoTheDev/Save-System-for-Unity "Visit Save-System-for-Unity GitHub repo") -->
 
 ## License
 
