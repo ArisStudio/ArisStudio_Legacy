@@ -31,8 +31,8 @@ namespace ArisStudio.Core
         private SettingsMenuUI settingsMenu;
         private ProgressStoryButton[] progressStoryButtons;
 
-        public int asCommandListLength { get; private set; }
-        private List<string> asCommandList = new List<string>();
+        public int AsCommandListLength { get; private set; }
+        public List<string> AsCommandList { get; private set; } = new List<string>();
 
         // List
         private readonly Dictionary<string, int> targetList = new Dictionary<string, int>(); // targetName, lineIndex (i.e, t1, 7)
@@ -57,7 +57,7 @@ namespace ArisStudio.Core
 
         // Play state
         [SerializeField] KeyCode[] m_ProgressStoryKeys = { KeyCode.Space, KeyCode.Return, KeyCode.RightArrow };
-        public bool IsPlaying { get; private set; }
+        public bool IsPlaying { get; set; }
         public bool IsSelectChoice { get; set; } // Does selecting a choice button?
         public bool IsTyping { get; set; }
 
@@ -71,7 +71,7 @@ namespace ArisStudio.Core
         private float waitTime;
         private float waitTimer;
 
-        private int runLineIndex;
+        public int RunLineIndex { get; private set; }
 
         #region Unity built-in methods
 
@@ -99,7 +99,7 @@ namespace ArisStudio.Core
                 else
                     AutoTimer += Time.deltaTime;
 
-                if (AutoTimer >= AutoTime || runLineIndex == 0)
+                if (AutoTimer >= AutoTime || RunLineIndex == 0)
                 {
                     AutoTimer = 0;
                     IsPlaying = true;
@@ -132,10 +132,10 @@ namespace ArisStudio.Core
                 return;
             }
 
-            if (IsPlaying && runLineIndex < asCommandListLength)
-                RunAsCommand(asCommandList[runLineIndex]);
+            if (IsPlaying && RunLineIndex < AsCommandListLength)
+                RunAsCommand(AsCommandList[RunLineIndex]);
 
-            if (runLineIndex == asCommandListLength)
+            if (RunLineIndex == AsCommandListLength)
             {
                 IsPlaying = false;
                 AutoTimer = 0;
@@ -175,7 +175,7 @@ namespace ArisStudio.Core
             isWait = false;
             waitTime = 0;
             waitTimer = 0;
-            runLineIndex = 0;
+            RunLineIndex = 0;
 
             DebugConsole.Instance.PrintLog("\n<#ffa500>Initialize</color>");
         }
@@ -210,17 +210,17 @@ namespace ArisStudio.Core
                 yield break;
             }
 
+            DebugConsole.Instance.PrintLog($"Load Story: <#00ff00>{AsHelper.NormalizePath(storyPath)}</color>");
+
             UnityWebRequest www = UnityWebRequest.Get(storyPath);
             yield return www.SendWebRequest();
 
-            asCommandList = www.downloadHandler.text.Split('\n').ToList();
-            asCommandList.RemoveAll(string.IsNullOrEmpty); // remove item that's empty
-            asCommandList = asCommandList.Where(item => !item.StartsWith("//")).ToList(); /// remove item that start with '//'
+            AsCommandList = www.downloadHandler.text.Split('\n').ToList();
+            AsCommandList.RemoveAll(string.IsNullOrEmpty); // remove item that's empty
+            AsCommandList = AsCommandList.Where(item => !item.StartsWith("//")).ToList(); /// remove item that start with '//'
 
-            asCommandListLength = asCommandList.Count;
-            PreLoad(asCommandList.ToArray());
-
-            DebugConsole.Instance.PrintLog($"Load Story: <#00ff00>{storyPath}</color>");
+            AsCommandListLength = AsCommandList.Count;
+            PreLoad(AsCommandList.ToArray());
         }
 
         public void ProgressStory()
@@ -241,10 +241,10 @@ namespace ArisStudio.Core
                     {
 #if ENABLE_NEW_INPUT_SYSTEM
                         foreach (KeyCode key in m_ProgressStoryKeys)
-                            if (Keyboard.current.GetKeyDown(key)) IsPlaying = true;
+                            if (Keyboard.current.GetKeyDown(key)) ProgressStory();
 #else
                         foreach (KeyCode key in m_ProgressStoryKeys)
-                            if (Input.GetKeyDown(key)) IsPlaying = true;
+                            if (Input.GetKeyDown(key)) ProgressStory();
 #endif
                     }
                 }
@@ -267,7 +267,7 @@ namespace ArisStudio.Core
         }
 
         /// <summary>
-        /// Run a command from asCommandList.
+        /// Run a command from AsCommandList.
         /// </summary>
         /// <param name="asCommand"></param>
         public void RunAsCommand(string asCommand)
@@ -285,7 +285,7 @@ namespace ArisStudio.Core
             }
             finally
             {
-                runLineIndex++;
+                RunLineIndex++;
             }
         }
 
@@ -388,7 +388,7 @@ namespace ArisStudio.Core
         /// <param name="targetName"></param>
         public void JumpTarget(string targetName)
         {
-            runLineIndex = targetList[targetName];
+            RunLineIndex = targetList[targetName];
             DebugConsole.Instance.PrintLog($"Jump to target: <#00ff00>{targetName}</color>");
             AutoTimer = 0;
             IsPlaying = true;
@@ -497,7 +497,7 @@ namespace ArisStudio.Core
 
                 case "banner":
                     asComponentsManager.BannerCommand(command);
-                    IsPlaying = command[1] == "hide";
+                    // IsPlaying = command[1] == "hide";
                     break;
 
                 // scene commands

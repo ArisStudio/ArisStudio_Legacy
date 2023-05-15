@@ -5711,10 +5711,10 @@ TextureImporter:
       name: Common_205
       rect:
         serializedVersion: 2
-        x: 321
-        y: 1468
-        width: 93
-        height: 127
+        x: 322
+        y: 1472
+        width: 90
+        height: 110
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -5724,27 +5724,6 @@ TextureImporter:
       bones: []
       spriteID: 35c4158c0af1369d0800000000000000
       internalID: -2782345369368834989
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Common_206
-      rect:
-        serializedVersion: 2
-        x: 343
-        y: 1578
-        width: 8
-        height: 17
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 59779c2f247807790800000000000000
-      internalID: -7534373454979958891
       vertices: []
       indices: 
       edges: []

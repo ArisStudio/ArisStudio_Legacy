@@ -2,7 +2,7 @@
 {
     Properties
     {
-        [PerRendererData] _MainTex ("Texture", 2D) = "white" {}
+        [HideInInspector] [PerRendererData] _MainTex ("Texture", 2D) = "white" {}
         [HDR] _BorderColor("Border Color", Color) = (1,1,1,1)
 
         _Length ("Length", Range(0,0.5)) = 0.4

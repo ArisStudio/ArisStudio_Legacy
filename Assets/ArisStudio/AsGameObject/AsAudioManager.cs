@@ -6,12 +6,14 @@ using ArisStudio.AsGameObject.Audio;
 using ArisStudio.Core;
 using ArisStudio.Utils;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Networking;
 
 namespace ArisStudio.AsGameObject
 {
     public class AsAudioManager : Singleton<AsAudioManager>
     {
+        [field: SerializeField] public AudioMixer AsAudioMixer { get; private set; }
         [SerializeField]
         private GameObject asBgmListBase,
             asSfxListBase;

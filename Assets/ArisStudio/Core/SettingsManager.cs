@@ -110,7 +110,7 @@ namespace ArisStudio.Core
                     currentStoryFilePath = paths[0];
 
                     DebugConsole.Instance.PrintLog(
-                        $"Selected Story: <#00ff00>{currentStoryFilePath}</color>"
+                        $"Select Story: <#00ff00>{AsHelper.NormalizePath(currentStoryFilePath)}</color>"
                     );
                 },
                 () => { },
@@ -281,12 +281,12 @@ namespace ArisStudio.Core
 
             if (Directory.Exists(defaultLocalDataPath))
             {
-                DebugConsole.Instance.PrintLog($"Default <#00ff00>Data</color> path found! Set <#00ff00>Data</color> path: <#00ff00>{currentLocalDataPath}</color>");
+                DebugConsole.Instance.PrintLog($"Default <#00ff00>Data</color> path found! Set <#00ff00>Data</color> path: <#00ff00>{AsHelper.NormalizePath(currentLocalDataPath)}</color>");
             }
             else
             {
                 Directory.CreateDirectory(defaultLocalDataPath);
-                DebugConsole.Instance.PrintLog($"Default <#ff0000>Data</color> path doesn't exist! Create default <#00ff00>Data</color> directory: <#00ff00>{currentLocalDataPath}</color>");
+                DebugConsole.Instance.PrintLog($"Default <#ff0000>Data</color> path doesn't exist! Create default <#00ff00>Data</color> directory: <#00ff00>{AsHelper.NormalizePath(currentLocalDataPath)}</color>");
             }
 
             CreateAndSetDefaultDataDirectory();
@@ -301,7 +301,7 @@ namespace ArisStudio.Core
                 (paths) =>
                 {
                     DebugConsole.Instance.PrintLog(
-                        $"Selected Data path: <#00ff00>{currentLocalDataPath}</color>"
+                        $"Select Data path: <#00ff00>{AsHelper.NormalizePath(currentLocalDataPath)}</color>"
                     );
 
                     currentLocalDataPath = paths[0];
@@ -366,13 +366,13 @@ namespace ArisStudio.Core
             if (Directory.Exists(path))
             {
                 DebugConsole.Instance.PrintLog(
-                    $"Default <#00ff00>{Path.GetFileNameWithoutExtension(path)}</color> directory already exist: <#00ff00>{path}</color>");
+                    $"Default <#00ff00>{Path.GetFileNameWithoutExtension(path)}</color> directory already exist: <#00ff00>{AsHelper.NormalizePath(path)}</color>");
                 return;
             }
 
             Directory.CreateDirectory(path);
             DebugConsole.Instance.PrintLog(
-                $"Create default <#00ff00>{Path.GetFileNameWithoutExtension(path)}</color> directory: <#00ff00>{path}</color>");
+                $"Create default <#00ff00>{Path.GetFileNameWithoutExtension(AsHelper.NormalizePath(path))}</color> directory: <#00ff00>{path}</color>");
         }
 
         #endregion

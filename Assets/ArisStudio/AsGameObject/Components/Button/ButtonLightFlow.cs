@@ -1,24 +1,26 @@
 ﻿using System;
 using UnityEngine;
+using UnityImage = UnityEngine.UI.Image;
 
-namespace ArisStudio.Components.Button
+namespace ArisStudio.AsGameObject.Components
 {
+    [AddComponentMenu("Aris Studio/AsGameObject/Components/Button Light Flow")]
     public class ButtonLightFlow : MonoBehaviour
     {
-        private UnityEngine.UI.Image image;
-        public float angle;
+        [SerializeField] float m_Angle;
+        UnityImage image;
 
-        private void Start()
+        private void Awake()
         {
-            image = GetComponent<UnityEngine.UI.Image>();
+            image = GetComponent<UnityImage>();
         }
 
         private void Update()
         {
-            if (angle > 360) angle = 0;
+            if (m_Angle > 360) m_Angle = 0;
 
-            angle += Time.deltaTime * 100;
-            image.material.SetFloat("_StartAngle", angle);
+            m_Angle += Time.deltaTime * 100;
+            image.material.SetFloat("_StartAngle", m_Angle);
         }
     }
 }

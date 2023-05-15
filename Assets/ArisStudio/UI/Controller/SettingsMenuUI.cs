@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using ArisStudio.Core;
+using ArisStudio.Utils;
 using SimpleFileBrowser;
 using UnityEngine;
 using UnityEngine.UI;
@@ -90,6 +91,19 @@ namespace ArisStudio.UI
             InitializeDisplaySettings();
             // InitializeAudioSettings();
             InitializeDataSettings();
+            HideSettings();
+        }
+
+        /// <summary>
+        /// Hide settings on a specific platform.
+        /// </summary>
+        private void HideSettings()
+        {
+#if UNITY_ANDROID
+            m_ScreenResolutionDropdown.gameObject.GetComponentInParent<RectTransform>().gameObject.SetActive(false);
+            m_ToggleFullScreen.gameObject.GetComponentInParent<RectTransform>().gameObject.SetActive(false);
+            m_ToggleVSync.gameObject.GetComponentInParent<RectTransform>().gameObject.SetActive(false);
+#endif
         }
 
         #region Story Settings
@@ -103,7 +117,7 @@ namespace ArisStudio.UI
         {
             settingsManager.GetStoryFile();
             yield return new WaitUntil(() => FileBrowser.Success);
-            m_StoryPathInput.text = settingsManager.currentStoryFilePath;
+            m_StoryPathInput.text = AsHelper.NormalizePath(settingsManager.currentStoryFilePath);
         }
 
         #endregion
@@ -142,7 +156,7 @@ namespace ArisStudio.UI
         public void ChangeTypingSpeed()
         {
             settingsManager.SetTypingSpeed(m_TypingSpeedSlider.value);
-            m_TypingSpeedValue.text = 
+            m_TypingSpeedValue.text =
                 $"{Math.Round(settingsManager.currentTypingSpeed, 2).ToString("0.##")}";
         }
 
@@ -202,13 +216,13 @@ namespace ArisStudio.UI
 
         private void InitializeDataSettings()
         {
-            m_LocalDataPathInput.text = settingsManager.currentLocalDataPath;
+            m_LocalDataPathInput.text = AsHelper.NormalizePath(settingsManager.currentLocalDataPath);
         }
 
         public void SelectLocalDataPath()
         {
             settingsManager.SetLocalDataPath();
-            m_LocalDataPathInput.text = settingsManager.currentLocalDataPath;
+            m_LocalDataPathInput.text = AsHelper.NormalizePath(settingsManager.currentLocalDataPath);
         }
 
         #endregion

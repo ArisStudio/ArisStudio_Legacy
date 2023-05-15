@@ -1,4 +1,5 @@
 using ArisStudio.Core;
+using ArisStudio.Utils;
 using ScreenshotCompanionCore;
 using TMPro;
 using UnityEngine;
@@ -12,8 +13,11 @@ namespace ArisStudio.Utils
     [RequireComponent(typeof(ScreenshotCompanion))]
     public class ScreenshotUtility : MonoBehaviour
     {
-        [Tooltip("Resolution Setting will be used at runtime to capture the whole screen according to the choosed resolution at the setting menu. Meanwhile, if you\'re in the Editor, you can just change the resolution (Size Multiplier) at Screenshot Companion")]
-        [SerializeField] TMP_Dropdown m_ResolutionSetting;
+        [Tooltip(
+            "Resolution Setting will be used at runtime to capture the whole screen according to the choosed resolution at the setting menu. Meanwhile, if you\'re in the Editor, you can just change the resolution (Size Multiplier) at Screenshot Companion"
+        )]
+        [SerializeField]
+        TMP_Dropdown m_ResolutionSetting;
 
         float multiplierSize = 1f;
         ScreenshotCompanion screenshot => GetComponent<ScreenshotCompanion>();
@@ -61,7 +65,9 @@ namespace ArisStudio.Utils
         public void TakeScreenshot()
         {
             screenshot.CaptureRenderTexture(Camera.main, 0);
-            DebugConsole.Instance.PrintLog($"Screenshot saved at: {screenshot.getSaveDirectory()}{screenshot.getFileName(0)}");
+            DebugConsole.Instance.PrintLog(
+                $"Screenshot saved at: {AsHelper.NormalizePath($"{screenshot.getSaveDirectory()}{screenshot.getFileName(0)}")}"
+            );
         }
     }
 }
