@@ -1,6 +1,8 @@
 name: Build Aris Studio 🎮
 
-on: push
+on: 
+#     push:
+    workflow_dispatch:
 
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -13,6 +15,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
+      - name: Clone Spine
+        run: |
+          svn co https://github.com/EsotericSoftware/spine-runtimes/branches/3.8/spine-unity/Assets/Spine Assets/Spine
+          rm -rf Assets/Spine/.svn
+          svn co https://github.com/EsotericSoftware/spine-runtimes/branches/3.8/spine-csharp/src Assets/Spine/Runtime/spine-csharp
 
       - name: Create LFS file list
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
@@ -58,6 +66,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+                
+      - name: Clone Spine
+        run: |
+          svn co https://github.com/EsotericSoftware/spine-runtimes/branches/3.8/spine-unity/Assets/Spine Assets/Spine
+          rm -rf Assets/Spine/.svn
+          svn co https://github.com/EsotericSoftware/spine-runtimes/branches/3.8/spine-csharp/src Assets/Spine/Runtime/spine-csharp
 
       - name: Create LFS file list
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
@@ -102,6 +116,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+     
+      - name: Clone Spine
+        run: |
+          svn co https://github.com/EsotericSoftware/spine-runtimes/branches/3.8/spine-unity/Assets/Spine Assets/Spine
+          rm -rf Assets/Spine/.svn
+          svn co https://github.com/EsotericSoftware/spine-runtimes/branches/3.8/spine-csharp/src Assets/Spine/Runtime/spine-csharp
 
       - name: Create LFS file list
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
@@ -146,6 +166,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      
+      - name: Clone Spine
+        run: |
+          svn co https://github.com/EsotericSoftware/spine-runtimes/branches/3.8/spine-unity/Assets/Spine Assets/Spine
+          rm -rf Assets/Spine/.svn
+          svn co https://github.com/EsotericSoftware/spine-runtimes/branches/3.8/spine-csharp/src Assets/Spine/Runtime/spine-csharp
 
       - name: Create LFS file list
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
