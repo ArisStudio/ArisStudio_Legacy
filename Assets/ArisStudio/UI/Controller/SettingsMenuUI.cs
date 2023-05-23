@@ -79,6 +79,12 @@ namespace ArisStudio.UI
         [SerializeField]
         TMP_InputField m_RemoteDataPathInput;
 
+#if UNITY_ANDROID
+        [Header("Hide Settings - Android")]
+        [SerializeField]
+        RectTransform[] m_HideSettings;
+#endif
+
         SettingsManager settingsManager;
 
         private void Awake()
@@ -100,9 +106,14 @@ namespace ArisStudio.UI
         private void HideSettings()
         {
 #if UNITY_ANDROID
-            m_ScreenResolutionDropdown.gameObject.GetComponentInParent<RectTransform>().gameObject.SetActive(false);
-            m_ToggleFullScreen.gameObject.GetComponentInParent<RectTransform>().gameObject.SetActive(false);
-            m_ToggleVSync.gameObject.GetComponentInParent<RectTransform>().gameObject.SetActive(false);
+            if (m_HideSettings.Length > 0)
+            {
+                foreach (RectTransform setting in m_HideSettings)
+                {
+                    if (setting != null)
+                        setting.gameObject.SetActive(false);
+                }
+            }
 #endif
         }
 
@@ -216,12 +227,19 @@ namespace ArisStudio.UI
 
         private void InitializeDataSettings()
         {
+            // Only update the UI, the actual logic is in SettingsManager.
             m_LocalDataPathInput.text = AsHelper.NormalizePath(settingsManager.currentLocalDataPath);
         }
 
         public void SelectLocalDataPath()
         {
+            StartCoroutine(SelectLocalDataPathRoutine());
+        }
+
+        private IEnumerator SelectLocalDataPathRoutine()
+        {
             settingsManager.SetLocalDataPath();
+            yield return new WaitUntil(() => FileBrowser.Success);
             m_LocalDataPathInput.text = AsHelper.NormalizePath(settingsManager.currentLocalDataPath);
         }
 

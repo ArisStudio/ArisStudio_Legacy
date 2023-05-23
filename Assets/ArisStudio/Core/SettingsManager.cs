@@ -256,7 +256,7 @@ namespace ArisStudio.Core
         /// <returns>Application/project root path</returns>
         private static string GetRootPath()
         {
-#if UNITY_ANDROID
+#if UNITY_ANDROID || UNITY_WEBGl && !UNITY_EDITOR
             string path = $"file:///{Directory.GetParent(Application.persistentDataPath)!.ToString()}";
 #elif UNITY_STANDALONE_OSX
             string path = $"file://{Directory.GetParent(Application.dataPath)!.ToString()}";
