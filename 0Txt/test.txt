@@ -28,236 +28,236 @@ load end
 bg set bg1
 
 target tSelect
-button '背景与场景' 'tSI' '声音' 'tSound' '人物' 'tSpr'
+button `背景与场景` `tSI` `声音` `tSound` `人物` `tSpr`
 
 target tSI
-t 'banner & banner2' 'Test Command' '横幅'
+t `banner & banner2` `Test Command` `横幅`
 
 // 横幅命令
-banner '已有命令测试 | Test All Command'
-banner2 '这是横幅小标题' '这是横幅大标题'
+banner `已有命令测试 | Test All Command`
+banner2 `这是横幅小标题` `这是横幅大标题`
 
 // 场景标题命令
-label '这是场景标题'
-t 'label' 'Test Command' '场景标题命令'
+label `这是场景标题`
+t `label` `Test Command` `场景标题命令`
 
-t 'screen' 'Test Command' '场景命令'
+t `screen` `Test Command` `场景命令`
 
 
 // 场景效果 ScreenEffect
 screen smoke show
-t 'screen' 'Test Command' 'screen smoke'
+t `screen` `Test Command` `screen smoke`
 screen smoke hide
 
 screen dust show
-t 'screen' 'Test Command' 'screen dust'
+t `screen` `Test Command` `screen dust`
 screen dust hide
 
 screen snow show
-t 'screen' 'Test Command' 'screen snow'
+t `screen` `Test Command` `screen snow`
 screen snow hide
 
 screen rain show
-t 'screen' 'Test Command' 'screen rain'
+t `screen` `Test Command` `screen rain`
 screen rain hide
 
 screen speedline show
-t 'screen' 'Test Command' 'screen speedline'
+t `screen` `Test Command` `screen speedline`
 screen speedline hide
 
 wait 1
 screen speedline s 1
-t 'screen' 'Test Command' 'screen speedline s {seconds}'
+t `screen` `Test Command` `screen speedline s {seconds}`
 
 curtain show
-t 'curtain' 'Test Command' 'curtain show'
+t `curtain` `Test Command` `curtain show`
 
 curtain hide
-t 'curtain' 'Test Command' 'curtain hide'
+t `curtain` `Test Command` `curtain hide`
 
 curtain showD
-t 'curtain' 'Test Command' 'curtain showD'
+t `curtain` `Test Command` `curtain showD`
 
 curtain red
-t 'curtain' 'Test Command' 'curtain red'
+t `curtain` `Test Command` `curtain red`
 
 curtain white
-t 'curtain' 'Test Command' 'curtain white'
+t `curtain` `Test Command` `curtain white`
 
 curtain black
-t 'curtain' 'Test Command' 'curtain black'
+t `curtain` `Test Command` `curtain black`
 
 curtain hideD
-t 'curtain' 'Test Command' 'curtain hideD'
+t `curtain` `Test Command` `curtain hideD`
 
 // 背景图片 Background Image
 bg set bg2
-t 'background' 'Test Command' 'bg set {nameId}'
+t `background` `Test Command` `bg set {nameId}`
 
 bg hide
-t 'background' 'Test Command' 'bg hide'
+t `background` `Test Command` `bg hide`
 
 bg show
-t 'background' 'Test Command' 'bg show'
+t `background` `Test Command` `bg show`
 
 bg hideD
-t 'background' 'Test Command' 'bg hideD'
+t `background` `Test Command` `bg hideD`
 
 bg showD
-t 'background' 'Test Command' 'bg showD'
+t `background` `Test Command` `bg showD`
 
 bg shakeX 10 10 4
-t 'background' 'Test Command' 'bg shakeX 10 10 4'
+t `background` `Test Command` `bg shakeX 10 10 4`
 
 bg shakeY 10 10 4
-t 'background' 'Test Command' 'bg shakeY 10 10 4'
+t `background` `Test Command` `bg shakeY 10 10 4`
 bg set bg1
 
 // 覆盖图片 Cover Image
 cover set c3
-t 'cover' 'Test Command' 'cover set {nameId}'
+t `cover` `Test Command` `cover set {nameId}`
 
 cover hide
-t 'cover' 'Test Command' 'cover hide'
+t `cover` `Test Command` `cover hide`
 
 cover show
-t 'cover' 'Test Command' 'cover show'
+t `cover` `Test Command` `cover show`
 
 cover set c1
-t 'cover' 'Test Command' 'Other shape Cover Image1'
+t `cover` `Test Command` `Other shape Cover Image1`
 
 cover set c2
-t 'cover' 'Test Command' 'Other shape Cover Image2'
+t `cover` `Test Command` `Other shape Cover Image2`
 cover hide
 jump tSelect
 
 // 背景音乐 bgm
 target tSound
 bgm set bgm1
-t 'bgm' 'Test Command' 'bgm set {nameId}'
+t `bgm` `Test Command` `bgm set {nameId}`
 
 bgm pause
-t 'bgm' 'Test Command' 'bgm pause'
+t `bgm` `Test Command` `bgm pause`
 
 bgm play
-t 'bgm' 'Test Command' 'bgm play'
+t `bgm` `Test Command` `bgm play`
 
 bgm stop
-t 'bgm' 'Test Command' 'bgm stop'
+t `bgm` `Test Command` `bgm stop`
 
 bgm set bgm2
-t 'bgm' 'Test Command' 'Other bgm'
+t `bgm` `Test Command` `Other bgm`
 
 bgm v 1
-t 'bgm' 'Test Command' 'bgm v 1'
+t `bgm` `Test Command` `bgm v 1`
 
 bgm down
-t 'bgm' 'Test Command' 'bgm down'
+t `bgm` `Test Command` `bgm down`
 
 // 音效 SoundEffect
 se set se1
-t 'soundEffect' 'Test Command' 'se set {nameId}'
+t `soundEffect` `Test Command` `se set {nameId}`
 
 se pause
-t 'soundEffect' 'Test Command' 'se pause'
+t `soundEffect` `Test Command` `se pause`
 
 se play
-t 'soundEffect' 'Test Command' 'se play'
+t `soundEffect` `Test Command` `se play`
 
 se stop
-t 'soundEffect' 'Test Command' 'se stop'
+t `soundEffect` `Test Command` `se stop`
 
 se set se2
-t 'soundEffect' 'Test Command' 'Other soundEffect'
+t `soundEffect` `Test Command` `Other soundEffect`
 
 se v 1
-t 'soundEffect' 'Test Command' 'se v 1'
+t `soundEffect` `Test Command` `se v 1`
 
 se down
-t 'soundEffect' 'Test Command' 'se down'
+t `soundEffect` `Test Command` `se down`
 jump tSelect
 
 // 人物(旧命令) Old spr Command 
 target tSpr
 spr show m
-t 'spr' 'Test Command' 'spr show {nameId}'
+t `spr` `Test Command` `spr show {nameId}`
 
 spr hide m
-t 'spr' 'Test Command' 'spr hide {nameId}'
+t `spr` `Test Command` `spr hide {nameId}`
 
 spr showD m
-t 'spr' 'Test Command' 'spr showD {nameId}'
+t `spr` `Test Command` `spr showD {nameId}`
 
 spr hl m 1
-t 'spr' 'Test Command' 'spr hl {nameId} 1'
+t `spr` `Test Command` `spr hl {nameId} 1`
 
 spr x m 5
-t 'spr' 'Test Command' 'spr x {nameId} 5'
+t `spr` `Test Command` `spr x {nameId} 5`
 
 spr moveX m -10 20
-t 'spr' 'Test Command' 'spr move/moveX {nameId} -10 20'
+t `spr` `Test Command` `spr move/moveX {nameId} -10 20`
 
 spr y m 5
-t 'spr' 'Test Command' 'spr y {nameId} 5'
+t `spr` `Test Command` `spr y {nameId} 5`
 
 spr moveY m 0 20
-t 'spr' 'Test Command' 'spr moveY {nameId} 0 20'
+t `spr` `Test Command` `spr moveY {nameId} 0 20`
 
 spr close m
-t 'spr' 'Test Command' 'spr close {nameId}'
+t `spr` `Test Command` `spr close {nameId}`
 
 spr back m
-t 'spr' 'Test Command' 'spr back {nameId}'
+t `spr` `Test Command` `spr back {nameId}`
 
 spr down m
-t 'spr' 'Test Command' 'spr down {nameId}'
+t `spr` `Test Command` `spr down {nameId}`
 
 spr empty m
-t 'spr' 'Test Command' 'spr empty {nameId}'
+t `spr` `Test Command` `spr empty {nameId}`
 
 spr up m
-t 'spr' 'Test Command' 'spr up {nameId}'
+t `spr` `Test Command` `spr up {nameId}`
 spr empty m
 
 spr shakeX m 10 10 4
-t 'spr' 'Test Command' 'spr shakeX m 10 10 4'
+t `spr` `Test Command` `spr shakeX m 10 10 4`
 
 spr shakeY m 10 10 4
-t 'spr' 'Test Command' 'spr shakeY m 10 10 4'
+t `spr` `Test Command` `spr shakeY m 10 10 4`
 
 spr emo m Action
-t 'spr' 'Test Command' 'spr emo m Action'
+t `spr` `Test Command` `spr emo m Action`
 
 spr state m 03
-t 'spr' 'Test Command' 'spr state m 03'
+t `spr` `Test Command` `spr state m 03`
 
 spr x h 5
 spr show h
-t 'spr' 'Test Command' 'Other spr show'
+t `spr` `Test Command` `Other spr show`
 
-th h 'th' 'Test Command' 'run th Command'
+th h `th` `Test Command` `run th Command`
 
 spr x h 0
 spr hl m 1
 spr x m 0
-t 'spr' 'Test Command' 'z defaults to 0'
+t `spr` `Test Command` `z defaults to 0`
 
 spr z h 2
-t 'spr' 'Test Command' 'spr z m 2'
+t `spr` `Test Command` `spr z m 2`
 
 spr z m 4
-t 'spr' 'Test Command' 'spr h m 4'
+t `spr` `Test Command` `spr h m 4`
 
 spr hide h
-t 'spr' 'Test Command' 'Other spr hide'
+t `spr` `Test Command` `Other spr hide`
 
 spr hideD m
-t 'spr' 'Test Command' 'spr hideD {nameId}'
+t `spr` `Test Command` `spr hideD {nameId}`
 
 spr showD mc
-t 'sprC' 'Test Command' 'spr showD {nameId}'
+t `sprC` `Test Command` `spr showD {nameId}`
 
 spr hideD mc
-t 'sprC' 'Test Command' 'spr hideD {nameId}'
+t `sprC` `Test Command` `spr hideD {nameId}`
 
 jump tSelect

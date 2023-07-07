@@ -15,7 +15,7 @@ namespace ArisStudio
             {
                 case "finish":
                     endContinue.SetActive(false);
-                    endText.text = endCommand.Split('\'')[1];
+                    endText.text = endCommand.Split('`')[1];
                     endFinish.SetActive(true);
                     break;
                 case "continue":

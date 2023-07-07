@@ -12,11 +12,11 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{639c1a88-8f68-59f9-21b9-4088e2a885bc}</ProjectGuid>
+    <ProjectGuid>{93b8c8c6-2b72-a8c7-141b-bab44b88dec9}</ProjectGuid>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>spine-unity</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -25,7 +25,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>Temp\Bin\Debug\Assembly-CSharp\</OutputPath>
+    <OutputPath>Temp\Bin\Debug\spine-unity\</OutputPath>
     <DefineConstants>UNITY_2019_3_15;UNITY_2019_3;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;PLATFORM_STANDALONE;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -41,64 +41,189 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\ArisStudio\Banner.cs" />
-     <Compile Include="Assets\ArisStudio\Components\Button\ButtonLightFlow.cs" />
-     <Compile Include="Assets\ArisStudio\DebugConsole.cs" />
-     <Compile Include="Assets\ArisStudio\End.cs" />
-     <Compile Include="Assets\ArisStudio\Image\ImageFactory.cs" />
-     <Compile Include="Assets\ArisStudio\Image\ImageShake.cs" />
-     <Compile Include="Assets\ArisStudio\Label.cs" />
-     <Compile Include="Assets\ArisStudio\MainControl.cs" />
-     <Compile Include="Assets\ArisStudio\OtherShortcut.cs" />
-     <Compile Include="Assets\ArisStudio\RichText.cs" />
-     <Compile Include="Assets\ArisStudio\ScreenEffect\Curtain.cs" />
-     <Compile Include="Assets\ArisStudio\ScreenEffect\Flow.cs" />
-     <Compile Include="Assets\ArisStudio\ScreenEffect\ScreenEffectFactory.cs" />
-     <Compile Include="Assets\ArisStudio\ScreenEffect\SpeedLine.cs" />
-     <Compile Include="Assets\ArisStudio\ScreenRecorder.cs" />
-     <Compile Include="Assets\ArisStudio\ScreenSetting.cs" />
-     <Compile Include="Assets\ArisStudio\SelectButton.cs" />
-     <Compile Include="Assets\ArisStudio\SettingMenu.cs" />
-     <Compile Include="Assets\ArisStudio\Sound\Bgm.cs" />
-     <Compile Include="Assets\ArisStudio\Sound\SoundEffect.cs" />
-     <Compile Include="Assets\ArisStudio\Sound\SoundFactory.cs" />
-     <Compile Include="Assets\ArisStudio\Spr\CharState.cs" />
-     <Compile Include="Assets\ArisStudio\Spr\OldEmoticonScript.cs" />
-     <Compile Include="Assets\ArisStudio\Spr\OldSprEmotion.cs" />
-     <Compile Include="Assets\ArisStudio\Spr\SprAnimation.cs" />
-     <Compile Include="Assets\ArisStudio\Spr\SprFactory.cs" />
-     <Compile Include="Assets\ArisStudio\Spr\SprMove.cs" />
-     <Compile Include="Assets\ArisStudio\Spr\SprState.cs" />
-     <Compile Include="Assets\ArisStudio\TextArea.cs" />
-     <Compile Include="Assets\SkipSplash.cs" />
-     <Compile Include="Assets\StatePreview\PreSpr.cs" />
-     <Folder Include="Assets" />
-     <Folder Include="Assets\ArisStudio\Components\TextArea" />
-     <Folder Include="Assets\ArisStudio\Components\End" />
-     <Folder Include="Assets\ArisStudio\Spr\Emoticon" />
-     <Folder Include="Assets\ArisStudio\Components" />
-     <Folder Include="Assets\ArisStudio\Image" />
-     <Folder Include="Assets\ArisStudio\Spr\Emoticon\OldEmoticon" />
-     <Folder Include="Assets\ArisStudio" />
-     <Folder Include="Assets\ArisStudio\Components\Button" />
-     <Folder Include="Assets\ArisStudio\ScreenEffect" />
-     <Folder Include="Assets\ArisStudio\Spr\Emoticon\OldEmoticon\Img" />
-     <Folder Include="Assets\ArisStudio\Sound" />
-     <None Include="Assets\ArisStudio\Components\Button\ButtonLight.shader" />
-     <None Include="Assets\ArisStudio\Spr\Comm.shader" />
-     <None Include="Assets\ArisStudio\Spr\SFill.shader" />
-     <Folder Include="Assets\Scenes" />
-     <Folder Include="Assets\Spine" />
-     <Folder Include="Assets\ArisStudio\Spr\Emoticon\OldEmoticon\Sound" />
-     <Folder Include="Assets\ArisStudio\Spr\Emoticon\OldEmoticon\Animation" />
-     <Folder Include="Assets\ArisStudio\Spr\Animation" />
-     <None Include="Assets\ArisStudio\Components\Banner\Blur.shader" />
-     <Folder Include="Assets\StatePreview" />
-     <None Include="Assets\ArisStudio\ScreenEffect\SpeedLine.shader" />
-     <None Include="Assets\Spine\package.json" />
-     <None Include="Assets\Spine\version.txt" />
-     <Folder Include="Assets\ArisStudio\Spr" />
-     <Folder Include="Assets\ArisStudio\Components\Banner" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\Animation.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\AnimationState.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\AnimationStateData.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\Atlas.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\Attachments\AtlasAttachmentLoader.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\Attachments\Attachment.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\Attachments\AttachmentLoader.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\Attachments\AttachmentType.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\Attachments\BoundingBoxAttachment.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\Attachments\ClippingAttachment.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\Attachments\MeshAttachment.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\Attachments\PathAttachment.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\Attachments\PointAttachment.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\Attachments\RegionAttachment.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\Attachments\VertexAttachment.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\BlendMode.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\Bone.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\BoneData.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\Collections\OrderedDictionary.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\ConstraintData.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\Event.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\EventData.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\ExposedList.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\IUpdatable.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\IkConstraint.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\IkConstraintData.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\Json.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\MathUtils.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\PathConstraint.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\PathConstraintData.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\Skeleton.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\SkeletonBinary.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\SkeletonBounds.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\SkeletonClipping.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\SkeletonData.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\SkeletonJson.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\Skin.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\Slot.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\SlotData.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\TransformConstraint.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\TransformConstraintData.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-csharp\Triangulator.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Asset Types\AnimationReferenceAsset.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Asset Types\AtlasAssetBase.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Asset Types\BlendModeMaterials.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Asset Types\EventDataReferenceAsset.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Asset Types\RegionlessAttachmentLoader.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Asset Types\SkeletonDataAsset.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Asset Types\SkeletonDataCompatibility.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Asset Types\SkeletonDataModifierAsset.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Asset Types\SpineAtlasAsset.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Asset Types\SpineSpriteAtlasAsset.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\Following\BoneFollower.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\Following\BoneFollowerGraphic.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\Following\BoundingBoxFollower.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\Following\BoundingBoxFollowerGraphic.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\Following\PointFollower.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\RootMotion\SkeletonMecanimRootMotion.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\RootMotion\SkeletonRootMotion.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\RootMotion\SkeletonRootMotionBase.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\SkeletonAnimation.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\SkeletonGraphic.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\SkeletonMecanim.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\SkeletonRenderSeparator\SkeletonPartsRenderer.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\SkeletonRenderSeparator\SkeletonRenderSeparator.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\SkeletonRenderer.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\SkeletonRendererCustomMaterials\SkeletonGraphicCustomMaterials.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\SkeletonRendererCustomMaterials\SkeletonRendererCustomMaterials.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\SkeletonUtility\ActivateBasedOnFlipDirection.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\SkeletonUtility\FollowLocationRigidbody.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\SkeletonUtility\FollowLocationRigidbody2D.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\SkeletonUtility\FollowSkeletonUtilityRootRotation.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\SkeletonUtility\SkeletonUtility.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\SkeletonUtility\SkeletonUtilityBone.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Components\SkeletonUtility\SkeletonUtilityConstraint.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Deprecated\SlotBlendModes\SlotBlendModes.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\ISkeletonAnimation.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Mesh Generation\DoubleBuffered.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Mesh Generation\MeshGenerator.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Mesh Generation\MeshRendererBuffers.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Mesh Generation\SkeletonRendererInstruction.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Mesh Generation\SpineMesh.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Modules\TK2D\SpriteCollectionAttachmentLoader.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\SkeletonDataModifierAssets\BlendModeMaterials\BlendModeMaterialsAsset.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\SpineAttributes.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Utility\AtlasUtilities.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Utility\AttachmentCloneExtensions.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Utility\AttachmentRegionExtensions.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Utility\MaterialChecks.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Utility\SkeletonExtensions.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Utility\SkinUtilities.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Utility\TimelineExtensions.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Utility\YieldInstructions\WaitForSpineAnimation.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Utility\YieldInstructions\WaitForSpineAnimationComplete.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Utility\YieldInstructions\WaitForSpineAnimationEnd.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Utility\YieldInstructions\WaitForSpineEvent.cs" />
+     <Compile Include="Assets\Spine\Runtime\spine-unity\Utility\YieldInstructions\WaitForSpineTrackEntryEnd.cs" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Utility\YieldInstructions" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\CGIncludes\Spine-Skeleton-Lit-Common.cginc" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Outline\Sprite\SpritesUnlit-Outline.shader" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Shaders\BlendModes" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Sprite\SpriteDepthNormalsTexture.shader" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Spine-Skeleton.shader" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Spine-Skeleton-Fill.shader" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Outline\Spine-Skeleton-Lit-ZWrite-Outline.shader" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\SkeletonDataModifierAssets\BlendModeMaterials" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Mesh Generation" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Outline\SkeletonGraphic\Spine-SkeletonGraphic-TintBlack-Outline.shader" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\BlendModes\Spine-Skeleton-PMA-Multiply.shader" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Outline\BlendModes\Spine-Skeleton-PMA-Additive-Outline.shader" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Components\Following" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Utility\Hidden-Spine-Bones.shader" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Outline\CGIncludes\Spine-Outline-Pass.cginc" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\CGIncludes\Spine-Skeleton-Lit-Common-Shadow.cginc" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Utility\HiddenPass.shader" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Shaders\CGIncludes" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\CGIncludes\Spine-DepthOnlyPass.cginc" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Sprite\SpritesUnlit.shader" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Shaders\SkeletonGraphic" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Sprite\CGIncludes\ShaderMaths.cginc" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Outline\Spine-Skeleton-Outline.shader" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Sprite\CGIncludes\SpriteShadows.cginc" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Shaders" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Components\SkeletonUtility" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Utility" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Shaders\Outline\Sprite" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Components" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\CGIncludes\Spine-Outline-Common.cginc" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Outline\BlendModes\Spine-Skeleton-PMA-Screen-Outline.shader" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Spine-Skeleton-Lit-ZWrite.shader" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Spine-Special-Skeleton-Grayscale.shader" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Sprite\CGIncludes\SpriteVertexLighting.cginc" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Outline\Sprite\SpritesPixelLit-Outline.shader" />
+     <Folder Include="Assets\Spine\Runtime\spine-csharp\Collections" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Deprecated" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Sprite\CGIncludes\SpriteUnlit.cginc" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Shaders\Utility" />
+     <Folder Include="Assets\Spine\Runtime\spine-csharp\Attachments" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Sprite\CameraDepthNormalsTexture.shader" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Shaders\Outline\BlendModes" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Shaders\Outline\CGIncludes" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Outline\Spine-Skeleton-Fill-Outline.shader" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Sprite\SpritesPixelLit.shader" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Sprite\CameraNormalsTexture.shader" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Shaders\Outline\SkeletonGraphic" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Materials" />
+     <None Include="Assets\Spine\Runtime\spine-unity.asmdef" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Outline\Spine-Skeleton-OutlineOnly-ZWrite.shader" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\SkeletonDataModifierAssets" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\SkeletonGraphic\Spine-SkeletonGraphic.shader" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Components\SkeletonRendererCustomMaterials" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Sprite\CGIncludes\SpriteSpecular.cginc" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Outline\Spine-Skeleton-Lit-Outline.shader" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Shaders\Outline" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Outline\Sprite\SpritesVertexLit-Outline.shader" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Sprite\CameraDepthTexture.shader" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Sprite\CGIncludes\SpritePixelLighting.cginc" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Sprite\CGIncludes\SpriteLighting.cginc" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Outline\BlendModes\Spine-Skeleton-PMA-Multiply-Outline.shader" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Spine-Skeleton-TintBlack.shader" />
+     <Folder Include="Assets\Spine\Runtime" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Shaders\Sprite\CGIncludes" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Outline\SkeletonGraphic\Spine-SkeletonGraphic-Outline.shader" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Sprite\SpritesVertexLit.shader" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Modules\TK2D" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\SkeletonGraphic\Spine-SkeletonGraphic-TintBlack.shader" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Outline\Spine-Special-Skeleton-Grayscale-Outline.shader" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Components\SkeletonRenderSeparator" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Sprite\CGIncludes\ShaderShared.cginc" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Deprecated\SlotBlendModes" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Modules" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Spine-Skeleton-Lit.shader" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Spine-Skeleton-Tint.shader" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\CGIncludes\Spine-Skeleton-Tint-Common.cginc" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Asset Types" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\BlendModes\Spine-Skeleton-PMA-Screen.shader" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\BlendModes\Spine-Skeleton-PMA-Additive.shader" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Shaders\Sprite" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Outline\Spine-Skeleton-Tint-Outline.shader" />
+     <Folder Include="Assets\Spine\Runtime\spine-csharp" />
+     <None Include="Assets\Spine\Runtime\spine-unity\Shaders\Outline\Spine-Skeleton-TintBlack-Outline.shader" />
+     <Folder Include="Assets\Spine\Runtime\spine-unity\Components\RootMotion" />
      <Reference Include="UnityEngine">
      <HintPath>D:\Unity3d\2019.3.15f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
@@ -281,6 +406,21 @@
      </Reference>
      <Reference Include="UnityEditor">
      <HintPath>D:\Unity3d\2019.3.15f1\Editor\Data\Managed\UnityEditor.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEditor.VR">
+     <HintPath>D:\Unity3d\2019.3.15f1\Editor\Data\UnityExtensions\Unity\UnityVR\Editor\UnityEditor.VR.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEditor.Graphs">
+     <HintPath>D:\Unity3d\2019.3.15f1\Editor\Data\Managed\UnityEditor.Graphs.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
+     <HintPath>D:\Unity3d\2019.3.15f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEditor.WebGL.Extensions">
+     <HintPath>D:\Unity3d\2019.3.15f1\Editor\Data\PlaybackEngines\WebGLSupport\UnityEditor.WebGL.Extensions.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEditor.Android.Extensions">
+     <HintPath>D:\Unity3d\2019.3.15f1\Editor\Data\PlaybackEngines\AndroidPlayer\UnityEditor.Android.Extensions.dll</HintPath>
      </Reference>
      <Reference Include="netstandard">
      <HintPath>D:\Unity3d\2019.3.15f1\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>
@@ -627,49 +767,14 @@
      <Reference Include="System.Xml.Serialization">
      <HintPath>D:\Unity3d\2019.3.15f1\Editor\Data\NetStandard\compat\2.0.0\shims\netfx\System.Xml.Serialization.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.Timeline.Editor">
-     <HintPath>D:\1project\ArisStudio.0.2\Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.VSCode.Editor">
-     <HintPath>D:\1project\ArisStudio.0.2\Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.TextMeshPro.Editor">
-     <HintPath>D:\1project\ArisStudio.0.2\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
+     <Reference Include="UnityEditor.UI">
+     <HintPath>D:\1project\ArisStudio.0.2\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
      </Reference>
      <Reference Include="UnityEngine.UI">
      <HintPath>D:\1project\ArisStudio.0.2\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.Timeline">
-     <HintPath>D:\1project\ArisStudio.0.2\Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.CollabProxy.Editor">
-     <HintPath>D:\1project\ArisStudio.0.2\Library\ScriptAssemblies\Unity.CollabProxy.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Rider.Editor">
-     <HintPath>D:\1project\ArisStudio.0.2\Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Mathematics">
-     <HintPath>D:\1project\ArisStudio.0.2\Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Mathematics.Editor">
-     <HintPath>D:\1project\ArisStudio.0.2\Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.TextMeshPro">
-     <HintPath>D:\1project\ArisStudio.0.2\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
-     </Reference>
-     <Reference Include="UnityEditor.UI">
-     <HintPath>D:\1project\ArisStudio.0.2\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
-     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="spine-unity.csproj">
-      <Project>{93b8c8c6-2b72-a8c7-141b-bab44b88dec9}</Project>
-      <Name>spine-unity</Name>
-    </ProjectReference>
-    <ProjectReference Include="spine-unity-editor.csproj">
-      <Project>{b07a36c3-7172-28a9-9c42-adb4b092395f}</Project>
-      <Name>spine-unity-editor</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

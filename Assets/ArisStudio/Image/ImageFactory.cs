@@ -154,10 +154,9 @@ namespace ArisStudio.Image
 
                         case "showD":
                             backgroundImage.color = new Color(1, 1, 1, 1);
-                            backgroundImage.gameObject.SetActive(true);
                             break;
                         case "hideD":
-                            backgroundImage.gameObject.SetActive(false);
+                            backgroundImage.color = new Color(1, 1, 1, 0);
                             break;
 
                         case "shakeX":

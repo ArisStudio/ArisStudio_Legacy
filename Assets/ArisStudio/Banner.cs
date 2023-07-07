@@ -18,7 +18,7 @@ namespace ArisStudio
             textArea.SetActive(false);
             menu.SetActive(false);
             blur.SetActive(true);
-            t1.text = text.Split('\'')[1];
+            t1.text = text.Split('`')[1];
             b1.SetActive(true);
         }
 
@@ -26,7 +26,7 @@ namespace ArisStudio
         {
             textArea.SetActive(false);
             menu.SetActive(false);
-            var tt = text.Split('\'');
+            var tt = text.Split('`');
             blur.SetActive(true);
             t21.text = tt[1];
             t22.text = tt[3];

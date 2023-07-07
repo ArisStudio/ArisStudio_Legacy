@@ -95,7 +95,7 @@ namespace ArisStudio
             tName.text = sName == string.Empty ? " " : sName;
             tGroup.text = sGroup == string.Empty ? " " : sGroup;
             tContent.text = string.Empty;
-            tmpContent = sContent == string.Empty ? " " : sContent;
+            tmpContent = sContent == string.Empty ? " " : sContent.Replace("<n>", "\n");
             typing = true;
             br.SetActive(false);
         }

@@ -390,25 +390,25 @@ namespace ArisStudio
                     // Text
                     case "txt":
                         isPlaying = false;
-                        tt = text.Split('\'');
+                        tt = text.Split('`');
                         textArea.SetText(tt[1], tt[3], tt[5]);
                         break;
 
                     case "t":
                         isPlaying = false;
-                        tt = text.Split('\'');
+                        tt = text.Split('`');
                         textArea.SetText(tt[1], tt[3], tt[5]);
                         break;
 
                     case "tc":
-                        tt = text.Split('\'');
+                        tt = text.Split('`');
                         textArea.SetText(tt[1], tt[3], tt[5]);
                         break;
 
                     case "th":
                         sprFactory.TextWithHl(l[1]);
                         isPlaying = false;
-                        tt = text.Split('\'');
+                        tt = text.Split('`');
                         textArea.SetText(tt[1], tt[3], tt[5]);
                         break;
 

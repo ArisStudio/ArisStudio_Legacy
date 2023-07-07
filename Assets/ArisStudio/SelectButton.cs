@@ -120,7 +120,7 @@ namespace ArisStudio
             button33.transform.localScale = Vector3.one;
 
 
-            var l = selectCommand.Split('\'');
+            var l = selectCommand.Split('`');
             switch (l.Length)
             {
                 case 5:
