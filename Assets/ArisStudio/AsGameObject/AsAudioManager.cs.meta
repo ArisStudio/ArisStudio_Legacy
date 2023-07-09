@@ -1,3 +1,14 @@
-﻿fileFormatVersion: 2
+fileFormatVersion: 2
 guid: f6124aa3c7c44194998a2e21837ab009
-timeCreated: 1681114610
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - <AsAudioMixer>k__BackingField: {instanceID: 0}
+  - asBgmListBase: {instanceID: 0}
+  - asSfxListBase: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

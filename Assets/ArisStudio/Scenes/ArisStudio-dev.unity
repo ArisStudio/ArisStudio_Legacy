@@ -3160,7 +3160,7 @@ GameObject:
   m_Component:
   - component: {fileID: 430847275}
   m_Layer: 0
-  m_Name: AsBgmList
+  m_Name: BgmList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12151,7 +12151,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1029774778}
   m_Layer: 0
-  m_Name: AsCharacterBase
+  m_Name: CharacterBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15518,7 +15518,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1383193853}
   m_Layer: 0
-  m_Name: AsSfxList
+  m_Name: SfxList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
