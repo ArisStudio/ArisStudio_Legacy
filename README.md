@@ -8,14 +8,9 @@
   It provides a similar storytelling to the Blue Archive game, but with richer features.</p>
 </div>
 
-## Downloads
+## [Downloads Aris Studio](https://github.com/Tualin14/ArisStudio/releases "Download Aris Studio")
 
 <img align="center" src="./IMG_Aris_Studio_Demo_Preview.png" alt="Demo preview image" title="Demo preview">
-
-<br>
-
-- [Aris Studio](https://github.com/Tualin14/ArisStudio/releases "Download Aris Studio")
-<!-- - [Game Data]() -->
 
 ## How to Use
 
@@ -25,9 +20,9 @@
   - [中文文档](https://github.com/Tualin14/ArisStudio/wiki "Read Documentation in Chinese")
   - [Documentation](https://github.com/kiraio-moe/ArisStudio/wiki "Read Documentation in English")
 
-- Version 0.3 (Under Construction)
+<!-- - Version 0.3 (Under Construction)
   - [中文文档](https://as.t14.me/docs/category/as-commands "Read Documentation in Chinese")
-  - [Documentation](https://as.t14.me/en/docs/category/as-commands/ "Read Documentation in English")
+  - [Documentation](https://as.t14.me/en/docs/category/as-commands/ "Read Documentation in English") -->
 
 <!-- ## Awesome works done with Aris Studio ヾ(≧▽≦\\\*)o
 
