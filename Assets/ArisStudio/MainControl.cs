@@ -124,9 +124,9 @@ namespace ArisStudio
 #if UNITY_ANDROID
             var rootPath = $"file:///{Application.persistentDataPath}";
 #elif UNITY_STANDALONE_OSX
-            var rootPath = Directory.GetParent($"file://{Application.dataPath}").ToString();
+            var rootPath = $"file://{Directory.GetParent(Application.dataPath)}";
 #else
-            var rootPath = Directory.GetParent(Application.dataPath).ToString();
+             var rootPath = Directory.GetParent(Application.dataPath).ToString();
 #endif
             var localDataPath = Path.Combine(rootPath, "Data");
             sprFactory.SetSprDataPath(localDataPath);
