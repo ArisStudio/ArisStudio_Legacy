@@ -343,6 +343,11 @@ namespace ArisStudio.Spr
                     ssList[l[1]].GetComponent<SprState>().HighLight(float.Parse(l[3]));
                     break;
                 }
+                case "skin":
+                {
+                    ssList[l[1]].GetComponent<SprState>().SetSkin(l[3]);
+                    break;
+                }
                 case "state":
                 {
                     ssList[l[1]].GetComponent<SprState>().SetState(l[3]);

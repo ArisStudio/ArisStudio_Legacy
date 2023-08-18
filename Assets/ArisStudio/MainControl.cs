@@ -166,7 +166,7 @@ namespace ArisStudio
             }
 
             isPlaying = true;
-            debugConsole.PrintLog("Play Once");
+            // debugConsole.PrintLog("Play Once");
         }
 
         public void SetTyping(bool b)
@@ -178,6 +178,7 @@ namespace ArisStudio
         {
             runLineNumber = targetList[tName];
             isSelecting = false;
+            isPlaying = true;
             debugConsole.PrintLog($"Select: <color=lime>{tName}</color>");
         }
 

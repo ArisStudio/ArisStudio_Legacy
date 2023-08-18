@@ -176,6 +176,13 @@ namespace ArisStudio.Spr
             }
         }
 
+        public void SetSkin(string skinName)
+        {
+            if (!isSpr) return;
+            sa.skeleton.SetSkin(skinName);
+            sa.skeleton.SetSlotsToSetupPose();
+        }
+
         public void SetState(string stateName)
         {
             if (isSpr)
