@@ -1,3 +1,5 @@
+(This repository is archived)[https://github.com/Tualin14/ArisStudio/discussions/34]
+
 # Aris Studio
 
 <div align="center">
