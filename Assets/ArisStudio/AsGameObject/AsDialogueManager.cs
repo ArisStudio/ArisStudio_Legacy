@@ -51,7 +51,7 @@ namespace ArisStudio.AsGameObject
 
             tmp_typewriter.Play
             (
-                text        : text,
+                text        : text.Replace("<br>", "\n"),
                 speed       : SettingsManager.Instance.currentTypingSpeed,
                 onComplete  : () => {
                     MainManager.Instance.IsTyping = false;
