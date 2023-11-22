@@ -1,4 +1,4 @@
-# [This repository is archived](https://github.com/Tualin14/ArisStudio/discussions/34)
+# For special reasons, this repository is deprecated.
 
 ---
 
